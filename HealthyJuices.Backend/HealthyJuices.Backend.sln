@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Domain", "3.Domain", "{2F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Infrastructure", "4.Infrastructure", "{3D937A68-36BD-4820-9F6C-6EF10CA34972}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthyJuices.Common.DataTransfer", "Common\HealthyJuices.Common.DataTransfer\HealthyJuices.Common.DataTransfer.csproj", "{5CDD45D9-2733-49B7-9E35-BCD8D3FF4594}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthyJuices.Shared", "Common\HealthyJuices.Common.DataTransfer\HealthyJuices.Shared.csproj", "{5CDD45D9-2733-49B7-9E35-BCD8D3FF4594}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthyJuices.Common", "Common\HealthyJuices.Common\HealthyJuices.Common.csproj", "{6ADBF2A3-8088-4DD4-BD36-80DCC39A1EB4}"
 EndProject

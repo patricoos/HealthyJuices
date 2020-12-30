@@ -14,14 +14,13 @@
     <Folder Include="Bootstrap\" />
     <Folder Include="Controllers\" />
     <Folder Include="Middlewares\" />
-    <Folder Include="Auth\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\2Application\HealthyJuices.Application\HealthyJuices.Application.csproj" />
     <ProjectReference Include="..\..\3Domain\HealthyJuices.Domain\HealthyJuices.Domain.csproj" />
     <ProjectReference Include="..\..\4Infrastructure\HealthyJuices.Persistence.Ef\HealthyJuices.Persistence.Ef.csproj" />
-    <ProjectReference Include="..\..\Common\HealthyJuices.Common.DataTransfer\HealthyJuices.Common.DataTransfer.csproj" />
+    <ProjectReference Include="..\..\Common\HealthyJuices.Common.DataTransfer\HealthyJuices.Shared.csproj" />
     <ProjectReference Include="..\..\Common\HealthyJuices.Common\HealthyJuices.Common.csproj" />
   </ItemGroup>
 

@@ -5,13 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\HealthyJuices.Common.DataTransfer\HealthyJuices.Shared.csproj" />
     <ProjectReference Include="..\..\Common\HealthyJuices.Common\HealthyJuices.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Abstraction\DataAccess\" />
     <Folder Include="Models\Companies\DataAccess\" />
-    <Folder Include="Models\Logs\DataAccess\" />
     <Folder Include="Models\Orders\DataAccess\" />
     <Folder Include="Models\Products\DataAccess\" />
     <Folder Include="Models\Users\DataAccess\" />
