@@ -17,7 +17,7 @@ namespace HealthyJuices.Domain.Models.Companies
         public double Longitude { get; set; }
 
         public bool IsRemoved { get; set; }
-        public DateTime DateCreated { get; set; }
+        public DateTime DateCreated { get; init; }
         public DateTime DateModified { get; set; }
 
 

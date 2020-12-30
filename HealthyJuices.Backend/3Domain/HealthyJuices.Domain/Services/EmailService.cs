@@ -14,7 +14,7 @@ namespace HealthyJuices.Domain.Services
 
         public async Task<bool> SendRegisterCodeEmail(string email, string url, string token)
         {
-            return await _mailer.Send(email, "Register Veryfication", $"Code: '{url + token}'");
+            return await _mailer.Send(email, "Register Veryfication", $"Confirm: '{url}?token={token}&email={email}'");
         }
 
         public async Task<bool> SendForgotPasswordEmail(string email, string token)

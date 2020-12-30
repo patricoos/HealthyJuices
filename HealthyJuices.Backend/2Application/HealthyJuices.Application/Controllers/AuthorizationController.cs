@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using HealthyJuices.Application.Auth;
-using HealthyJuices.Common.Auth;
 using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Domain.Models.Users;
 using HealthyJuices.Domain.Models.Users.DataAccess;
@@ -44,7 +41,8 @@ namespace HealthyJuices.Application.Controllers
             if (!user.CheckPasswordValidity(dto.Password))
                 throw new UnauthorizedException($"Wrong password for user '{dto.Email}'");
 
-            return GenerateLoginResponse(user);
+            var token = _tokenProvider.Create(user.Id.ToString(), _timeProvider, user.RolesList);
+            return new LoginResponseDto(user.ToDto(), token);
         }
 
         public async Task RegisterAsync(RegisterUserDto dto)
@@ -124,19 +122,7 @@ namespace HealthyJuices.Application.Controllers
 
             await _userRepository.Update(user).SaveChangesAsync();
         }
-
-        private LoginResponseDto GenerateLoginResponse(User user)
-        {
-            var customClaims = new List<Claim>();
-            customClaims.Add(new Claim(CustomClaimTypes.UserId, user.Id.ToString()));
-
-            var token = _tokenProvider.Create(user.Id.ToString(), _timeProvider, user.RolesList, customClaims.ToArray());
-
-            var result = new LoginResponseDto(user.ToDto(), token);
-
-            return result;
-        }
-
+       
         private void VerifyResetPermissionsToken(User user, string token)
         {
             if (user.ResetPermissionsTokenExpiration < _timeProvider.UtcNow)

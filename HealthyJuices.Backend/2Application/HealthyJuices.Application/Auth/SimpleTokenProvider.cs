@@ -24,9 +24,9 @@ namespace HealthyJuices.Application.Auth
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(Secret);
-            var identity = new ClaimsIdentity(new Claim[]
+            var identity = new ClaimsIdentity(new[]
             {
-                new Claim(ClaimTypes.Name, userId),
+                new Claim(ClaimTypes.Name, userId)
             });
 
             if (roles != null)

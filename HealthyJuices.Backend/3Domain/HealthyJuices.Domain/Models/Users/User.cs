@@ -22,7 +22,7 @@ namespace HealthyJuices.Domain.Models.Users
         public long? CompanyId { get; set; }
         public Company Company { get; set; }
 
-        public DateTime DateCreated { get; set; }
+        public DateTime DateCreated { get; init; }
         public DateTime DateModified { get; set; }
         public bool IsRemoved { get;  set; }
         public bool IsActive { get; private set; }
@@ -56,10 +56,8 @@ namespace HealthyJuices.Domain.Models.Users
                 this.Roles |= userRole;
             }
         }
-        public List<string> RolesList
-        {
-            get { return Roles.GetFlags().Select(r => r.ToString()).ToList(); }
-        }
+        public List<string> RolesList => this.Roles.GetFlags().Select(x => Enum.GetName(typeof(UserRole), x)).ToList();
+        
         public bool CheckPasswordValidity(string password)
         {
             var hashedPassword = PasswordManager.HashPassword(password, PasswordSalt);
