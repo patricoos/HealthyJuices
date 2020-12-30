@@ -1,10 +1,6 @@
-﻿using System;
-using System.Linq;
-using System.Security.Claims;
-using HealthyJuices.Domain.Models.Users;
-using HealthyJuices.Shared.Enums;
+﻿using System.Security.Claims;
 
-namespace HealthyJuices.Api.Auth
+namespace HealthyJuices.Application.Auth
 {
     public static class SecurityExtension
     {

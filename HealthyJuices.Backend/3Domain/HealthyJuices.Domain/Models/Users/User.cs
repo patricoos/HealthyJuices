@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using HealthyJuices.Common.Exceptions;
+using HealthyJuices.Common.Extensions;
 using HealthyJuices.Domain.Models.Abstraction;
 using HealthyJuices.Domain.Models.Abstraction.DataAccess.Entities;
 using HealthyJuices.Domain.Models.Companies;
@@ -8,7 +12,6 @@ namespace HealthyJuices.Domain.Models.Users
 {
     public class User : Entity, IModifiableEntity, ISoftRemovableEntity, IAggregateRoot
     {
-
         public string Email { get; set; }
         public UserRole Roles { get; private set; }
 
@@ -21,10 +24,11 @@ namespace HealthyJuices.Domain.Models.Users
 
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
-        public bool IsRemoved { get; set; }
+        public bool IsRemoved { get;  set; }
+        public bool IsActive { get; private set; }
 
-        //public string ResetPasswordToken { get; set; }
-        //public DateTime? ResetPasswordTokenExpiration { get; set; }
+        public string ResetPermissionsToken { get; set; }
+        public DateTime? ResetPermissionsTokenExpiration { get; set; }
 
 
         public User() { }
@@ -32,11 +36,16 @@ namespace HealthyJuices.Domain.Models.Users
 
         public User(string email, string password, UserRole role)
         {
+            this.DateCreated = DateTime.Now;
+            this.DateModified = DateTime.Now;
+            this.IsActive = false;
+            this.IsRemoved = false;
+
             this.Email = email;
             this.PasswordSalt = PasswordManager.GenerateSalt();
             this.Password = PasswordManager.HashPassword(password, this.PasswordSalt);
-            this.DateCreated = DateTime.Now;
-            this.DateModified = DateTime.Now;
+
+            SetPassword(password);
             AddRoles(role);
         }
 
@@ -47,7 +56,27 @@ namespace HealthyJuices.Domain.Models.Users
                 this.Roles |= userRole;
             }
         }
+        public List<string> RolesList
+        {
+            get { return Roles.GetFlags().Select(r => r.ToString()).ToList(); }
+        }
+        public bool CheckPasswordValidity(string password)
+        {
+            var hashedPassword = PasswordManager.HashPassword(password, PasswordSalt);
 
+            return string.CompareOrdinal(hashedPassword, this.Password) == 0;
+        }
+
+        public void SetPassword(string password)
+        {
+            this.PasswordSalt = PasswordManager.GenerateSalt();
+            this.Password = PasswordManager.HashPassword(password, this.PasswordSalt);
+        }
+
+        public void Activate()
+        {
+            this.IsActive = IsRemoved ? throw new BadRequestException("This user is removed") : true;
+        }
 
         public void Remove()
         {

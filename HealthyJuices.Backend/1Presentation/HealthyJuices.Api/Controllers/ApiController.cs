@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using HealthyJuices.Api.Auth;
 using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Domain.Models.Users;
 using HealthyJuices.Domain.Models.Users.DataAccess;

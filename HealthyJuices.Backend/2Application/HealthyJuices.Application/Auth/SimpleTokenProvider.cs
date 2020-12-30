@@ -6,7 +6,7 @@ using System.Text;
 using HealthyJuices.Domain.Services;
 using Microsoft.IdentityModel.Tokens;
 
-namespace HealthyJuices.Api.Auth
+namespace HealthyJuices.Application.Auth
 {
     public class SimpleTokenProvider
     {
