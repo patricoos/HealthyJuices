@@ -13,7 +13,6 @@
     <Folder Include="Models\Companies\DataAccess\" />
     <Folder Include="Models\Orders\DataAccess\" />
     <Folder Include="Models\Products\DataAccess\" />
-    <Folder Include="Models\Users\DataAccess\" />
   </ItemGroup>
 
 </Project>

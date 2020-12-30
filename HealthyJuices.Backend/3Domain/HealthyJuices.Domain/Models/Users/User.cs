@@ -30,6 +30,25 @@ namespace HealthyJuices.Domain.Models.Users
         public User() { }
 
 
+        public User(string email, string password, UserRole role)
+        {
+            this.Email = email;
+            this.PasswordSalt = PasswordManager.GenerateSalt();
+            this.Password = PasswordManager.HashPassword(password, this.PasswordSalt);
+            this.DateCreated = DateTime.Now;
+            this.DateModified = DateTime.Now;
+            AddRoles(role);
+        }
+
+        public void AddRoles(params UserRole[] roles)
+        {
+            foreach (var userRole in roles)
+            {
+                this.Roles |= userRole;
+            }
+        }
+
+
         public void Remove()
         {
             this.IsRemoved = true;
