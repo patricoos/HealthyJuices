@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\3Domain\HealthyJuices.Domain\HealthyJuices.Domain.csproj" />
+    <ProjectReference Include="..\..\4Infrastructure\HealthyJuices.Persistence.Ef\HealthyJuices.Persistence.Ef.csproj" />
+    <ProjectReference Include="..\..\Common\HealthyJuices.Common.DataTransfer\HealthyJuices.Common.DataTransfer.csproj" />
+    <ProjectReference Include="..\..\Common\HealthyJuices.Common\HealthyJuices.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Mappers\" />
+  </ItemGroup>
+
+</Project>

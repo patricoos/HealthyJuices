@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Mappings\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\3Domain\HealthyJuices.Domain\HealthyJuices.Domain.csproj" />
+    <ProjectReference Include="..\..\Common\HealthyJuices.Common\HealthyJuices.Common.csproj" />
+  </ItemGroup>
+
+</Project>
