@@ -6,6 +6,7 @@ using HealthyJuices.Domain.Models.Users;
 using HealthyJuices.Domain.Models.Users.DataAccess;
 using HealthyJuices.Domain.Services;
 using HealthyJuices.Shared.Dto;
+using HealthyJuices.Shared.Dto.Auth;
 using HealthyJuices.Shared.Enums;
 using Nexus.Application.Mappers;
 
@@ -44,6 +45,74 @@ namespace HealthyJuices.Application.Controllers
             var token = _tokenProvider.Create(user.Id.ToString(), _timeProvider, user.RolesList);
             return new LoginResponseDto(user.ToDto(), token);
         }
+
+        public async Task<LoginResponseDto> LoginWithRefreshTokenAsync(LoginDto dto, string ipAddress)
+        {
+            var result = await this.LoginAsync(dto);
+            var refreshToken = _tokenProvider.CreateRefreshToken(ipAddress);
+            result.RefreshToken = refreshToken.Token;
+
+            //  var user = await _userRepository.Query().ByEmail(dto.Email).FirstOrDefaultAsync();
+            // save refresh token
+            //  user.RefreshTokens.Add(refreshToken);
+            //  await _userRepository.Update(user).SaveChangesAsync();
+
+            return result;
+        }
+
+        public async Task<LoginResponseDto> RefreshTokenAsync(string refreshToken, string ipAddress)
+        {
+            var user = await _userRepository.Query()
+                // .SingleOrDefault(u => u.RefreshTokens.Any(t => t.Token == token));
+                .IsNotRemoved()
+                .OnlyActive()
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+
+            if (user == null)
+                throw new UnauthorizedException("Token not found");
+
+            //var refreshToken = user.RefreshTokens.Single(x => x.Token == token);
+
+            //if (!refreshToken.IsActive) return null;
+            //if (user == null)
+            //    throw new NotFoundException("Token not found");
+
+            //var newRefreshToken = _tokenProvider.CreateRefreshToken(ipAddress);
+
+            //refreshToken.Revoked = DateTime.UtcNow;
+            //refreshToken.RevokedByIp = ipAddress;
+            //refreshToken.ReplacedByToken = newRefreshToken.Token;
+            // user.RefreshTokens.Add(newRefreshToken);
+            // await _userRepository.Update(user).SaveChangesAsync();
+
+            var token = _tokenProvider.Create(user.Id.ToString(), _timeProvider, user.RolesList);
+            return new LoginResponseDto(user.ToDto(), token);
+        }
+
+        public async Task RevokeTokenAsync(string token, string ipAddress)
+        {
+            var user = await _userRepository.Query()
+            // .SingleOrDefault(u => u.RefreshTokens.Any(t => t.Token == token));
+                .IsNotRemoved()
+                .OnlyActive()
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+
+            if (user == null)
+                throw new NotFoundException("Token not found");
+
+            //var refreshToken = user.RefreshTokens.Single(x => x.Token == token);
+
+            //if (!refreshToken.IsActive)
+            //        throw new NotFoundException("Token not found");
+
+            //refreshToken.Revoked = DateTime.UtcNow;
+            //refreshToken.RevokedByIp = ipAddress;
+
+            //  await _userRepository.Update(user).SaveChangesAsync();
+        }
+
 
         public async Task RegisterAsync(RegisterUserDto dto)
         {
@@ -122,7 +191,7 @@ namespace HealthyJuices.Application.Controllers
 
             await _userRepository.Update(user).SaveChangesAsync();
         }
-       
+
         private void VerifyResetPermissionsToken(User user, string token)
         {
             if (user.ResetPermissionsTokenExpiration < _timeProvider.UtcNow)

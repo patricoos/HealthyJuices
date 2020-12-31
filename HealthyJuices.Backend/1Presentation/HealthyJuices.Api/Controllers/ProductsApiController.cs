@@ -11,7 +11,7 @@ namespace HealthyJuices.Api.Controllers
     [ApiController]
     [Route("products")]
     [AuthorizeRoles(UserRole.BusinessOwner)]
-    public class ProductsApiController
+    public class ProductsApiController : ApiController
     {
         private readonly ProductsController _appController;
 
