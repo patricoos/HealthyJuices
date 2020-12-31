@@ -1,0 +1,61 @@
+// colors
+
+$primary-color: #169ca5;
+$primary-dark-color: #2f8a92;
+$secondary-color: #2dd881;
+$secondary-dark-color: #2bbd73;
+$tertiary-color: #d0d0d0;
+$quaternary-color: rgb(43, 125, 192);
+$quaternary-dark-color: rgb(29, 96, 151);
+// header
+// $header-bg-color: #0772B3;
+$header-bg-color: #333;
+$header-hover-bg-color: #171a1d;
+$header-font-color: #ffffff;
+$header-hover-font-color: #ffffff;
+
+// left menu
+// $leftmenu-bg-color: #eaeaea;
+$leftmenu-bg-color: #282d33;
+$leftmenu-font-color: #ffffff;
+$leftmenu-border-color: rgba(255, 255, 255, 0.6);
+$leftmenu-hover-color: rgba(255, 255, 255, 0.2);
+
+//breadcrumb
+$breadcrumb-bg-color: #ffff;
+$breadcrumb-hover-bg-color: rgb(255, 243, 226);
+$breadcrumb-current-bg-color: $secondary-color;
+$breadcrumb-current-color: #ffff;
+$breadcrumb-color: #7d7d7d;
+
+// content
+// $content-bg-color: #f4f4f4;34495e
+$content-bg-color: #f5f5f5;
+$card-header-bg-color: #f4f4f4;
+$card-body-bg-color: #ffffff;
+$font-color: #2f3038;
+
+$content-text-primary-color: #333333;
+$content-bg-primary-color: #f4f4f4;
+$content-border-primary-color: rgb(175, 175, 175);
+
+$no-layout-bg-color: #22272d;
+
+// butons
+$main-button-color: $primary-color;
+$main-button-hover-color: $primary-dark-color;
+
+// inputs
+$grey-button-bg-color: #eeeeee;
+$grey-button-color: #616161;
+
+// tables
+$table-header-border-color: #d0d0d0;
+
+$save-button: #2dd881;
+$save-button-hover: #2bbd73;
+// layout
+$header-height: 75px;
+$breadcrumb-height: 25px;
+$left-menu-width: 75px;
+$hide-menu: 950px;

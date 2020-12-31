@@ -1,0 +1,265 @@
+@import "../../../../../variables.scss";
+
+#logo {
+  display: inline-block;
+  text-align: left;
+  height: $header-height;
+  background-color: #359ca5;
+  cursor: pointer;
+  transition: 0.5s all ease;
+}
+
+#center {
+  // margin-left: 20px;
+  text-align: center;
+  display: inline-block;
+  height: $header-height;
+  position: absolute;
+}
+
+#rightSide {
+  display: block;
+  float: right;
+  height: $header-height;
+}
+
+#hamburger-btn {
+  display: block;
+  visibility: hidden;
+  color: $header-font-color;
+  // background-color: rgb(38, 39, 46);
+  height: 52px;
+  width: 52px;
+  text-align: center;
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+}
+#hamburger-btn:hover,
+#hamburger-btn.active {
+  background-color: rgb(25, 26, 31);
+  color: $header-hover-font-color;
+  opacity: 1;
+}
+
+#logoImg {
+  margin: 11px 25px 0 22px;
+  transition: 0.5s all ease;
+}
+
+.block {
+  width: 100px;
+  height: $header-height;
+  color: $header-font-color;
+  opacity: 1;
+  text-align: center;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 1px;
+  background-color: #515151;
+  vertical-align: top;
+
+  span {
+    width: 100%;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: $leftmenu-bg-color;
+    color: $leftmenu-font-color;
+    min-width: 160px;
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.1);
+    z-index: 200;
+    top: 65px;
+
+    div {
+      height: 45px;
+      line-height: 20px;
+    }
+    div:hover {
+      background-color: $leftmenu-hover-color;
+    }
+  }
+  .dropdown-content > div.selected {
+    color: $header-font-color;
+    background-color: $primary-dark-color;
+  }
+}
+
+.block:hover .dropdown-content {
+  display: block;
+}
+
+.block:hover,
+.block.active {
+  background-color: rgb(25, 26, 31);
+  color: $header-hover-font-color;
+  opacity: 1;
+}
+
+.block.user-name {
+  background-color: $header-bg-color;
+  min-width: 120px;
+  width: fit-content;
+  padding: 20px 20px 5px 20px;
+  cursor: default;
+  font-size: 15px;
+  .role {
+    font-size: 12px;
+    color: rgb(194, 194, 194);
+  }
+}
+.block.user-name:hover {
+  background-color: $header-bg-color;
+  color: $header-font-color;
+}
+
+.icon {
+  font-size: 26px;
+  margin: 13px 0px 9px 6px;
+}
+
+.small-icon {
+  font-size: 27px;
+  margin: 12px 0px 0px 0px;
+  transition-duration: 0.5s;
+}
+
+.summary {
+  margin: 13px 0px 9px 0px;
+}
+
+.rotate {
+  -ms-transform: rotate(90deg); /* IE 9 */
+  -webkit-transform: rotate(90deg); /* Safari 3-8 */
+  transform: rotate(90deg);
+}
+
+.border-left:before {
+  content: "";
+  position: absolute;
+  margin-left: -25px;
+  height: 90%;
+  top: 5%;
+  width: 1px;
+  background-color: #a4a8a9;
+}
+#hamburger-menu {
+  position: absolute;
+  top: 52px;
+  z-index: 1;
+  width: 100%;
+  height: 0;
+  background-color: #26272e62;
+
+  -webkit-transition: height 0.5s ease;
+  -moz-transition: height 0.5s ease;
+  -o-transition: height 0.5s ease;
+  transition: height 0.5s ease;
+}
+
+.hamburger-block {
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+  background-color: #26272e;
+  color: #a4a8a9;
+  overflow: hidden;
+  height: 0;
+  -webkit-transition: height 0.5s ease;
+  -moz-transition: height 0.5s ease;
+  -o-transition: height 0.5s ease;
+  transition: height 0.5s ease;
+}
+.hamburger-block:hover,
+.hamburger-block.active {
+  background-color: rgb(25, 26, 31);
+  color: $header-hover-font-color;
+  opacity: 1;
+}
+
+.hamburger-block > div {
+  padding: 16px 0;
+}
+
+.hamburger-block.user-name {
+  background-color: #26272e;
+  cursor: default;
+  font-size: 15px;
+  .role {
+    font-size: 12px;
+    color: rgb(194, 194, 194);
+  }
+}
+.hamburger-block.user-name:hover {
+  background-color: #26272e;
+  cursor: default;
+  color: #a4a8a9;
+}
+
+.rotate {
+  -ms-transform: rotate(180deg); /* IE 9 */
+  -webkit-transform: rotate(180deg); /* Safari 3-8 */
+  transform: rotate(180deg);
+}
+
+.dropdown-content {
+  margin-top: 10px;
+  display: none;
+  position: absolute;
+  background-color: #515151;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.block:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content div {
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content div:hover,
+.dropdown-content div.active {
+  background-color: rgb(25, 26, 31);
+}
+
+@media only screen and (max-width: $hide-menu) {
+  #logo {
+    height: 52px;
+  }
+  #logoImg {
+    margin: 7px 15px 0 15px;
+    height: 38px;
+  }
+  .hide-menu {
+    visibility: hidden;
+  }
+  #hamburger-btn {
+    visibility: visible;
+  }
+  #hamburger-menu.visible > .hamburger-block {
+    height: 50px;
+  }
+  #hamburger-menu.visible > .hamburger-block.user-name {
+    min-height: 50px;
+    height: fit-content;
+  }
+
+  .visible {
+    height: 1200px !important;
+  }
+}
+
+@media only screen and (min-width: $hide-menu) {
+  .hide-menu {
+    transition-delay: 0.5s;
+  }
+}

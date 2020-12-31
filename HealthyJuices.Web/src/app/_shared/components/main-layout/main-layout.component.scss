@@ -1,0 +1,42 @@
+@import "../../../../variables.scss";
+
+#header {
+  position: fixed;
+  background-color: $header-bg-color;
+  margin: 0px 0px 0px 0px;
+  padding: 0;
+  width: 100%;
+  height: $header-height;
+  z-index: 101;
+}
+
+#breadcrumb {
+  position: absolute;
+  z-index: 100;
+  margin-top: $header-height;
+  width: 100%;
+  background-color: $breadcrumb-bg-color;
+}
+
+#content {
+  padding: 100px 0px 0px 0px;
+  transition: 0.7s all ease;
+  min-height: 100%;
+}
+
+@media only screen and (max-width: $hide-menu) {
+  #leftmenu {
+    display: none;
+  }
+  #header {
+    width: 100%;
+    margin: 0px;
+    height: 52px;
+  }
+  #breadcrumb {
+    margin-top: 52px;
+  }
+  #content {
+    padding: 78px 0px 0px 0px;
+  }
+}

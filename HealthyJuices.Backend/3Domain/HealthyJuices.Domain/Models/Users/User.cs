@@ -13,6 +13,10 @@ namespace HealthyJuices.Domain.Models.Users
     public class User : Entity, IModifiableEntity, ISoftRemovableEntity, IAggregateRoot
     {
         public string Email { get; set; }
+
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
         public UserRole Roles { get; private set; }
 
         public string Password { get; private set; }
@@ -34,7 +38,7 @@ namespace HealthyJuices.Domain.Models.Users
         public User() { }
 
 
-        public User(string email, string password, UserRole role)
+        public User(string email, string password, params UserRole[] role)
         {
             this.DateCreated = DateTime.Now;
             this.DateModified = DateTime.Now;
@@ -47,6 +51,12 @@ namespace HealthyJuices.Domain.Models.Users
 
             SetPassword(password);
             AddRoles(role);
+        }
+
+        public User(string email, string password, string firstName, string lastName, params UserRole[] role) : this(email, password, role)
+        {
+            this.FirstName = firstName;
+            this.LastName = lastName;
         }
 
         public void AddRoles(params UserRole[] roles)

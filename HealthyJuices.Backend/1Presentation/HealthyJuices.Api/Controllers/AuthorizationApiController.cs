@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HealthyJuices.Api.Controllers
 {
+    [ApiController]
+    [Route("auth")]
     public class AuthorizationApiController : ApiController
     {
         private readonly AuthorizationController _appController;

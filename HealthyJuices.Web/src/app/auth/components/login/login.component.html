@@ -1,0 +1,42 @@
+<p-toast></p-toast>
+<div class="background">
+  <form [formGroup]="loginForm" class="box">
+
+    <div class="header">
+      <img src="../../../../assets/logo.svg">
+    </div>
+
+    <div class="content">
+      <div class="input-container">
+        <i class="fa fa-user fa-lg icon" aria-hidden="true"></i>
+        <input type="text" formControlName="login" placeholder="Username">
+      </div>
+
+      <div class="input-container">
+        <i class="fa fa-lock fa-lg icon" aria-hidden="true"></i>
+        <input type="password" formControlName="password" placeholder="Password">
+      </div>
+
+    </div>
+
+    <div class="footer">
+      <label class="checkbox-container">Remember me
+        <input type="checkbox" formControlName="rememberme">
+        <span class="checkmark"></span>
+      </label>
+
+      <div class="forgot">Forgot Password?</div>
+
+    </div>
+    <button class="login" (click)="onSubmit()" [disabled]="loader">
+      <div *ngIf="loader" class="loader-container">
+        <i class="fa fa-spinner loader" aria-hidden="true"></i>
+      </div>
+      <div *ngIf="!loader">
+        <i class="fa fa-sign-in" aria-hidden="true"></i> Login
+      </div>
+    </button>
+
+
+  </form>
+</div>
