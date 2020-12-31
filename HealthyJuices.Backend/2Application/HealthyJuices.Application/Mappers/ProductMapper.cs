@@ -1,7 +1,7 @@
 ﻿using HealthyJuices.Domain.Models.Products;
 using HealthyJuices.Shared.Dto.Products;
 
-namespace Nexus.Application.Mappers
+namespace HealthyJuices.Application.Mappers
 {
     public static class ProductMapper
     {

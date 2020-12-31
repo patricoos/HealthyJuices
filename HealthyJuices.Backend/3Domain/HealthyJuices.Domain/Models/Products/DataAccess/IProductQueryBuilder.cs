@@ -4,6 +4,7 @@ namespace HealthyJuices.Domain.Models.Products.DataAccess
 {
     public interface IProductQueryBuilder : IQueryBuilder<Product, IProductQueryBuilder>
     {
-        
+        IProductQueryBuilder IsActive();
+        IProductQueryBuilder IsNotRemoved();
     }
 }

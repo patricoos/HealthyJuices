@@ -32,7 +32,7 @@ namespace HealthyJuices.Application.Controllers
             var user = await _userRepository.Query()
                 .ByEmail(dto.Email)
                 .IsNotRemoved()
-                .OnlyActive()
+                .IsActive()
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
 
@@ -65,7 +65,7 @@ namespace HealthyJuices.Application.Controllers
             var user = await _userRepository.Query()
                 // .SingleOrDefault(u => u.RefreshTokens.Any(t => t.Token == token));
                 .IsNotRemoved()
-                .OnlyActive()
+                .IsActive()
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
 
@@ -95,7 +95,7 @@ namespace HealthyJuices.Application.Controllers
             var user = await _userRepository.Query()
             // .SingleOrDefault(u => u.RefreshTokens.Any(t => t.Token == token));
                 .IsNotRemoved()
-                .OnlyActive()
+                .IsActive()
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
 
@@ -156,7 +156,7 @@ namespace HealthyJuices.Application.Controllers
         {
             var user = await _userRepository.Query()
                 .ByEmail(dto.Email)
-                .OnlyActive()
+                .IsActive()
                 .FirstOrDefaultAsync();
 
             if (user == null)
@@ -178,7 +178,7 @@ namespace HealthyJuices.Application.Controllers
         {
             var user = await _userRepository.Query()
                 .ByEmail(dto.Email)
-                .OnlyActive()
+                .IsActive()
                 .FirstOrDefaultAsync();
 
             if (user == null)

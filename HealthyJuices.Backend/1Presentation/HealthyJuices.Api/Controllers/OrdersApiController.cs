@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using HealthyJuices.Api.Utils.Attributes;
 using HealthyJuices.Application.Controllers;
+using HealthyJuices.Shared.Dto;
 using HealthyJuices.Shared.Dto.Products;
 using HealthyJuices.Shared.Enums;
 using Microsoft.AspNetCore.Authorization;
@@ -10,27 +11,27 @@ using Microsoft.AspNetCore.Mvc;
 namespace HealthyJuices.Api.Controllers
 {
     [ApiController]
-    [Route("products")]
+    [Route("orders")]
     [Authorize]
-    public class ProductsApiController : ApiController
+    public class OrdersApiController : ApiController
     {
-        private readonly ProductsController _appController;
+        private readonly OrdersController _appController;
 
-        public ProductsApiController(ProductsController appController)
+        public OrdersApiController(OrdersController appController)
         {
             _appController = appController;
         }
 
         [HttpGet]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task<List<ProductDto>> GetAllAsync()
+        public async Task<List<OrderDto>> GetAllAsync()
         {
             var result = await _appController.GetAllAsync();
             return result;
         }
 
         [HttpGet("active")]
-        public async Task<List<ProductDto>> GetAllActiveAsync()
+        public async Task<List<OrderDto>> GetAllActiveAsync()
         {
             var result = await _appController.GetAllActiveAsync();
             return result;
@@ -38,7 +39,7 @@ namespace HealthyJuices.Api.Controllers
 
 
         [HttpGet("{id}")]
-        public async Task<ProductDto> GetByIdAsync(long id)
+        public async Task<OrderDto> GetByIdAsync(long id)
         {
             var result = await _appController.GetByIdAsync(id);
             return result;
@@ -46,7 +47,7 @@ namespace HealthyJuices.Api.Controllers
 
         [HttpPost]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task<long> CreateAsync(ProductDto definitionDto)
+        public async Task<long> CreateAsync(OrderDto definitionDto)
         {
             var result = await _appController.CreateAsync(definitionDto);
             return result;
@@ -54,7 +55,7 @@ namespace HealthyJuices.Api.Controllers
 
         [HttpPut]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task UpdateAsync(ProductDto definitionDto)
+        public async Task UpdateAsync(OrderDto definitionDto)
         {
             await _appController.UpdateAsync(definitionDto);
         }

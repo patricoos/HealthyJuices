@@ -17,6 +17,7 @@ namespace HealthyJuices.Domain.Models.Products
         public DateTime DateCreated { get; init; }
         public DateTime DateModified { get; set; }
         public bool IsRemoved { get; set; }
+        public bool IsActive { get; set; }
 
 
         public Product() { }

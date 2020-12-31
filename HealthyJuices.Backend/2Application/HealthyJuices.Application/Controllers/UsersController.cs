@@ -33,7 +33,7 @@ namespace HealthyJuices.Application.Controllers
         public async Task<List<UserDto>> GetAllActiveAsync()
         {
             var users = await _userRepository.Query()
-                .OnlyActive()
+                .IsActive()
                 .IsNotRemoved()
                 .ToListAsync();
 
@@ -46,7 +46,7 @@ namespace HealthyJuices.Application.Controllers
         public async Task<List<UserDto>> GetAllActiveByUserRoleAsync(UserRole role)
         {
             var users = await _userRepository.Query()
-                .OnlyActive()
+                .IsActive()
                 .ByUserRole(role)
                 .ToListAsync();
 

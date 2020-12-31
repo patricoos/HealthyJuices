@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HealthyJuices.Application.Mappers;
 using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Domain.Models.Products;
 using HealthyJuices.Domain.Models.Products.DataAccess;
 using HealthyJuices.Shared.Dto.Products;
-using Nexus.Application.Mappers;
 
 namespace HealthyJuices.Application.Controllers
 {
@@ -33,6 +33,8 @@ namespace HealthyJuices.Application.Controllers
         public async Task<List<ProductDto>> GetAllActiveAsync()
         {
             var entities = await _productRepository.Query()
+                .IsActive()
+                .IsNotRemoved()
                 .ToListAsync();
 
             var result = entities
@@ -65,18 +67,16 @@ namespace HealthyJuices.Application.Controllers
 
         public async Task UpdateAsync(ProductDto dto)
         {
-          
             var product = await _productRepository.Query()
                 .ById(dto.Id)
                 .FirstOrDefaultAsync();
 
             if (product == null)
-                throw new BadRequestException($"Not found articleDefinition with id: {dto.Id}");
+                throw new BadRequestException($"Not found product with id: {dto.Id}");
 
             product.Update(dto.Name, dto.Description, dto.Unit, dto.QuantityPerUnit, dto.DefaultPricePerUnit);
 
             _productRepository.Update(product);
-
             await _productRepository.SaveChangesAsync();
         }
 
