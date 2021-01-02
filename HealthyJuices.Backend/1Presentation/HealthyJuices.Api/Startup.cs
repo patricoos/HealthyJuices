@@ -6,6 +6,8 @@ using System;
 using System.IO;
 using HealthyJuices.Api.Bootstrap;
 using HealthyJuices.Api.Middlewares;
+using HealthyJuices.Application.Auth;
+using HealthyJuices.Common;
 using Microsoft.Extensions.Configuration;
 
 namespace HealthyJuices.Api
@@ -31,23 +33,44 @@ namespace HealthyJuices.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
+            services.AddControllers();
+
+            services.AddSimpleTokenProvider(options =>
+            {
+                options.Secret = HealthyJuicesConstants.LOCAL_ACCESS_TOKEN_SECRET;
+                options.Expiration = TimeSpan.FromDays(8);
+                options.Issuer = HealthyJuicesConstants.LOCAL_ACCESS_TOKEN_ISSUER;
+            });
 
 
             services
                 .RegisterDatabase(Configuration.GetConnectionString("Sql"))
                 .RegisterRepositories()
                 .RegisterApplicationControllers()
-                .RegisterServices();
+                .RegisterServices(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors(config => config.WithHeaders("X-Access-Token").AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
+            app.MigrateDatabase();
+            app.SeedDefaultData();
             app.UseMiddleware<ExceptionMiddleware>();
+
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

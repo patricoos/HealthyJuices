@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using HealthyJuices.Application.Auth;
+using HealthyJuices.Common.Contracts;
 using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Domain.Models.Users;
 using HealthyJuices.Domain.Models.Users.DataAccess;
@@ -128,9 +129,7 @@ namespace HealthyJuices.Application.Controllers
 
             // TODO: get current url
 
-            var isSend = await _emailService.SendRegisterCodeEmail(user.Email, "", user.ResetPermissionsToken);
-            if (!isSend)
-                throw new BadRequestException($"Sending Email Failed To Address '{user.Email}'");
+            await _emailService.SendRegisterCodeEmail(user.Email, "", user.ResetPermissionsToken);
 
             await _userRepository.Insert(user).SaveChangesAsync();
         }
@@ -168,10 +167,7 @@ namespace HealthyJuices.Application.Controllers
 
             await _userRepository.Update(user).SaveChangesAsync();
 
-            var isSend = await _emailService.SendForgotPasswordEmail(user.Email, user.ResetPermissionsToken);
-
-            if (!isSend)
-                throw new UnhandledException($"Sending Email Failed To Address '{user.Email}'");
+           await _emailService.SendForgotPasswordEmail(user.Email, user.ResetPermissionsToken);
         }
 
         public async Task ResetPasswordAsync(ResetPasswordDto dto)

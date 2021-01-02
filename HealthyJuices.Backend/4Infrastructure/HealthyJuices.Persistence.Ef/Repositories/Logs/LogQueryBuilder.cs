@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
+using HealthyJuices.Common.Contracts;
 using HealthyJuices.Domain.Models.Logs;
 using HealthyJuices.Domain.Models.Logs.DataAccess;
-using HealthyJuices.Domain.Services;
 using HealthyJuices.Shared.Enums;
 
 namespace HealthyJuices.Persistence.Ef.Repositories.Logs

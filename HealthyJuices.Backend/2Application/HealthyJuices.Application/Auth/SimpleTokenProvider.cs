@@ -4,7 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using HealthyJuices.Domain.Services;
+using HealthyJuices.Common.Contracts;
 using HealthyJuices.Shared.Dto.Auth;
 using Microsoft.IdentityModel.Tokens;
 

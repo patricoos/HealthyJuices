@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using HealthyJuices.Common.Contracts;
 using HealthyJuices.Domain.Models.Abstraction;
 using HealthyJuices.Domain.Models.Abstraction.DataAccess.Entities;
 using HealthyJuices.Domain.Models.Abstraction.DataAccess.Repositories;
-using HealthyJuices.Domain.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace HealthyJuices.Persistence.Ef.Repositories

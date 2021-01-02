@@ -12,14 +12,14 @@ namespace HealthyJuices.Domain.Services
             _mailer = mailer;
         }
 
-        public async Task<bool> SendRegisterCodeEmail(string email, string url, string token)
+        public async Task SendRegisterCodeEmail(string email, string url, string token)
         {
-            return await _mailer.Send(email, "Register Veryfication", $"Confirm: '{url}?token={token}&email={email}'");
+             await _mailer.SendAsync(email, "Register Veryfication", $"Confirm: '{url}?token={token}&email={email}'");
         }
 
-        public async Task<bool> SendForgotPasswordEmail(string email, string token)
+        public async Task SendForgotPasswordEmail(string email, string token)
         {
-            return await _mailer.Send(email, "Veryfication Code", $"Code: '{token}'");
+            await _mailer.SendAsync(email, "Veryfication Code", $"Code: '{token}'");
         }
     }
 }

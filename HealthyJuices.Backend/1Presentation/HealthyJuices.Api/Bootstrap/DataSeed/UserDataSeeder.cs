@@ -13,6 +13,7 @@ namespace HealthyJuices.Api.Bootstrap.DataSeed
             if (!context.Users.Any())
             {
                 var businessOwner = new User(HealthyJuicesConstants.DEFAULT_USER_LOGIN, HealthyJuicesConstants.DEFAULT_USER_PASSWORD, UserRole.BusinessOwner);
+                businessOwner.Activate();
                 context.Users.Add(businessOwner);
             }
 

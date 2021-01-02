@@ -25,7 +25,7 @@ const MAIN_LAYOUT_ROUTES: Routes = [
     path: 'management',
     canActivate: [AuthGuardsService],
     data: {
-      breadcrumb: 'management.management',
+      breadcrumb: 'Management',
       canNavigateFromBreadcrumb: false,
       expectedRoles: [UserRole.BusinessOwner]
     },

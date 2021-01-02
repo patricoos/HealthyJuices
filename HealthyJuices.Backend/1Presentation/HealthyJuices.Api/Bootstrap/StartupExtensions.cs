@@ -8,10 +8,18 @@ using System.Reflection;
 using System.Security.Claims;
 using System.Threading;
 using HealthyJuices.Api.Bootstrap.DataSeed;
+using HealthyJuices.Application.Auth;
+using HealthyJuices.Application.Controllers;
 using HealthyJuices.Application.Services.Logging;
+using HealthyJuices.Common.Contracts;
+using HealthyJuices.Common.Services;
+using HealthyJuices.Domain.Models.Logs.DataAccess;
 using HealthyJuices.Domain.Models.Users.DataAccess;
 using HealthyJuices.Domain.Services;
+using HealthyJuices.Mailing;
 using HealthyJuices.Persistence.Ef;
+using HealthyJuices.Persistence.Ef.Repositories.Logs;
+using HealthyJuices.Persistence.Ef.Repositories.Users;
 using HealthyJuices.Shared.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -27,14 +35,23 @@ namespace HealthyJuices.Api.Bootstrap
     {
         public static IServiceCollection RegisterApplicationControllers(this IServiceCollection @this)
         {
-            //   @this.AddScoped<AuthorizationController, AuthorizationController>();
+            @this.AddScoped<AuthorizationController>();
             return @this;
         }
 
-        public static IServiceCollection RegisterServices(this IServiceCollection @this)
+        public static IServiceCollection RegisterServices(this IServiceCollection @this, IConfiguration config)
         {
+            @this.AddScoped<IMailer>(x => new Mailer(
+                config["smtp:smtpServer"],
+                config["smtp:smtpUser"],
+                config["smtp:smtpPassword"],
+                config["smtp:smtpMailFrom"],
+                int.Parse(config["smtp:port"])
+            ));
+
             @this.AddScoped<ILogger, Logger>();
-            //      @this.AddScoped<IMailer, Mailer>();
+            @this.AddScoped<ITimeProvider, TimeProvider>();
+            @this.AddScoped<EmailService>();
 
             return @this;
         }
@@ -51,42 +68,38 @@ namespace HealthyJuices.Api.Bootstrap
         {
             @this.AddScoped<IDbContext, HealthyJuicesDbContext>();
 
-            // @this.AddScoped<IUserRepository, UserRepository>();
-
+            @this.AddScoped<ILogRepository, LogRepository>();
+            @this.AddScoped<IUserRepository, UserRepository>();
 
             return @this;
         }
 
         public static IApplicationBuilder MigrateDatabase(this IApplicationBuilder @this)
         {
-            using (var serviceScope = @this.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-            {
-                var context = serviceScope.ServiceProvider.GetRequiredService<HealthyJuicesDbContext>();
+            using var serviceScope = @this.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
+            var context = serviceScope.ServiceProvider.GetRequiredService<HealthyJuicesDbContext>();
 
-                context.Database.Migrate();
+            context.Database.Migrate();
 
-                return @this;
-            }
+            return @this;
         }
 
         public static IApplicationBuilder SeedDefaultData(this IApplicationBuilder @this)
         {
-            using (var serviceScope = @this.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-            {
-                var context = serviceScope.ServiceProvider.GetRequiredService<HealthyJuicesDbContext>();
+            using var serviceScope = @this.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
+            var context = serviceScope.ServiceProvider.GetRequiredService<HealthyJuicesDbContext>();
 
-                var seeders = new List<IDataSeeder>()
+            var seeders = new List<IDataSeeder>()
                 {
                         new UserDataSeeder(),
                 };
 
-                foreach (var dataSeeder in seeders)
-                {
-                    dataSeeder.Seed(context);
-                }
-
-                return @this;
+            foreach (var dataSeeder in seeders)
+            {
+                dataSeeder.Seed(context);
             }
+
+            return @this;
         }
     }
 }

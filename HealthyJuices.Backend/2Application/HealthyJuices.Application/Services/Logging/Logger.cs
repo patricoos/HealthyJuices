@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Reflection;
 using System.Threading.Tasks;
+using HealthyJuices.Common.Contracts;
 using HealthyJuices.Domain.Models.Logs;
 using HealthyJuices.Domain.Models.Logs.DataAccess;
 using HealthyJuices.Domain.Services;

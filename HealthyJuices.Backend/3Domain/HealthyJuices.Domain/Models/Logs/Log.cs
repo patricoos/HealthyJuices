@@ -16,9 +16,6 @@ namespace HealthyJuices.Domain.Models.Logs
         public string RequestUrl { get; set; }
         public string RequestBody { get; set; }
 
-        public Log()
-        {
-
-        }
+        public Log() { }
     }
 }

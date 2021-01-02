@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using HealthyJuices.Domain.Models.Abstraction;
 using HealthyJuices.Domain.Models.Abstraction.DataAccess.Entities;
+using HealthyJuices.Domain.Models.Users;
 
 namespace HealthyJuices.Domain.Models.Companies
 {
@@ -19,6 +21,8 @@ namespace HealthyJuices.Domain.Models.Companies
         public bool IsRemoved { get; set; }
         public DateTime DateCreated { get; init; }
         public DateTime DateModified { get; set; }
+
+        public ICollection<User> Users { get; set; }
 
 
         public Company() { }

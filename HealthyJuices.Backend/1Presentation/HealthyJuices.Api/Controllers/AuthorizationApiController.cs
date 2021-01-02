@@ -1,10 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using HealthyJuices.Application.Controllers;
 using HealthyJuices.Shared.Dto;
 using HealthyJuices.Shared.Dto.Auth;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HealthyJuices.Api.Controllers

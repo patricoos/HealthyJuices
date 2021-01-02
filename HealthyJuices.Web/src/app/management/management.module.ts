@@ -1,12 +1,17 @@
+import { ManagementRoutingModule } from './management.routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { OrdersComponent } from './components/orders/orders.component';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    OrdersComponent,
+  ],
   imports: [
-    CommonModule
+    CommonModule,
+    ManagementRoutingModule
   ]
 })
 export class ManagementModule { }

@@ -23,20 +23,7 @@ export class AuthService extends BaseService {
 
   constructor(private http: HttpClient, private router: Router, private localStorageService: LocalStorageService) {
     super();
-    // this.userInfo = localStorageService.load(LocalStorageService.AUTH_USER_INFO);
-    this.userInfo = {
-      user: {
-        id: 1,
-        isRemoved: false,
-        isActive: true,
-        roles: UserRole.BusinessOwner,
-        email: 'email',
-        firstName: 'firstName',
-        lastName: 'lastName',
-      },
-      accessToken: 'string',
-      refreshToken: 'string',
-    };
+    this.userInfo = localStorageService.load(LocalStorageService.AUTH_USER_INFO);
   }
 
   login(email: string, password: string, rememberMe: boolean): Observable<User | null> {
@@ -93,7 +80,7 @@ export class AuthService extends BaseService {
   logout(): void {
     this.userInfo = null;
     this.localStorageService.remove(LocalStorageService.AUTH_USER_INFO);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/auth/login']);
   }
 
   private saveUser(response: LoginResponse, rememberMe: boolean): User | null {

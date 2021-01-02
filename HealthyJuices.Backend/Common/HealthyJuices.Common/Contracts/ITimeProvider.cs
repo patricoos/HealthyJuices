@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HealthyJuices.Domain.Services
+namespace HealthyJuices.Common.Contracts
 {
     public interface ITimeProvider
     {
@@ -11,6 +11,5 @@ namespace HealthyJuices.Domain.Services
 
         DateTime ToLocalDateTime(DateTime dateTime);
         DateTime ToUtcDateTime(DateTime dateTime);
-
     }
 }
