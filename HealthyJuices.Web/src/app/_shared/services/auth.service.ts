@@ -23,11 +23,25 @@ export class AuthService extends BaseService {
 
   constructor(private http: HttpClient, private router: Router, private localStorageService: LocalStorageService) {
     super();
-    this.userInfo = localStorageService.load(LocalStorageService.AUTH_USER_INFO);
+    // this.userInfo = localStorageService.load(LocalStorageService.AUTH_USER_INFO);
+    this.userInfo = {
+      user: {
+        id: 1,
+        isRemoved: false,
+        isActive: true,
+        roles: UserRole.BusinessOwner,
+        email: 'email',
+        firstName: 'firstName',
+        lastName: 'lastName',
+      },
+      accessToken: 'string',
+      refreshToken: 'string',
+    };
   }
 
   login(email: string, password: string, rememberMe: boolean): Observable<User | null> {
-    return this.http.post<LoginResponse>(this.baseUrl + 'auth/login', new LoginUser(email, password)).pipe(
+
+    return this.http.post<LoginResponse>(this.baseUrl + '/auth/login', new LoginUser(email, password)).pipe(
       map(response => this.saveUser(response, rememberMe)),
     );
   }

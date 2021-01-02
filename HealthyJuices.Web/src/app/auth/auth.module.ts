@@ -18,7 +18,7 @@ import { ToastModule } from 'primeng/toast';
     AuthRoutingModule,
     FormsModule,
     ToastModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ]
 })
 export class AuthModule { }

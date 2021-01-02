@@ -1,14 +1,16 @@
 <ul class="breadcrumb">
-  <li><a (click)="onHome()" [class.disabled]="true"><i class="fa fa-home home" aria-hidden="true"></i></a></li>
+  <li>
+    <a (click)="onHome()" [class.disabled]="true">
+      <i class="fa fa-home home"></i>
+    </a>
+  </li>
 
   <li *ngFor="let breadcrumb of breadcrumbs">
     <a *ngIf="!breadcrumb.params" [routerLink]="[breadcrumb.url]" [class.disabled]="true">
       {{ breadcrumb.label}}
-      <!-- {{ breadcrumb.label}} -->
     </a>
     <a *ngIf="breadcrumb.params" [routerLink]="[breadcrumb.url, breadcrumb.params]" [class.disabled]="true">
       {{ breadcrumb.label}}
-      <!-- {{ breadcrumb.label}} -->
     </a>
   </li>
 </ul>

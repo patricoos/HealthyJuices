@@ -1,8 +1,7 @@
 import { ToastsService } from './../../../_shared/services/toasts.service';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/_shared/services/auth.service';
-import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-login',

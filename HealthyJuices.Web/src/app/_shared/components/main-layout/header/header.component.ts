@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserRole } from 'src/app/_shared/models/enums/user-role.enum';
 import { AuthService } from 'src/app/_shared/services/auth.service';
-import { PwaService } from 'src/app/_shared/services/pwa.service';
 import { MenuItem } from 'src/app/_shared/utils/menu-item.model';
 
 @Component({
@@ -20,13 +19,13 @@ export class HeaderComponent implements OnInit {
   menu: MenuItem[] = [
     { label: 'Orders', routerLink: '/orders', roles: [UserRole.Customer], icon: 'fa fa-check-square-o ' },
     {
-      label: 'Management', icon: '', roles: [UserRole.BusinessOwner], children: [
-        { label: 'Orders', routerLink: '/management/orders', icon: 'fa fa-check-square-o ' },
+      label: 'Management', icon: 'fa fa-cog', roles: [UserRole.BusinessOwner], children: [
+        { label: 'Orders', routerLink: '/management/orders' },
       ]
     },
   ];
 
-  constructor(private authService: AuthService, public Pwa: PwaService) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
     this.userRoles = this.authService.getUserRoles();
@@ -62,7 +61,7 @@ export class HeaderComponent implements OnInit {
   }
 
   installPwa(): void {
-    this.Pwa.installPwa();
+    //   this.Pwa.installPwa();
   }
 
   update(): void {

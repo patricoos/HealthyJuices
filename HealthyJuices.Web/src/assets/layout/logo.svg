@@ -1,7 +1,6 @@
 <svg viewBox="0 0 500 150" version="1.1" id="svg_null"  xmlns="http://www.w3.org/2000/svg">
   <g id="root" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-    <rect id="background.accent" fill="#40a798" x="0" y="0" width="500" height="150"></rect>
-    <g id="shape.primary" transform="translate(20, 20), scale(0.6)" fill="#f5e1da" fill-rule="nonzero" width="200"
+    <g id="shape.primary" transform="translate(20, 20), scale(0.6)" fill="#ffffff" fill-rule="nonzero" width="200"
       height="200">
       <path
         d="M13.017 66.5c0 -29.542 24.202 -53.57 53.954 -53.57c1.12 0 2.029 0.902 2.029 2.014l0 103.116c0 1.112 -0.91 2.015 -2.03 2.015c-29.75 0 -53.953 -24.033 -53.953 -53.575zm51.924 -49.5c-26.573 1.06 -47.866 22.86 -47.866 49.5c0 26.644 21.293 48.444 47.866 49.504l0 -99.004z">
@@ -48,7 +47,7 @@
     </g>
     <g id="Group" transform="translate(135, 50)">
       <rect id="Rectangle-53" x="0" y="0" width="420" height="46"></rect><text id="headerText.primary"
-        font-family="Nova Mono" font-size="46" font-weight="400" line-spacing="46" letter-spacing="4.04" fill="#f5e1da"
+        font-family="Nova Mono" font-size="46" font-weight="400" line-spacing="46" letter-spacing="4.04" fill="#ffffff"
         data-text-alignment="C" font-style="normal">
         <tspan x="2.953125" y="36">Healthy Juices</tspan>
       </text>

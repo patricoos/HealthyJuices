@@ -1,12 +1,12 @@
 <div id="logo" (click)="onNavigateHome()">
-  <img src="../../../../../assets/logo.svg" id="logoImg">
+  <img src="../../../../../assets/layout/logo.svg" id="logoImg">
 </div>
 
 <div id="center" class="hide-menu">
   <ng-container *ngFor="let menuItem of menu">
     <div class="block menu" routerLinkActive="active" [routerLink]="menuItem.routerLink"
       *ngIf="isUserInOneRoleOf(menuItem.roles)">
-      <i class="icon" [class]="menuItem.icon" aria-hidden="true"></i>
+      <i class="icon summary" [class]="menuItem.icon" aria-hidden="true"></i>
       <div>{{menuItem.label}}</div>
       <ng-container *ngIf="menuItem.children">
         <div class="dropdown-content">
@@ -26,18 +26,18 @@
   <div class="block user-name">{{userName}}<div class="role" *ngFor="let role of userRoles">
       {{UserRole[role]}}</div>
   </div>
-  <div class="block menu" *ngIf="Pwa.isUpdateAvailable" (click)="update()">
+  <!-- <div class="block menu" *ngIf="Pwa.isUpdateAvailable" (click)="update()">
     <i class="fa fa-mobile icon" aria-hidden="true"></i>
     <div>Update App</div>
   </div>
   <div class="block menu" *ngIf="Pwa.promptEvent" (click)="installPwa()">
     <i class="fa fa-mobile icon" aria-hidden="true"></i>
     <div>Install App</div>
-  </div>
+  </div> -->
 
   <div class="block" (click)="logout()">
     <i class="fa fa-sign-out icon" aria-hidden="true"></i>
-    <div>{{'common.logout' }}</div>
+    <div>Logout</div>
   </div>
 </div>
 <div id="hamburger-btn" (click)="changeHamburgerVisibilyty()" [class.active]="showHamurger">
@@ -71,12 +71,12 @@
   </div>
 
 
-  <div class="hamburger-block" *ngIf="Pwa.isUpdateAvailable" (click)="update()">
+  <!-- <div class="hamburger-block" *ngIf="Pwa.isUpdateAvailable" (click)="update()">
     <div> <i class="fa fa-mobile" aria-hidden="true"></i> Update App</div>
   </div>
   <div class="hamburger-block" *ngIf="Pwa.promptEvent" (click)="installPwa()">
     <div> <i class="fa fa-mobile" aria-hidden="true"></i> Install App</div>
-  </div>
+  </div> -->
 
   <div class="hamburger-block" (click)="logout()">
     <div> <i class="fa fa-sign-out" aria-hidden="true"></i> Logout</div>

@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { EmptyLayoutComponent } from './_shared/components/empty-layout/empty-layout.component';
 import { MainLayoutComponent } from './_shared/components/main-layout/main-layout.component';
 import { UserRole } from './_shared/models/enums/user-role.enum';
 import { AuthGuardsService } from './_shared/services/auth-guards.service';
-import { SharedModule } from './_shared/shared.module';
-
 
 const NO_LAYOUT_ROUTES: Routes = [
   { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) },
@@ -52,10 +50,7 @@ const APP_ROUTES: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(APP_ROUTES, { preloadingStrategy: PreloadAllModules }),
-    SharedModule
-  ],
+  imports: [RouterModule.forRoot(APP_ROUTES)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

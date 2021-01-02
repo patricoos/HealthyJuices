@@ -15,6 +15,6 @@ export interface User {
   firstName: string;
   lastName: string;
 
-  companyId: number;
-  company: Company;
+  companyId?: number;
+  company?: Company;
 }
