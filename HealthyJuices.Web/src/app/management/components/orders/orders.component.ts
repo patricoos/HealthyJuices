@@ -36,12 +36,7 @@ export class OrdersComponent implements OnInit {
     }, error => this.toastsService.showError(error));
   }
 
+  onAddNew(): void { }
 
-  onAddNew(): void {
-
-  }
-
-  onEdit(order: Order): void {
-
-  }
+  onEdit(order: Order): void { }
 }

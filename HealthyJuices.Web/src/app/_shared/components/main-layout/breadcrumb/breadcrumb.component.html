@@ -1,15 +1,17 @@
 <ul class="breadcrumb">
   <li>
-    <a (click)="onHome()" [class.disabled]="true">
+    <a (click)="onHome()">
       <i class="fa fa-home home"></i>
     </a>
   </li>
 
   <li *ngFor="let breadcrumb of breadcrumbs">
-    <a *ngIf="!breadcrumb.params" [routerLink]="[breadcrumb.url]" [class.disabled]="true">
+    <a *ngIf="!breadcrumb.params" [routerLink]="[breadcrumb.url]"
+      [class.disabled]="!breadcrumb.canNavigateFromBreadcrumb">
       {{ breadcrumb.label}}
     </a>
-    <a *ngIf="breadcrumb.params" [routerLink]="[breadcrumb.url, breadcrumb.params]" [class.disabled]="true">
+    <a *ngIf="breadcrumb.params" [routerLink]="[breadcrumb.url, breadcrumb.params]"
+      [class.disabled]="!breadcrumb.canNavigateFromBreadcrumb">
       {{ breadcrumb.label}}
     </a>
   </li>

@@ -1,0 +1,82 @@
+<p-confirmDialog></p-confirmDialog>
+<form [formGroup]="editForm">
+  <div class="mycontainer">
+
+    <div class="loader-container">
+      <app-loader [name]="companiesFormComponentLoader"></app-loader>
+      <div class="columns-container">
+        <div class="col2">
+
+          <div class="formCard">
+
+            <div class="formCard-header">
+              <div class="label" *ngIf="selectedCompany?.id">
+                {{selectedCompany?.name}}
+              </div>
+              <div class="label" *ngIf="!selectedCompany?.id">Add New Company</div>
+            </div>
+
+            <div class="formCard-body">
+              <div class="form-container" autocomplete="off">
+                <div class="input-container">
+                  <div class="label">Name</div>
+                  <input type="text" formControlName="name" autocomplete="off">
+                  <div *ngIf="editForm.controls.name.invalid && editForm.controls.name.dirty" class="validation-alert">
+                    Required</div>
+                </div>
+
+                <div class="input-container joinColumns">
+                  <div class="label">Comment</div>
+                  <textarea rows="5" cols="30" style="width:100%;" pInputTextarea formControlName="comment"
+                    autoResize="autoResize"></textarea>
+
+                  <div *ngIf="editForm.controls.comment.invalid && editForm.controls.comment.dirty"
+                    class="validation-alert">
+                    Required</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col2">
+          <div class="formCard right-form">
+            <div class="right-form-container-header">
+              <div class="p-col-6"></div>
+              <div class="p-col-2">
+                <button *ngIf="selectedCompany?.id" class="button button__cancel" (click)="onCancel()"
+                  [style]="{'width':'100%'}">
+                  <i class="fa fa-close" aria-hidden="true"></i>
+                  <div class="label">Cancel</div>
+                </button>
+              </div>
+              <div class="p-col-2">
+                <button *ngIf="selectedCompany?.id" class="delete" (click)="onDelete()" [style]="{'width':'100%'}">
+                  <i class="fa fa-trash" aria-hidden="true"></i>
+                  <div class="label">Delete</div>
+                </button>
+              </div>
+              <div class="p-col-2">
+                <button class="submit" (click)="onSave()" [disabled]="!editForm.dirty" [style]="{'width':'100%'}">
+                  <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                  <div class="label">Save</div>
+                </button>
+              </div>
+            </div>
+
+            <div class="right-form-container-map">
+              <div class="input-container map-container">
+                <agm-map [zoom]="14" [latitude]="lat" [longitude]="lng">
+                  <agm-marker *ngIf="selectedCompany" [latitude]="selectedCompany.latitude"
+                    (dragEnd)="onDragEnd($event)" [longitude]="selectedCompany.longitude" [markerDraggable]="true">
+                  </agm-marker>
+                </agm-map>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

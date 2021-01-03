@@ -88,6 +88,9 @@
 a.disabled {
   pointer-events: none;
 }
+a:hover {
+  background-color: $primary-dark-color;
+}
 
 @media only screen and (max-width: 600px) {
   .breadcrumb li a {

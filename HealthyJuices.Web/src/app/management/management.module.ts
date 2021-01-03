@@ -12,12 +12,22 @@ import { FullCalendarModule } from 'primeng/fullcalendar';
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 import { UnavailabilitEditFormModalComponent } from './components/unavailabilities/unavailabilit-edit-form-modal/unavailabilit-edit-form-modal.component';
 import { DropdownModule } from 'primeng/dropdown';
+import { CompaniesComponent } from './components/companies/companies.component';
+import { CompaniesFormComponent } from './components/companies/companies-form/companies-form.component';
+import { OrdersFormComponent } from './components/orders/orders-form/orders-form.component';
+import { environment } from 'src/environments/environment';
+import { AgmCoreModule } from '@agm/core';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
 
 @NgModule({
   declarations: [
     OrdersComponent,
     UnavailabilitiesComponent,
-    UnavailabilitEditFormModalComponent
+    UnavailabilitEditFormModalComponent,
+    CompaniesComponent,
+    CompaniesFormComponent,
+    OrdersFormComponent
   ],
   imports: [
     CommonModule,
@@ -30,10 +40,15 @@ import { DropdownModule } from 'primeng/dropdown';
     CalendarModule,
     FullCalendarModule,
     DynamicDialogModule,
-    DropdownModule
+    DropdownModule,
+    AgmCoreModule.forRoot({
+      apiKey: environment.googleMapsApiKey
+    }),
+    ConfirmDialogModule
   ],
   providers: [
-    DialogService
+    DialogService,
+    ConfirmationService
   ],
   entryComponents: [
     UnavailabilitEditFormModalComponent

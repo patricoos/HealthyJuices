@@ -20,8 +20,9 @@ export class HeaderComponent implements OnInit {
     { label: 'Orders', routerLink: '/orders', roles: [UserRole.BusinessOwner], icon: 'fa fa-check-square-o ' },
     {
       label: 'Management', icon: 'fa fa-cog', roles: [UserRole.BusinessOwner], children: [
-        { label: 'Orders', routerLink: '/management/orders', roles: [UserRole.BusinessOwner] },
+        { label: 'Companies', routerLink: '/management/companies', roles: [UserRole.BusinessOwner] },
         { label: 'Unavailabilities', routerLink: '/management/unavailabilities', roles: [UserRole.BusinessOwner] },
+        { label: 'Orders', routerLink: '/management/orders', roles: [UserRole.BusinessOwner] },
       ]
     },
   ];

@@ -70,7 +70,8 @@ export class BreadcrumbComponent implements OnInit {
       // add breadcrumb
       const breadcrumb: BreadCrumb = {
         label: child.snapshot.data[ROUTE_DATA_BREADCRUMB],
-        url
+        url,
+        canNavigateFromBreadcrumb: child.snapshot.data.canNavigateFromBreadcrumb
       };
       if (Object.keys(child.snapshot.params).length > 0) {
         breadcrumb.params = child.snapshot.params;

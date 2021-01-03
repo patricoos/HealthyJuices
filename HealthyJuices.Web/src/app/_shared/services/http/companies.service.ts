@@ -2,33 +2,33 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { finalize, map } from 'rxjs/operators';
-import { LoadersService } from 'src/app/_shared/services/loaders.service';
-import { BaseService } from 'src/app/_shared/services/_base.service';
-import { Order } from '../../../management/models/order.model';
+import { Company } from '../../models/user/company.model';
+import { LoadersService } from '../loaders.service';
+import { BaseService } from '../_base.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class OrdersService extends BaseService {
+export class CompaniesService extends BaseService {
 
   constructor(private http: HttpClient, private loadersService: LoadersService) {
     super();
   }
 
-  getAllActive(loader: string): Observable<Array<Order>> {
+  getAllActive(loader: string): Observable<Array<Company>> {
     this.loadersService.show(loader);
-    return this.http.get<Array<Order>>(this.baseUrl + '/orders/active').pipe(
+    return this.http.get<Array<Company>>(this.baseUrl + '/companies/active').pipe(
       finalize(() => this.loadersService.hide(loader))
     );
   }
 
-  Get(id: number, loader: string): Observable<Order> {
+  Get(id: number, loader: string): Observable<Company> {
     this.loadersService.show(loader);
-    return this.http.get<Order>(this.baseUrl + '/orders/' + id)
+    return this.http.get<Company>(this.baseUrl + '/companies/' + id)
       .pipe(finalize(() => this.loadersService.hide(loader)));
   }
 
-  addOrEdit(dto: Order, loader: string): Observable<boolean> {
+  addOrEdit(dto: Company, loader: string): Observable<boolean> {
     if (dto.id == null || dto.id === 0) {
       return this.add(dto, loader);
     } else {
@@ -36,23 +36,23 @@ export class OrdersService extends BaseService {
     }
   }
 
-  add(dto: Order, loader: string): Observable<boolean> {
+  add(dto: Company, loader: string): Observable<boolean> {
     this.loadersService.show(loader);
-    return this.http.post(this.baseUrl + '/orders', dto, { observe: 'response' }).pipe(
+    return this.http.post(this.baseUrl + '/companies', dto, { observe: 'response' }).pipe(
       map(response => this.isStatusSucceed(response.status)),
       finalize(() => this.loadersService.hide(loader)));
   }
 
-  edit(dto: Order, loader: string): Observable<boolean> {
+  edit(dto: Company, loader: string): Observable<boolean> {
     this.loadersService.show(loader);
-    return this.http.put(this.baseUrl + '/orders', dto, { observe: 'response' }).pipe(
+    return this.http.put(this.baseUrl + '/companies', dto, { observe: 'response' }).pipe(
       map(response => this.isStatusSucceed(response.status)),
       finalize(() => this.loadersService.hide(loader)));
   }
 
   delete(id: number, loader: string): Observable<boolean> {
     this.loadersService.show(loader);
-    return this.http.delete(this.baseUrl + '/orders/' + id, { observe: 'response' }).pipe(
+    return this.http.delete(this.baseUrl + '/companies/' + id, { observe: 'response' }).pipe(
       map(response => this.isStatusSucceed(response.status)),
       finalize(() => this.loadersService.hide(loader)));
   }
