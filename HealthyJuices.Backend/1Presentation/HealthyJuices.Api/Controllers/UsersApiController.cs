@@ -4,13 +4,13 @@ using HealthyJuices.Api.Utils.Attributes;
 using HealthyJuices.Application.Controllers;
 using HealthyJuices.Shared.Dto;
 using HealthyJuices.Shared.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HealthyJuices.Api.Controllers
 {
     [ApiController]
     [Route("users")]
-    [AuthorizeRoles(UserRole.BusinessOwner)]
     public class UsersApiController : ApiController
     {
         private readonly UsersController _appController;
@@ -20,6 +20,7 @@ namespace HealthyJuices.Api.Controllers
             _appController = appController;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<List<UserDto>> GetAllAsync()
         {
@@ -27,6 +28,7 @@ namespace HealthyJuices.Api.Controllers
             return result;
         }
 
+        [Authorize]
         [HttpGet("active")]
         public async Task<List<UserDto>> GetAllActiveAsync()
         {
@@ -34,6 +36,7 @@ namespace HealthyJuices.Api.Controllers
             return result;
         }
 
+        [Authorize]
         [HttpGet("role/{role}")]
         public async Task<List<UserDto>> GetAllActiveByUserRoleAsync(UserRole role)
         {
@@ -41,6 +44,7 @@ namespace HealthyJuices.Api.Controllers
             return result;
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<UserDto> GetByIdAsync(long id)
         {
@@ -48,6 +52,7 @@ namespace HealthyJuices.Api.Controllers
             return result;
         }
 
+        [Authorize]
         [HttpGet("{userName}")]
         public async Task<UserDto> GetAsync(string userName)
         {
@@ -55,6 +60,15 @@ namespace HealthyJuices.Api.Controllers
             return result;
         }
 
+        [HttpGet("existing/{userName}")]
+        [AllowAnonymous]
+        public async Task<bool> IsExistingAsync(string userName)
+        {
+            var result = await _appController.IsExistingAsync(userName);
+            return result;
+        }
+
+        [Authorize]
         [HttpPost]
         public async Task<long> CreateAsync([FromBody] AddOrEditUserDto dto)
         {
@@ -62,6 +76,7 @@ namespace HealthyJuices.Api.Controllers
             return result;
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task DeleteAsync(long id)
         {

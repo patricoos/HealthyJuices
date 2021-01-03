@@ -1,0 +1,211 @@
+@import "../../../../variables.scss";
+
+.background {
+  width: 100%;
+  height: 100%;
+  background-color: $no-layout-bg-color;
+}
+
+.box {
+  width: 350px;
+  height: 470px;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border-radius: 4px 4px 2px 2px;
+  -webkit-border-radius: 4px 4px 2px 2px;
+  -moz-border-radius: 4px 4px 2px 2px;
+  text-align: center;
+}
+.box .header {
+  background-color: #169ca5;
+  color: white;
+  border-radius: 3px 3px 0 0;
+  -webkit-border-radius: 3px 3px 0 0;
+  -moz-border-radius: 3px 3px 0 0;
+  height: 103px;
+}
+
+.box .content {
+  text-align: center;
+  padding: 20px 30px 8px 30px;
+}
+
+.footer {
+  padding: 0 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.forgot {
+  text-align: right;
+  color: #169ca5;
+  font-size: 13px;
+  cursor: pointer;
+}
+.forgot:hover {
+  text-decoration: underline;
+}
+
+.login-btn-container {
+  margin-top: 15px;
+  button {
+    display: inline-block;
+  }
+  button:first-child {
+    margin-right: 10px;
+  }
+}
+
+.login {
+  // border: 1px solid #2f8a92;
+  border: 0;
+  background-color: #169ca5;
+  color: #fff;
+  border-radius: 2px;
+  font-size: 16px;
+  font-weight: 700;
+}
+.login:hover {
+  background-color: #2f8a92;
+}
+
+input.ng-touched.ng-dirty.ng-invalid {
+  border-color: #992626;
+}
+input {
+  width: 100%;
+}
+
+.loader-container {
+  font-size: 24px;
+}
+
+.loader {
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+button:disabled,
+button:hover:disabled {
+  background-color: #169ca5;
+  opacity: 0.7;
+}
+
+input.error {
+  border-color: red;
+}
+
+.input-container {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  width: 100%;
+  margin-bottom: 10px;
+
+  .icon.error {
+    border-color: red;
+  }
+  .icon {
+    padding: 10px 10px 0px 10px;
+    background: #eee;
+    color: #555;
+    min-width: 30px;
+    min-height: 30px;
+    text-align: center;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    border-radius: 3px 0 0 3px;
+    -webkit-border-radius: 3px 0 0 3px;
+    -moz-border-radius: 3px 0 0 3px;
+  }
+}
+
+.input-container > input {
+  width: 100%;
+  padding: 10px;
+  outline: none;
+  border: 0;
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 0 2px 2px 0;
+  -webkit-border-radius: 0 2px 2px 0;
+  -moz-border-radius: 0 2px 2px 0;
+}
+.input-container.firstName {
+  margin-top: 25px;
+}
+
+.checkbox-container {
+  display: block;
+  color: #000;
+  position: relative;
+  cursor: pointer;
+  padding: 3px 0 0 32px;
+  text-align: left;
+  font-size: 15px;
+}
+
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 21px;
+  width: 21px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+}
+
+.checkbox-container input:checked ~ .checkmark {
+  background-color: #169ca5;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.checkbox-container .checkmark:after {
+  left: 6px;
+  top: 1.5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}

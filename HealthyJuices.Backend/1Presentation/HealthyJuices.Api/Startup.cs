@@ -12,6 +12,7 @@ using HealthyJuices.Common;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 namespace HealthyJuices.Api
 {
@@ -52,6 +53,20 @@ namespace HealthyJuices.Api
                 .RegisterRepositories()
                 .RegisterApplicationControllers()
                 .RegisterServices(Configuration);
+
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "HealthyJuices Api", Version = "v1" });
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "JWT Authorization header using the Bearer scheme.",
+                });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -61,10 +76,19 @@ namespace HealthyJuices.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.SeedDefaultData();
+                app.UseSwagger(c =>
+                {
+                    c.SerializeAsV2 = true;
+                });
+
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                });
             }
 
             app.MigrateDatabase();
-            app.SeedDefaultData();
             app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseRouting();

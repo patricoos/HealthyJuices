@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ConfirmRegisterComponent } from './components/confirm-register/confirm-register.component';
 import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 
 
 const authRoutes: Routes = [
@@ -8,6 +10,14 @@ const authRoutes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+  },
+  {
+    path: 'confirm-register',
+    component: ConfirmRegisterComponent,
   }
 ];
 

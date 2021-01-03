@@ -1,3 +1,66 @@
-<p>
-  register works!
-</p>
+<div class="background">
+  <form [formGroup]="registerForm" class="box">
+    <div class="loader-container">
+      <app-loader [name]="registerLoader"></app-loader>
+      <div class="header">
+        <img src="../../../../assets/layout/logo.svg">
+      </div>
+
+      <div class="content">
+        <div class="input-container">
+          <i class="fa fa-user fa-lg icon" aria-hidden="true"></i>
+          <input class="email" type="text" formControlName="email" placeholder="Email">
+          <div *ngIf="registerForm?.controls?.email?.errors?.required && registerForm?.controls?.email?.dirty"
+            class="validation-alert">
+            This field is required</div>
+          <div *ngIf="registerForm?.controls?.email?.errors?.usernameExist && registerForm?.controls?.email?.dirty"
+            class="validation-alert">
+            This email already exist</div>
+        </div>
+
+        <div class="input-container">
+          <i class="fa fa-lock fa-lg icon" aria-hidden="true"></i>
+          <input type="password" formControlName="password" placeholder="Password" autocomplete="new-password">
+        </div>
+        <div *ngIf="registerForm?.controls?.password?.errors?.required && registerForm?.controls?.password?.dirty"
+          class="validation-alert">
+          This field is required</div>
+
+        <div class="input-container">
+          <i class="fa fa-lock fa-lg icon" aria-hidden="true"></i>
+          <input type="password" formControlName="connfirmPassword" placeholder="Connfirm Password"
+            autocomplete="new-password">
+        </div>
+        <div
+          *ngIf="registerForm?.controls?.connfirmPassword?.errors?.required && registerForm?.controls?.connfirmPassword?.dirty"
+          class="validation-alert">
+          This field is required</div>
+        <div *ngIf="registerForm?.errors?.invalidConnfirmPassword && registerForm?.controls?.connfirmPassword?.dirty"
+          class="validation-alert">
+          Invalid connfirm password</div>
+
+        <div class="input-container firstName">
+          <i class="fa fa-user fa-lg icon" aria-hidden="true"></i>
+          <input type="text" formControlName="firstName" placeholder="First Name">
+        </div>
+
+        <div class="input-container">
+          <i class="fa fa-user fa-lg icon" aria-hidden="true"></i>
+          <input type="text" formControlName="lastName" placeholder="Last Name">
+        </div>
+      </div>
+
+      <div class="login-btn-container">
+        <button class="register" (click)="onBack()">
+          <i class="fa fa-sign-in" aria-hidden="true"></i> Back
+        </button>
+        <button class="login" (click)="onSubmit()">
+          <i class="fa fa-sign-in" aria-hidden="true"></i> Register
+        </button>
+      </div>
+    </div>
+
+
+  </form>
+
+</div>

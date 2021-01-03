@@ -58,7 +58,7 @@ namespace HealthyJuices.Api.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("confirm-register")]
+        [HttpGet("confirm-register")]
         public async Task ConfirmRegisterAsync([FromQuery] string email, [FromQuery] string token)
         {
             await _appController.ConfirmRegisterAsync(email, token);

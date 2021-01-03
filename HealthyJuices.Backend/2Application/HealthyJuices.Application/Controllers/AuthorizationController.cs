@@ -119,18 +119,18 @@ namespace HealthyJuices.Application.Controllers
         {
             var existing = await _userRepository.IsExistingAsync(dto.Email);
             if (existing)
-                throw new NotFoundException($"User with email '{dto.Email}' already exists");
+                throw new BadRequestException($"User with email '{dto.Email}' already exists");
 
-            var user = new User(dto.Email, dto.Password, UserRole.Customer)
+            var user = new User(dto.Email, dto.Password, dto.FirstName, dto.LastName, UserRole.Customer)
             {
-                ResetPermissionsToken = new Guid().ToString(),
+                ResetPermissionsToken = Guid.NewGuid().ToString(),
                 ResetPermissionsTokenExpiration = _timeProvider.UtcNow.AddDays(1)
             };
 
             // TODO: get current url
 
-            await _emailService.SendRegisterCodeEmail(user.Email, "", user.ResetPermissionsToken);
-
+            await _emailService.SendRegisterCodeEmail(user.Email, "http://localhost:4200/auth/confirm-register", user.ResetPermissionsToken);
+            
             await _userRepository.Insert(user).SaveChangesAsync();
         }
 

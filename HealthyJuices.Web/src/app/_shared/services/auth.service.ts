@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { BaseService } from './_base.service';
 import { LocalStorageService } from './local-storage.service';
 import { EnumExtension } from '../utils/enum.extension';
 import { User } from '../models/user/user.model';
-import { map } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { LoginUser } from '../models/auth/login-user.model';
 import { LoginResponse } from '../models/auth/login-response.model';
 import { UserRole } from '../models/enums/user-role.enum';
 import { Observable } from 'rxjs';
+import { LoadersService } from './loaders.service';
+import { RegisterUser } from 'src/app/auth/models/register-user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,16 +23,37 @@ export class AuthService extends BaseService {
     return this.userInfo ? this.userInfo.accessToken : null;
   }
 
-  constructor(private http: HttpClient, private router: Router, private localStorageService: LocalStorageService) {
+  constructor(private http: HttpClient, private router: Router, private localStorageService: LocalStorageService,
+    private loadersService: LoadersService) {
     super();
     this.userInfo = localStorageService.load(LocalStorageService.AUTH_USER_INFO);
   }
 
-  login(email: string, password: string, rememberMe: boolean): Observable<User | null> {
-
+  login(loader: string, email: string, password: string, rememberMe: boolean): Observable<User | null> {
+    this.loadersService.show(loader);
     return this.http.post<LoginResponse>(this.baseUrl + '/auth/login', new LoginUser(email, password)).pipe(
       map(response => this.saveUser(response, rememberMe)),
+      finalize(() => this.loadersService.hide(loader))
     );
+  }
+
+  register(loader: string, dto: RegisterUser): Observable<boolean> {
+    this.loadersService.show(loader);
+    return this.http.post(this.baseUrl + '/auth/register', dto, { observe: 'response' }).pipe(
+      map(response => this.isStatusSucceed(response.status)),
+      finalize(() => this.loadersService.hide(loader))
+    );
+  }
+
+  confirmRegister(loader: string, email: string, token: string): Observable<boolean> {
+    this.loadersService.show(loader);
+    let params = new HttpParams();
+    params = params.set('email', email);
+    params = params.set('token', token);
+
+    return this.http.get(this.baseUrl + '/auth/confirm-register', { params, observe: 'response' }).pipe(
+      map(response => this.isStatusSucceed(response.status)),
+      finalize(() => this.loadersService.hide(loader)));
   }
 
   getAuthorizationToken(): string {

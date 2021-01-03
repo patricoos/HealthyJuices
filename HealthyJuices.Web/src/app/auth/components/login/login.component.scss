@@ -50,10 +50,17 @@
   text-decoration: underline;
 }
 
-.login {
-  width: 220px;
-  height: 35px;
+.login-btn-container {
   margin-top: 30px;
+  button {
+    display: inline-block;
+  }
+  button:first-child {
+    margin-right: 10px;
+  }
+}
+
+.login {
   // border: 1px solid #2f8a92;
   border: 0;
   background-color: #169ca5;

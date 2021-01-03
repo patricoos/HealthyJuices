@@ -35,6 +35,7 @@ namespace HealthyJuices.Api.Bootstrap
             @this.AddScoped<AuthorizationController>();
             @this.AddScoped<OrdersController>();
             @this.AddScoped<UnavailabilitiesController>();
+            @this.AddScoped<UsersController>();
             return @this;
         }
 

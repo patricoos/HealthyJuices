@@ -78,6 +78,10 @@ namespace HealthyJuices.Application.Controllers
 
             return result;
         }
+        public async Task<bool> IsExistingAsync(string email)
+        {
+           return await _userRepository.Query().ByEmail(email).AnyAsync();
+        }
 
         public async Task<long> CreateAsync(AddOrEditUserDto dto)
         {

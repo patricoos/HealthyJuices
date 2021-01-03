@@ -6,11 +6,13 @@ import { AuthRoutingModule } from './auth.routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../_shared/shared.module';
 import { ToastModule } from 'primeng/toast';
+import { ConfirmRegisterComponent } from './components/confirm-register/confirm-register.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ConfirmRegisterComponent
   ],
   imports: [
     CommonModule,

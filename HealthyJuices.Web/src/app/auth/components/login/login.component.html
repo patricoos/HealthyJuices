@@ -1,41 +1,43 @@
-<p-toast></p-toast>
 <div class="background">
   <form [formGroup]="loginForm" class="box">
+    <div class="loader-container">
+      <app-loader [name]="loginLoader"></app-loader>
+      <div class="header">
+        <img src="../../../../assets/layout/logo.svg">
+      </div>
 
-    <div class="header">
-      <img src="../../../../assets/layout/logo.svg">
+      <div class="content">
+        <div class="input-container">
+          <i class="fa fa-user fa-lg icon" aria-hidden="true"></i>
+          <input type="text" formControlName="email" placeholder="Email">
+        </div>
+
+        <div class="input-container">
+          <i class="fa fa-lock fa-lg icon" aria-hidden="true"></i>
+          <input type="password" formControlName="password" placeholder="Password">
+        </div>
+
+      </div>
+
+      <div class="footer">
+        <label class="checkbox-container">Remember me
+          <input type="checkbox" formControlName="rememberme">
+          <span class="checkmark"></span>
+        </label>
+
+        <div class="forgot">Forgot Password?</div>
+
+      </div>
+      <div class="login-btn-container">
+        <button class="login" (click)="onSubmit()">
+          <i class="fa fa-sign-in" aria-hidden="true"></i> Login
+        </button>
+
+        <button class="register" (click)="onRegister()">
+          <i class="fa fa-sign-in" aria-hidden="true"></i> Register
+        </button>
+      </div>
     </div>
-
-    <div class="content">
-      <div class="input-container">
-        <i class="fa fa-user fa-lg icon" aria-hidden="true"></i>
-        <input type="text" formControlName="login" placeholder="Username">
-      </div>
-
-      <div class="input-container">
-        <i class="fa fa-lock fa-lg icon" aria-hidden="true"></i>
-        <input type="password" formControlName="password" placeholder="Password">
-      </div>
-
-    </div>
-
-    <div class="footer">
-      <label class="checkbox-container">Remember me
-        <input type="checkbox" formControlName="rememberme">
-        <span class="checkmark"></span>
-      </label>
-
-      <div class="forgot">Forgot Password?</div>
-
-    </div>
-    <button class="login" (click)="onSubmit()" [disabled]="loader">
-      <div *ngIf="loader" class="loader-container">
-        <i class="fa fa-spinner loader" aria-hidden="true"></i>
-      </div>
-      <div *ngIf="!loader">
-        <i class="fa fa-sign-in" aria-hidden="true"></i> Login
-      </div>
-    </button>
 
 
   </form>
