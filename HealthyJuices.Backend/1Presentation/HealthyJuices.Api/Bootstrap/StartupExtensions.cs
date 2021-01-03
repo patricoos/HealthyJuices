@@ -1,15 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Reflection;
-using System.Security.Claims;
 using System.Text;
-using System.Threading;
 using HealthyJuices.Api.Bootstrap.DataSeed;
-using HealthyJuices.Application.Auth;
 using HealthyJuices.Application.Controllers;
 using HealthyJuices.Application.Services.Logging;
 using HealthyJuices.Common;
@@ -17,18 +9,18 @@ using HealthyJuices.Common.Contracts;
 using HealthyJuices.Common.Services;
 using HealthyJuices.Domain.Models.Logs.DataAccess;
 using HealthyJuices.Domain.Models.Orders.DataAccess;
+using HealthyJuices.Domain.Models.Unavailabilities.DataAccess;
 using HealthyJuices.Domain.Models.Users.DataAccess;
 using HealthyJuices.Domain.Services;
 using HealthyJuices.Mailing;
 using HealthyJuices.Persistence.Ef;
 using HealthyJuices.Persistence.Ef.Repositories.Logs;
 using HealthyJuices.Persistence.Ef.Repositories.Orders;
+using HealthyJuices.Persistence.Ef.Repositories.Unavailabilities;
 using HealthyJuices.Persistence.Ef.Repositories.Users;
 using HealthyJuices.Shared.Enums;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,6 +34,7 @@ namespace HealthyJuices.Api.Bootstrap
         {
             @this.AddScoped<AuthorizationController>();
             @this.AddScoped<OrdersController>();
+            @this.AddScoped<UnavailabilitiesController>();
             return @this;
         }
 
@@ -77,6 +70,7 @@ namespace HealthyJuices.Api.Bootstrap
             @this.AddScoped<ILogRepository, LogRepository>();
             @this.AddScoped<IUserRepository, UserRepository>();
             @this.AddScoped<IOrderRepository, OrderRepository>();
+            @this.AddScoped<IUnavailabilityRepository, UnavailabilityRepository>();
 
             return @this;
         }

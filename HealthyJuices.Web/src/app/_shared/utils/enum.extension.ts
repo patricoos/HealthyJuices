@@ -1,8 +1,8 @@
 import { SelectItem } from 'primeng/api';
 
 export class EnumExtension {
-  static getNamesAndValues<T extends number>(e: any): SelectItem[] {
-    return EnumExtension.getNames(e).map(n => ({ name: n, value: e[n] as T }));
+  static getLabelAndValues<T extends number>(e: any): SelectItem[] {
+    return EnumExtension.getNames(e).map(n => ({ label: n, value: e[n] as T }));
   }
 
   static getNames(e: any): string[] {

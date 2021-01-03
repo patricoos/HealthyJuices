@@ -1,7 +1,7 @@
 import { ToastsService } from './../../../_shared/services/toasts.service';
 import { Component, OnInit } from '@angular/core';
 import { Order } from '../../models/order.model';
-import { OrdersService } from '../../services/orders.service';
+import { OrdersService } from '../../../_shared/services/http/orders.service';
 import { FullCallendarConsts } from 'src/app/_shared/constants/full-calendar.const';
 import { TableQueryService } from 'src/app/_shared/services/table.service';
 
@@ -19,7 +19,7 @@ export class OrdersComponent implements OnInit {
     { field: 'destinationCompanyName', header: 'Destination Company' },
     { field: 'dateCreated', header: 'Created' },
     { field: 'deliveryDate', header: 'Delivery Date' },
-    { field: 'action', header: 'common.action', width: '145px' },
+    { field: 'action', header: 'Action', width: '145px' },
   ];
   calendarLocale = FullCallendarConsts.getCallendarLocale();
 

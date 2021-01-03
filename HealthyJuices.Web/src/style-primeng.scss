@@ -87,3 +87,74 @@
 p-fullcalendar .fc.fc-ltr .fc-toolbar.fc-header-toolbar .fc-left {
   display: flex;
 }
+
+p-fullcalendar.myCalendar {
+  height: 100%;
+
+  .undefined.fc.fc-ltr.fc-unthemed {
+    height: 100%;
+
+    .fc-toolbar.fc-header-toolbar {
+      margin-bottom: 5px;
+
+      .fc-center {
+        font-size: 12px;
+      }
+      .fc-left,
+      .fc-right {
+        .fc-next-button,
+        .fc-button,
+        .fc-button-primary {
+          width: 40px;
+        }
+        .fc-today-button {
+          width: 80px;
+          font-size: 13px !important;
+        }
+      }
+    }
+
+    .fc-view-container {
+      height: calc(100% - 35px);
+
+      .fc-view.fc-dayGridMonth-view.fc-dayGrid-view {
+        height: 100%;
+
+        table {
+          height: 99%;
+
+          .fc-body {
+            height: 100%;
+
+            tr > td.fc-widget-content {
+              height: 100%;
+
+              .fc-scroller.fc-day-grid-container {
+                height: 100% !important;
+                overflow: hidden !important;
+
+                .fc-day-grid {
+                  height: 100%;
+
+                  .fc-row.fc-week.fc-widget-content {
+                    height: 16.7% !important;
+
+                    // .fc-bg > table > tbody > tr > td.fc-day.fc-widget-content{
+                    //   cursor: pointer;
+                    // }
+                    // .fc-content-skeleton > table > thead > tr > td.fc-day-top{
+                    //   cursor: pointer;
+                    // }
+                    //  .fc-highlight-skeleton > table > tbody > tr > td{
+                    //   cursor: pointer;
+                    // }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

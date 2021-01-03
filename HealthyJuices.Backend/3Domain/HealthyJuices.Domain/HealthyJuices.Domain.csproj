@@ -12,6 +12,7 @@
   <ItemGroup>
     <Folder Include="Models\Companies\DataAccess\" />
     <Folder Include="Models\Orders\DataAccess\" />
+    <Folder Include="Models\Unavailabilities\DataAccess\" />
   </ItemGroup>
 
 </Project>

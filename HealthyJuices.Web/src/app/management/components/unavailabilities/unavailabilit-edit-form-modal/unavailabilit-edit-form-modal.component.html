@@ -1,0 +1,76 @@
+<div class="loader-container">
+  <app-loader [name]="unavailabilitEditFormModalLoader"></app-loader>
+
+  <div class="modal-container">
+    <div class="modal-body-container">
+
+      <form [formGroup]="editForm" class="modal-form-container">
+
+        <div class="input-container">
+          <div class="label required">From</div>
+          <p-calendar formControlName="from" [style]="{'width':'100%'}" appendTo="body" [locale]="calendarLocale"
+            dateFormat="dd.mm.yy">
+          </p-calendar>
+          <div *ngIf="editForm?.controls?.from?.errors?.required && editForm?.controls?.from?.dirty"
+            class="validation-alert">
+            This field is required</div>
+        </div>
+
+        <div class="input-container">
+          <div class="label required">To</div>
+          <p-calendar formControlName="to" [style]="{'width':'100%'}" appendTo="body" [locale]="calendarLocale"
+            dateFormat="dd.mm.yy">
+          </p-calendar>
+          <div *ngIf="editForm?.controls?.to?.errors?.required && editForm?.controls?.to?.dirty"
+            class="validation-alert">
+            This field is required</div>
+        </div>
+
+        <div class="input-container">
+          <div class="label required">Reason</div>
+          <p-dropdown [options]="reasons" [autoDisplayFirst]="false" [style]="{'width':'100%'}" appendTo="body"
+            formControlName="reason">
+          </p-dropdown>
+          <div *ngIf="editForm?.controls?.reason?.errors?.required && editForm?.controls?.reason?.dirty"
+            class="validation-alert">
+            This field is required</div>
+        </div>
+
+        <div class="input-container">
+          <div class="label required">Comment</div>
+          <input type="text" formControlName="comment">
+          <div *ngIf="editForm?.controls?.comment?.errors?.required && editForm?.controls?.comment?.dirty"
+            class="validation-alert">This field is required</div>
+        </div>
+
+      </form>
+
+    </div>
+    <div class="footer-modal-container">
+      <div class="dialog-footer">
+        <div>
+          <button *ngIf="unavailability" class="delete" (click)="onDelete()">
+            <i class="fa fa-trash" aria-hidden="true"></i>
+            <div class="label">Delete</div>
+          </button>
+        </div>
+        <div>
+          <button class="submit" (click)="onSave()" [disabled]="!editForm.dirty">
+            <ng-container *ngIf="unavailability; else addNew">
+              <i class="fa fa-pencil" aria-hidden="true"></i>
+              <div class="label">Edit</div>
+            </ng-container>
+            <ng-template #addNew>
+              <i class="fa fa-plus" aria-hidden="true"></i>
+              <div class="label">Add</div>
+            </ng-template>
+          </button>
+          <button class="close" (click)="onClose()">
+            <i class="fa fa-close" aria-hidden="true"></i>
+            <div class="label">Close</div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

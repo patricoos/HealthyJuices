@@ -54,7 +54,7 @@ export class AuthService extends BaseService {
     const userRoles = Array<UserRole>();
     if (this.userInfo && this.userInfo.user.roles) {
       let code = this.userInfo.user.roles.valueOf();
-      EnumExtension.getNamesAndValues(UserRole)
+      EnumExtension.getLabelAndValues(UserRole)
         .sort((a, b) => 0 - (a.value > b.value ? 1 : -1))
         .forEach(x => {
           if (code - x.value >= 0 && (x.value > 0 || !userRoles.length)) {

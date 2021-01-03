@@ -47,8 +47,7 @@
 <div id="hamburger-menu" [class.visible]="showHamurger" (click)="hideHamburgerVisibilyty()">
 
   <ng-container *ngFor="let menuItem of menu">
-    <div class="hamburger-block" routerLinkActive="active" [routerLink]="menuItem.routerLink"
-      *ngIf="isUserInOneRoleOf(menuItem.roles)">
+    <div class="hamburger-block" [routerLink]="menuItem.routerLink" *ngIf="isUserInOneRoleOf(menuItem.roles)">
       <i class="icon" [class]="menuItem.icon" aria-hidden="true"></i>
       <div>{{menuItem.label}}</div>
       <ng-container *ngIf="menuItem.children">

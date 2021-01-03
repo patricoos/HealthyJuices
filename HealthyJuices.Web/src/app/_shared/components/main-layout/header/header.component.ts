@@ -17,10 +17,11 @@ export class HeaderComponent implements OnInit {
 
 
   menu: MenuItem[] = [
-    { label: 'Orders', routerLink: '/orders', roles: [UserRole.Customer], icon: 'fa fa-check-square-o ' },
+    { label: 'Orders', routerLink: '/orders', roles: [UserRole.BusinessOwner], icon: 'fa fa-check-square-o ' },
     {
       label: 'Management', icon: 'fa fa-cog', roles: [UserRole.BusinessOwner], children: [
-        { label: 'Orders', routerLink: '/management/orders' },
+        { label: 'Orders', routerLink: '/management/orders', roles: [UserRole.BusinessOwner] },
+        { label: 'Unavailabilities', routerLink: '/management/unavailabilities', roles: [UserRole.BusinessOwner] },
       ]
     },
   ];

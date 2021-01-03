@@ -2,10 +2,8 @@
 using System.Threading.Tasks;
 using HealthyJuices.Api.Utils.Attributes;
 using HealthyJuices.Application.Controllers;
-using HealthyJuices.Common.Extensions;
 using HealthyJuices.Shared.Dto;
 using HealthyJuices.Shared.Enums;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HealthyJuices.Api.Controllers
