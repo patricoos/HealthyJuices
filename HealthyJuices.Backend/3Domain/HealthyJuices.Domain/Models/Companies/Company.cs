@@ -42,6 +42,20 @@ namespace HealthyJuices.Domain.Models.Companies
             this.Longitude = longitude;
         }
 
+        public void Update(string name, string comment, string postalCode, string city, string street, double latitude,
+            double longitude)
+        {
+            this.DateModified = DateTime.UtcNow;
+
+            this.Name = name;
+            this.Comment = comment;
+            this.PostalCode = postalCode;
+            this.City = city;
+            this.Street = street;
+            this.Latitude = latitude;
+            this.Longitude = longitude;
+        }
+
         public void Remove()
         {
             this.IsRemoved = true;
