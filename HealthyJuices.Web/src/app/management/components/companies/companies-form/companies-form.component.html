@@ -1,11 +1,11 @@
 <p-confirmDialog></p-confirmDialog>
 <form [formGroup]="editForm">
-  <div class="mycontainer">
+  <div class="mycontainer white-container shadow-container">
 
     <div class="loader-container">
       <app-loader [name]="companiesFormComponentLoader"></app-loader>
       <div class="columns-container">
-        <div class="col2">
+        <div class="col-7">
 
           <div class="formCard">
 
@@ -25,6 +25,29 @@
                     Required</div>
                 </div>
 
+                <div class="input-container">
+                  <div class="label">Postal Code</div>
+                  <input type="text" formControlName="postalCode" autocomplete="off">
+                  <div *ngIf="editForm.controls.postalCode.invalid && editForm.controls.postalCode.dirty"
+                    class="validation-alert">
+                    Required</div>
+                </div>
+
+                <div class="input-container">
+                  <div class="label">City</div>
+                  <input type="text" formControlName="city" autocomplete="off">
+                  <div *ngIf="editForm.controls.city.invalid && editForm.controls.city.dirty" class="validation-alert">
+                    Required</div>
+                </div>
+
+                <div class="input-container">
+                  <div class="label">Street</div>
+                  <input type="text" formControlName="street" autocomplete="off">
+                  <div *ngIf="editForm.controls.street.invalid && editForm.controls.street.dirty"
+                    class="validation-alert">
+                    Required</div>
+                </div>
+
                 <div class="input-container joinColumns">
                   <div class="label">Comment</div>
                   <textarea rows="5" cols="30" style="width:100%;" pInputTextarea formControlName="comment"
@@ -40,40 +63,36 @@
 
         </div>
 
-        <div class="col2">
-          <div class="formCard right-form">
-            <div class="right-form-container-header">
-              <div class="p-col-6"></div>
-              <div class="p-col-2">
-                <button *ngIf="selectedCompany?.id" class="button button__cancel" (click)="onCancel()"
-                  [style]="{'width':'100%'}">
-                  <i class="fa fa-close" aria-hidden="true"></i>
-                  <div class="label">Cancel</div>
-                </button>
-              </div>
-              <div class="p-col-2">
-                <button *ngIf="selectedCompany?.id" class="delete" (click)="onDelete()" [style]="{'width':'100%'}">
-                  <i class="fa fa-trash" aria-hidden="true"></i>
-                  <div class="label">Delete</div>
-                </button>
-              </div>
-              <div class="p-col-2">
-                <button class="submit" (click)="onSave()" [disabled]="!editForm.dirty" [style]="{'width':'100%'}">
-                  <i class="fa fa-floppy-o" aria-hidden="true"></i>
-                  <div class="label">Save</div>
-                </button>
-              </div>
+        <div class="col-5">
+          <div class="right-container-header">
+            <div class="col-3">
+              <button *ngIf="selectedCompany?.id" class="button button__cancel" (click)="onCancel()"
+                [style]="{'width':'100%'}">
+                <i class="fa fa-close" aria-hidden="true"></i>
+                <div class="label">Cancel</div>
+              </button>
             </div>
+            <div class="col-3"></div>
+            <div class="col-3">
+              <button *ngIf="selectedCompany?.id" class="delete" (click)="onDelete()" [style]="{'width':'100%'}">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+                <div class="label">Delete</div>
+              </button>
+            </div>
+            <div class="col-3">
+              <button class="submit" (click)="onSave()" [disabled]="!editForm.dirty" [style]="{'width':'100%'}">
+                <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                <div class="label">Save</div>
+              </button>
+            </div>
+          </div>
 
-            <div class="right-form-container-map">
-              <div class="input-container map-container">
-                <agm-map [zoom]="14" [latitude]="lat" [longitude]="lng">
-                  <agm-marker *ngIf="selectedCompany" [latitude]="selectedCompany.latitude"
-                    (dragEnd)="onDragEnd($event)" [longitude]="selectedCompany.longitude" [markerDraggable]="true">
-                  </agm-marker>
-                </agm-map>
-              </div>
-            </div>
+          <div class="map-container">
+            <agm-map [zoom]="14" [latitude]="lat" [longitude]="lng">
+              <agm-marker *ngIf="selectedCompany" [latitude]="selectedCompany.latitude" (dragEnd)="onDragEnd($event)"
+                [longitude]="selectedCompany.longitude" [markerDraggable]="true">
+              </agm-marker>
+            </agm-map>
           </div>
         </div>
       </div>

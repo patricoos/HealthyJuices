@@ -12,7 +12,7 @@ namespace HealthyJuices.Api.Bootstrap.DataSeed
         {
             if (!context.Companies.Any())
             {
-                var company = new Company("Test company", "test coment", "123-123", "test city", "test street", 1, 1);
+                var company = new Company("Test company", "test coment", "123-123", "test city", "test street", 52.22, 21.01);
                 context.Companies.Add(company);
             }
 

@@ -1,11 +1,11 @@
 import { Company } from 'src/app/_shared/models/user/company.model';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CompaniesService } from 'src/app/_shared/services/http/companies.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastsService } from 'src/app/_shared/services/toasts.service';
-import { NULL_EXPR } from '@angular/compiler/src/output/output_ast';
 import { ConfirmationService } from 'primeng/api';
+import { FormGroupExtension } from 'src/app/_shared/utils/form-group.extension';
 
 @Component({
   selector: 'app-companies-form',
@@ -25,7 +25,7 @@ export class CompaniesFormComponent implements AfterViewInit {
   editForm: FormGroup = this.initForm();
 
   constructor(private route: ActivatedRoute, private companService: CompaniesService, private toastsService: ToastsService,
-    private confirmationService: ConfirmationService) { }
+    private confirmationService: ConfirmationService, private router: Router) { }
 
   ngAfterViewInit(): void {
     this.sub = this.route.params.subscribe(params => {
@@ -38,6 +38,7 @@ export class CompaniesFormComponent implements AfterViewInit {
 
   getDetails(id: number): void {
     this.companService.Get(id, this.companiesFormComponentLoader).subscribe(x => {
+      console.log(x);
       this.selectedCompany = x;
       this.editForm = this.initForm(x);
       this.lat = x.latitude;
@@ -52,18 +53,53 @@ export class CompaniesFormComponent implements AfterViewInit {
       name: new FormControl(company ? company.name : null, Validators.required),
       comment: new FormControl(company ? company.comment : null),
 
-      postalCode: new FormControl(company ? company.comment : null),
-      city: new FormControl(company ? company.comment : null),
-      street: new FormControl(company ? company.comment : null),
+      postalCode: new FormControl(company ? company.postalCode : null),
+      city: new FormControl(company ? company.city : null),
+      street: new FormControl(company ? company.street : null),
 
-      latitude: new FormControl(company ? company.comment : null),
-      longitude: new FormControl(company ? company.comment : null),
+      latitude: new FormControl(company ? company.latitude : this.lat),
+      longitude: new FormControl(company ? company.longitude : this.lng),
     });
     return form;
   }
 
-  onDelete(): void { }
-  onDragEnd(event: any): void { }
-  onSave(): void { }
-  onCancel(): void { }
+  onDragEnd(event: any): void {
+    this.editForm.markAsDirty();
+    this.editForm.controls.latitude.setValue(event.coords.lat);
+    this.editForm.controls.longitude.setValue(event.coords.lng);
+  }
+
+  onSave(): void {
+    if (this.editForm.invalid) {
+      FormGroupExtension.markFormAssDirtyAndTouched(this.editForm);
+      this.toastsService.showError('Invalid Form');
+      return;
+    }
+    this.companService.addOrEdit(this.editForm.value, this.companiesFormComponentLoader).subscribe(x => {
+      this.toastsService.showSuccess(this.editForm.controls.name.value + ' updated!');
+      this.router.navigate(['management/companies']);
+    }, error => this.toastsService.showError(error));
+  }
+
+  onDelete(): void {
+    if (!this.selectedCompany || !this.selectedCompany.id) { return; }
+    this.confirmationService.confirm({
+      message: 'Are you sure tha you want to delete',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => this.delete()
+    });
+  }
+
+  onCancel(): void {
+    this.router.navigate(['management/companies']);
+  }
+
+  private delete(): void {
+    if (!this.selectedCompany || !this.selectedCompany.id) { return; }
+    this.companService.delete(this.selectedCompany.id, this.companiesFormComponentLoader).subscribe(x => {
+      this.toastsService.showSuccess(this.selectedCompany?.name + ' deteted!');
+      this.router.navigate(['management/companies']);
+    }, error => this.toastsService.showError(error));
+  }
 }
