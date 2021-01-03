@@ -40,3 +40,313 @@ body {
   font-family: sans-serif;
   color: $font-color;
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+// region Containers
+
+.loader-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  cursor: auto;
+}
+
+.primary-container {
+  height: calc(100% - 20px);
+  margin: 10px;
+}
+
+// end region Containers
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+// region Buttons
+
+button {
+  width: 130px;
+  height: 30px;
+  // margin: 10px;
+  // border-radius: 6px;
+  border: 0;
+  text-align: left;
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  cursor: pointer;
+  line-height: 22px;
+}
+button:disabled,
+button:hover:disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+button > .label {
+  text-align: center;
+  width: 100%;
+  padding-top: 2px;
+  cursor: pointer;
+}
+button > i {
+  font-size: 20px !important;
+  line-height: 28px !important;
+}
+button:hover {
+  background-color: $main-button-hover-color;
+}
+
+button.submit {
+  background-color: $main-button-color;
+  color: #fff;
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
+}
+button.submit:hover {
+  background-color: $main-button-hover-color;
+}
+button.submit:disabled,
+button.submit:hover:disabled {
+  background-color: $main-button-color;
+}
+
+button.save {
+  background-color: $main-button-color;
+  color: #fff;
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
+}
+button.save:hover {
+  background-color: $main-button-hover-color;
+}
+button.save:disabled,
+button.save:hover:disabled {
+  background-color: $main-button-color;
+}
+
+button.action {
+  background-color: $main-button-color;
+  color: #fff;
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
+}
+button.action:hover {
+  background-color: $main-button-hover-color;
+}
+button.action:disabled,
+button.action:hover:disabled {
+  background-color: $main-button-color;
+}
+button.delete {
+  background-color: rgb(200, 0, 0);
+  color: #fff;
+  color: #fff;
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
+}
+button.delete:hover {
+  background-color: rgb(143, 0, 0);
+}
+
+button.cancel {
+  background-color: rgb(200, 163, 0);
+  color: #fff;
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
+  margin-right: 10px;
+
+  &:hover {
+    background-color: rgb(143, 163, 0);
+  }
+}
+
+button.refresh {
+  background-color: $main-button-color;
+  color: #fff;
+  color: #fff;
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
+}
+button.refresh:hover {
+  background-color: $main-button-hover-color;
+}
+
+button.plus {
+  float: right;
+  color: $main-button-color;
+  background-color: transparent;
+  width: 30px;
+  height: 30px;
+  padding: 6px 7px;
+  margin: 0;
+  border-radius: 15px;
+}
+
+.btn-plus {
+  float: right;
+  color: $main-button-color;
+  background-color: transparent;
+  width: 30px;
+  height: 30px;
+  margin: 0;
+  border-radius: 15px;
+}
+
+button.plus:hover {
+  background-color: rgba(135, 175, 172, 0.452);
+}
+
+button.minus {
+  float: right;
+  color: red;
+  background-color: transparent;
+  width: 30px;
+  height: 30px;
+  padding: 6px 7px;
+  margin: 0;
+  border-radius: 15px;
+  display: inline-block;
+}
+
+.btn-minus {
+  color: red;
+  background-color: transparent;
+  width: 30px;
+  height: 30px;
+  margin: 0;
+  border-radius: 15px;
+  display: inline-block;
+}
+button.minus:hover {
+  background-color: rgba(135, 175, 172, 0.452);
+}
+
+// end region Buttons
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+// region inputs
+
+input {
+  background: #ffffff;
+  border-radius: 3px;
+  border: 1px solid #ced4da;
+  width: 100%;
+  min-height: 32px;
+  padding-left: 8px;
+  color: $grey-button-color;
+  transition: 0.2s all linear;
+}
+.field-filter {
+  span {
+    border-radius: 3px;
+    border: solid 1px $grey-button-bg-color;
+    background: $grey-button-bg-color;
+    width: 100%;
+    min-height: 32px;
+    padding-left: 8px;
+    color: $grey-button-color;
+    transition: 0.2s all linear;
+  }
+}
+input:hover {
+  border: solid 1px $primary-color;
+}
+input:disabled,
+input.disabled {
+  opacity: 0.6;
+  cursor: no-drop;
+  pointer-events: none;
+}
+input.ng-dirty.ng-invalid,
+input.invalid,
+.invalid > .p-calendar > input {
+  border: 1px solid #a80000;
+}
+input.highlightInputWithValue,
+.highlightInputWithValue > .p-calendar > input {
+  border: 1px solid #000000;
+}
+.validation-alert {
+  color: #a80000;
+  font-size: 12px;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+::placeholder {
+  color: rgb(143, 143, 143) !important;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: rgb(143, 143, 143) !important;
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: rgb(143, 143, 143) !important;
+}
+
+.route-planer-overlay.p-overlaypanel-shifted:before,
+.route-planer-overlay.p-overlaypanel-shifted:after {
+  left: 10px !important;
+  right: unset !important;
+}
+// end region inputs
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+// region input-container
+
+.input-container {
+  margin: 7px 0;
+}
+
+.input-container > .label {
+  padding: 0 0 2px 8px;
+  font-family: "raleway";
+  font-size: 14px;
+  color: #7d7d7d;
+  font-weight: 500;
+}
+
+.input-container.input-switch {
+  min-height: 30px;
+  margin: 14px 0 0 0;
+}
+
+.input-container.input-switch > .label {
+  display: inline;
+  line-height: 25px;
+}
+
+.input-container.input-switch > p-inputSwitch {
+  display: inline;
+  float: right;
+}
+
+// end region input-container
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// scroll
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #ebebeb;
+}
+::-webkit-scrollbar-thumb {
+  background: #bbbbbb;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a0a0a0;
+}

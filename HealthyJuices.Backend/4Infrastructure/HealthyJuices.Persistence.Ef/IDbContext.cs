@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using HealthyJuices.Domain.Models.Companies;
 using HealthyJuices.Domain.Models.Logs;
 using HealthyJuices.Domain.Models.Orders;
+using HealthyJuices.Domain.Models.Products;
 using HealthyJuices.Domain.Models.Unavailabilities;
 using HealthyJuices.Domain.Models.Users;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,8 @@ namespace HealthyJuices.Persistence.Ef
         DbSet<Unavailability> Unavailabilities { get; set; }
         DbSet<Company> Companies { get; set; }
         DbSet<User> Users { get; set; }
+        DbSet<Product> Products { get; set; }
+        DbSet<OrderProduct> OrderProducts { get; set; }
 
         #endregion
 

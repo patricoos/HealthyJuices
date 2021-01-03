@@ -6,22 +6,27 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Reflection;
 using System.Security.Claims;
+using System.Text;
 using System.Threading;
 using HealthyJuices.Api.Bootstrap.DataSeed;
 using HealthyJuices.Application.Auth;
 using HealthyJuices.Application.Controllers;
 using HealthyJuices.Application.Services.Logging;
+using HealthyJuices.Common;
 using HealthyJuices.Common.Contracts;
 using HealthyJuices.Common.Services;
 using HealthyJuices.Domain.Models.Logs.DataAccess;
+using HealthyJuices.Domain.Models.Orders.DataAccess;
 using HealthyJuices.Domain.Models.Users.DataAccess;
 using HealthyJuices.Domain.Services;
 using HealthyJuices.Mailing;
 using HealthyJuices.Persistence.Ef;
 using HealthyJuices.Persistence.Ef.Repositories.Logs;
+using HealthyJuices.Persistence.Ef.Repositories.Orders;
 using HealthyJuices.Persistence.Ef.Repositories.Users;
 using HealthyJuices.Shared.Enums;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
@@ -36,6 +41,7 @@ namespace HealthyJuices.Api.Bootstrap
         public static IServiceCollection RegisterApplicationControllers(this IServiceCollection @this)
         {
             @this.AddScoped<AuthorizationController>();
+            @this.AddScoped<OrdersController>();
             return @this;
         }
 
@@ -70,6 +76,7 @@ namespace HealthyJuices.Api.Bootstrap
 
             @this.AddScoped<ILogRepository, LogRepository>();
             @this.AddScoped<IUserRepository, UserRepository>();
+            @this.AddScoped<IOrderRepository, OrderRepository>();
 
             return @this;
         }
@@ -84,6 +91,48 @@ namespace HealthyJuices.Api.Bootstrap
             return @this;
         }
 
+        public static IServiceCollection AddTokenAuthentication(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddAuthentication()
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.SaveToken = true;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(HealthyJuicesConstants.LOCAL_ACCESS_TOKEN_SECRET)),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Anyone", builder =>
+                {
+                    builder.RequireAuthenticatedUser();
+                    builder.AuthenticationSchemes = new List<string> { "Bearer" };
+                });
+                options.AddPolicy(Enum.GetName(typeof(UserRole), UserRole.Customer), builder =>
+                {
+                    builder.RequireAuthenticatedUser();
+                    builder.AuthenticationSchemes = new List<string> { "Bearer" };
+                    builder.AddRequirements(new RolesAuthorizationRequirement(new[] { UserRole.Customer.ToString() }));
+                });
+                options.AddPolicy(Enum.GetName(typeof(UserRole), UserRole.BusinessOwner), builder =>
+                {
+                    builder.RequireAuthenticatedUser();
+                    builder.AuthenticationSchemes = new List<string> { "Bearer" };
+                    builder.AddRequirements(new RolesAuthorizationRequirement(new[] { UserRole.BusinessOwner.ToString() }));
+                });
+
+                options.DefaultPolicy = options.GetPolicy("Anyone");
+            });
+
+            return services;
+        }
+
         public static IApplicationBuilder SeedDefaultData(this IApplicationBuilder @this)
         {
             using var serviceScope = @this.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
@@ -91,7 +140,11 @@ namespace HealthyJuices.Api.Bootstrap
 
             var seeders = new List<IDataSeeder>()
                 {
+                        new ProductDataSeeder(),
+                        new CompanyDataSeeder(),
                         new UserDataSeeder(),
+                        new OrderDataSeeder()
+
                 };
 
             foreach (var dataSeeder in seeders)

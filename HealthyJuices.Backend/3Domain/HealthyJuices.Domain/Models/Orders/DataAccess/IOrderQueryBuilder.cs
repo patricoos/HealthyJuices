@@ -5,5 +5,7 @@ namespace HealthyJuices.Domain.Models.Orders.DataAccess
     public interface IOrderQueryBuilder : IQueryBuilder<Order, IOrderQueryBuilder>
     {
         IOrderQueryBuilder IsNotRemoved();
+        IOrderQueryBuilder IncludeUser();
+        IOrderQueryBuilder IncludeDestinationCompany();
     }
 }

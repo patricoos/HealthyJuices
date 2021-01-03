@@ -1,6 +1,9 @@
 export interface Company {
   id: number;
 
+  name: string;
+  comment: string;
+
   dateCreated?: Date;
   dateModified?: Date;
   isRemoved?: boolean;

@@ -24,3 +24,121 @@
   font-size: 12px;
   padding: 4px 0;
 }
+
+.loader-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  cursor: auto;
+}
+
+.loader-backgroud {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.1);
+  -webkit-backdrop-filter: blur(1px);
+  backdrop-filter: blur(1px);
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  z-index: 99;
+  cursor: progress;
+}
+
+.loader-backgroud > svg {
+  width: 80px;
+  height: 80px;
+  margin: auto;
+  top: calc(50% - 40px);
+  position: absolute;
+  left: calc(50% - 40px);
+}
+
+.loader-backgroud > svg.logo {
+  fill: rgba(255, 255, 255, 0.4);
+}
+
+.loader-backgroud > svg.logo-animation {
+  fill: rgba(255, 255, 255, 0.4);
+  stroke-width: 0;
+  -webkit-animation: down-enter ease-in 1.2s infinite, stroke-color linear 2.4s infinite;
+  animation: down-enter ease-in 1.2s infinite, stroke-color linear 2.4s infinite;
+}
+
+@keyframes down-enter {
+  0% {
+    clip-path: inset(0 0 100% 0);
+  }
+  25% {
+    clip-path: inset(0);
+  }
+  50% {
+    clip-path: inset(0);
+  }
+  75% {
+    clip-path: inset(100% 0 0 0);
+  }
+  100% {
+    clip-path: inset(100% 0 0 0);
+  }
+}
+
+@-webkit-keyframes down-enter {
+  0% {
+    clip-path: inset(0 0 100% 0);
+  }
+  25% {
+    clip-path: inset(0);
+  }
+  50% {
+    clip-path: inset(0);
+  }
+  75% {
+    clip-path: inset(100% 0 0 0);
+  }
+  100% {
+    clip-path: inset(100% 0 0 0);
+  }
+}
+
+@keyframes down-leave {
+  0% {
+    clip-path: inset(0);
+  }
+  100% {
+    clip-path: inset(100% 0 0 0);
+  }
+}
+
+@-webkit-keyframes stroke-color {
+  0% {
+    fill: $primary-color;
+  }
+  49% {
+    fill: $primary-color;
+  }
+
+  50% {
+    fill: $secondary-color;
+  }
+  99% {
+    fill: $secondary-color;
+  }
+}
+
+@keyframes stroke-color {
+  0% {
+    fill: $primary-color;
+  }
+  49% {
+    fill: $primary-color;
+  }
+
+  50% {
+    fill: $secondary-color;
+  }
+  99% {
+    fill: $secondary-color;
+  }
+}

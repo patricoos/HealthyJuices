@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HealthyJuices.Application.Mappers;
 using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Domain.Models.Users;
 using HealthyJuices.Domain.Models.Users.DataAccess;
 using HealthyJuices.Shared.Dto;
 using HealthyJuices.Shared.Enums;
-using Nexus.Application.Mappers;
 
 namespace HealthyJuices.Application.Controllers
 {

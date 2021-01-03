@@ -59,6 +59,11 @@ namespace HealthyJuices.Domain.Models.Users
             this.LastName = lastName;
         }
 
+        public User(string email, string password, string firstName, string lastName, Company company, params UserRole[] role) : this(email, password, firstName, lastName, role)
+        {
+            this.Company = company;
+        }
+
         public void AddRoles(params UserRole[] roles)
         {
             foreach (var userRole in roles)

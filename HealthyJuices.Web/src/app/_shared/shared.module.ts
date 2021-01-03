@@ -17,11 +17,14 @@ import { BreadcrumbComponent } from './components/main-layout/breadcrumb/breadcr
     FooterComponent,
     EmptyLayoutComponent,
     LoaderComponent,
-    BreadcrumbComponent
+    BreadcrumbComponent,
   ],
   imports: [
     CommonModule,
     RouterModule
+  ],
+  exports: [
+    LoaderComponent,
   ]
 })
 export class SharedModule { }

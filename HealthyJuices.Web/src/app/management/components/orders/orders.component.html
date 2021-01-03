@@ -1,1 +1,59 @@
-<p>orders works!</p>
+<div class="loader-container">
+  <app-loader [name]="ordersComponentLoader"></app-loader>
+  <div class="primary-container">
+    <p-table #dt [columns]="columns" [value]="orders" [scrollable]="true" [resizableColumns]="true"
+      [reorderableColumns]="true" scrollHeight="calc(100% - 20px)" class="mytableBorder"
+      [exportFilename]="'contractors'">
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+          <col *ngFor="let col of columns" [style.width]="col.width">
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" [pSortableColumn]="col.field" class="headerRow" [ngSwitch]="col.field"
+            pReorderableColumn>
+            {{col.header}}
+            <div *ngSwitchCase="'action'"></div>
+            <p-sortIcon *ngSwitchDefault [field]="col.field"></p-sortIcon>
+          </th>
+        </tr>
+        <tr>
+          <th *ngFor="let col of columns" [ngSwitch]="col.field">
+            <div *ngSwitchCase="'action'">
+              <button class="add" (click)="onAddNew()"><i class="fa fa-plus" aria-hidden="true"></i>
+                Add new</button>
+            </div>
+            <p-calendar *ngSwitchCase="'deliveryDate'" #rangeFilter1 selectionMode="range" appendTo="body"
+              placeholder="Filter" dateFormat="dd.mm.yy" [showButtonBar]="true"
+              (onSelect)="dt.filter(rangeFilter1.value, col.field, 'dateRangeFilter')" [locale]="calendarLocale"
+              (onClearClick)="dt.filter(null, col.field, 'dateRangeFilter')" [style]="{'minWidth':'100%'}">
+            </p-calendar>
+            <input *ngSwitchDefault type="text" placeholder="Filter"
+              (input)="dt.filter($any($event.target).value, col.field, col.filterMatchMode)">
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr [pSelectableRow]="rowData">
+          <td *ngFor="let col of columns" [ngSwitch]="col.field">
+            <div *ngSwitchCase="'dateCreated'">
+              {{rowData[col.field] | date:"HH:mm dd.MM.yyyy"}}
+            </div>
+            <div *ngSwitchCase="'deliveryDate'">
+              {{rowData[col.field] | date:"HH:mm dd.MM.yyyy"}}
+            </div>
+            <div *ngSwitchCase="'action'" class="center-content">
+              <button class="action" (click)="onEdit(rowData)"><i class="fa fa-pencil" aria-hidden="true"></i>
+                Edit
+              </button>
+            </div>
+            <div *ngSwitchDefault>
+              {{rowData[col.field]}}
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

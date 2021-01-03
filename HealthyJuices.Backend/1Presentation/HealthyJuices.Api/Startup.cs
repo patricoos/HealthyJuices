@@ -4,11 +4,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.IO;
+using System.Text;
 using HealthyJuices.Api.Bootstrap;
 using HealthyJuices.Api.Middlewares;
 using HealthyJuices.Application.Auth;
 using HealthyJuices.Common;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 
 namespace HealthyJuices.Api
 {
@@ -42,6 +45,7 @@ namespace HealthyJuices.Api
                 options.Issuer = HealthyJuicesConstants.LOCAL_ACCESS_TOKEN_ISSUER;
             });
 
+            services.AddTokenAuthentication(Configuration);
 
             services
                 .RegisterDatabase(Configuration.GetConnectionString("Sql"))
@@ -66,6 +70,7 @@ namespace HealthyJuices.Api
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

@@ -1,11 +1,10 @@
-using System.Linq;
 using HealthyJuices.Domain.Models.Users;
 using HealthyJuices.Shared.Dto;
 
-namespace Nexus.Application.Mappers
+namespace HealthyJuices.Application.Mappers
 {
     public static class UserMapper
     {
-        public static UserDto ToDto(this User e) => new UserDto(e.Id, e.Email, e.Roles, e.CompanyId, e.DateCreated, e.DateModified, e.IsRemoved);
+        public static UserDto ToDto(this User e) => new UserDto(e.Id, e.Email, e.FirstName, e.LastName, e.Roles, e.CompanyId, e.DateCreated, e.DateModified, e.IsRemoved);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using HealthyJuices.Application.Auth;
+using HealthyJuices.Application.Mappers;
 using HealthyJuices.Common.Contracts;
 using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Domain.Models.Users;
@@ -9,7 +10,6 @@ using HealthyJuices.Domain.Services;
 using HealthyJuices.Shared.Dto;
 using HealthyJuices.Shared.Dto.Auth;
 using HealthyJuices.Shared.Enums;
-using Nexus.Application.Mappers;
 
 namespace HealthyJuices.Application.Controllers
 {

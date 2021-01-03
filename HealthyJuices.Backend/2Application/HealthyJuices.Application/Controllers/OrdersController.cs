@@ -33,6 +33,8 @@ namespace HealthyJuices.Application.Controllers
         public async Task<List<OrderDto>> GetAllActiveAsync()
         {
             var entities = await _orderRepository.Query()
+                .IncludeUser()
+                .IncludeDestinationCompany()
                 .IsNotRemoved()
                 .ToListAsync();
 

@@ -1,6 +1,5 @@
 ﻿using HealthyJuices.Domain.Models.Orders;
 using HealthyJuices.Shared.Dto;
-using Nexus.Application.Mappers;
 
 namespace HealthyJuices.Application.Mappers
 {
