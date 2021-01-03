@@ -1,0 +1,30 @@
+@import "../../../../variables.scss";
+
+.mycontainer {
+  height: calc(100vh - 120px);
+  margin: 10px;
+  transition: 0.5s all ease;
+}
+.col-5 {
+  width: calc(41.6% - 10px);
+  margin-right: 10px;
+}
+
+agm-map {
+  height: 100%;
+}
+
+.info-container {
+  height: calc(50vh - 70px);
+}
+
+.map-container {
+  height: calc(50vh - 70px);
+  padding-top: 10px;
+}
+
+@media only screen and (max-width: $hide-menu) {
+  .mycontainer {
+    height: calc(100vh - 100px);
+  }
+}

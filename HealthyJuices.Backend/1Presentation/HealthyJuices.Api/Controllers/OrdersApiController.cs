@@ -36,7 +36,6 @@ namespace HealthyJuices.Api.Controllers
             return result;
         }
 
-
         [HttpGet("{id}")]
         public async Task<OrderDto> GetByIdAsync(long id)
         {

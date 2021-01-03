@@ -22,6 +22,14 @@ const MAIN_LAYOUT_ROUTES: Routes = [
     loadChildren: () => import('./orders/orders.module').then(m => m.OrdersModule)
   },
   {
+    path: 'dashboard', data: {
+      breadcrumb: 'Dashboard',
+      canNavigateFromBreadcrumb: false,
+      expectedRoles: [UserRole.BusinessOwner]
+    },
+    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
+  },
+  {
     path: 'management',
     canActivate: [AuthGuardsService],
     data: {

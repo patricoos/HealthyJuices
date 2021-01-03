@@ -56,5 +56,4 @@ export class OrdersService extends BaseService {
       map(response => this.isStatusSucceed(response.status)),
       finalize(() => this.loadersService.hide(loader)));
   }
-
 }

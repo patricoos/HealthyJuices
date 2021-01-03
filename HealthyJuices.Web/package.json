@@ -24,6 +24,7 @@
     "@fullcalendar/core": "^4.4.2",
     "@fullcalendar/daygrid": "^4.4.2",
     "@fullcalendar/interaction": "^4.4.2",
+    "chart.js": "^2.9.4",
     "font-awesome": "^4.7.0",
     "moment": "^2.29.1",
     "primeicons": "^4.1.0",
