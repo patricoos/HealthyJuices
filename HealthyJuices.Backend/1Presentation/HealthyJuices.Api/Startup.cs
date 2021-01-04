@@ -72,6 +72,7 @@ namespace HealthyJuices.Api
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseCors(config => config.WithHeaders("X-Access-Token").AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+            app.MigrateDatabase();
 
             if (env.IsDevelopment())
             {
@@ -88,7 +89,6 @@ namespace HealthyJuices.Api
                 });
             }
 
-            app.MigrateDatabase();
             app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseRouting();

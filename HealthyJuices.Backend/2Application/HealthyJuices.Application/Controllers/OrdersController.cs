@@ -1,17 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HealthyJuices.Application.Mappers;
 using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Domain.Models.Orders;
 using HealthyJuices.Domain.Models.Orders.DataAccess;
-using HealthyJuices.Shared.Dto;
+using HealthyJuices.Domain.Models.Products.DataAccess;
+using HealthyJuices.Shared.Dto.Orders;
+using HealthyJuices.Shared.Dto.Products;
+using HealthyJuices.Shared.Dto.Reports;
 
 namespace HealthyJuices.Application.Controllers
 {
     public class OrdersController
     {
         private readonly IOrderRepository _orderRepository;
+        private readonly IProductRepository _productRepository;
 
         public OrdersController(IOrderRepository orderRepository)
         {
@@ -30,17 +35,64 @@ namespace HealthyJuices.Application.Controllers
             return result;
         }
 
-        public async Task<List<OrderDto>> GetAllActiveAsync()
+        public async Task<List<OrderDto>> GetAllActiveAsync(DateTime? from, DateTime? to)
         {
-            var entities = await _orderRepository.Query()
+            var query = _orderRepository.Query()
                 .IncludeUser()
                 .IncludeDestinationCompany()
-                .IsNotRemoved()
-                .ToListAsync();
+                .IsNotRemoved();
+
+            if (from.HasValue)
+                query.AfterDateTime(from.Value);
+
+            if (to.HasValue)
+                query.BeforeDateTime(to.Value);
+
+            var entities = await query.ToListAsync();
 
             var result = entities
                 .Select(x => x.ToDto())
                 .ToList();
+
+            return result;
+        }
+
+        public async Task<DashboardOrderReportDto> GetAllActiveWithProductsAsync(DateTime from, DateTime to)
+        {
+            var entities = await _orderRepository.Query()
+                .IncludeUser()
+                .IncludeDestinationCompany()
+                .IncludeProducts()
+                .IsNotRemoved()
+                .BetweenDateTimes(from, to)
+                .ToListAsync();
+
+            var ordersBycompany = entities
+                .GroupBy(x => x.User.Company)
+                .Select(x => new OrderReportDto()
+                {
+                    Company = x.Key.ToDto(),
+                    ProductsByUser = x.GroupBy(z => z.User).Select(u => new UsersProductsReportDto()
+                    {
+                        User = u.Key.ToDto(),
+                        Products = u.SelectMany(p => p.OrderProducts.Select(z => z.ToDto()))
+                    })
+                }).ToList();
+
+            var products = entities
+                .SelectMany(x => x.OrderProducts.GroupBy(z => z.Product))
+                .Select(x => new OrderProductDto()
+                     {
+                    Amount = x.Sum(a => a.Amount),
+                    ProductId = x.Key.Id,
+                    Product = x.Key.ToDto()
+                });
+
+            var result = new DashboardOrderReportDto()
+            {
+                OrderReports = ordersBycompany,
+                Products = products
+            };
 
             return result;
         }

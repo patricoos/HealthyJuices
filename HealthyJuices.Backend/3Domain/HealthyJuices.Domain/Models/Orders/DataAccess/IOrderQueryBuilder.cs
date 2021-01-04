@@ -1,4 +1,5 @@
-﻿using HealthyJuices.Domain.Models.Abstraction.DataAccess.Repositories;
+﻿using System;
+using HealthyJuices.Domain.Models.Abstraction.DataAccess.Repositories;
 
 namespace HealthyJuices.Domain.Models.Orders.DataAccess
 {
@@ -7,5 +8,9 @@ namespace HealthyJuices.Domain.Models.Orders.DataAccess
         IOrderQueryBuilder IsNotRemoved();
         IOrderQueryBuilder IncludeUser();
         IOrderQueryBuilder IncludeDestinationCompany();
+        IOrderQueryBuilder IncludeProducts();
+        IOrderQueryBuilder BeforeDateTime(DateTime date);
+        IOrderQueryBuilder AfterDateTime(DateTime date);
+        IOrderQueryBuilder BetweenDateTimes(DateTime from, DateTime to);
     }
 }

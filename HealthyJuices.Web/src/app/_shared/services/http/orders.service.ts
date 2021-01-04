@@ -1,10 +1,12 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { finalize, map } from 'rxjs/operators';
 import { LoadersService } from 'src/app/_shared/services/loaders.service';
 import { BaseService } from 'src/app/_shared/services/_base.service';
 import { Order } from '../../../management/models/order.model';
+import { DashboardOrderReport } from '../../models/orders/dashboard-order-report.model';
+import { OrderReport } from '../../models/orders/order-report.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +17,33 @@ export class OrdersService extends BaseService {
     super();
   }
 
-  getAllActive(loader: string): Observable<Array<Order>> {
+  getAllActive(loader: string, from?: Date, to?: Date): Observable<Array<Order>> {
     this.loadersService.show(loader);
-    return this.http.get<Array<Order>>(this.baseUrl + '/orders/active').pipe(
+
+    let params = new HttpParams();
+    if (from) {
+      params = params.set('from', from.toISOString());
+    }
+    if (to) {
+      params = params.set('to', to.toISOString());
+    }
+
+    return this.http.get<Array<Order>>(this.baseUrl + '/orders/active', { params }).pipe(
       finalize(() => this.loadersService.hide(loader))
     );
   }
+
+  GetAllActiveByCompanyAsync(loader: string, from: Date, to: Date): Observable<DashboardOrderReport> {
+    this.loadersService.show(loader);
+    let params = new HttpParams();
+    params = params.set('from', from.toISOString());
+    params = params.set('to', to.toISOString());
+
+    return this.http.get<DashboardOrderReport>(this.baseUrl + '/orders/dashboard-report', { params }).pipe(
+      finalize(() => this.loadersService.hide(loader))
+    );
+  }
+
 
   Get(id: number, loader: string): Observable<Order> {
     this.loadersService.show(loader);

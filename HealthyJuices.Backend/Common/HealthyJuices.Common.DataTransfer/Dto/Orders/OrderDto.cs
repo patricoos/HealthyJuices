@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using HealthyJuices.Shared.Dto.Products;
 
-namespace HealthyJuices.Shared.Dto
+namespace HealthyJuices.Shared.Dto.Orders
 {
     public record OrderDto
     {
@@ -18,5 +20,7 @@ namespace HealthyJuices.Shared.Dto
 
         public long DestinationCompanyId { get; init; }
         public CompanyDto DestinationCompany { get; init; }
+
+        public IEnumerable<OrderProductDto> OrderProducts { get; set; }
     }
 }

@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using HealthyJuices.Api.Utils.Attributes;
 using HealthyJuices.Application.Controllers;
-using HealthyJuices.Shared.Dto;
+using HealthyJuices.Shared.Dto.Orders;
+using HealthyJuices.Shared.Dto.Reports;
 using HealthyJuices.Shared.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -30,9 +32,16 @@ namespace HealthyJuices.Api.Controllers
         }
 
         [HttpGet("active")]
-        public async Task<List<OrderDto>> GetAllActiveAsync()
+        public async Task<List<OrderDto>> GetAllActiveAsync([FromQuery]DateTime? from, [FromQuery]DateTime? to)
         {
-            var result = await _appController.GetAllActiveAsync();
+            var result = await _appController.GetAllActiveAsync(from, to);
+            return result;
+        }
+
+        [HttpGet("dashboard-report")]
+        public async Task<DashboardOrderReportDto> GetAllActiveWithProductsAsync([FromQuery] DateTime from, [FromQuery] DateTime to)
+        {
+            var result = await _appController.GetAllActiveWithProductsAsync(from, to);
             return result;
         }
 

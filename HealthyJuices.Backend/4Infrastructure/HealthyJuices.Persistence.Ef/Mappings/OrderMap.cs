@@ -1,4 +1,5 @@
-﻿using HealthyJuices.Domain.Models.Orders;
+﻿using HealthyJuices.Domain.Models.Companies;
+using HealthyJuices.Domain.Models.Orders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -12,6 +13,9 @@ namespace HealthyJuices.Persistence.Ef.Mappings
 
             builder.HasMany<OrderProduct>(x => x.OrderProducts)
                 .WithOne(x => x.Order);
+
+            builder.HasOne<Company>(x => x.DestinationCompany)
+                .WithMany();
         }
     }
 }

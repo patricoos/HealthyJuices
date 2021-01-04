@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using HealthyJuices.Common;
 using HealthyJuices.Domain.Models.Users;
 using HealthyJuices.Persistence.Ef;
 using HealthyJuices.Shared.Enums;
@@ -12,9 +11,13 @@ namespace HealthyJuices.Api.Bootstrap.DataSeed
         {
             if (!context.Users.Any())
             {
-                var businessOwner = new User(HealthyJuicesConstants.DEFAULT_USER_LOGIN, HealthyJuicesConstants.DEFAULT_USER_PASSWORD, HealthyJuicesConstants.DEFAULT_USER_LOGIN, HealthyJuicesConstants.DEFAULT_USER_PASSWORD, context.Companies.FirstOrDefault(), UserRole.BusinessOwner);
+                var businessOwner = new User("bo@demo.com", "demo", "bo name", "bo surname", UserRole.BusinessOwner);
                 businessOwner.Activate();
                 context.Users.Add(businessOwner);
+
+                var customer = new User("customer@demo.com", "demo", "customer name", "customer surname", context.Companies.FirstOrDefault(), UserRole.Customer);
+                customer.Activate();
+                context.Users.Add(customer);
             }
 
             context.SaveChanges();

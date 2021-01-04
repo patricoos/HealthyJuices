@@ -33,12 +33,15 @@ namespace HealthyJuices.Application.Controllers
             var user = await _userRepository.Query()
                 .ByEmail(dto.Email)
                 .IsNotRemoved()
-                .IsActive()
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
 
             if (user == null)
                 throw new NotFoundException($"User with email '{dto.Email}' not found");
+
+            if (!user.IsActive)
+                throw new BadRequestException($"User with email '{dto.Email}' is not activated");
+
 
             if (!user.CheckPasswordValidity(dto.Password))
                 throw new UnauthorizedException($"Wrong password for user '{dto.Email}'");

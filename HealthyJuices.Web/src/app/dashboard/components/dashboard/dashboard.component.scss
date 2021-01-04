@@ -23,6 +23,10 @@ agm-map {
   padding-top: 10px;
 }
 
+.product-amount-cell {
+  text-align: right;
+}
+
 @media only screen and (max-width: $hide-menu) {
   .mycontainer {
     height: calc(100vh - 100px);

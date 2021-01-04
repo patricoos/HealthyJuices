@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using HealthyJuices.Common;
 using HealthyJuices.Domain.Models.Orders;
-using HealthyJuices.Domain.Models.Products;
-using HealthyJuices.Domain.Models.Users;
 using HealthyJuices.Persistence.Ef;
-using HealthyJuices.Shared.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace HealthyJuices.Api.Bootstrap.DataSeed
 {
@@ -16,8 +13,12 @@ namespace HealthyJuices.Api.Bootstrap.DataSeed
         {
             if (!context.Orders.Any())
             {
-                var order = new Order(context.Users.FirstOrDefault(), DateTime.Now, new List<Product>(){context.Products.FirstOrDefault()});
-                context.Orders.Add(order);
+                var orders = new List<Order>()
+                {
+                    new Order(context.Users.Include(x => x.Company).FirstOrDefault(), DateTime.Now, context.Products.Take(2).ToList()),
+                    new Order(context.Users.Include(x => x.Company).FirstOrDefault(), DateTime.Now.AddDays(1), context.Products.Skip(1).Take(2).ToList())
+                };
+                context.Orders.AddRange(orders);
             }
 
             context.SaveChanges();

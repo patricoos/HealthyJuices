@@ -1,5 +1,6 @@
-﻿using HealthyJuices.Domain.Models.Orders;
-using HealthyJuices.Shared.Dto;
+﻿using System.Linq;
+using HealthyJuices.Domain.Models.Orders;
+using HealthyJuices.Shared.Dto.Orders;
 
 namespace HealthyJuices.Application.Mappers
 {
@@ -16,7 +17,8 @@ namespace HealthyJuices.Application.Mappers
             UserId = e.UserId,
             User = e.User?.ToDto(),
             DestinationCompanyId = e.DestinationCompanyId,
-            DestinationCompany = e.DestinationCompany?.ToDto()
+            DestinationCompany = e.DestinationCompany?.ToDto(),
+            OrderProducts = e.OrderProducts?.Select(x => x.ToDto()).ToList()
         };
     }
 }

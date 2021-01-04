@@ -3,11 +3,11 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 
-const ordersRoutes: Routes = [
+const dashboardRoutes: Routes = [
   {
     path: '',
     data: {
-      breadcrumb: 'Unavailabilities',
+      breadcrumb: 'Dashboard',
       canNavigateFromBreadcrumb: false,
     },
     component: DashboardComponent,
@@ -15,7 +15,7 @@ const ordersRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(ordersRoutes)],
+  imports: [RouterModule.forChild(dashboardRoutes)],
   exports: [RouterModule]
 })
 export class DashboardRoutingModule { }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using HealthyJuices.Common.Contracts;
 using HealthyJuices.Domain.Models.Orders;
 using HealthyJuices.Domain.Models.Orders.DataAccess;
@@ -27,6 +28,32 @@ namespace HealthyJuices.Persistence.Ef.Repositories.Orders
         public IOrderQueryBuilder IncludeDestinationCompany()
         {
             Query = Query.Include(x => x.DestinationCompany);
+            return this;
+        }
+
+        public IOrderQueryBuilder IncludeProducts()
+        {
+            Query = Query.Include(x => x.OrderProducts).ThenInclude(x => x.Product);
+            return this;
+        }
+
+        public IOrderQueryBuilder BeforeDateTime(DateTime date)
+        {
+            Query = Query.Where(x => x.DeliveryDate <= date);
+            return this;
+        }
+
+        public IOrderQueryBuilder AfterDateTime(DateTime date)
+        {
+            Query = Query.Where(x => x.DeliveryDate >= date);
+            return this;
+        }
+
+        public IOrderQueryBuilder BetweenDateTimes(DateTime @from, DateTime to)
+        {
+            AfterDateTime(from);
+            BeforeDateTime(to);
+
             return this;
         }
     }
