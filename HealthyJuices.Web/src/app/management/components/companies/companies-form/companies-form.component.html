@@ -1,13 +1,13 @@
 <p-confirmDialog></p-confirmDialog>
-<form [formGroup]="editForm">
-  <div class="mycontainer white-container shadow-container">
+<div class="mycontainer white-container shadow-container">
 
-    <div class="loader-container">
-      <app-loader [name]="companiesFormComponentLoader"></app-loader>
-      <div class="columns-container">
-        <div class="col-7">
+  <div class="loader-container">
+    <app-loader [name]="companiesFormComponentLoader"></app-loader>
+    <div class="columns-container">
+      <div class="col-7">
 
-          <div class="formCard">
+        <div class="formCard">
+          <form [formGroup]="editForm">
 
             <div class="formCard-header">
               <div class="label" *ngIf="selectedCompany?.id">
@@ -59,43 +59,44 @@
                 </div>
               </div>
             </div>
-          </div>
+          </form>
 
         </div>
 
-        <div class="col-5">
-          <div class="right-container-header">
-            <div class="col-3">
-              <button *ngIf="selectedCompany?.id" class="button button__cancel" (click)="onCancel()"
-                [style]="{'width':'100%'}">
-                <i class="fa fa-close" aria-hidden="true"></i>
-                <div class="label">Cancel</div>
-              </button>
-            </div>
-            <div class="col-3"></div>
-            <div class="col-3">
-              <button *ngIf="selectedCompany?.id" class="delete" (click)="onDelete()" [style]="{'width':'100%'}">
-                <i class="fa fa-trash" aria-hidden="true"></i>
-                <div class="label">Delete</div>
-              </button>
-            </div>
-            <div class="col-3">
-              <button class="submit" (click)="onSave()" [disabled]="!editForm.dirty" [style]="{'width':'100%'}">
-                <i class="fa fa-floppy-o" aria-hidden="true"></i>
-                <div class="label">Save</div>
-              </button>
-            </div>
-          </div>
+      </div>
 
-          <div class="map-container">
-            <agm-map [zoom]="14" [latitude]="lat" [longitude]="lng">
-              <agm-marker *ngIf="selectedCompany" [latitude]="selectedCompany.latitude" (dragEnd)="onDragEnd($event)"
-                [longitude]="selectedCompany.longitude" [markerDraggable]="true">
-              </agm-marker>
-            </agm-map>
+      <div class="col-5">
+        <div class="right-container-header">
+          <div class="col-3">
+            <button *ngIf="selectedCompany?.id" class="button button__cancel" (click)="onCancel()"
+              [style]="{'width':'100%'}">
+              <i class="fa fa-close" aria-hidden="true"></i>
+              <div class="label">Cancel</div>
+            </button>
           </div>
+          <div class="col-3"></div>
+          <div class="col-3">
+            <button *ngIf="selectedCompany?.id" class="delete" (click)="onDelete()" [style]="{'width':'100%'}">
+              <i class="fa fa-trash" aria-hidden="true"></i>
+              <div class="label">Delete</div>
+            </button>
+          </div>
+          <div class="col-3">
+            <button class="submit" (click)="onSave()" [disabled]="!editForm.dirty" [style]="{'width':'100%'}">
+              <i class="fa fa-floppy-o" aria-hidden="true"></i>
+              <div class="label">Save</div>
+            </button>
+          </div>
+        </div>
+
+        <div class="map-container">
+          <agm-map [zoom]="14" [latitude]="lat" [longitude]="lng">
+            <agm-marker *ngIf="selectedCompany" [latitude]="selectedCompany.latitude" (dragEnd)="onDragEnd($event)"
+              [longitude]="selectedCompany.longitude" [markerDraggable]="true">
+            </agm-marker>
+          </agm-map>
         </div>
       </div>
     </div>
   </div>
-</form>
+</div>

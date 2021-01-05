@@ -2,9 +2,7 @@
   height: calc(100% - 10px);
   margin: 10px;
 }
-form {
-  height: calc(100% - 10px);
-}
+
 .columns-container {
   background-color: white;
   display: flex;
@@ -31,8 +29,8 @@ agm-map {
   padding: 10px 5px;
 }
 .map-container {
-  height: calc(100vh - 160px);
-  padding: 10px;
+  height: calc(100vh - 180px);
+  padding: 10px 0 0 10px;
 }
 button.refresh {
   margin: 28px 10px 0 0;
