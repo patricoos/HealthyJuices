@@ -17,6 +17,7 @@ namespace HealthyJuices.Api.Bootstrap.DataSeed
                 {
                     new Order(context.Users.Include(x => x.Company).FirstOrDefault(), DateTime.Now.AddDays(1), context.Products.Where(x => x.IsActive).Skip(2).Take(2).Select(x => new OrderProduct{Product = x, Amount = 1}).ToList()),
                     new Order(context.Users.Include(x => x.Company).FirstOrDefault(), DateTime.Now, context.Products.Where(x => x.IsActive).Take(3).Select(x => new OrderProduct{Product = x, Amount = 2}).ToList()),
+                    new Order(context.Users.Include(x => x.Company).FirstOrDefault(), DateTime.Now, context.Products.Where(x => x.IsActive).Skip(3).Select(x => new OrderProduct{Product = x, Amount = 5}).ToList()),
                 };
                 context.Orders.AddRange(orders);
             }

@@ -45,7 +45,6 @@ namespace HealthyJuices.Application.Controllers
             if (!user.IsActive)
                 throw new BadRequestException($"User with email '{dto.Email}' is not activated");
 
-
             if (!user.CheckPasswordValidity(dto.Password))
                 throw new UnauthorizedException($"Wrong password for user '{dto.Email}'");
 
@@ -140,7 +139,7 @@ namespace HealthyJuices.Application.Controllers
             // TODO: get current url
 
             await _emailService.SendRegisterCodeEmail(user.Email, "http://localhost:4200/auth/confirm-register", user.ResetPermissionsToken);
-            
+
             await _userRepository.Insert(user).SaveChangesAsync();
         }
 
@@ -165,26 +164,24 @@ namespace HealthyJuices.Application.Controllers
         {
             var user = await _userRepository.Query()
                 .ByEmail(dto.Email)
-                .IsActive()
+                .IsNotRemoved()
                 .FirstOrDefaultAsync();
 
             if (user == null)
                 throw new BadRequestException($"User with email '{dto.Email}' not found");
 
-            var generator = new Random();
-            user.ResetPermissionsToken = generator.Next(0, 999999).ToString("D6");
-            user.ResetPermissionsTokenExpiration = _timeProvider.UtcNow.AddHours(2);
+            user.ResetPermissionsToken = Guid.NewGuid().ToString();
+            user.ResetPermissionsTokenExpiration = _timeProvider.UtcNow.AddDays(1);
 
+            await _emailService.SendForgotPasswordEmail(user.Email, "http://localhost:4200/auth/reset-password", user.ResetPermissionsToken);
             await _userRepository.Update(user).SaveChangesAsync();
-
-           await _emailService.SendForgotPasswordEmail(user.Email, user.ResetPermissionsToken);
         }
 
         public async Task ResetPasswordAsync(ResetPasswordDto dto)
         {
             var user = await _userRepository.Query()
                 .ByEmail(dto.Email)
-                .IsActive()
+                .IsNotRemoved()
                 .FirstOrDefaultAsync();
 
             if (user == null)

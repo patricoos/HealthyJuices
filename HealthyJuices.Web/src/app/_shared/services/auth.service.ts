@@ -37,6 +37,22 @@ export class AuthService extends BaseService {
     );
   }
 
+  forgotPassword(loader: string, dto: any): Observable<boolean> {
+    this.loadersService.show(loader);
+    return this.http.post(this.baseUrl + '/auth/forgot-password', dto, { observe: 'response' }).pipe(
+      map(response => this.isStatusSucceed(response.status)),
+      finalize(() => this.loadersService.hide(loader))
+    );
+  }
+
+  resetPassword(loader: string, dto: any): Observable<boolean> {
+    this.loadersService.show(loader);
+    return this.http.post(this.baseUrl + '/auth/reset-password', dto, { observe: 'response' }).pipe(
+      map(response => this.isStatusSucceed(response.status)),
+      finalize(() => this.loadersService.hide(loader))
+    );
+  }
+
   register(loader: string, dto: RegisterUser): Observable<boolean> {
     this.loadersService.show(loader);
     return this.http.post(this.baseUrl + '/auth/register', dto, { observe: 'response' }).pipe(

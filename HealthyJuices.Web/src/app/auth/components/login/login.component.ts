@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/_shared/services/auth.service';
 import { Router } from '@angular/router';
+import { FormGroupExtension } from 'src/app/_shared/utils/form-group.extension';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,8 @@ export class LoginComponent {
 
   onSubmit(): void {
     if (this.loginForm.invalid) {
-      this.markControls();
+      FormGroupExtension.markFormAssDirtyAndTouched(this.loginForm);
+      this.messageService.showError('Invalid Form');
       return;
     }
     this.authService.login(this.loginLoader, this.loginForm.controls.email.value,
@@ -30,14 +32,12 @@ export class LoginComponent {
         error => this.messageService.showError(error));
   }
 
-  private markControls(): void {
-    this.loginForm.controls.email.markAsDirty();
-    this.loginForm.controls.email.markAsTouched();
-    this.loginForm.controls.password.markAsDirty();
-    this.loginForm.controls.password.markAsTouched();
-  }
 
   onRegister(): void {
     this.router.navigate(['/auth/register']);
+  }
+
+  onForgotPassword(): void {
+    this.router.navigate(['/auth/forgot-password']);
   }
 }

@@ -7,6 +7,9 @@
       </div>
 
       <div class="content">
+
+        <div class="title-container"> Login </div>
+
         <div class="input-container">
           <i class="fa fa-user fa-ng icon" aria-hidden="true"></i>
           <input type="text" formControlName="email" placeholder="Email">
@@ -25,11 +28,11 @@
           <span class="checkmark"></span>
         </label>
 
-        <div class="forgot">Forgot Password?</div>
+        <div class="forgot" (click)="onForgotPassword()">Forgot Password?</div>
 
       </div>
       <div class="login-btn-container">
-        <button class="login" (click)="onSubmit()">
+        <button class="login" (click)="onSubmit()" type="submit">
           <i class="fa fa-sign-in" aria-hidden="true"></i> Login
         </button>
 

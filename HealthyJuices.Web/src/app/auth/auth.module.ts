@@ -8,12 +8,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../_shared/shared.module';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmRegisterComponent } from './components/confirm-register/confirm-register.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
     RegisterComponent,
-    ConfirmRegisterComponent
+    ConfirmRegisterComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     CommonModule,
