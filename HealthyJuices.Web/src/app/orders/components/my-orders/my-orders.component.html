@@ -1,9 +1,10 @@
 <div class="mycontainer">
-  <div class="col-7 white-container shadow-container">
+  <div class="col-7 white-container shadow-container table-container">
     <div class="loader-container">
       <app-loader [name]="myOrdersTableComponentLoader"></app-loader>
+
       <p-table #dt [columns]="columns" [value]="orders" [scrollable]="true" [resizableColumns]="true"
-        [reorderableColumns]="true" scrollHeight="calc(100% - 20px)" class="mytableBorder"
+        [reorderableColumns]="true" [scrollHeight]="'calc(100vh - 230px )'" class="mytableBorder"
         [exportFilename]="'contractors'" dataKey="id">
         <ng-template pTemplate="colgroup" let-columns>
           <colgroup>
@@ -100,6 +101,9 @@
       </div>
     </div>
     <div class="info-container">
+      <div class="messages-container">
+        <p-messages [(value)]="unavailabilities" [enableService]="false"></p-messages>
+      </div>
       <form [formGroup]="orderForm">
 
         <div class="input-container">

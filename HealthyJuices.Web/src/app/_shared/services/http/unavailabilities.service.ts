@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
@@ -15,9 +15,18 @@ export class UnavailabilitiesService extends BaseService {
     super();
   }
 
-  getAll(loader: string): Observable<Array<Unavailability>> {
+  getAll(loader: string, from?: Date, to?: Date): Observable<Array<Unavailability>> {
     this.loadersService.show(loader);
-    return this.http.get<Array<Unavailability>>(this.baseUrl + '/unavailabilities').pipe(
+
+    let params = new HttpParams();
+    if (from) {
+      params = params.set('from', from.toISOString());
+    }
+    if (to) {
+      params = params.set('to', to.toISOString());
+    }
+
+    return this.http.get<Array<Unavailability>>(this.baseUrl + '/unavailabilities', { params }).pipe(
       finalize(() => this.loadersService.hide(loader))
     );
   }

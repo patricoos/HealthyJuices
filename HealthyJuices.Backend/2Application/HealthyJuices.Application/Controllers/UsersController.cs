@@ -86,7 +86,7 @@ namespace HealthyJuices.Application.Controllers
         public async Task<long> CreateAsync(AddOrEditUserDto dto)
         {
             if (await _userRepository.IsExistingAsync(dto.Email))
-                throw new InauspiciousException($"User '{dto.Email}' already existing");
+                throw new ConflictException($"User '{dto.Email}' already existing");
 
             var user = new User(dto.Email, dto.Password, dto.Roles);
             await _userRepository.Insert(user).SaveChangesAsync();
@@ -100,7 +100,7 @@ namespace HealthyJuices.Application.Controllers
                 .FirstOrDefaultAsync();
 
             if (user == null)
-                throw new InauspiciousException($"User not found");
+                throw new ConflictException($"User not found");
 
             user.Remove();
 

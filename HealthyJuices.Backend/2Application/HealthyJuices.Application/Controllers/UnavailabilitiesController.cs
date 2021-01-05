@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HealthyJuices.Application.Mappers;
@@ -18,10 +19,16 @@ namespace HealthyJuices.Application.Controllers
             _unavailabilityRepository = unavailabilityRepository;
         }
 
-        public async Task<List<UnavailabilityDto>> GetAllAsync()
+        public async Task<List<UnavailabilityDto>> GetAllAsync(DateTime? from = null, DateTime? to = null)
         {
-            var entities = await _unavailabilityRepository.Query()
-                .ToListAsync();
+            var query = _unavailabilityRepository.Query();
+            if (from.HasValue)
+                query.AfterDateTime(from.Value);
+
+            if (to.HasValue)
+                query.BeforeDateTime(to.Value);
+
+            var entities = await query.ToListAsync();
 
             var result = entities
                 .Select(x => x.ToDto())

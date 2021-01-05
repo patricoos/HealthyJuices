@@ -19,7 +19,7 @@ export class OrdersComponent implements OnInit {
     { field: 'destinationCompanyName', header: 'Destination Company' },
     { field: 'dateCreated', header: 'Created' },
     { field: 'deliveryDate', header: 'Delivery Date' },
-    { field: 'action', header: 'Action', width: '145px' },
+    // { field: 'action', header: 'Action', width: '145px' },
   ];
   calendarLocale = FullCallendarConsts.getCallendarLocale();
 

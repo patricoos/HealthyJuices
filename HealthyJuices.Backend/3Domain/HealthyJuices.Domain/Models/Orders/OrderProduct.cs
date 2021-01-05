@@ -1,4 +1,5 @@
-﻿using HealthyJuices.Domain.Models.Abstraction.DataAccess.Entities;
+﻿using HealthyJuices.Common.Exceptions;
+using HealthyJuices.Domain.Models.Abstraction.DataAccess.Entities;
 using HealthyJuices.Domain.Models.Products;
 
 namespace HealthyJuices.Domain.Models.Orders
@@ -18,7 +19,7 @@ namespace HealthyJuices.Domain.Models.Orders
         public OrderProduct(Order order, Product product, decimal amount)
         {
             this.Order = order;
-            this.Product = product;
+            this.Product = product.IsRemoved || !product.IsActive ? throw new ConflictException($"{nameof(Product)} {product.Name} is not active"):  product;
             this.Amount = amount;
         }
     }

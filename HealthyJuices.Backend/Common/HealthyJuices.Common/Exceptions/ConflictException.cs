@@ -2,19 +2,19 @@
 
 namespace HealthyJuices.Common.Exceptions
 {
-    public class InauspiciousException : CustomException
+    public class ConflictException : CustomException
     {
-        public InauspiciousException(HttpStatusCode statusCode, string message, string uiMessage)
+        public ConflictException(HttpStatusCode statusCode, string message, string uiMessage)
             : base(statusCode, message, uiMessage)
         {
         }
 
-        public InauspiciousException(string message, string uiMessage)
+        public ConflictException(string message, string uiMessage)
             : base(HttpStatusCode.Conflict, message, uiMessage)
         {
         }
 
-        public InauspiciousException(string message)
+        public ConflictException(string message)
             : base(HttpStatusCode.Conflict, message, message)
         {
         }

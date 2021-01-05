@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using HealthyJuices.Api.Utils.Attributes;
 using HealthyJuices.Application.Controllers;
@@ -22,10 +23,9 @@ namespace HealthyJuices.Api.Controllers
         }
 
         [HttpGet]
-        [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task<List<UnavailabilityDto>> GetAllAsync()
+        public async Task<List<UnavailabilityDto>> GetAllAsync([FromQuery] DateTime? from, [FromQuery] DateTime? to)
         {
-            var result = await _appController.GetAllAsync();
+            var result = await _appController.GetAllAsync(from, to);
             return result;
         }
 

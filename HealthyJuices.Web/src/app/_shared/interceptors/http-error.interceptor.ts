@@ -24,6 +24,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           let message = '';
           switch (error.status) {
             case 406:
+            case 400:
             case 409:
             case 500:
               message = error.error;

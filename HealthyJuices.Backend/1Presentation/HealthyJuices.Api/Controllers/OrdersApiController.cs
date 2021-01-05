@@ -33,7 +33,7 @@ namespace HealthyJuices.Api.Controllers
 
         [HttpGet("my")]
         [AuthorizeRoles(UserRole.Customer)]
-        public async Task<List<OrderDto>> GetAllActiveByUserAsync([FromQuery] DateTime? from, [FromQuery] DateTime? to)
+        public async Task<List<OrderDto>> GetAllActiveByUserAsync([FromQuery] DateTime? from = null, [FromQuery] DateTime? to = null)
         {
             var result = await _appController.GetAllActiveByUserAsync(RequestSenderId, from, to);
             return result;
@@ -41,7 +41,7 @@ namespace HealthyJuices.Api.Controllers
 
         [HttpGet("active")]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task<List<OrderDto>> GetAllActiveAsync([FromQuery]DateTime? from, [FromQuery]DateTime? to)
+        public async Task<List<OrderDto>> GetAllActiveAsync([FromQuery]DateTime? from = null, [FromQuery]DateTime? to = null)
         {
             var result = await _appController.GetAllActiveAsync(from, to);
             return result;

@@ -40,7 +40,7 @@ namespace HealthyJuices.Application.Controllers
                 .FirstOrDefaultAsync();
 
             if (user == null)
-                throw new NotFoundException($"User with email '{dto.Email}' not found");
+                throw new BadRequestException($"User with email '{dto.Email}' not found");
 
             if (!user.IsActive)
                 throw new BadRequestException($"User with email '{dto.Email}' is not activated");
@@ -107,7 +107,7 @@ namespace HealthyJuices.Application.Controllers
                 .FirstOrDefaultAsync();
 
             if (user == null)
-                throw new NotFoundException("Token not found");
+                throw new BadRequestException("Token not found");
 
             //var refreshToken = user.RefreshTokens.Single(x => x.Token == token);
 
@@ -153,7 +153,7 @@ namespace HealthyJuices.Application.Controllers
                 .FirstOrDefaultAsync();
 
             if (user == null)
-                throw new NotFoundException($"User with email '{email}' not found");
+                throw new BadRequestException($"User with email '{email}' not found");
 
             VerifyResetPermissionsToken(user, token);
 
@@ -169,7 +169,7 @@ namespace HealthyJuices.Application.Controllers
                 .FirstOrDefaultAsync();
 
             if (user == null)
-                throw new NotFoundException($"User with email '{dto.Email}' not found");
+                throw new BadRequestException($"User with email '{dto.Email}' not found");
 
             var generator = new Random();
             user.ResetPermissionsToken = generator.Next(0, 999999).ToString("D6");
@@ -188,7 +188,7 @@ namespace HealthyJuices.Application.Controllers
                 .FirstOrDefaultAsync();
 
             if (user == null)
-                throw new NotFoundException($"User with email '{dto.Email}' not found");
+                throw new BadRequestException($"User with email '{dto.Email}' not found");
 
             VerifyResetPermissionsToken(user, dto.Token);
 

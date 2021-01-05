@@ -140,7 +140,7 @@ namespace HealthyJuices.Application.Controllers
         {
             var user = _userRepository.Query().IsActive().ById(userId).IncludeCompany().FirstOrDefault();
             if (user == null)
-                throw new InauspiciousException("User not found");
+                throw new BadRequestException("User not found");
 
             var productsEntities = await _productRepository.Query()
                 .IsNotRemoved()
@@ -148,8 +148,18 @@ namespace HealthyJuices.Application.Controllers
                 .ByIds(dto.OrderProducts.Select(p => p.ProductId).ToArray())
                 .ToListAsync();
 
-            var products = dto.OrderProducts.Select(x =>
-                new Tuple<Product, decimal>(productsEntities.FirstOrDefault(p => p.Id == x.ProductId), x.Amount)
+            var products = dto.OrderProducts.GroupBy(x => x.ProductId).Select(x =>
+                {
+                    var prod = productsEntities.FirstOrDefault(p => p.Id == x.Key);
+                    if (prod == null)
+                        throw new BadRequestException("Product not found");
+
+                    return new OrderProduct()
+                    {
+                        Product = prod,
+                        Amount = x.Sum(a => a.Amount)
+                    };
+                }
             ).ToList();
 
             var order = new Order(user, dto.DeliveryDate, products);
