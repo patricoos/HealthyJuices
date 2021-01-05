@@ -98,7 +98,7 @@ export class MyOrdersComponent extends MapComponent implements AfterViewInit {
       return;
     }
 
-    this.orderService.addOrEdit(this.orderForm.value, this.myOrdersTableComponentLoader).subscribe(x => {
+    this.orderService.addOrEdit(this.orderForm.value, this.myOrdersFormComponentLoader).subscribe(x => {
       this.toastsService.showSuccess('Order added!');
       this.getOrders();
       this.orderForm = this.initForm();

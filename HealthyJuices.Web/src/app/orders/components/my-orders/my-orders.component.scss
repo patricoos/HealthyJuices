@@ -60,3 +60,13 @@ button.plus {
   max-height: 100%;
   overflow-y: auto;
 }
+
+@media only screen and (max-width: $hide-menu) {
+  .table-container {
+    width: 100%;
+  }
+  .new-order-container {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
