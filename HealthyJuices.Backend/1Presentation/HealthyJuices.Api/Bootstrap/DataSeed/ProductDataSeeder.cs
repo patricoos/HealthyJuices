@@ -19,6 +19,7 @@ namespace HealthyJuices.Api.Bootstrap.DataSeed
                     new Product("Raspberry Juice", "Raspberry Juice desc", ProductUnitType.Items, 0.5m),
                     new Product("Plum Juice", "Plum Juice desc", ProductUnitType.Items, 0.1m)
                 };
+                products.ForEach(x => x.Activate());
                 context.Products.AddRange(products);
             }
 

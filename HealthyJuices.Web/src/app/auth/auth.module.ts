@@ -1,3 +1,4 @@
+import { DropdownModule } from 'primeng/dropdown';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './components/login/login.component';
@@ -21,6 +22,7 @@ import { ConfirmRegisterComponent } from './components/confirm-register/confirm-
     FormsModule,
     ToastModule,
     ReactiveFormsModule,
+    DropdownModule
   ]
 })
 export class AuthModule { }

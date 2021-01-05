@@ -32,14 +32,14 @@ namespace HealthyJuices.Domain.Models.Orders
         {
         }
 
-        public Order(User user, DateTime deliveryDate, List<Product> products)
+        public Order(User user, DateTime deliveryDate, List<Tuple<Product, decimal>> products)
         {
             this.DateCreated = DateTime.UtcNow;
             this.DateModified = DateTime.UtcNow;
             this.DeliveryDate = deliveryDate;
             this.User = user;
             this.DestinationCompany = user.Company;
-            this.OrderProducts = products.Select(x => new OrderProduct(this, x, 1)).ToList();
+            this.OrderProducts = products.Select(x => new OrderProduct(this, x.Item1, x.Item2)).ToList();
         }
 
         public void Remove()

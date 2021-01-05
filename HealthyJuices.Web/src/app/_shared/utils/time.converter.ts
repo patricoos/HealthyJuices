@@ -1,6 +1,10 @@
 import * as moment from 'moment';
 
 export class TimeConverter {
+  public static get tomorrow(): Date {
+    return moment().add('days', 1).toDate();
+  }
+
   public static toUtc(value: Date): Date | null {
     if (value == null) {
       return null;

@@ -4,6 +4,7 @@ using HealthyJuices.Application.Auth;
 using HealthyJuices.Application.Mappers;
 using HealthyJuices.Common.Contracts;
 using HealthyJuices.Common.Exceptions;
+using HealthyJuices.Domain.Models.Companies.DataAccess;
 using HealthyJuices.Domain.Models.Users;
 using HealthyJuices.Domain.Models.Users.DataAccess;
 using HealthyJuices.Domain.Services;
@@ -16,16 +17,18 @@ namespace HealthyJuices.Application.Controllers
     public class AuthorizationController
     {
         private readonly IUserRepository _userRepository;
+        private readonly ICompanyRepository _companyRepository;
         private readonly SimpleTokenProvider _tokenProvider;
         private readonly ITimeProvider _timeProvider;
         private readonly EmailService _emailService;
 
-        public AuthorizationController(IUserRepository userRepository, SimpleTokenProvider tokenProvider, ITimeProvider timeProvider, EmailService emailService)
+        public AuthorizationController(IUserRepository userRepository, SimpleTokenProvider tokenProvider, ITimeProvider timeProvider, EmailService emailService, ICompanyRepository companyRepository)
         {
             _userRepository = userRepository;
             _tokenProvider = tokenProvider;
             _timeProvider = timeProvider;
             _emailService = emailService;
+            _companyRepository = companyRepository;
         }
 
         public async Task<LoginResponseDto> LoginAsync(LoginDto dto)
@@ -124,7 +127,11 @@ namespace HealthyJuices.Application.Controllers
             if (existing)
                 throw new BadRequestException($"User with email '{dto.Email}' already exists");
 
-            var user = new User(dto.Email, dto.Password, dto.FirstName, dto.LastName, UserRole.Customer)
+            var company = await _companyRepository.Query().ById(dto.CompanyId).FirstOrDefaultAsync();
+            if (company == null)
+                throw new BadRequestException($"Company not found");
+
+            var user = new User(dto.Email, dto.Password, dto.FirstName, dto.LastName, company, UserRole.Customer)
             {
                 ResetPermissionsToken = Guid.NewGuid().ToString(),
                 ResetPermissionsTokenExpiration = _timeProvider.UtcNow.AddDays(1)

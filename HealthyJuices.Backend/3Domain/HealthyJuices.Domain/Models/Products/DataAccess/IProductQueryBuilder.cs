@@ -6,5 +6,6 @@ namespace HealthyJuices.Domain.Models.Products.DataAccess
     {
         IProductQueryBuilder IsActive();
         IProductQueryBuilder IsNotRemoved();
+        IProductQueryBuilder ByIds(params long[] ids);
     }
 }

@@ -11,7 +11,6 @@ namespace HealthyJuices.Api.Controllers
 {
     [ApiController]
     [Route("companies")]
-    [Authorize]
     public class CompaniesApiController : ApiController
     {
         private readonly CompaniesController _appController;
@@ -38,6 +37,7 @@ namespace HealthyJuices.Api.Controllers
 
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<CompanyDto> GetByIdAsync(long id)
         {
             var result = await _appController.GetByIdAsync(id);

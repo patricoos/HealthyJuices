@@ -15,7 +15,7 @@ const MAIN_LAYOUT_ROUTES: Routes = [
   { path: '', redirectTo: '/orders', pathMatch: 'full' },
   {
     path: 'orders', data: {
-      breadcrumb: 'Orders',
+      breadcrumb: 'Current Orders',
       canNavigateFromBreadcrumb: false,
       expectedRoles: [UserRole.Customer]
     },

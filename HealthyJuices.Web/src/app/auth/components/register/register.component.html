@@ -7,9 +7,11 @@
       </div>
 
       <div class="content">
-        <div class="input-container">
-          <i class="fa fa-user fa-lg icon" aria-hidden="true"></i>
-          <input class="email" type="text" formControlName="email" placeholder="Email">
+        <div>
+          <div class="input-container">
+            <i class="fa fa-user fa-mg icon" aria-hidden="true"></i>
+            <input class="email" type="text" formControlName="email" placeholder="Email">
+          </div>
           <div *ngIf="registerForm?.controls?.email?.errors?.required && registerForm?.controls?.email?.dirty"
             class="validation-alert">
             This field is required</div>
@@ -19,7 +21,7 @@
         </div>
 
         <div class="input-container">
-          <i class="fa fa-lock fa-lg icon" aria-hidden="true"></i>
+          <i class="fa fa-lock fa-mg icon" aria-hidden="true"></i>
           <input type="password" formControlName="password" placeholder="Password" autocomplete="new-password">
         </div>
         <div *ngIf="registerForm?.controls?.password?.errors?.required && registerForm?.controls?.password?.dirty"
@@ -27,7 +29,7 @@
           This field is required</div>
 
         <div class="input-container">
-          <i class="fa fa-lock fa-lg icon" aria-hidden="true"></i>
+          <i class="fa fa-lock fa-mg icon" aria-hidden="true"></i>
           <input type="password" formControlName="connfirmPassword" placeholder="Connfirm Password"
             autocomplete="new-password">
         </div>
@@ -40,14 +42,24 @@
           Invalid connfirm password</div>
 
         <div class="input-container firstName">
-          <i class="fa fa-user fa-lg icon" aria-hidden="true"></i>
+          <i class="fa fa-user fa-mg icon" aria-hidden="true"></i>
           <input type="text" formControlName="firstName" placeholder="First Name">
         </div>
 
         <div class="input-container">
-          <i class="fa fa-user fa-lg icon" aria-hidden="true"></i>
+          <i class="fa fa-user fa-mg icon" aria-hidden="true"></i>
           <input type="text" formControlName="lastName" placeholder="Last Name">
         </div>
+
+        <div class="input-container">
+          <i class="fa fa-building fa-mg icon" aria-hidden="true"></i>
+          <p-dropdown class="companies-dropdown" [options]="companies" [autoDisplayFirst]="false" [style]="{'width':'100%', 'height': '100%', 'vertical-align':'top',
+            'border-radius': '0 2px 2px 0'}" appendTo="body" formControlName="companyId" placeholder="Company">
+          </p-dropdown>
+        </div>
+        <div *ngIf="registerForm?.controls?.companyId?.errors?.required && registerForm?.controls?.companyId?.dirty"
+          class="validation-alert">
+          This field is required</div>
       </div>
 
       <div class="login-btn-container">

@@ -31,21 +31,24 @@ namespace HealthyJuices.Api.Controllers
             return result;
         }
 
+        [HttpGet("my")]
+        [AuthorizeRoles(UserRole.Customer)]
+        public async Task<List<OrderDto>> GetAllActiveByUserAsync([FromQuery] DateTime? from, [FromQuery] DateTime? to)
+        {
+            var result = await _appController.GetAllActiveByUserAsync(RequestSenderId, from, to);
+            return result;
+        }
+
         [HttpGet("active")]
+        [AuthorizeRoles(UserRole.BusinessOwner)]
         public async Task<List<OrderDto>> GetAllActiveAsync([FromQuery]DateTime? from, [FromQuery]DateTime? to)
         {
             var result = await _appController.GetAllActiveAsync(from, to);
             return result;
         }
 
-        [HttpGet("dashboard-report")]
-        public async Task<DashboardOrderReportDto> GetAllActiveWithProductsAsync([FromQuery] DateTime from, [FromQuery] DateTime to)
-        {
-            var result = await _appController.GetAllActiveWithProductsAsync(from, to);
-            return result;
-        }
-
         [HttpGet("{id}")]
+        [AuthorizeRoles(UserRole.BusinessOwner)]
         public async Task<OrderDto> GetByIdAsync(long id)
         {
             var result = await _appController.GetByIdAsync(id);
@@ -53,10 +56,10 @@ namespace HealthyJuices.Api.Controllers
         }
 
         [HttpPost]
-        [AuthorizeRoles(UserRole.BusinessOwner)]
+        [AuthorizeRoles(UserRole.Customer)]
         public async Task<long> CreateAsync(OrderDto definitionDto)
         {
-            var result = await _appController.CreateAsync(definitionDto);
+            var result = await _appController.CreateAsync(definitionDto,RequestSenderId);
             return result;
         }
 
@@ -72,6 +75,15 @@ namespace HealthyJuices.Api.Controllers
         public async Task DeleteAsync(long id)
         {
             await _appController.DeleteByIdAsync(id);
+        }
+
+
+        [HttpGet("dashboard-report")]
+        [AuthorizeRoles(UserRole.BusinessOwner)]
+        public async Task<DashboardOrderReportDto> GetDashboardOrderReportAsync([FromQuery] DateTime from, [FromQuery] DateTime to)
+        {
+            var result = await _appController.GetDashboardOrderReportAsync(from, to);
+            return result;
         }
     }
 }

@@ -26,14 +26,6 @@
   <div class="block user-name">{{userName}}<div class="role" *ngFor="let role of userRoles">
       {{UserRole[role]}}</div>
   </div>
-  <!-- <div class="block menu" *ngIf="Pwa.isUpdateAvailable" (click)="update()">
-    <i class="fa fa-mobile icon" aria-hidden="true"></i>
-    <div>Update App</div>
-  </div>
-  <div class="block menu" *ngIf="Pwa.promptEvent" (click)="installPwa()">
-    <i class="fa fa-mobile icon" aria-hidden="true"></i>
-    <div>Install App</div>
-  </div> -->
 
   <div class="block" (click)="logout()">
     <i class="fa fa-sign-out icon" aria-hidden="true"></i>
@@ -48,17 +40,7 @@
 
   <ng-container *ngFor="let menuItem of menu">
     <div class="hamburger-block" [routerLink]="menuItem.routerLink" *ngIf="isUserInOneRoleOf(menuItem.roles)">
-      <i class="icon" [class]="menuItem.icon" aria-hidden="true"></i>
-      <div>{{menuItem.label}}</div>
-      <ng-container *ngIf="menuItem.children">
-        <div class="dropdown-content">
-          <ng-container *ngFor="let childrenItem of menuItem.children">
-            <div [routerLink]="childrenItem.routerLink" routerLinkActive="active"
-              *ngIf="isUserInOneRoleOf(childrenItem.roles)">
-              {{childrenItem.label}}</div>
-          </ng-container>
-        </div>
-      </ng-container>
+      <i class="icon" [class]="menuItem.icon" aria-hidden="true"></i> {{menuItem.label}}
     </div>
   </ng-container>
 

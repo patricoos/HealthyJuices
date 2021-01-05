@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Domain.Models.Users;
 using HealthyJuices.Domain.Models.Users.DataAccess;
@@ -17,12 +19,11 @@ namespace HealthyJuices.Api.Controllers
         {
             get
             {
-                if (!HttpContext.Items.TryGetValue("UserId", out var userId)) return -1;
+                var customerClaim = User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.Name);
+                if (customerClaim != null && int.TryParse(customerClaim.Value, out var id))
+                    return id;
 
-                if (long.TryParse(userId.ToString(), out var result))
-                    return result;
-
-                return -1;
+                throw new UnhandledException("User id Not In Token");
             }
         }
 

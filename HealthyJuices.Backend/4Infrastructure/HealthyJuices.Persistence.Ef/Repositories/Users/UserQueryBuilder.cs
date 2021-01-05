@@ -3,6 +3,7 @@ using HealthyJuices.Common.Contracts;
 using HealthyJuices.Domain.Models.Users;
 using HealthyJuices.Domain.Models.Users.DataAccess;
 using HealthyJuices.Shared.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace HealthyJuices.Persistence.Ef.Repositories.Users
 {
@@ -28,6 +29,12 @@ namespace HealthyJuices.Persistence.Ef.Repositories.Users
         public IUserQueryBuilder IsActive()
         {
             Query = Query.Where(x => x.IsActive == true);
+            return this;
+        }
+
+        public IUserQueryBuilder IncludeCompany()
+        {
+            Query = Query.Include(x => x.Company);
             return this;
         }
 

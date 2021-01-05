@@ -1,4 +1,5 @@
 ﻿using System;
+using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Domain.Models.Abstraction;
 using HealthyJuices.Domain.Models.Abstraction.DataAccess.Entities;
 using HealthyJuices.Shared.Enums;
@@ -49,6 +50,11 @@ namespace HealthyJuices.Domain.Models.Products
             this.Unit = unit;
             this.QuantityPerUnit = quantityPerUnit;
             this.DefaultPricePerUnit = defaultPrice;
+        }
+
+        public void Activate()
+        {
+            this.IsActive = IsRemoved ? throw new BadRequestException("This product is removed") : true;
         }
     }
 }

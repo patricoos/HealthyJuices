@@ -10,6 +10,7 @@ using HealthyJuices.Common.Services;
 using HealthyJuices.Domain.Models.Companies.DataAccess;
 using HealthyJuices.Domain.Models.Logs.DataAccess;
 using HealthyJuices.Domain.Models.Orders.DataAccess;
+using HealthyJuices.Domain.Models.Products.DataAccess;
 using HealthyJuices.Domain.Models.Unavailabilities.DataAccess;
 using HealthyJuices.Domain.Models.Users.DataAccess;
 using HealthyJuices.Domain.Services;
@@ -18,6 +19,7 @@ using HealthyJuices.Persistence.Ef;
 using HealthyJuices.Persistence.Ef.Repositories.Companies;
 using HealthyJuices.Persistence.Ef.Repositories.Logs;
 using HealthyJuices.Persistence.Ef.Repositories.Orders;
+using HealthyJuices.Persistence.Ef.Repositories.Products;
 using HealthyJuices.Persistence.Ef.Repositories.Unavailabilities;
 using HealthyJuices.Persistence.Ef.Repositories.Users;
 using HealthyJuices.Shared.Enums;
@@ -39,6 +41,7 @@ namespace HealthyJuices.Api.Bootstrap
             @this.AddScoped<UnavailabilitiesController>();
             @this.AddScoped<UsersController>();
             @this.AddScoped<CompaniesController>();
+            @this.AddScoped<ProductsController>();
             return @this;
         }
 
@@ -76,6 +79,7 @@ namespace HealthyJuices.Api.Bootstrap
             @this.AddScoped<IOrderRepository, OrderRepository>();
             @this.AddScoped<IUnavailabilityRepository, UnavailabilityRepository>();
             @this.AddScoped<ICompanyRepository, CompanyRepository>();
+            @this.AddScoped<IProductRepository, ProductRepository>();
 
             return @this;
         }

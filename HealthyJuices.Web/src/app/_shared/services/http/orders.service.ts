@@ -33,6 +33,22 @@ export class OrdersService extends BaseService {
     );
   }
 
+  getAllMyActive(loader: string, from?: Date, to?: Date): Observable<Array<Order>> {
+    this.loadersService.show(loader);
+
+    let params = new HttpParams();
+    if (from) {
+      params = params.set('from', from.toISOString());
+    }
+    if (to) {
+      params = params.set('to', to.toISOString());
+    }
+
+    return this.http.get<Array<Order>>(this.baseUrl + '/orders/my', { params }).pipe(
+      finalize(() => this.loadersService.hide(loader))
+    );
+  }
+
   GetAllActiveByCompanyAsync(loader: string, from: Date, to: Date): Observable<DashboardOrderReport> {
     this.loadersService.show(loader);
     let params = new HttpParams();

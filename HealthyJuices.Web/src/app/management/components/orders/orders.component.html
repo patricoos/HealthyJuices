@@ -46,7 +46,7 @@
               {{rowData[col.field] | date:"HH:mm dd.MM.yyyy"}}
             </div>
             <div *ngSwitchCase="'deliveryDate'">
-              {{rowData[col.field] | date:"HH:mm dd.MM.yyyy"}}
+              {{rowData[col.field] | date:"dd.MM.yyyy"}}
             </div>
             <div *ngSwitchCase="'action'" class="center-content">
               <button class="action" (click)="onEdit(rowData)"><i class="fa fa-pencil" aria-hidden="true"></i>

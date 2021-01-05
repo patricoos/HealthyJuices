@@ -8,6 +8,7 @@ namespace HealthyJuices.Domain.Models.Users.DataAccess
         IUserQueryBuilder ByEmail(string email);
         IUserQueryBuilder ByUserRole(UserRole role);
         IUserQueryBuilder IsActive();
+        IUserQueryBuilder IncludeCompany();
         IUserQueryBuilder IsNotRemoved();
     }
 }

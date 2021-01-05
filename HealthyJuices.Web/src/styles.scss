@@ -187,20 +187,19 @@ button.refresh:hover {
 }
 
 button.plus {
-  float: right;
   color: $main-button-color;
   background-color: transparent;
-  width: 30px;
-  height: 30px;
-  padding: 6px 7px;
+  width: 32px;
+  height: 32px;
+  padding: 3px 0;
+  justify-content: center;
   margin: 0;
-  border-radius: 15px;
 }
 
 .btn-plus {
   float: right;
   color: $main-button-color;
-  background-color: transparent;
+  background-color: rgba(0, 0, 0, 0.2);
   width: 30px;
   height: 30px;
   margin: 0;

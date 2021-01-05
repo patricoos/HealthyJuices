@@ -56,5 +56,11 @@ namespace HealthyJuices.Persistence.Ef.Repositories.Orders
 
             return this;
         }
+
+        public IOrderQueryBuilder ByUser(long id)
+        {
+            Query = Query.Where(x => x.UserId == id);
+            return this;
+        }
     }
 }

@@ -118,7 +118,7 @@ export class AuthService extends BaseService {
 
   navigateByUserRole(): void {
     if (this.getUserRoles().includes(UserRole.BusinessOwner)) {
-      this.router.navigate(['/management/orders']);
+      this.router.navigate(['/dashboard']);
       return;
     }
     if (this.getUserRoles().includes(UserRole.Customer)) {
