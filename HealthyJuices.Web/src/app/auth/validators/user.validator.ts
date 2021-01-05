@@ -25,7 +25,7 @@ export class UserValidators {
 
   public static checkUserNameTaken(service: UsersService): any {
     return (control: AbstractControl) => {
-      return service.IsExisting(control.value)
+      return service.isExisting(control.value)
         .pipe(map((isTaken) => (isTaken ? { usernameExist: true } : null)));
     };
   }

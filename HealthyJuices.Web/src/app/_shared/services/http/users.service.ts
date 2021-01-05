@@ -13,7 +13,7 @@ export class UsersService extends BaseService {
     super();
   }
 
-  IsExisting(username: string): Observable<boolean> {
+  isExisting(username: string): Observable<boolean> {
     return this.http.get<boolean>(`${this.baseUrl}/users/existing/${username}`);
   }
 }

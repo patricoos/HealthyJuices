@@ -1,7 +1,7 @@
 <div class="loader-container">
-  <app-loader [name]="companiesComponentLoader"></app-loader>
+  <app-loader [name]="productsComponentLoader"></app-loader>
   <div class="primary-container shadow-container">
-    <p-table #dt [columns]="columns" [value]="companies" [scrollable]="true" [resizableColumns]="true"
+    <p-table #dt [columns]="columns" [value]="products" [scrollable]="true" [resizableColumns]="true"
       [reorderableColumns]="true" scrollHeight="calc(100% - 20px)" class="mytableBorder"
       [exportFilename]="'contractors'">
       <ng-template pTemplate="colgroup" let-columns>
@@ -21,11 +21,15 @@
         <tr>
           <th *ngFor="let col of columns" [ngSwitch]="col.field">
             <div *ngSwitchCase="'action'">
-              <button class="add" (click)="onAddNew()">
-                <i class="fa fa-plus" aria-hidden="true"></i>
+              <button class="add" (click)="onAddNew()"><i class="fa fa-plus" aria-hidden="true"></i>
                 <div class="label">Add new</div>
               </button>
             </div>
+            <p-multiSelect *ngSwitchCase="'isActive'" [options]="boolStatus" [filter]="false" [maxSelectedLabels]="1"
+              appendTo="body" [panelStyle]="{minWidth:'15em'}" [style]="{minWidth:'100%'}" highlightInputWithValue
+              defaultLabel="All" [selectedItemsLabel]="'{0} items'" [showToggleAll]="false"
+              (onChange)="dt.filter($event.value, col.field, 'in')">
+            </p-multiSelect>
             <p-calendar *ngSwitchCase="'deliveryDate'" #rangeFilter1 selectionMode="range" appendTo="body"
               placeholder="Filter" dateFormat="dd.mm.yy" [showButtonBar]="true"
               (onSelect)="dt.filter(rangeFilter1.value, col.field, 'dateRangeFilter')" [locale]="calendarLocale"
@@ -47,8 +51,8 @@
             <div *ngSwitchCase="'dateCreated'">
               {{rowData[col.field] | date:"HH:mm dd.MM.yyyy"}}
             </div>
-            <div *ngSwitchCase="'deliveryDate'">
-              {{rowData[col.field] | date:"dd.MM.yyyy"}}
+            <div *ngSwitchCase="'unit'">
+              {{ProductUnitType[rowData[col.field]] | spaceBeforeCapital}}
             </div>
             <div *ngSwitchCase="'action'" class="center-content">
               <button class="action" (click)="onEdit(rowData)"><i class="fa fa-pencil" aria-hidden="true"></i>

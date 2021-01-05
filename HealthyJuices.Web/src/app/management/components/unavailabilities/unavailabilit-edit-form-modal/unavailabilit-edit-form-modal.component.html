@@ -48,13 +48,13 @@
     </div>
     <div class="footer-modal-container">
       <div class="dialog-footer">
-        <div>
+        <div class="col-4">
           <button *ngIf="unavailability" class="delete" (click)="onDelete()">
             <i class="fa fa-trash" aria-hidden="true"></i>
             <div class="label">Delete</div>
           </button>
         </div>
-        <div>
+        <div class="col-8 right-btns-container">
           <button class="submit" (click)="onSave()" [disabled]="!editForm.dirty">
             <ng-container *ngIf="unavailability; else addNew">
               <i class="fa fa-pencil" aria-hidden="true"></i>

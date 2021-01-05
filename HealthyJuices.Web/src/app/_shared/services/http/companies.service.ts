@@ -15,6 +15,13 @@ export class CompaniesService extends BaseService {
     super();
   }
 
+  getAll(loader: string): Observable<Array<Company>> {
+    this.loadersService.show(loader);
+    return this.http.get<Array<Company>>(this.baseUrl + '/companies/').pipe(
+      finalize(() => this.loadersService.hide(loader))
+    );
+  }
+
   getAllActive(loader: string): Observable<Array<Company>> {
     this.loadersService.show(loader);
     return this.http.get<Array<Company>>(this.baseUrl + '/companies/active').pipe(
@@ -22,7 +29,7 @@ export class CompaniesService extends BaseService {
     );
   }
 
-  Get(id: number, loader: string): Observable<Company> {
+  get(id: number, loader: string): Observable<Company> {
     this.loadersService.show(loader);
     return this.http.get<Company>(this.baseUrl + '/companies/' + id)
       .pipe(finalize(() => this.loadersService.hide(loader)));

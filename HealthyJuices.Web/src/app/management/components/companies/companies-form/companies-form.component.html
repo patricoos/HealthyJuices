@@ -66,33 +66,22 @@
       </div>
 
       <div class="col-5">
-        <div class="right-container-header">
-          <div class="col-3">
-            <button *ngIf="selectedCompany?.id" class="button button__cancel" (click)="onCancel()"
-              [style]="{'width':'100%'}">
-              <i class="fa fa-close" aria-hidden="true"></i>
-              <div class="label">Cancel</div>
-            </button>
-          </div>
-          <div class="col-3"></div>
-          <div class="col-3">
-            <button *ngIf="selectedCompany?.id" class="delete" (click)="onDelete()" [style]="{'width':'100%'}">
-              <i class="fa fa-trash" aria-hidden="true"></i>
-              <div class="label">Delete</div>
-            </button>
-          </div>
-          <div class="col-3">
-            <button class="submit" (click)="onSave()" [disabled]="!editForm.dirty" [style]="{'width':'100%'}">
-              <i class="fa fa-floppy-o" aria-hidden="true"></i>
-              <div class="label">Save</div>
-            </button>
-          </div>
+        <div class=" col-12 right-container-header btns-container">
+          <button class="submit" (click)="onSave()" [disabled]="!editForm.dirty">
+            <i class="fa fa-floppy-o" aria-hidden="true"></i>
+            <div class="label">Save</div>
+          </button>
+
+          <button *ngIf="selectedCompany?.id" class="delete" (click)="onDelete()">
+            <i class="fa fa-trash" aria-hidden="true"></i>
+            <div class="label">Delete</div>
+          </button>
         </div>
 
         <div class="map-container">
           <agm-map [zoom]="14" [latitude]="lat" [longitude]="lng">
-            <agm-marker *ngIf="selectedCompany" [latitude]="selectedCompany.latitude" (dragEnd)="onDragEnd($event)"
-              [longitude]="selectedCompany.longitude" [markerDraggable]="true">
+            <agm-marker [latitude]="editForm.controls.latitude.value" (dragEnd)="onDragEnd($event)"
+              [longitude]="editForm.controls.longitude.value" [markerDraggable]="true">
             </agm-marker>
           </agm-map>
         </div>

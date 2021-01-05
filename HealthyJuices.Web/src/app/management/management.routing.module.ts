@@ -5,6 +5,8 @@ import { OrdersComponent } from './components/orders/orders.component';
 import { UnavailabilitiesComponent } from './components/unavailabilities/unavailabilities.component';
 import { CompaniesFormComponent } from './components/companies/companies-form/companies-form.component';
 import { OrdersFormComponent } from './components/orders/orders-form/orders-form.component';
+import { ProductsComponent } from './components/products/products.component';
+import { ProductsFormComponent } from './components/products/products-form/products-form.component';
 
 
 const ordersRoutes: Routes = [
@@ -39,6 +41,18 @@ const ordersRoutes: Routes = [
       { path: '', component: CompaniesComponent },
       { path: 'add', data: { breadcrumb: 'Add' }, component: CompaniesFormComponent },
       { path: ':id', data: { breadcrumb: 'Edit' }, component: CompaniesFormComponent },
+    ]
+  },
+  {
+    path: 'products',
+    data: {
+      breadcrumb: 'Products',
+      canNavigateFromBreadcrumb: true,
+    },
+    children: [
+      { path: '', component: ProductsComponent },
+      { path: 'add', data: { breadcrumb: 'Add' }, component: ProductsFormComponent },
+      { path: ':id', data: { breadcrumb: 'Edit' }, component: ProductsFormComponent },
     ]
   }
 ];

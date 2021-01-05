@@ -17,6 +17,7 @@ namespace HealthyJuices.Application.Mappers
             DateCreated = e.DateCreated,
             DateModified = e.DateModified,
             IsRemoved = e.IsRemoved,
+            IsActive = e.IsActive
         };
 
         public static OrderProductDto ToDto(this OrderProduct e, bool mapOrder = false) => new OrderProductDto()

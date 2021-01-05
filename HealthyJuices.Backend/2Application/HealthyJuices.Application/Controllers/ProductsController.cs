@@ -21,6 +21,7 @@ namespace HealthyJuices.Application.Controllers
         public async Task<List<ProductDto>> GetAllAsync()
         {
             var entities = await _productRepository.Query()
+                .IsNotRemoved()
                 .ToListAsync();
 
             var result = entities
@@ -57,7 +58,7 @@ namespace HealthyJuices.Application.Controllers
 
         public async Task<long> CreateAsync(ProductDto dto)
         {
-            var product = new Product(dto.Name, dto.Description, dto.Unit, dto.QuantityPerUnit, dto.DefaultPricePerUnit);
+            var product = new Product(dto.Name, dto.Description, dto.Unit, dto.QuantityPerUnit, dto.IsActive, dto.DefaultPricePerUnit);
 
             _productRepository.Insert(product);
             await _productRepository.SaveChangesAsync();
@@ -74,7 +75,7 @@ namespace HealthyJuices.Application.Controllers
             if (product == null)
                 throw new BadRequestException($"Not found product with id: {dto.Id}");
 
-            product.Update(dto.Name, dto.Description, dto.Unit, dto.QuantityPerUnit, dto.DefaultPricePerUnit);
+            product.Update(dto.Name, dto.Description, dto.Unit, dto.QuantityPerUnit, dto.IsActive, dto.DefaultPricePerUnit);
 
             _productRepository.Update(product);
             await _productRepository.SaveChangesAsync();

@@ -3,25 +3,13 @@
   margin: 10px;
 }
 
-.columns-container {
-  background-color: white;
-  display: flex;
-  height: 100%;
-}
-.col2:first-child {
-  margin-right: 0;
-}
-
-agm-map {
-  height: 100%;
-}
 .form-container {
   overflow: auto;
   display: grid;
-  grid-template-columns: auto auto;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: auto auto auto auto;
+  grid-template-columns: repeat(4, 1fr);
   height: 100%;
-  grid-template-rows: 75px 75px auto;
+  grid-template-rows: 75px auto;
   padding: 10px 0 10px 10px;
 }
 
@@ -35,14 +23,12 @@ agm-map {
 
 .joinColumns {
   grid-column-start: 1;
-  grid-column-end: 3;
+  grid-column-end: 5;
 }
 
 .formCard-header {
   display: inline-block;
   width: 100%;
-  height: 45px;
-  padding: 8px;
   font-size: 25px;
   font-weight: bold;
 }
@@ -52,4 +38,9 @@ agm-map {
     float: right;
     margin-left: 10px;
   }
+}
+
+.checkbox-container {
+  padding-left: 30px;
+  padding-top: 30px;
 }

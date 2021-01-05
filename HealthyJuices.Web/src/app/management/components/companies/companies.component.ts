@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FullCallendarConsts } from 'src/app/_shared/constants/full-calendar.const';
 import { Company } from 'src/app/_shared/models/user/company.model';
@@ -11,7 +11,7 @@ import { ToastsService } from 'src/app/_shared/services/toasts.service';
   templateUrl: './companies.component.html',
   styleUrls: ['./companies.component.scss']
 })
-export class CompaniesComponent implements OnInit {
+export class CompaniesComponent implements AfterViewInit {
   companiesComponentLoader = 'companiesComponentLoader';
 
   companies: Company[] = [];
@@ -28,7 +28,7 @@ export class CompaniesComponent implements OnInit {
   constructor(private companiesService: CompaniesService, private toastsService: ToastsService,
     private tableQueryService: TableQueryService, private router: Router) { }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.companiesService.getAllActive(this.companiesComponentLoader).subscribe(x => {
       console.log(x);
       this.companies = x;

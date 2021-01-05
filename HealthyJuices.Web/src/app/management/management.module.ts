@@ -19,6 +19,9 @@ import { environment } from 'src/environments/environment';
 import { AgmCoreModule } from '@agm/core';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
+import { ProductsComponent } from './components/products/products.component';
+import { ProductsFormComponent } from './components/products/products-form/products-form.component';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,10 @@ import { ConfirmationService } from 'primeng/api';
     UnavailabilitEditFormModalComponent,
     CompaniesComponent,
     CompaniesFormComponent,
-    OrdersFormComponent
+    OrdersFormComponent,
+    ProductsComponent,
+    OrdersFormComponent,
+    ProductsFormComponent
   ],
   imports: [
     CommonModule,
@@ -44,7 +50,8 @@ import { ConfirmationService } from 'primeng/api';
     AgmCoreModule.forRoot({
       apiKey: environment.googleMapsApiKey
     }),
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    CheckboxModule
   ],
   providers: [
     DialogService,

@@ -22,6 +22,7 @@ export class HeaderComponent implements OnInit {
     {
       label: 'Management', icon: 'fa fa-cog', roles: [UserRole.BusinessOwner], children: [
         { label: 'Companies', routerLink: '/management/companies', roles: [UserRole.BusinessOwner] },
+        { label: 'Products', routerLink: '/management/products', roles: [UserRole.BusinessOwner] },
         { label: 'Unavailabilities', routerLink: '/management/unavailabilities', roles: [UserRole.BusinessOwner] },
         { label: 'Orders', routerLink: '/management/orders', roles: [UserRole.BusinessOwner] },
       ]

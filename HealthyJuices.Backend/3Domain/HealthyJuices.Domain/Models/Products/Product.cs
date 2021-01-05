@@ -23,7 +23,7 @@ namespace HealthyJuices.Domain.Models.Products
 
         public Product() { }
 
-        public Product(string name, string description, ProductUnitType unit, decimal quantityPerUnit, decimal? defaultPrice = null)
+        public Product(string name, string description, ProductUnitType unit, decimal quantityPerUnit, bool isActive, decimal? defaultPrice = null)
         {
             this.DateCreated = DateTime.UtcNow;
             this.DateModified = DateTime.UtcNow;
@@ -33,6 +33,7 @@ namespace HealthyJuices.Domain.Models.Products
             this.Unit = unit;
             this.QuantityPerUnit = quantityPerUnit;
             this.DefaultPricePerUnit = defaultPrice;
+            this.IsActive = isActive;
         }
 
         public void Remove()
@@ -41,7 +42,7 @@ namespace HealthyJuices.Domain.Models.Products
             this.DateModified = DateTime.UtcNow;
         }
 
-        public void Update(string name, string description, ProductUnitType unit, decimal quantityPerUnit, decimal? defaultPrice = null)
+        public void Update(string name, string description, ProductUnitType unit, decimal quantityPerUnit, bool isActive, decimal? defaultPrice = null)
         {
             this.DateModified = DateTime.UtcNow;
 
@@ -50,11 +51,7 @@ namespace HealthyJuices.Domain.Models.Products
             this.Unit = unit;
             this.QuantityPerUnit = quantityPerUnit;
             this.DefaultPricePerUnit = defaultPrice;
-        }
-
-        public void Activate()
-        {
-            this.IsActive = IsRemoved ? throw new BadRequestException("This product is removed") : true;
+            this.IsActive = isActive;
         }
     }
 }

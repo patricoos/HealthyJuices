@@ -49,7 +49,7 @@ export class OrdersService extends BaseService {
     );
   }
 
-  GetAllActiveByCompanyAsync(loader: string, from: Date, to: Date): Observable<DashboardOrderReport> {
+  getAllActiveByCompanyAsync(loader: string, from: Date, to: Date): Observable<DashboardOrderReport> {
     this.loadersService.show(loader);
     let params = new HttpParams();
     params = params.set('from', from.toISOString());
@@ -61,7 +61,7 @@ export class OrdersService extends BaseService {
   }
 
 
-  Get(id: number, loader: string): Observable<Order> {
+  get(id: number, loader: string): Observable<Order> {
     this.loadersService.show(loader);
     return this.http.get<Order>(this.baseUrl + '/orders/' + id)
       .pipe(finalize(() => this.loadersService.hide(loader)));

@@ -37,7 +37,7 @@ export class CompaniesFormComponent implements AfterViewInit {
   }
 
   getDetails(id: number): void {
-    this.companService.Get(id, this.companiesFormComponentLoader).subscribe(x => {
+    this.companService.get(id, this.companiesFormComponentLoader).subscribe(x => {
       console.log(x);
       this.selectedCompany = x;
       this.editForm = this.initForm(x);
@@ -48,7 +48,7 @@ export class CompaniesFormComponent implements AfterViewInit {
 
   private initForm(company: Company | null = null): FormGroup {
     const form = new FormGroup({
-      id: new FormControl(company ? company.id : null),
+      id: new FormControl(company ? company.id : 0),
 
       name: new FormControl(company ? company.name : null, Validators.required),
       comment: new FormControl(company ? company.comment : null),
@@ -89,10 +89,6 @@ export class CompaniesFormComponent implements AfterViewInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => this.delete()
     });
-  }
-
-  onCancel(): void {
-    this.router.navigate(['management/companies']);
   }
 
   private delete(): void {

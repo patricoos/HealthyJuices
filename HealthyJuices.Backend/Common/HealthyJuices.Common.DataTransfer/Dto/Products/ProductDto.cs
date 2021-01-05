@@ -16,5 +16,6 @@ namespace HealthyJuices.Shared.Dto.Products
         public DateTime DateCreated { get; init; }
         public DateTime DateModified { get; init; }
         public bool IsRemoved { get; init; }
+        public bool IsActive { get; set; }
     }
 }

@@ -14,12 +14,11 @@ namespace HealthyJuices.Api.Bootstrap.DataSeed
             {
                 var products = new List<Product>()
                 {
-                    new Product("Apple Juice", "Apple Juice desc", ProductUnitType.Items, 0.33m),
-                    new Product("Pear Juice", "Pear Juice desc", ProductUnitType.Items, 0.2m),
-                    new Product("Raspberry Juice", "Raspberry Juice desc", ProductUnitType.Items, 0.5m),
-                    new Product("Plum Juice", "Plum Juice desc", ProductUnitType.Items, 0.1m)
+                    new Product("Apple Juice", "Apple Juice desc", ProductUnitType.Liters, 0.33m, true),
+                    new Product("Pear Juice", "Pear Juice desc", ProductUnitType.Liters,  0.2m, true),
+                    new Product("Raspberry Juice", "Raspberry Juice desc", ProductUnitType.Liters,  0.5m, true),
+                    new Product("Plum Juice", "Plum Juice desc", ProductUnitType.Liters, 0.1m, false)
                 };
-                products.ForEach(x => x.Activate());
                 context.Products.AddRange(products);
             }
 

@@ -15,11 +15,24 @@ export class ProductsService extends BaseService {
     super();
   }
 
+  getAll(loader: string): Observable<Array<Product>> {
+    this.loadersService.show(loader);
+    return this.http.get<Array<Product>>(this.baseUrl + '/products/').pipe(
+      finalize(() => this.loadersService.hide(loader))
+    );
+  }
+
   getAllActive(loader: string): Observable<Array<Product>> {
     this.loadersService.show(loader);
     return this.http.get<Array<Product>>(this.baseUrl + '/products/active').pipe(
       finalize(() => this.loadersService.hide(loader))
     );
+  }
+
+  get(id: number, loader: string): Observable<Product> {
+    this.loadersService.show(loader);
+    return this.http.get<Product>(this.baseUrl + '/products/' + id)
+      .pipe(finalize(() => this.loadersService.hide(loader)));
   }
 
   addOrEdit(dto: Product, loader: string): Observable<boolean> {

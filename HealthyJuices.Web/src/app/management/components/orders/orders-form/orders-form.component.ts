@@ -31,7 +31,7 @@ export class OrdersFormComponent implements AfterViewInit {
   }
 
   getDetails(id: number): void {
-    this.ordersService.Get(id, this.ordersFormComponentLoader).subscribe(x => {
+    this.ordersService.get(id, this.ordersFormComponentLoader).subscribe(x => {
       this.selectedOrder = x;
       this.editForm = this.initForm(x);
     }, error => this.toastsService.showError(error));

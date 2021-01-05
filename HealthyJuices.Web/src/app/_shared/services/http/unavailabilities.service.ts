@@ -30,6 +30,12 @@ export class UnavailabilitiesService extends BaseService {
     }
   }
 
+  get(id: number, loader: string): Observable<Unavailability> {
+    this.loadersService.show(loader);
+    return this.http.get<Unavailability>(this.baseUrl + '/unavailabilities/' + id)
+      .pipe(finalize(() => this.loadersService.hide(loader)));
+  }
+
   add(dto: Unavailability, loader: string): Observable<boolean> {
     this.loadersService.show(loader);
     return this.http.post(this.baseUrl + '/unavailabilities', dto, { observe: 'response' }).pipe(

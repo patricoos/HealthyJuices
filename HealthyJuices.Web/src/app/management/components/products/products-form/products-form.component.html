@@ -1,0 +1,80 @@
+<p-confirmDialog></p-confirmDialog>
+<div class="mycontainer white-container shadow-container">
+
+  <div class="loader-container">
+    <app-loader [name]="productsFormComponentLoader"></app-loader>
+
+    <div class="right-container-header">
+      <div class="col-5">
+        <div class="label formCard-header" *ngIf="selectedProduct?.id">
+          {{selectedProduct?.name}}
+        </div>
+        <div class="label formCard-header" *ngIf="!selectedProduct?.id">Add New Product</div>
+      </div>
+      <div class="col-3"></div>
+      <div class="col-4 btns-container">
+
+        <button class="submit" (click)="onSave()" [disabled]="!editForm.dirty">
+          <i class="fa fa-floppy-o" aria-hidden="true"></i>
+          <div class="label">Save</div>
+        </button>
+
+        <button *ngIf="selectedProduct?.id" class="delete" (click)="onDelete()">
+          <i class="fa fa-trash" aria-hidden="true"></i>
+          <div class="label">Delete</div>
+        </button>
+      </div>
+    </div>
+
+    <div class="formCard">
+      <form [formGroup]="editForm">
+
+        <div class="formCard-body">
+          <div class="form-container" autocomplete="off">
+            <div class="input-container">
+              <div class="label">Name</div>
+              <input type="text" formControlName="name" autocomplete="off">
+              <div *ngIf="editForm.controls.name.invalid && editForm.controls.name.dirty" class="validation-alert">
+                Required</div>
+            </div>
+
+            <div class="input-container">
+              <div class="label required">Unit</div>
+              <p-dropdown [options]="units" [autoDisplayFirst]="false" [style]="{'width':'100%'}" appendTo="body"
+                formControlName="unit">
+              </p-dropdown>
+              <div *ngIf="editForm?.controls?.unit?.errors?.required && editForm?.controls?.unit?.dirty"
+                class="validation-alert">
+                This field is required</div>
+            </div>
+
+            <div class="input-container">
+              <div class="label">Quantity Per Unit</div>
+              <input type="number" formControlName="quantityPerUnit" autocomplete="off">
+              <div *ngIf="editForm.controls.quantityPerUnit.invalid && editForm.controls.quantityPerUnit.dirty"
+                class="validation-alert">
+                Required</div>
+            </div>
+
+            <div class="input-container checkbox-container">
+              <p-checkbox name="groupname" formControlName="isActive" binary="true" label="Active"></p-checkbox>
+            </div>
+
+            <div class="input-container joinColumns">
+              <div class="label">Description</div>
+              <textarea rows="5" cols="30" style="width:100%;" pInputTextarea formControlName="description"
+                autoResize="autoResize"></textarea>
+
+              <div *ngIf="editForm.controls.description.invalid && editForm.controls.description.dirty"
+                class="validation-alert">
+                Required</div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+    </div>
+
+  </div>
+
+</div>

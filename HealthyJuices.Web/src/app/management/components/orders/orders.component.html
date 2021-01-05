@@ -22,7 +22,8 @@
           <th *ngFor="let col of columns" [ngSwitch]="col.field">
             <div *ngSwitchCase="'action'">
               <button class="add" (click)="onAddNew()"><i class="fa fa-plus" aria-hidden="true"></i>
-                Add new</button>
+                <div class="label">Add new</div>
+              </button>
             </div>
             <p-calendar *ngSwitchCase="'deliveryDate'" #rangeFilter1 selectionMode="range" appendTo="body"
               placeholder="Filter" dateFormat="dd.mm.yy" [showButtonBar]="true"
@@ -50,7 +51,7 @@
             </div>
             <div *ngSwitchCase="'action'" class="center-content">
               <button class="action" (click)="onEdit(rowData)"><i class="fa fa-pencil" aria-hidden="true"></i>
-                Show
+                <div class="label">Show</div>
               </button>
             </div>
             <div *ngSwitchDefault>

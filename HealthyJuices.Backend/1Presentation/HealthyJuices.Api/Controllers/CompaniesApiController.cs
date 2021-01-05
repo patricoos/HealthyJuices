@@ -21,6 +21,7 @@ namespace HealthyJuices.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [AuthorizeRoles(UserRole.BusinessOwner)]
         public async Task<List<CompanyDto>> GetAllAsync()
         {
@@ -45,6 +46,7 @@ namespace HealthyJuices.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [AuthorizeRoles(UserRole.BusinessOwner)]
         public async Task<long> CreateAsync(CompanyDto definitionDto)
         {
@@ -53,6 +55,7 @@ namespace HealthyJuices.Api.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         [AuthorizeRoles(UserRole.BusinessOwner)]
         public async Task UpdateAsync(CompanyDto definitionDto)
         {
@@ -60,6 +63,7 @@ namespace HealthyJuices.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         [AuthorizeRoles(UserRole.BusinessOwner)]
         public async Task DeleteAsync(long id)
         {

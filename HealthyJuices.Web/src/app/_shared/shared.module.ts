@@ -7,6 +7,7 @@ import { FooterComponent } from './components/main-layout/footer/footer.componen
 import { EmptyLayoutComponent } from './components/empty-layout/empty-layout.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { BreadcrumbComponent } from './components/main-layout/breadcrumb/breadcrumb.component';
+import { SpaceBeforeCapitalPipe } from './pipes/space-before-capital.pipe';
 
 
 
@@ -18,6 +19,7 @@ import { BreadcrumbComponent } from './components/main-layout/breadcrumb/breadcr
     EmptyLayoutComponent,
     LoaderComponent,
     BreadcrumbComponent,
+    SpaceBeforeCapitalPipe
   ],
   imports: [
     CommonModule,
@@ -25,6 +27,7 @@ import { BreadcrumbComponent } from './components/main-layout/breadcrumb/breadcr
   ],
   exports: [
     LoaderComponent,
+    SpaceBeforeCapitalPipe
   ]
 })
 export class SharedModule { }

@@ -38,7 +38,7 @@ export class DashboardComponent extends MapComponent implements AfterViewInit {
     super();
   }
   ngAfterViewInit(): void {
-    this.ordersService.GetAllActiveByCompanyAsync(this.dashboardComponentLoader,
+    this.ordersService.getAllActiveByCompanyAsync(this.dashboardComponentLoader,
       TimeConverter.getMinTime(this.filterDate), TimeConverter.getMaxTime(this.filterDate)).subscribe(x => {
         console.log(x);
         this.orderReports = x.orderReports;
