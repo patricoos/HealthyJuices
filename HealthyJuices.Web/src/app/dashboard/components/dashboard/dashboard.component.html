@@ -3,18 +3,17 @@
   <div class="loader-container">
     <app-loader [name]="dashboardComponentLoader"></app-loader>
     <div class="col-5 white-container shadow-container">
-      <div class="info-container">
-        <div class="input-container">
-          <div class="label required">Date</div>
-          <p-calendar [(ngModel)]="filterDate" [style]="{'width':'100%'}" appendTo="body" [locale]="calendarLocale"
-            dateFormat="dd.mm.yy" (onSelect)="ngAfterViewInit()">
-          </p-calendar>
-        </div>
-
-
-        <p-chart type="pie" [data]="chartData" [options]="chartOptions"></p-chart>
-
+      <div class="input-container">
+        <div class="label required">Date</div>
+        <p-calendar [(ngModel)]="filterDate" [style]="{'width':'100%'}" appendTo="body" [locale]="calendarLocale"
+          dateFormat="dd.mm.yy" (onSelect)="ngAfterViewInit()">
+        </p-calendar>
       </div>
+
+      <div class="info-container">
+        <p-chart [height]="'calc(50vh - 135px)'" type="pie" [data]="chartData" [options]="chartOptions"></p-chart>
+      </div>
+
       <div class="map-container">
         <agm-map [latitude]="centerLatitude" [longitude]="centerLongitude" [zoom]="zoom" [fullscreenControl]="true">
           <ng-container *ngFor="let report of orderReports">

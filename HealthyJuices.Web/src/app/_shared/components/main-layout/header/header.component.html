@@ -4,8 +4,13 @@
 
 <div id="center" class="hide-menu">
   <ng-container *ngFor="let menuItem of menu">
-    <div class="block menu" routerLinkActive="active" [routerLink]="menuItem.routerLink"
-      *ngIf="isUserInOneRoleOf(menuItem.roles)">
+    <div class="block menu" [routerLink]="menuItem.routerLink" routerLinkActive="active"
+      *ngIf="!menuItem.children && isUserInOneRoleOf(menuItem.roles)">
+      <i class="icon summary" [class]="menuItem.icon" aria-hidden="true"></i>
+      <div>{{menuItem.label}}</div>
+    </div>
+
+    <div class="block menu" *ngIf="menuItem.children && isUserInOneRoleOf(menuItem.roles)" routerLinkActive="active">
       <i class="icon summary" [class]="menuItem.icon" aria-hidden="true"></i>
       <div>{{menuItem.label}}</div>
       <ng-container *ngIf="menuItem.children">

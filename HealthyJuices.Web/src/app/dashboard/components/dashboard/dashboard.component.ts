@@ -17,8 +17,7 @@ import { TimeConverter } from 'src/app/_shared/utils/time.converter';
 export class DashboardComponent extends MapComponent implements AfterViewInit {
   dashboardComponentLoader = 'dashboardComponentLoader';
   chartData: any;
-  chartOptions: any = { legend: { position: 'right' } };
-
+  chartOptions: any = { legend: { position: 'right' }, responsive: true, maintainAspectRatio: false };
   filterDate = new Date();
 
   orderReports: OrderReport[] = [];
