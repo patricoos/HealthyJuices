@@ -5,7 +5,7 @@
 
       <p-table #dt [columns]="columns" [value]="orders" [scrollable]="true" [resizableColumns]="true"
         [reorderableColumns]="true" [scrollHeight]="'calc(100vh - 230px )'" class="mytableBorder"
-        [exportFilename]="'contractors'" dataKey="id">
+        styleClass="p-datatable-responsive-demo" [exportFilename]="'contractors'" dataKey="id">
         <ng-template pTemplate="colgroup" let-columns>
           <colgroup>
             <col *ngFor="let col of columns" [style.width]="col.width">
@@ -48,12 +48,15 @@
             </td>
             <td *ngFor="let col of columns" [ngSwitch]="col.field">
               <div *ngSwitchCase="'dateCreated'">
+                <span class="p-column-title">{{col.header}}</span>
                 {{rowData[col.field] | date:"HH:mm dd.MM.yyyy"}}
               </div>
               <div *ngSwitchCase="'deliveryDate'">
+                <span class="p-column-title">{{col.header}}</span>
                 {{rowData[col.field] | date:"dd.MM.yyyy"}}
               </div>
               <div *ngSwitchDefault>
+                <span class="p-column-title">{{col.header}}</span>
                 {{rowData[col.field]}}
               </div>
             </td>
@@ -63,7 +66,7 @@
           <tr>
             <td colspan="4">
               <div class="p-p-3">
-                <p-table [value]="order.orderProducts" dataKey="id">
+                <p-table [value]="order.orderProducts" dataKey="id" class="products-table">
                   <ng-template pTemplate="header">
           <tr>
             <th pSortableColumn="id">Product <p-sortIcon field="product"></p-sortIcon>
@@ -74,8 +77,14 @@
         </ng-template>
         <ng-template pTemplate="body" let-order>
           <tr>
-            <td>{{order.product.name}}</td>
-            <td> {{order.amount}} </td>
+            <td>
+              <span class="p-column-title">Product</span>
+              {{order.product.name}}
+            </td>
+            <td>
+              <span class="p-column-title">Amount</span>
+              {{order.amount}}
+            </td>
           </tr>
         </ng-template>
       </p-table>
