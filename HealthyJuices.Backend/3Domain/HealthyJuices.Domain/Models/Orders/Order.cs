@@ -72,6 +72,9 @@ namespace HealthyJuices.Domain.Models.Orders
 
         private void Modifie()
         {
+            if (this.IsRemoved)
+                throw new BadRequestException("This order is removed");
+
             if (DeliveryDate <= DateTime.Now)
                 throw new BadRequestException("This order can not be modified");
 
@@ -107,7 +110,7 @@ namespace HealthyJuices.Domain.Models.Orders
             if (!user.IsActive || user.IsRemoved)
                 throw new BadRequestException($"User '{user.Email}' is not active");
 
-            if (user.Roles.HasFlag(UserRole.Customer))
+            if (!user.Roles.HasFlag(UserRole.Customer))
                 throw new BadRequestException($"User '{user.Email}' has no permision to create order");
 
             this.Modifie();
