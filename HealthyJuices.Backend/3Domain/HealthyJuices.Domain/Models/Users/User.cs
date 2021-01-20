@@ -74,7 +74,6 @@ namespace HealthyJuices.Domain.Models.Users
         public bool CheckPasswordValidity(string password)
         {
             var hashedPassword = PasswordManager.HashPassword(password, PasswordSalt);
-
             return string.CompareOrdinal(hashedPassword, this.Password) == 0;
         }
 
