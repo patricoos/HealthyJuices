@@ -33,6 +33,7 @@ namespace HealthyJuices.Domain.Models.Users
 
         public string ResetPermissionsToken { get; set; }
         public DateTime? ResetPermissionsTokenExpiration { get; set; }
+        public List<string> RolesList => this.Roles.GetFlags().Select(x => Enum.GetName(typeof(UserRole), x)).ToList();
 
 
         public User() { }
@@ -67,11 +68,8 @@ namespace HealthyJuices.Domain.Models.Users
         public void AddRoles(params UserRole[] roles)
         {
             foreach (var userRole in roles)
-            {
                 this.Roles |= userRole;
-            }
         }
-        public List<string> RolesList => this.Roles.GetFlags().Select(x => Enum.GetName(typeof(UserRole), x)).ToList();
         
         public bool CheckPasswordValidity(string password)
         {

@@ -25,7 +25,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthyJuices.Domain", "3Do
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthyJuices.Persistence.Ef", "4Infrastructure\HealthyJuices.Persistence.Ef\HealthyJuices.Persistence.Ef.csproj", "{B247315E-1DEE-4FB4-BDAC-0145C0A1F8B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthyJuices.Mailing", "4Infrastructure\HealthyJuices.Mailing\HealthyJuices.Mailing.csproj", "{9F4DDD9B-D89E-4AFF-BE33-E44428122FBD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthyJuices.Mailing", "4Infrastructure\HealthyJuices.Mailing\HealthyJuices.Mailing.csproj", "{9F4DDD9B-D89E-4AFF-BE33-E44428122FBD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthyJuices.Domain.Tests", "3Domain\HealthyJuices.Domain.Tests\HealthyJuices.Domain.Tests.csproj", "{C85C2E10-5DE1-41C7-9FFA-9C224C23F415}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthyJuices.IntegrationTests", "2Application\HealthyJuices.IntegrationTests\HealthyJuices.IntegrationTests.csproj", "{D423565B-3A82-487F-B98B-540D8D8DEC77}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthyJuices.Persistence.TestHelpers", "4Infrastructure\HealthyJuices.Persistence.TestHelpers\HealthyJuices.Persistence.TestHelpers.csproj", "{BF1FF1E3-8C92-4CBD-BA58-B64BC236F739}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +67,18 @@ Global
 		{9F4DDD9B-D89E-4AFF-BE33-E44428122FBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F4DDD9B-D89E-4AFF-BE33-E44428122FBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F4DDD9B-D89E-4AFF-BE33-E44428122FBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C85C2E10-5DE1-41C7-9FFA-9C224C23F415}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C85C2E10-5DE1-41C7-9FFA-9C224C23F415}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C85C2E10-5DE1-41C7-9FFA-9C224C23F415}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C85C2E10-5DE1-41C7-9FFA-9C224C23F415}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D423565B-3A82-487F-B98B-540D8D8DEC77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D423565B-3A82-487F-B98B-540D8D8DEC77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D423565B-3A82-487F-B98B-540D8D8DEC77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D423565B-3A82-487F-B98B-540D8D8DEC77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF1FF1E3-8C92-4CBD-BA58-B64BC236F739}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF1FF1E3-8C92-4CBD-BA58-B64BC236F739}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF1FF1E3-8C92-4CBD-BA58-B64BC236F739}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF1FF1E3-8C92-4CBD-BA58-B64BC236F739}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,6 +91,9 @@ Global
 		{3565AB39-0CA2-4718-95DB-3E06EA7D258E} = {2F6F975B-4FF1-4DC4-93BF-8306A11D896D}
 		{B247315E-1DEE-4FB4-BDAC-0145C0A1F8B5} = {3D937A68-36BD-4820-9F6C-6EF10CA34972}
 		{9F4DDD9B-D89E-4AFF-BE33-E44428122FBD} = {3D937A68-36BD-4820-9F6C-6EF10CA34972}
+		{C85C2E10-5DE1-41C7-9FFA-9C224C23F415} = {2F6F975B-4FF1-4DC4-93BF-8306A11D896D}
+		{D423565B-3A82-487F-B98B-540D8D8DEC77} = {D11B7E59-6C51-4DC1-B5E9-B8EFC63867C5}
+		{BF1FF1E3-8C92-4CBD-BA58-B64BC236F739} = {3D937A68-36BD-4820-9F6C-6EF10CA34972}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4A943487-9743-4E3D-AA7E-C61A00302256}
