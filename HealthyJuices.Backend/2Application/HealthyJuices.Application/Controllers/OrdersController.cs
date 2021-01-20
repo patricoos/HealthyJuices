@@ -6,7 +6,6 @@ using HealthyJuices.Application.Mappers;
 using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Domain.Models.Orders;
 using HealthyJuices.Domain.Models.Orders.DataAccess;
-using HealthyJuices.Domain.Models.Products;
 using HealthyJuices.Domain.Models.Products.DataAccess;
 using HealthyJuices.Domain.Models.Users.DataAccess;
 using HealthyJuices.Shared.Dto.Orders;
@@ -160,7 +159,7 @@ namespace HealthyJuices.Application.Controllers
                         Amount = x.Sum(a => a.Amount)
                     };
                 }
-            ).ToList();
+            ).ToArray();
 
             var order = new Order(user, dto.DeliveryDate, products);
 

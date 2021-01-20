@@ -15,9 +15,9 @@ namespace HealthyJuices.Api.Bootstrap.DataSeed
             {
                 var orders = new List<Order>()
                 {
-                    new Order(context.Users.Include(x => x.Company).FirstOrDefault(), DateTime.Now.AddDays(1), context.Products.Where(x => x.IsActive).Skip(2).Take(2).Select(x => new OrderProduct{Product = x, Amount = 1}).ToList()),
-                    new Order(context.Users.Include(x => x.Company).FirstOrDefault(), DateTime.Now, context.Products.Where(x => x.IsActive).Take(3).Select(x => new OrderProduct{Product = x, Amount = 2}).ToList()),
-                    new Order(context.Users.Include(x => x.Company).FirstOrDefault(), DateTime.Now, context.Products.Where(x => x.IsActive).Skip(3).Select(x => new OrderProduct{Product = x, Amount = 5}).ToList()),
+                    new Order(context.Users.Include(x => x.Company).FirstOrDefault(), DateTime.Now.AddDays(1), context.Products.Where(x => x.IsActive).Skip(2).Take(2).Select(x => new OrderProduct{Product = x, Amount = 1}).ToArray()),
+                    new Order(context.Users.Include(x => x.Company).FirstOrDefault(), DateTime.Now, context.Products.Where(x => x.IsActive).Take(3).Select(x => new OrderProduct{Product = x, Amount = 2}).ToArray()),
+                    new Order(context.Users.Include(x => x.Company).FirstOrDefault(), DateTime.Now, context.Products.Where(x => x.IsActive).Skip(3).Select(x => new OrderProduct{Product = x, Amount = 5}).ToArray()),
                 };
                 context.Orders.AddRange(orders);
             }

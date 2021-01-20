@@ -32,14 +32,23 @@ namespace HealthyJuices.Domain.Models.Orders
         {
         }
 
-        public Order(User user, DateTime deliveryDate, List<OrderProduct> products)
+        public Order(User user, DateTime deliveryDate, OrderProduct[] products)
         {
+            this.OrderProducts = new List<OrderProduct>();
             this.DateCreated = DateTime.UtcNow;
             this.DateModified = DateTime.UtcNow;
             this.DeliveryDate = deliveryDate;
             this.User = user;
             this.DestinationCompany = user.Company;
-            this.OrderProducts = products.Select(x => new OrderProduct(this, x.Product, x.Amount)).ToList();
+            this.AddProduct(products);
+        }
+
+        public void AddProduct(params OrderProduct[] products) => products.ToList().ForEach(x => this.AddProduct(x.Product, x.Amount));
+
+        public void AddProduct(Product product, decimal amount)
+        {
+            this.DateModified = DateTime.UtcNow;
+            this.OrderProducts.Add(new OrderProduct(this, product, amount));
         }
 
         public void Remove()
