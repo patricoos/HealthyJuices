@@ -34,26 +34,33 @@ namespace HealthyJuices.Domain.Models.Orders
         {
         }
 
-        public Order(User user, DateTime deliveryDate, OrderProduct[] products)
+        public Order(User user, DateTime deliveryDate)
         {
             this.OrderProducts = new List<OrderProduct>();
             this.DateCreated = DateTime.UtcNow;
-            this.Modifie();
             this.SetDeliveryDate(deliveryDate);
-            this.AddProduct(products);
             this.SetUser(user);
             this.SetCompany(user.Company);
+            this.Modifie();
         }
 
-        public void AddProduct(params OrderProduct[] products)
+        public Order(User user, DateTime deliveryDate, Dictionary<Product, decimal> products) : this(user, deliveryDate)
+        {
+            this.AddProduct(products);
+        }
+
+        public void AddProduct(Dictionary<Product, decimal> products)
         {
             foreach (var item in products)
-                this.AddProduct(item.Product, item.Amount);
+                this.AddProduct(item.Key, item.Value);
         }
 
         public void AddProduct(Product product, decimal amount)
         {
             this.Modifie();
+            var existingProduct = OrderProducts.FirstOrDefault(x => x.ProductId == product.Id || x.Product.Id == product.Id);
+            if (existingProduct != null)
+                existingProduct.Amount += amount;
             this.OrderProducts.Add(new OrderProduct(this, product, amount));
         }
 
@@ -75,7 +82,7 @@ namespace HealthyJuices.Domain.Models.Orders
             if (this.IsRemoved)
                 throw new BadRequestException("This order is removed");
 
-            if (DeliveryDate <= DateTime.Now)
+            if (DeliveryDate.Date <= DateTime.Now.Date)
                 throw new BadRequestException("This order can not be modified");
 
             this.DateModified = DateTime.UtcNow;
@@ -83,11 +90,11 @@ namespace HealthyJuices.Domain.Models.Orders
 
         private void SetDeliveryDate(DateTime date)
         {
-            if (date <= DateTime.Now)
+            if (date.Date <= DateTime.Now.Date)
                 throw new BadRequestException("Delivery Date must be in feature");
 
-            this.Modifie();
             this.DeliveryDate = date;
+            this.Modifie();
         }
 
         private void SetCompany(Company company)

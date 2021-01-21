@@ -6,6 +6,7 @@ using HealthyJuices.Application.Mappers;
 using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Domain.Models.Orders;
 using HealthyJuices.Domain.Models.Orders.DataAccess;
+using HealthyJuices.Domain.Models.Products;
 using HealthyJuices.Domain.Models.Products.DataAccess;
 using HealthyJuices.Domain.Models.Users.DataAccess;
 using HealthyJuices.Shared.Dto.Orders;
@@ -147,19 +148,15 @@ namespace HealthyJuices.Application.Controllers
                 .ByIds(dto.OrderProducts.Select(p => p.ProductId).ToArray())
                 .ToListAsync();
 
-            var products = dto.OrderProducts.GroupBy(x => x.ProductId).Select(x =>
-                {
-                    var prod = productsEntities.FirstOrDefault(p => p.Id == x.Key);
-                    if (prod == null)
-                        throw new BadRequestException("Product not found");
+            var products = new Dictionary<Product, decimal>();
+            foreach (var item in dto.OrderProducts.GroupBy(x => x.ProductId))
+            {
+                var prod = productsEntities.FirstOrDefault(p => p.Id == item.Key);
+                if (prod == null)
+                    throw new BadRequestException("Product not found");
 
-                    return new OrderProduct()
-                    {
-                        Product = prod,
-                        Amount = x.Sum(a => a.Amount)
-                    };
-                }
-            ).ToArray();
+                products.Add(prod, item.Sum(a => a.Amount));
+            }
 
             var order = new Order(user, dto.DeliveryDate, products);
 

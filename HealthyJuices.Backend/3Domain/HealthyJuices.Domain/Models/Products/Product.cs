@@ -1,5 +1,4 @@
 ﻿using System;
-using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Domain.Models.Abstraction;
 using HealthyJuices.Domain.Models.Abstraction.DataAccess.Entities;
 using HealthyJuices.Shared.Enums;
