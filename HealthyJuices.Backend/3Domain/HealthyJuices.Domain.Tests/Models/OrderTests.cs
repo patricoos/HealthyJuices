@@ -22,7 +22,7 @@ namespace HealthyJuices.Domain.Tests.Models
             var company = new Company("", "", "", "", "", 50, 20);
             var user = new User("test@test.com", "demo", "", "", company, UserRole.Customer);
             user.Activate();
-            var product = new Product("", "", ProductUnitType.Items, 0.2m, true) { Id = 1 };
+            var product = new Product("test Prod", "", ProductUnitType.Items, 0.2m, true) { Id = 1 };
 
             // act
             var order = new Order(user, DateTime.Now.AddDays(1), new List<KeyValuePair<Product, decimal>> { new KeyValuePair<Product, decimal>(product, 1) });
@@ -39,7 +39,7 @@ namespace HealthyJuices.Domain.Tests.Models
             var company = new Company("", "", "", "", "", 50, 20);
             var user = new User("test@test.com", "demo", "", "", company, UserRole.Customer);
             user.Activate();
-            var product = new Product("", "", ProductUnitType.Items, 0.2m, true) { Id = 1 };
+            var product = new Product("test Prod", "", ProductUnitType.Items, 0.2m, true) { Id = 1 };
 
             // act
             var order = new Order(user, DateTime.Now.AddDays(1), new List<KeyValuePair<Product, decimal>> {
@@ -59,7 +59,7 @@ namespace HealthyJuices.Domain.Tests.Models
             var company = new Company("", "", "", "", "", 50, 20);
             var user = new User("test@test.com", "demo", "", "", company, UserRole.Customer);
             user.Activate();
-            var product = new Product("", "", ProductUnitType.Items, 0.2m, true) { Id = 1 };
+            var product = new Product("test Prod", "", ProductUnitType.Items, 0.2m, true) { Id = 1 };
 
             // act
             Action act = () => new Order(user, DateTime.Now);
@@ -74,7 +74,7 @@ namespace HealthyJuices.Domain.Tests.Models
         {
             var company = new Company("", "", "", "", "", 50, 20);
             var user = new User("test@test.com", "demo", "", "", company, UserRole.Customer);
-            var product = new Product("", "", ProductUnitType.Items, 0.2m, true) { Id = 1 };
+            var product = new Product("test Prod", "", ProductUnitType.Items, 0.2m, true) { Id = 1 };
 
             // act
             Action act = () => new Order(user, DateTime.Now.AddDays(1));
@@ -90,7 +90,7 @@ namespace HealthyJuices.Domain.Tests.Models
             var company = new Company("", "", "", "", "", 50, 20);
             var user = new User("test@test.com", "demo", "", "", company, UserRole.Customer);
             user.Activate();
-            var product = new Product("", "", ProductUnitType.Items, 0.2m, true) { Id = 1 };
+            var product = new Product("test Prod", "", ProductUnitType.Items, 0.2m, true) { Id = 1 };
             var order = new Order(user, DateTime.Now.AddDays(1), new Dictionary<Product, decimal> { { product, 1 } }.ToArray());
             order.Remove();
 
@@ -108,7 +108,7 @@ namespace HealthyJuices.Domain.Tests.Models
             var company = new Company("", "", "", "", "", 50, 20);
             var user = new User("test@test.com", "demo", "", "", company, UserRole.Customer);
             user.Activate();
-            var product = new Product("", "", ProductUnitType.Items, 0.2m, true) { Id = 1 };
+            var product = new Product("test Prod", "", ProductUnitType.Items, 0.2m, true) { Id = 1 };
             var order = new Order(user, DateTime.Now.AddDays(1), new Dictionary<Product, decimal> { { product, 1 } }.ToArray());
             order.Remove();
 

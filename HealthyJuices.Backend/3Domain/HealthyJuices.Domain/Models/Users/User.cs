@@ -114,7 +114,7 @@ namespace HealthyJuices.Domain.Models.Users
                 throw new Exception($"User can not have an empty email.");
 
             if (!new EmailAddressAttribute().IsValid(email))
-                throw new Exception($"Email address is invalid.");
+                throw new BadRequestException($"Email address is invalid.");
 
             this.Email = email;
             this.Update();

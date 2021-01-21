@@ -18,7 +18,7 @@ namespace HealthyJuices.Domain.Tests.Models
             //  arrange
 
             // act
-            var product = new Product("", "", ProductUnitType.Items, 0.2m, true);
+            var product = new Product("test Prod", "", ProductUnitType.Items, 0.2m, true);
 
             // assert
             product.IsActive.Should().BeTrue();
