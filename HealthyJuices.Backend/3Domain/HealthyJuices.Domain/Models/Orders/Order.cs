@@ -14,21 +14,21 @@ namespace HealthyJuices.Domain.Models.Orders
     public class Order : Entity, IModifiableEntity, ISoftRemovableEntity, IAggregateRoot
     {
         public DateTime DateCreated { get; init; }
-        public DateTime DateModified { get; set; }
-        public bool IsRemoved { get; set; }
+        public DateTime DateModified { get; private set; }
+        public bool IsRemoved { get; private set; }
 
-        public DateTime DeliveryDate { get; set; }
+        public DateTime DeliveryDate { get; private set; }
 
         //  public OrderStatus Status { get; set; }
 
 
-        public long UserId { get; set; }
-        public User User { get; set; }
+        public long UserId { get; private set; }
+        public User User { get; private set; }
 
-        public long DestinationCompanyId { get; set; }
-        public Company DestinationCompany { get; set; }
+        public long DestinationCompanyId { get; private set; }
+        public Company DestinationCompany { get; private set; }
 
-        public ICollection<OrderProduct> OrderProducts { get; set; }
+        public ICollection<OrderProduct> OrderProducts { get; private set; }
 
         public Order()
         {
@@ -41,7 +41,7 @@ namespace HealthyJuices.Domain.Models.Orders
             this.SetDeliveryDate(deliveryDate);
             this.SetUser(user);
             this.SetCompany(user.Company);
-            this.Modifie();
+            this.Update();
         }
 
         public Order(User user, DateTime deliveryDate, IEnumerable<KeyValuePair<Product, decimal>> products) : this(user, deliveryDate)
@@ -57,7 +57,7 @@ namespace HealthyJuices.Domain.Models.Orders
 
         public void AddProduct(Product product, decimal amount)
         {
-            this.Modifie();
+            this.Update();
             var existingProduct = OrderProducts.FirstOrDefault(x => x.ProductId == product.Id || x.Product.Id == product.Id);
             if (existingProduct != null)
             {
@@ -69,18 +69,18 @@ namespace HealthyJuices.Domain.Models.Orders
 
         public void Remove()
         {
-            this.Modifie();
+            this.Update();
             this.IsRemoved = true;
         }
 
         public void Update(DateTime deliveryDate)
         {
-            this.Modifie();
+            this.Update();
             this.SetDeliveryDate(deliveryDate);
         }
 
 
-        private void Modifie()
+        private void Update()
         {
             if (this.IsRemoved)
                 throw new BadRequestException("This order is removed");
@@ -97,7 +97,7 @@ namespace HealthyJuices.Domain.Models.Orders
                 throw new BadRequestException("Delivery Date must be in feature");
 
             this.DeliveryDate = date;
-            this.Modifie();
+            this.Update();
         }
 
         private void SetCompany(Company company)
@@ -108,7 +108,7 @@ namespace HealthyJuices.Domain.Models.Orders
             if (company.IsRemoved)
                 throw new BadRequestException($"Company '{company.Name}' is removed");
 
-            this.Modifie();
+            this.Update();
             this.DestinationCompany = company;
         }
 
@@ -123,7 +123,7 @@ namespace HealthyJuices.Domain.Models.Orders
             if (!user.Roles.HasFlag(UserRole.Customer))
                 throw new BadRequestException($"User '{user.Email}' has no permision to create order");
 
-            this.Modifie();
+            this.Update();
             this.User = user;
         }
     }

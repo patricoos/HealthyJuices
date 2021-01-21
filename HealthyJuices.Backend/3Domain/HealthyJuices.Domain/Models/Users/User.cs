@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Common.Extensions;
@@ -12,9 +13,9 @@ namespace HealthyJuices.Domain.Models.Users
 {
     public class User : Entity, IModifiableEntity, ISoftRemovableEntity, IAggregateRoot
     {
-        public string Email { get; set; }
+        public string Email { get; private set; }
 
-        public string FirstName { get; set; }
+        public string FirstName { get;  set; }
         public string LastName { get; set; }
 
         public UserRole Roles { get; private set; }
@@ -23,16 +24,16 @@ namespace HealthyJuices.Domain.Models.Users
         public string PasswordSalt { get; private set; }
 
 
-        public long? CompanyId { get; set; }
-        public Company Company { get; set; }
+        public long? CompanyId { get; private set; }
+        public Company Company { get; private set; }
 
-        public DateTime DateCreated { get; init; }
-        public DateTime DateModified { get; set; }
-        public bool IsRemoved { get;  set; }
+        public DateTime DateCreated { get; private init; }
+        public DateTime DateModified { get; private set; }
+        public bool IsRemoved { get; private set; }
         public bool IsActive { get; private set; }
 
-        public string ResetPermissionsToken { get; set; }
-        public DateTime? ResetPermissionsTokenExpiration { get; set; }
+        public string ResetPermissionsToken { get; private set; }
+        public DateTime? ResetPermissionsTokenExpiration { get; private set; }
         public List<string> RolesList => this.Roles.GetFlags().Select(x => Enum.GetName(typeof(UserRole), x)).ToList();
 
 
@@ -42,16 +43,16 @@ namespace HealthyJuices.Domain.Models.Users
         public User(string email, string password, params UserRole[] role)
         {
             this.DateCreated = DateTime.Now;
-            this.DateModified = DateTime.Now;
             this.IsActive = false;
             this.IsRemoved = false;
 
-            this.Email = email;
+            this.SetEmail(email);
             this.PasswordSalt = PasswordManager.GenerateSalt();
             this.Password = PasswordManager.HashPassword(password, this.PasswordSalt);
 
-            SetPassword(password);
-            AddRoles(role);
+            this.SetPassword(password);
+            this.AddRoles(role);
+            this.Update();
         }
 
         public User(string email, string password, string firstName, string lastName, params UserRole[] role) : this(email, password, role)
@@ -69,8 +70,9 @@ namespace HealthyJuices.Domain.Models.Users
         {
             foreach (var userRole in roles)
                 this.Roles |= userRole;
+            this.Update();
         }
-        
+
         public bool CheckPasswordValidity(string password)
         {
             var hashedPassword = PasswordManager.HashPassword(password, PasswordSalt);
@@ -79,19 +81,52 @@ namespace HealthyJuices.Domain.Models.Users
 
         public void SetPassword(string password)
         {
+            if (string.IsNullOrWhiteSpace(password) || password.Length < 3)
+                throw new Exception($"Password is incorrect.");
+
             this.PasswordSalt = PasswordManager.GenerateSalt();
             this.Password = PasswordManager.HashPassword(password, this.PasswordSalt);
+            this.Update();
         }
 
         public void Activate()
         {
-            this.IsActive = IsRemoved ? throw new BadRequestException("This user is removed") : true;
+            this.IsActive = true;
+            this.Update();
+        }
+
+        public void SetResetPermissionsToken(string token, DateTime date)
+        {
+            ResetPermissionsToken = token;
+            ResetPermissionsTokenExpiration = date;
+            this.Update();
         }
 
         public void Remove()
         {
+            this.Update();
             this.IsRemoved = true;
+        }
+
+        public void SetEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                throw new Exception($"User can not have an empty email.");
+
+            if (!new EmailAddressAttribute().IsValid(email))
+                throw new Exception($"Email address is invalid.");
+
+            this.Email = email;
+            this.Update();
+        }
+
+        private void Update()
+        {
+            if (this.IsRemoved)
+                throw new BadRequestException("This user is removed");
+
             this.DateModified = DateTime.UtcNow;
         }
+
     }
 }

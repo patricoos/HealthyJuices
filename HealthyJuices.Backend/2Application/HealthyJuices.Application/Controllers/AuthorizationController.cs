@@ -130,11 +130,8 @@ namespace HealthyJuices.Application.Controllers
             if (company == null)
                 throw new BadRequestException($"Company not found");
 
-            var user = new User(dto.Email, dto.Password, dto.FirstName, dto.LastName, company, UserRole.Customer)
-            {
-                ResetPermissionsToken = Guid.NewGuid().ToString(),
-                ResetPermissionsTokenExpiration = _timeProvider.UtcNow.AddDays(1)
-            };
+            var user = new User(dto.Email, dto.Password, dto.FirstName, dto.LastName, company, UserRole.Customer);
+            user.SetResetPermissionsToken(Guid.NewGuid().ToString(), _timeProvider.UtcNow.AddDays(1));
 
             // TODO: get current url
 
@@ -170,8 +167,9 @@ namespace HealthyJuices.Application.Controllers
             if (user == null)
                 throw new BadRequestException($"User with email '{dto.Email}' not found");
 
-            user.ResetPermissionsToken = Guid.NewGuid().ToString();
-            user.ResetPermissionsTokenExpiration = _timeProvider.UtcNow.AddDays(1);
+            user.SetResetPermissionsToken(Guid.NewGuid().ToString(), _timeProvider.UtcNow.AddDays(1));
+
+            // TODO: get current url
 
             await _emailService.SendForgotPasswordEmail(user.Email, "http://localhost:4200/auth/reset-password", user.ResetPermissionsToken);
             await _userRepository.Update(user).SaveChangesAsync();
@@ -190,7 +188,7 @@ namespace HealthyJuices.Application.Controllers
             VerifyResetPermissionsToken(user, dto.Token);
 
             user.SetPassword(dto.Password);
-            user.ResetPermissionsTokenExpiration = _timeProvider.UtcNow;
+            user.SetResetPermissionsToken(String.Empty, _timeProvider.UtcNow);
 
             await _userRepository.Update(user).SaveChangesAsync();
         }

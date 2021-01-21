@@ -2,7 +2,7 @@
 {
     public interface ISoftRemovableEntity : IEntity
     {
-        bool IsRemoved { get; set; }
+        bool IsRemoved { get; }
         void Remove();
     }
 }
