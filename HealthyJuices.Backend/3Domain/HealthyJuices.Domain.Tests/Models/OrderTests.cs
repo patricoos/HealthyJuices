@@ -19,7 +19,7 @@ namespace HealthyJuices.Domain.Tests.Models
         public void Can_create_order_for_tomorrow()
         {
             //  arrange
-            var company = new Company("", "", "", "", "", 50, 20);
+            var company = new Company("test comp", "", "", "", "", 50, 20);
             var user = new User("test@test.com", "demo", "", "", company, UserRole.Customer);
             user.Activate();
             var product = new Product("test Prod", "", ProductUnitType.Items, 0.2m, true) { Id = 1 };
@@ -36,7 +36,7 @@ namespace HealthyJuices.Domain.Tests.Models
         public void Can_create_order_for_tomorrow_and_add_products()
         {
             //  arrange
-            var company = new Company("", "", "", "", "", 50, 20);
+            var company = new Company("test comp", "", "", "", "", 50, 20);
             var user = new User("test@test.com", "demo", "", "", company, UserRole.Customer);
             user.Activate();
             var product = new Product("test Prod", "", ProductUnitType.Items, 0.2m, true) { Id = 1 };
@@ -54,9 +54,9 @@ namespace HealthyJuices.Domain.Tests.Models
         }
 
         [Fact]
-        public void When_create_order_for_today_returns_exception()
+        public void When_create_order_for_today_should_return_exception()
         {
-            var company = new Company("", "", "", "", "", 50, 20);
+            var company = new Company("test comp", "", "", "", "", 50, 20);
             var user = new User("test@test.com", "demo", "", "", company, UserRole.Customer);
             user.Activate();
             var product = new Product("test Prod", "", ProductUnitType.Items, 0.2m, true) { Id = 1 };
@@ -70,9 +70,9 @@ namespace HealthyJuices.Domain.Tests.Models
         }
 
         [Fact]
-        public void When_create_order_with_not_active_user_returns_exception()
+        public void When_create_order_with_not_active_user_should_return_exception()
         {
-            var company = new Company("", "", "", "", "", 50, 20);
+            var company = new Company("test comp", "", "", "", "", 50, 20);
             var user = new User("test@test.com", "demo", "", "", company, UserRole.Customer);
             var product = new Product("test Prod", "", ProductUnitType.Items, 0.2m, true) { Id = 1 };
 
@@ -85,9 +85,9 @@ namespace HealthyJuices.Domain.Tests.Models
         }
 
         [Fact]
-        public void When_add_product_when_order_is_removed_returns_exception()
+        public void When_add_product_when_order_is_removed_should_return_exception()
         {
-            var company = new Company("", "", "", "", "", 50, 20);
+            var company = new Company("test comp", "", "", "", "", 50, 20);
             var user = new User("test@test.com", "demo", "", "", company, UserRole.Customer);
             user.Activate();
             var product = new Product("test Prod", "", ProductUnitType.Items, 0.2m, true) { Id = 1 };
@@ -103,9 +103,9 @@ namespace HealthyJuices.Domain.Tests.Models
         }
 
         [Fact]
-        public void When_update_removed_order_returns_exception()
+        public void When_update_removed_order_should_return_exception()
         {
-            var company = new Company("", "", "", "", "", 50, 20);
+            var company = new Company("test comp", "", "", "", "", 50, 20);
             var user = new User("test@test.com", "demo", "", "", company, UserRole.Customer);
             user.Activate();
             var product = new Product("test Prod", "", ProductUnitType.Items, 0.2m, true) { Id = 1 };

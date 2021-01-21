@@ -17,7 +17,7 @@ namespace HealthyJuices.Domain.Tests.Models
             //  arrange
 
             // act
-            var company = new Company("", "", "", "", "", 50, 20);
+            var company = new Company("test comp", "", "", "", "", 50, 20);
 
             //assert
             company.IsRemoved.Should().BeFalse();

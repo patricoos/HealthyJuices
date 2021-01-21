@@ -17,7 +17,7 @@ namespace HealthyJuices.Domain.Tests.Models
         public void Can_create_user()
         {
             //  arrange
-            var company = new Company("", "", "", "", "", 50, 20);
+            var company = new Company("test comp", "", "", "", "", 50, 20);
 
             // act
             var user = new User("test@test.com", "demo", "", "", company, UserRole.Customer);
