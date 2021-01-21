@@ -148,15 +148,14 @@ namespace HealthyJuices.Application.Controllers
                 .ByIds(dto.OrderProducts.Select(p => p.ProductId).ToArray())
                 .ToListAsync();
 
-            var products = new Dictionary<Product, decimal>();
-            foreach (var item in dto.OrderProducts.GroupBy(x => x.ProductId))
+            var products = dto.OrderProducts.GroupBy(x => x.ProductId).Select(x =>
             {
-                var prod = productsEntities.FirstOrDefault(p => p.Id == item.Key);
+                var prod = productsEntities.FirstOrDefault(p => p.Id == x.Key);
                 if (prod == null)
                     throw new BadRequestException("Product not found");
 
-                products.Add(prod, item.Sum(a => a.Amount));
-            }
+                return new KeyValuePair<Product, decimal>(prod, x.Sum(a => a.Amount));
+            }).ToArray();
 
             var order = new Order(user, dto.DeliveryDate, products);
 

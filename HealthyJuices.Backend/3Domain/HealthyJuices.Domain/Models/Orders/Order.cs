@@ -44,12 +44,12 @@ namespace HealthyJuices.Domain.Models.Orders
             this.Modifie();
         }
 
-        public Order(User user, DateTime deliveryDate, Dictionary<Product, decimal> products) : this(user, deliveryDate)
+        public Order(User user, DateTime deliveryDate, IEnumerable<KeyValuePair<Product, decimal>> products) : this(user, deliveryDate)
         {
             this.AddProduct(products);
         }
 
-        public void AddProduct(Dictionary<Product, decimal> products)
+        public void AddProduct(IEnumerable<KeyValuePair<Product, decimal>> products)
         {
             foreach (var item in products)
                 this.AddProduct(item.Key, item.Value);
@@ -60,7 +60,10 @@ namespace HealthyJuices.Domain.Models.Orders
             this.Modifie();
             var existingProduct = OrderProducts.FirstOrDefault(x => x.ProductId == product.Id || x.Product.Id == product.Id);
             if (existingProduct != null)
+            {
                 existingProduct.Amount += amount;
+                return;
+            }
             this.OrderProducts.Add(new OrderProduct(this, product, amount));
         }
 

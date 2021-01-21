@@ -16,9 +16,9 @@ namespace HealthyJuices.Api.Bootstrap.DataSeed
             {
                 var orders = new List<Order>()
                 {
-                    new Order(context.Users.Include(x => x.Company).FirstOrDefault(), DateTime.Now.AddDays(1), context.Products.Where(x => x.IsActive).Skip(2).Take(2).ToDictionary<Product, Product, decimal>(x => x, x =>  1)),
-                    new Order(context.Users.Include(x => x.Company).FirstOrDefault(), DateTime.Now, context.Products.Where(x => x.IsActive).Take(3).ToDictionary<Product, Product, decimal>(x => x, x =>  2)),
-                    new Order(context.Users.Include(x => x.Company).FirstOrDefault(), DateTime.Now, context.Products.Where(x => x.IsActive).Skip(3).ToDictionary<Product, Product, decimal>(x => x, x =>  5)),
+                    new Order(context.Users.Include(x => x.Company).FirstOrDefault(), DateTime.Now.AddDays(1), context.Products.Where(x => x.IsActive).Skip(2).Take(2).Select(x => new KeyValuePair<Product, decimal>(x, 1))),
+                    new Order(context.Users.Include(x => x.Company).FirstOrDefault(), DateTime.Now, context.Products.Where(x => x.IsActive).Take(3).Select(x => new KeyValuePair<Product, decimal>(x,  2))),
+                    new Order(context.Users.Include(x => x.Company).FirstOrDefault(), DateTime.Now, context.Products.Where(x => x.IsActive).Skip(3).Select(x => new KeyValuePair<Product, decimal>(x, 5)))
                 };
                 context.Orders.AddRange(orders);
             }
