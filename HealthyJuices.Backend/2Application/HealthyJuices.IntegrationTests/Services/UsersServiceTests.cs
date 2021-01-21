@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace HealthyJuices.IntegrationTests.Controllers
+namespace HealthyJuices.IntegrationTests.Services
 {
-    class CompaniesControllerTests : InMemoryDatabaseTestBase
+    class UsersServiceTests : InMemoryDatabaseTestBase
     {
     }
 }

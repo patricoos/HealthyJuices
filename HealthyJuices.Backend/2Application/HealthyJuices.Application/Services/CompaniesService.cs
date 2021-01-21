@@ -7,13 +7,13 @@ using HealthyJuices.Domain.Models.Companies;
 using HealthyJuices.Domain.Models.Companies.DataAccess;
 using HealthyJuices.Shared.Dto;
 
-namespace HealthyJuices.Application.Controllers
+namespace HealthyJuices.Application.Services
 {
-    public class CompaniesController
+    public class CompaniesService
     {
         private readonly ICompanyRepository _companyRepository;
 
-        public CompaniesController(ICompanyRepository companyRepository)
+        public CompaniesService(ICompanyRepository companyRepository)
         {
             _companyRepository = companyRepository;
         }

@@ -8,13 +8,13 @@ using HealthyJuices.Domain.Models.Users.DataAccess;
 using HealthyJuices.Shared.Dto;
 using HealthyJuices.Shared.Enums;
 
-namespace HealthyJuices.Application.Controllers
+namespace HealthyJuices.Application.Services
 {
-    public class UsersController
+    public class UsersService
     {
         private readonly IUserRepository _userRepository;
 
-        public UsersController(IUserRepository userRepository)
+        public UsersService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }

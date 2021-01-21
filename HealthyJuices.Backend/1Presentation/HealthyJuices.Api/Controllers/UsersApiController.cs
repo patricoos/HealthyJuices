@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using HealthyJuices.Api.Utils.Attributes;
-using HealthyJuices.Application.Controllers;
+using HealthyJuices.Application.Services;
 using HealthyJuices.Shared.Dto;
 using HealthyJuices.Shared.Enums;
 using Microsoft.AspNetCore.Authorization;
@@ -13,18 +13,18 @@ namespace HealthyJuices.Api.Controllers
     [Route("users")]
     public class UsersApiController : ApiController
     {
-        private readonly UsersController _appController;
+        private readonly UsersService _service;
 
-        public UsersApiController(UsersController appController)
+        public UsersApiController(UsersService service)
         {
-            _appController = appController;
+            _service = service;
         }
 
         [Authorize]
         [HttpGet]
         public async Task<List<UserDto>> GetAllAsync()
         {
-            var result = await _appController.GetAllAsync();
+            var result = await _service.GetAllAsync();
             return result;
         }
 
@@ -32,7 +32,7 @@ namespace HealthyJuices.Api.Controllers
         [HttpGet("active")]
         public async Task<List<UserDto>> GetAllActiveAsync()
         {
-            var result = await _appController.GetAllActiveAsync();
+            var result = await _service.GetAllActiveAsync();
             return result;
         }
 
@@ -40,7 +40,7 @@ namespace HealthyJuices.Api.Controllers
         [HttpGet("role/{role}")]
         public async Task<List<UserDto>> GetAllActiveByUserRoleAsync(UserRole role)
         {
-            var result = await _appController.GetAllActiveByUserRoleAsync(role);
+            var result = await _service.GetAllActiveByUserRoleAsync(role);
             return result;
         }
 
@@ -48,7 +48,7 @@ namespace HealthyJuices.Api.Controllers
         [HttpGet("{id}")]
         public async Task<UserDto> GetByIdAsync(long id)
         {
-            var result = await _appController.GetAsync(id);
+            var result = await _service.GetAsync(id);
             return result;
         }
 
@@ -56,7 +56,7 @@ namespace HealthyJuices.Api.Controllers
         [HttpGet("{userName}")]
         public async Task<UserDto> GetAsync(string userName)
         {
-            var result = await _appController.GetAsync(userName);
+            var result = await _service.GetAsync(userName);
             return result;
         }
 
@@ -64,7 +64,7 @@ namespace HealthyJuices.Api.Controllers
         [AllowAnonymous]
         public async Task<bool> IsExistingAsync(string userName)
         {
-            var result = await _appController.IsExistingAsync(userName);
+            var result = await _service.IsExistingAsync(userName);
             return result;
         }
 
@@ -72,7 +72,7 @@ namespace HealthyJuices.Api.Controllers
         [HttpPost]
         public async Task<long> CreateAsync([FromBody] AddOrEditUserDto dto)
         {
-            var result = await _appController.CreateAsync(dto);
+            var result = await _service.CreateAsync(dto);
             return result;
         }
 
@@ -80,7 +80,7 @@ namespace HealthyJuices.Api.Controllers
         [HttpDelete("{id}")]
         public async Task DeleteAsync(long id)
         {
-            await _appController.DeleteAsync(id);
+            await _service.DeleteAsync(id);
         }
     }
 }

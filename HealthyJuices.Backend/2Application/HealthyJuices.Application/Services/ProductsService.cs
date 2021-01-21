@@ -7,13 +7,13 @@ using HealthyJuices.Domain.Models.Products;
 using HealthyJuices.Domain.Models.Products.DataAccess;
 using HealthyJuices.Shared.Dto.Products;
 
-namespace HealthyJuices.Application.Controllers
+namespace HealthyJuices.Application.Services
 {
-    public class ProductsController
+    public class ProductsService
     {
         private readonly IProductRepository _productRepository;
 
-        public ProductsController(IProductRepository productRepository)
+        public ProductsService(IProductRepository productRepository)
         {
             _productRepository = productRepository;
         }

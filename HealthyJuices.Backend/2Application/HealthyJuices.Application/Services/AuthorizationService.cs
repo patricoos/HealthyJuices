@@ -12,9 +12,9 @@ using HealthyJuices.Shared.Dto;
 using HealthyJuices.Shared.Dto.Auth;
 using HealthyJuices.Shared.Enums;
 
-namespace HealthyJuices.Application.Controllers
+namespace HealthyJuices.Application.Services
 {
-    public class AuthorizationController
+    public class AuthorizationService
     {
         private readonly IUserRepository _userRepository;
         private readonly ICompanyRepository _companyRepository;
@@ -22,7 +22,7 @@ namespace HealthyJuices.Application.Controllers
         private readonly ITimeProvider _timeProvider;
         private readonly EmailService _emailService;
 
-        public AuthorizationController(IUserRepository userRepository, SimpleTokenProvider tokenProvider, ITimeProvider timeProvider, EmailService emailService, ICompanyRepository companyRepository)
+        public AuthorizationService(IUserRepository userRepository, SimpleTokenProvider tokenProvider, ITimeProvider timeProvider, EmailService emailService, ICompanyRepository companyRepository)
         {
             _userRepository = userRepository;
             _tokenProvider = tokenProvider;

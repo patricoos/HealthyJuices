@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using HealthyJuices.Api.Utils.Attributes;
-using HealthyJuices.Application.Controllers;
+using HealthyJuices.Application.Services;
 using HealthyJuices.Shared.Dto;
 using HealthyJuices.Shared.Enums;
 using Microsoft.AspNetCore.Authorization;
@@ -13,11 +13,11 @@ namespace HealthyJuices.Api.Controllers
     [Route("companies")]
     public class CompaniesApiController : ApiController
     {
-        private readonly CompaniesController _appController;
+        private readonly CompaniesService _service;
 
-        public CompaniesApiController(CompaniesController appController)
+        public CompaniesApiController(CompaniesService service)
         {
-            _appController = appController;
+            _service = service;
         }
 
         [HttpGet]
@@ -25,14 +25,14 @@ namespace HealthyJuices.Api.Controllers
         [AuthorizeRoles(UserRole.BusinessOwner)]
         public async Task<List<CompanyDto>> GetAllAsync()
         {
-            var result = await _appController.GetAllAsync();
+            var result = await _service.GetAllAsync();
             return result;
         }
 
         [HttpGet("active")]
         public async Task<List<CompanyDto>> GetAllActiveAsync()
         {
-            var result = await _appController.GetAllActiveAsync();
+            var result = await _service.GetAllActiveAsync();
             return result;
         }
 
@@ -41,7 +41,7 @@ namespace HealthyJuices.Api.Controllers
         [Authorize]
         public async Task<CompanyDto> GetByIdAsync(long id)
         {
-            var result = await _appController.GetByIdAsync(id);
+            var result = await _service.GetByIdAsync(id);
             return result;
         }
 
@@ -50,7 +50,7 @@ namespace HealthyJuices.Api.Controllers
         [AuthorizeRoles(UserRole.BusinessOwner)]
         public async Task<long> CreateAsync(CompanyDto definitionDto)
         {
-            var result = await _appController.CreateAsync(definitionDto);
+            var result = await _service.CreateAsync(definitionDto);
             return result;
         }
 
@@ -59,7 +59,7 @@ namespace HealthyJuices.Api.Controllers
         [AuthorizeRoles(UserRole.BusinessOwner)]
         public async Task UpdateAsync(CompanyDto definitionDto)
         {
-            await _appController.UpdateAsync(definitionDto);
+            await _service.UpdateAsync(definitionDto);
         }
 
         [HttpDelete("{id}")]
@@ -67,7 +67,7 @@ namespace HealthyJuices.Api.Controllers
         [AuthorizeRoles(UserRole.BusinessOwner)]
         public async Task DeleteAsync(long id)
         {
-            await _appController.DeleteByIdAsync(id);
+            await _service.DeleteByIdAsync(id);
         }
     }
 }

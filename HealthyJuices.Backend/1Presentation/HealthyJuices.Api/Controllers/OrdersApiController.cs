@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using HealthyJuices.Api.Utils.Attributes;
-using HealthyJuices.Application.Controllers;
+using HealthyJuices.Application.Services;
 using HealthyJuices.Shared.Dto.Orders;
 using HealthyJuices.Shared.Dto.Reports;
 using HealthyJuices.Shared.Enums;
@@ -16,18 +16,18 @@ namespace HealthyJuices.Api.Controllers
     [Authorize]
     public class OrdersApiController : ApiController
     {
-        private readonly OrdersController _appController;
+        private readonly OrdersService _service;
 
-        public OrdersApiController(OrdersController appController)
+        public OrdersApiController(OrdersService service)
         {
-            _appController = appController;
+            _service = service;
         }
 
         [HttpGet]
         [AuthorizeRoles(UserRole.BusinessOwner)]
         public async Task<List<OrderDto>> GetAllAsync()
         {
-            var result = await _appController.GetAllAsync();
+            var result = await _service.GetAllAsync();
             return result;
         }
 
@@ -35,7 +35,7 @@ namespace HealthyJuices.Api.Controllers
         [AuthorizeRoles(UserRole.Customer)]
         public async Task<List<OrderDto>> GetAllActiveByUserAsync([FromQuery] DateTime? from = null, [FromQuery] DateTime? to = null)
         {
-            var result = await _appController.GetAllActiveByUserAsync(RequestSenderId, from, to);
+            var result = await _service.GetAllActiveByUserAsync(RequestSenderId, from, to);
             return result;
         }
 
@@ -43,7 +43,7 @@ namespace HealthyJuices.Api.Controllers
         [AuthorizeRoles(UserRole.BusinessOwner)]
         public async Task<List<OrderDto>> GetAllActiveAsync([FromQuery]DateTime? from = null, [FromQuery]DateTime? to = null)
         {
-            var result = await _appController.GetAllActiveAsync(from, to);
+            var result = await _service.GetAllActiveAsync(from, to);
             return result;
         }
 
@@ -51,7 +51,7 @@ namespace HealthyJuices.Api.Controllers
         [AuthorizeRoles(UserRole.BusinessOwner)]
         public async Task<OrderDto> GetByIdAsync(long id)
         {
-            var result = await _appController.GetByIdAsync(id);
+            var result = await _service.GetByIdAsync(id);
             return result;
         }
 
@@ -59,7 +59,7 @@ namespace HealthyJuices.Api.Controllers
         [AuthorizeRoles(UserRole.Customer)]
         public async Task<long> CreateAsync(OrderDto definitionDto)
         {
-            var result = await _appController.CreateAsync(definitionDto,RequestSenderId);
+            var result = await _service.CreateAsync(definitionDto,RequestSenderId);
             return result;
         }
 
@@ -67,14 +67,14 @@ namespace HealthyJuices.Api.Controllers
         [AuthorizeRoles(UserRole.BusinessOwner)]
         public async Task UpdateAsync(OrderDto definitionDto)
         {
-            await _appController.UpdateAsync(definitionDto);
+            await _service.UpdateAsync(definitionDto);
         }
 
         [HttpDelete("{id}")]
         [AuthorizeRoles(UserRole.BusinessOwner)]
         public async Task DeleteAsync(long id)
         {
-            await _appController.DeleteByIdAsync(id);
+            await _service.DeleteByIdAsync(id);
         }
 
 
@@ -82,7 +82,7 @@ namespace HealthyJuices.Api.Controllers
         [AuthorizeRoles(UserRole.BusinessOwner)]
         public async Task<DashboardOrderReportDto> GetDashboardOrderReportAsync([FromQuery] DateTime from, [FromQuery] DateTime to)
         {
-            var result = await _appController.GetDashboardOrderReportAsync(from, to);
+            var result = await _service.GetDashboardOrderReportAsync(from, to);
             return result;
         }
     }

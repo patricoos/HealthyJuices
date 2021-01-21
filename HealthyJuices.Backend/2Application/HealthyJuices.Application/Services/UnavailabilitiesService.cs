@@ -8,13 +8,13 @@ using HealthyJuices.Domain.Models.Unavailabilities;
 using HealthyJuices.Domain.Models.Unavailabilities.DataAccess;
 using HealthyJuices.Shared.Dto;
 
-namespace HealthyJuices.Application.Controllers
+namespace HealthyJuices.Application.Services
 {
-    public class UnavailabilitiesController
+    public class UnavailabilitiesService
     {
         private readonly IUnavailabilityRepository _unavailabilityRepository;
 
-        public UnavailabilitiesController(IUnavailabilityRepository unavailabilityRepository)
+        public UnavailabilitiesService(IUnavailabilityRepository unavailabilityRepository)
         {
             _unavailabilityRepository = unavailabilityRepository;
         }

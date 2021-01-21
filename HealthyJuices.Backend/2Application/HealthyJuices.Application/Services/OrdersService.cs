@@ -13,15 +13,15 @@ using HealthyJuices.Shared.Dto.Orders;
 using HealthyJuices.Shared.Dto.Products;
 using HealthyJuices.Shared.Dto.Reports;
 
-namespace HealthyJuices.Application.Controllers
+namespace HealthyJuices.Application.Services
 {
-    public class OrdersController
+    public class OrdersService
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IUserRepository _userRepository;
         private readonly IProductRepository _productRepository;
 
-        public OrdersController(IOrderRepository orderRepository, IUserRepository userRepository, IProductRepository productRepository)
+        public OrdersService(IOrderRepository orderRepository, IUserRepository userRepository, IProductRepository productRepository)
         {
             _orderRepository = orderRepository;
             _userRepository = userRepository;

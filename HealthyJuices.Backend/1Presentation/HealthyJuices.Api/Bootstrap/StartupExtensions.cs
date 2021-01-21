@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using HealthyJuices.Api.Bootstrap.DataSeed;
-using HealthyJuices.Application.Controllers;
+using HealthyJuices.Application.Services;
 using HealthyJuices.Application.Services.Logging;
 using HealthyJuices.Common;
 using HealthyJuices.Common.Contracts;
@@ -36,12 +36,12 @@ namespace HealthyJuices.Api.Bootstrap
     {
         public static IServiceCollection RegisterApplicationControllers(this IServiceCollection @this)
         {
-            @this.AddScoped<AuthorizationController>();
-            @this.AddScoped<OrdersController>();
-            @this.AddScoped<UnavailabilitiesController>();
-            @this.AddScoped<UsersController>();
-            @this.AddScoped<CompaniesController>();
-            @this.AddScoped<ProductsController>();
+            @this.AddScoped<AuthorizationService>();
+            @this.AddScoped<OrdersService>();
+            @this.AddScoped<UnavailabilitiesService>();
+            @this.AddScoped<UsersService>();
+            @this.AddScoped<CompaniesService>();
+            @this.AddScoped<ProductsService>();
             return @this;
         }
 

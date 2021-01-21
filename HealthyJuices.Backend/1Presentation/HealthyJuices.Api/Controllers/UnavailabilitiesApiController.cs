@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using HealthyJuices.Api.Utils.Attributes;
-using HealthyJuices.Application.Controllers;
+using HealthyJuices.Application.Services;
 using HealthyJuices.Shared.Dto;
 using HealthyJuices.Shared.Enums;
 using Microsoft.AspNetCore.Authorization;
@@ -15,24 +15,24 @@ namespace HealthyJuices.Api.Controllers
     [Authorize]
     public class UnavailabilitiesApiController : ApiController
     {
-        private readonly UnavailabilitiesController _appController;
+        private readonly UnavailabilitiesService _service;
 
-        public UnavailabilitiesApiController(UnavailabilitiesController appController)
+        public UnavailabilitiesApiController(UnavailabilitiesService service)
         {
-            _appController = appController;
+            _service = service;
         }
 
         [HttpGet]
         public async Task<List<UnavailabilityDto>> GetAllAsync([FromQuery] DateTime? from, [FromQuery] DateTime? to)
         {
-            var result = await _appController.GetAllAsync(from, to);
+            var result = await _service.GetAllAsync(from, to);
             return result;
         }
 
         [HttpGet("{id}")]
         public async Task<UnavailabilityDto> GetByIdAsync(long id)
         {
-            var result = await _appController.GetByIdAsync(id);
+            var result = await _service.GetByIdAsync(id);
             return result;
         }
 
@@ -40,7 +40,7 @@ namespace HealthyJuices.Api.Controllers
         [AuthorizeRoles(UserRole.BusinessOwner)]
         public async Task<long> CreateAsync(UnavailabilityDto dto)
         {
-            var result = await _appController.CreateAsync(dto);
+            var result = await _service.CreateAsync(dto);
             return result;
         }
 
@@ -48,14 +48,14 @@ namespace HealthyJuices.Api.Controllers
         [AuthorizeRoles(UserRole.BusinessOwner)]
         public async Task UpdateAsync(UnavailabilityDto dto)
         {
-            await _appController.UpdateAsync(dto);
+            await _service.UpdateAsync(dto);
         }
 
         [HttpDelete("{id}")]
         [AuthorizeRoles(UserRole.BusinessOwner)]
         public async Task DeleteAsync(long id)
         {
-            await _appController.DeleteByIdAsync(id);
+            await _service.DeleteByIdAsync(id);
         }
     }
 }
