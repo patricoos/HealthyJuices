@@ -11,7 +11,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -35,6 +34,8 @@ namespace HealthyJuices.IntegrationTests.Services
 
             ArrangeRepositoryContext.SaveChanges();
 
+            var amount = 2;
+
             var request = new OrderDto()
             {
                 DeliveryDate = DateTime.Now.AddDays(1),
@@ -42,8 +43,8 @@ namespace HealthyJuices.IntegrationTests.Services
                 OrderProducts = new List<OrderProductDto> {
                     new OrderProductDto()
                     {
-                        ProductId = 1,
-                        Amount = 2
+                        ProductId = product.Id,
+                        Amount = amount
                     }
                 }
             };
@@ -66,7 +67,7 @@ namespace HealthyJuices.IntegrationTests.Services
 
             subject.OrderProducts.Count.Should().Be(1);
             subject.OrderProducts.First().ProductId.Should().Be(product.Id);
-            subject.OrderProducts.First().Amount.Should().Be(2);
+            subject.OrderProducts.First().Amount.Should().Be(amount);
         }
     }
 }

@@ -2,10 +2,7 @@
 using HealthyJuices.Application.Services;
 using HealthyJuices.Persistence.TestHelpers;
 using HealthyJuices.Shared.Dto;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 

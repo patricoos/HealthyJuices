@@ -1,13 +1,10 @@
 ﻿using FluentAssertions;
 using HealthyJuices.Application.Services;
-using HealthyJuices.Persistence.Ef.Repositories.Unavailabilities;
 using HealthyJuices.Persistence.TestHelpers;
 using HealthyJuices.Shared.Dto;
 using HealthyJuices.Shared.Enums;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
