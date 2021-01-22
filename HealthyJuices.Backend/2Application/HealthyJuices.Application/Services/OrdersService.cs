@@ -138,7 +138,7 @@ namespace HealthyJuices.Application.Services
 
         public async Task<long> CreateAsync(OrderDto dto, long userId)
         {
-            var user = _userRepository.Query().IsActive().ById(userId).IncludeCompany().FirstOrDefault();
+            var user = await _userRepository.Query().IsActive().ById(userId).IncludeCompany().FirstOrDefaultAsync();
             if (user == null)
                 throw new BadRequestException("User not found");
 

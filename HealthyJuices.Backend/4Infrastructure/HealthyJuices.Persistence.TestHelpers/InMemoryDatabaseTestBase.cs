@@ -42,8 +42,8 @@ namespace HealthyJuices.Persistence.TestHelpers
         protected InMemoryDatabaseTestBase()
         {
             InitializeDbContexts();
-            InitializeRepositories();
             InitializeServices();
+            InitializeRepositories();
             SeedGlobalInitData();
         }
 
