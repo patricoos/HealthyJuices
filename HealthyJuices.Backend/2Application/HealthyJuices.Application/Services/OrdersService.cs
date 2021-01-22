@@ -8,6 +8,7 @@ using HealthyJuices.Domain.Models.Orders;
 using HealthyJuices.Domain.Models.Orders.DataAccess;
 using HealthyJuices.Domain.Models.Products;
 using HealthyJuices.Domain.Models.Products.DataAccess;
+using HealthyJuices.Domain.Models.Unavailabilities.DataAccess;
 using HealthyJuices.Domain.Models.Users.DataAccess;
 using HealthyJuices.Shared.Dto.Orders;
 using HealthyJuices.Shared.Dto.Products;
@@ -20,12 +21,14 @@ namespace HealthyJuices.Application.Services
         private readonly IOrderRepository _orderRepository;
         private readonly IUserRepository _userRepository;
         private readonly IProductRepository _productRepository;
+        private readonly IUnavailabilityRepository _unavailabilityRepository;
 
-        public OrdersService(IOrderRepository orderRepository, IUserRepository userRepository, IProductRepository productRepository)
+        public OrdersService(IOrderRepository orderRepository, IUserRepository userRepository, IProductRepository productRepository, IUnavailabilityRepository unavailabilityRepository)
         {
             _orderRepository = orderRepository;
             _userRepository = userRepository;
             _productRepository = productRepository;
+            _unavailabilityRepository = unavailabilityRepository;
         }
 
         public async Task<List<OrderDto>> GetAllAsync()
@@ -141,6 +144,11 @@ namespace HealthyJuices.Application.Services
             var user = await _userRepository.Query().IsActive().ById(userId).IncludeCompany().FirstOrDefaultAsync();
             if (user == null)
                 throw new BadRequestException("User not found");
+
+            var unavailability = await _unavailabilityRepository.Query().BetweenDateTimes(dto.DeliveryDate, dto.DeliveryDate).FirstOrDefaultAsync();
+            if (unavailability != null)
+                throw new BadRequestException("Can not create order in unavailability duration");
+
 
             var productsEntities = await _productRepository.Query()
                 .IsNotRemoved()
