@@ -3,10 +3,6 @@ using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Domain.Models.Unavailabilities;
 using HealthyJuices.Shared.Enums;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace HealthyJuices.Domain.Tests.Models
