@@ -1,15 +1,15 @@
 ﻿using FluentAssertions;
 using HealthyJuices.Application.Services;
-using HealthyJuices.Persistence.TestHelpers;
 using HealthyJuices.Shared.Dto.Products;
 using HealthyJuices.Shared.Enums;
 using System.Linq;
 using System.Threading.Tasks;
+using HealthyJuices.Api.Controllers;
 using Xunit;
 
-namespace HealthyJuices.IntegrationTests.Services
+namespace HealthyJuices.Tests.EndToEnd.Controllers
 {
-    public class ProductsServiceTests : InMemoryDatabaseTestBase
+    public class ProductsControllerTests : InMemoryDatabaseTestBase
     {
         [Fact]
         public async Task Product_can_be_created()
@@ -24,12 +24,13 @@ namespace HealthyJuices.IntegrationTests.Services
                 IsActive = true
             };
 
+            var controller = new ProductsController(ProductsService);
+
             // act
-            var service = new ProductsService(ProductRepository);
-            var result = await service.CreateAsync(request);
+            var result = await controller.CreateAsync(request);
 
             // assert
-            result.Should().BeGreaterThan(0);
+            result.Should().NotBeNullOrWhiteSpace();
             var subject = AssertRepositoryContext.Products.FirstOrDefault();
 
             subject.Should().NotBeNull();

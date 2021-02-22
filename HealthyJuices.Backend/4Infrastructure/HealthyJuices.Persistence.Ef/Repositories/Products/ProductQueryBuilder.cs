@@ -23,7 +23,7 @@ namespace HealthyJuices.Persistence.Ef.Repositories.Products
             return this;
         }
 
-        public IProductQueryBuilder ByIds(params long[] ids)
+        public IProductQueryBuilder ByIds(params string[] ids)
         {
             Query = Query.Where(x => ids.Contains(x.Id));
             return this;

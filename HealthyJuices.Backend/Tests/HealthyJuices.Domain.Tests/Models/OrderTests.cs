@@ -1,20 +1,19 @@
 ﻿using FluentAssertions;
 using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Domain.Models.Companies;
-using HealthyJuices.Domain.Models.Orders;
 using HealthyJuices.Domain.Models.Products;
-using HealthyJuices.Domain.Models.Users;
 using HealthyJuices.Shared.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using HealthyJuices.Domain.Models.Orders;
+using HealthyJuices.Domain.Models.Users;
 using Xunit;
 
 namespace HealthyJuices.Domain.Tests.Models
 {
     public class OrderTests
     {
-
         [Fact]
         public void Can_create_order_for_tomorrow()
         {
@@ -22,7 +21,7 @@ namespace HealthyJuices.Domain.Tests.Models
             var company = new Company("test comp", "", "", "", "", 50, 20);
             var user = new User("test@test.com", "demo", "", "", company, UserRole.Customer);
             user.Activate();
-            var product = new Product("test Prod", "", ProductUnitType.Items, 0.2m, true) { Id = 1 };
+            var product = new Product("test Prod", "", ProductUnitType.Items, 0.2m, true);
 
             // act
             var order = new Order(user, DateTime.Now.AddDays(1), new List<KeyValuePair<Product, decimal>> { new KeyValuePair<Product, decimal>(product, 1) });
@@ -39,7 +38,7 @@ namespace HealthyJuices.Domain.Tests.Models
             var company = new Company("test comp", "", "", "", "", 50, 20);
             var user = new User("test@test.com", "demo", "", "", company, UserRole.Customer);
             user.Activate();
-            var product = new Product("test Prod", "", ProductUnitType.Items, 0.2m, true) { Id = 1 };
+            var product = new Product("test Prod", "", ProductUnitType.Items, 0.2m, true);
 
             // act
             var order = new Order(user, DateTime.Now.AddDays(1), new List<KeyValuePair<Product, decimal>> {
@@ -60,7 +59,7 @@ namespace HealthyJuices.Domain.Tests.Models
             var company = new Company("test comp", "", "", "", "", 50, 20);
             var user = new User("test@test.com", "demo", "", "", company, UserRole.Customer);
             user.Activate();
-            var product = new Product("test Prod", "", ProductUnitType.Items, 0.2m, true) { Id = 1 };
+            var product = new Product("test Prod", "", ProductUnitType.Items, 0.2m, true);
 
             // act
             Action act = () => new Order(user, DateTime.Now);
@@ -76,7 +75,7 @@ namespace HealthyJuices.Domain.Tests.Models
             // arrange
             var company = new Company("test comp", "", "", "", "", 50, 20);
             var user = new User("test@test.com", "demo", "", "", company, UserRole.Customer);
-            var product = new Product("test Prod", "", ProductUnitType.Items, 0.2m, true) { Id = 1 };
+            var product = new Product("test Prod", "", ProductUnitType.Items, 0.2m, true);
 
             // act
             Action act = () => new Order(user, DateTime.Now.AddDays(1));
@@ -93,7 +92,7 @@ namespace HealthyJuices.Domain.Tests.Models
             var company = new Company("test comp", "", "", "", "", 50, 20);
             var user = new User("test@test.com", "demo", "", "", company, UserRole.Customer);
             user.Activate();
-            var product = new Product("test Prod", "", ProductUnitType.Items, 0.2m, true) { Id = 1 };
+            var product = new Product("test Prod", "", ProductUnitType.Items, 0.2m, true) ;
             var order = new Order(user, DateTime.Now.AddDays(1), new Dictionary<Product, decimal> { { product, 1 } }.ToArray());
             order.Remove();
 
@@ -112,7 +111,7 @@ namespace HealthyJuices.Domain.Tests.Models
             var company = new Company("test comp", "", "", "", "", 50, 20);
             var user = new User("test@test.com", "demo", "", "", company, UserRole.Customer);
             user.Activate();
-            var product = new Product("test Prod", "", ProductUnitType.Items, 0.2m, true) { Id = 1 };
+            var product = new Product("test Prod", "", ProductUnitType.Items, 0.2m, true);
             var order = new Order(user, DateTime.Now.AddDays(1), new Dictionary<Product, decimal> { { product, 1 } }.ToArray());
             order.Remove();
 

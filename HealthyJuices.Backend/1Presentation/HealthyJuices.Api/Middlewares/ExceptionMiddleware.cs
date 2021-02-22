@@ -5,7 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using HealthyJuices.Common.Exceptions;
-using HealthyJuices.Domain.Services;
+using HealthyJuices.Domain.Providers;
 using HealthyJuices.Shared.Enums;
 using Microsoft.AspNetCore.Http;
 
@@ -28,7 +28,7 @@ namespace HealthyJuices.Api.Middlewares
             }
             catch (CustomException e)
             {
-                long? logId = null;
+                string logId = null;
 
                 switch (e)
                 {
@@ -46,16 +46,16 @@ namespace HealthyJuices.Api.Middlewares
             }
         }
 
-        private async Task WriteResponseAsync(HttpContext context, string message, HttpStatusCode statusCode, long? logId = null)
+        private async Task WriteResponseAsync(HttpContext context, string message, HttpStatusCode statusCode, string logId = null)
         {
-            var responseMessage = logId.HasValue ? $" {message}  {Environment.NewLine}  EID:  {logId.Value} " : message;
+            var responseMessage = logId != null ? $" {message}  {Environment.NewLine}  EID:  {logId} " : message;
 
             context.Response.StatusCode = (int)statusCode;
 
             await context.Response.Body.WriteAsync(Encoding.UTF8.GetBytes(responseMessage));
         }
 
-        private static async Task<long?> WriteLogAsync(HttpContext context, Exception exception, ILogger logger)
+        private static async Task<string> WriteLogAsync(HttpContext context, Exception exception, ILogger logger)
         {
             try
             {

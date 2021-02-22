@@ -42,7 +42,7 @@ namespace HealthyJuices.Application.Services
 
             return result;
         }
-        public async Task<List<OrderDto>> GetAllActiveByUserAsync(long userId, DateTime? from, DateTime? to)
+        public async Task<List<OrderDto>> GetAllActiveByUserAsync(string userId, DateTime? from, DateTime? to)
         {
             var query = _orderRepository.Query()
                 .IncludeProducts()
@@ -128,7 +128,7 @@ namespace HealthyJuices.Application.Services
             return result;
         }
 
-        public async Task<OrderDto> GetByIdAsync(long id)
+        public async Task<OrderDto> GetByIdAsync(string id)
         {
             var entity = await _orderRepository.Query()
                 .ById(id)
@@ -139,7 +139,7 @@ namespace HealthyJuices.Application.Services
             return result;
         }
 
-        public async Task<long> CreateAsync(OrderDto dto, long userId)
+        public async Task<string> CreateAsync(OrderDto dto, string userId)
         {
             var user = await _userRepository.Query().IsActive().ById(userId).IncludeCompany().FirstOrDefaultAsync();
             if (user == null)
@@ -188,7 +188,7 @@ namespace HealthyJuices.Application.Services
             await _orderRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteByIdAsync(long id)
+        public async Task DeleteByIdAsync(string id)
         {
             var order = await _orderRepository.Query()
                 .ById(id)

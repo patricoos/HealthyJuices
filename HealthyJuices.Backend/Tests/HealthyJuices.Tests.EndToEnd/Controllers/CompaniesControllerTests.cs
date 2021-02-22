@@ -1,14 +1,14 @@
 ﻿using FluentAssertions;
 using HealthyJuices.Application.Services;
-using HealthyJuices.Persistence.TestHelpers;
 using HealthyJuices.Shared.Dto;
 using System.Linq;
 using System.Threading.Tasks;
+using HealthyJuices.Api.Controllers;
 using Xunit;
 
-namespace HealthyJuices.IntegrationTests.Services
+namespace HealthyJuices.Tests.EndToEnd.Controllers
 {
-    public class CompaniesServiceTests : InMemoryDatabaseTestBase
+    public class CompaniesControllerTests : InMemoryDatabaseTestBase
     {
         [Fact]
         public async Task Company_can_be_created()
@@ -26,11 +26,11 @@ namespace HealthyJuices.IntegrationTests.Services
             };
 
             // act
-            var service = new CompaniesService(CompanyRepository);
-            var result = await service.CreateAsync(request);
+            var controller = new CompaniesController(CompaniesService);
+            var result = await controller.CreateAsync(request);
 
             // assert
-            result.Should().BeGreaterThan(0);
+            result.Should().NotBeNullOrWhiteSpace();
             var subject = AssertRepositoryContext.Companies.FirstOrDefault();
 
             subject.Should().NotBeNull();

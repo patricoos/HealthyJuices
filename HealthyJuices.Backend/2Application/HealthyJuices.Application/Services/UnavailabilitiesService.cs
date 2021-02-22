@@ -37,7 +37,7 @@ namespace HealthyJuices.Application.Services
             return result;
         }
 
-        public async Task<UnavailabilityDto> GetByIdAsync(long id)
+        public async Task<UnavailabilityDto> GetByIdAsync(string id)
         {
             var entity = await _unavailabilityRepository.Query()
                 .ById(id)
@@ -48,7 +48,7 @@ namespace HealthyJuices.Application.Services
             return result;
         }
 
-        public async Task<long> CreateAsync(UnavailabilityDto dto)
+        public async Task<string> CreateAsync(UnavailabilityDto dto)
         {
             var unavailability = new Unavailability(dto.From, dto.To, dto.Reason, dto.Comment);
 
@@ -61,7 +61,7 @@ namespace HealthyJuices.Application.Services
         public async Task UpdateAsync(UnavailabilityDto dto)
         {
             var unavailability = await _unavailabilityRepository.Query()
-                .ById(dto.Id.Value)
+                .ById(dto.Id)
                 .FirstOrDefaultAsync();
 
             if (unavailability == null)
@@ -73,7 +73,7 @@ namespace HealthyJuices.Application.Services
             await _unavailabilityRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteByIdAsync(long id)
+        public async Task DeleteByIdAsync(string id)
         {
             var unavailability = await _unavailabilityRepository.Query()
                 .ById(id)

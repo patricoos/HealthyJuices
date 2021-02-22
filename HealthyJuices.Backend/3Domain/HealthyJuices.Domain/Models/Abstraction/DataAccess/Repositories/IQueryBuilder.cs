@@ -8,15 +8,13 @@ namespace HealthyJuices.Domain.Models.Abstraction.DataAccess.Repositories
 {
     public interface IQueryBuilder<TEntity, out TQueryBuilder> where TEntity : Entity where TQueryBuilder : class
     {
-        TQueryBuilder ById(long id);
+        TQueryBuilder ById(string id);
         TQueryBuilder Include<T>(Expression<Func<TEntity, T>> prop);
         TQueryBuilder Include(string prop);
         TQueryBuilder OrderBy<T>(Expression<Func<TEntity, T>> prop);
         TQueryBuilder OrderByDescending<T>(Expression<Func<TEntity, T>> prop);
         TQueryBuilder Take(int count);
         TQueryBuilder TakeLast(int howMany);
-        TQueryBuilder After(long id);
-        TQueryBuilder Before(long id);
         TQueryBuilder AsNoTracking();
         TQueryBuilder Exclude<TProperty>(Expression<Func<TEntity, TProperty>> selector);
         TQueryBuilder Select(Expression<Func<TEntity, TEntity>> func);

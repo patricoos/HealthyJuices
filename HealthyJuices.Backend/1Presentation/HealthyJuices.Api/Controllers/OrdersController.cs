@@ -14,11 +14,11 @@ namespace HealthyJuices.Api.Controllers
     [ApiController]
     [Route("orders")]
     [Authorize]
-    public class OrdersApiController : ApiController
+    public class OrdersController : BaseApiController
     {
         private readonly OrdersService _service;
 
-        public OrdersApiController(OrdersService service)
+        public OrdersController(OrdersService service)
         {
             _service = service;
         }
@@ -49,7 +49,7 @@ namespace HealthyJuices.Api.Controllers
 
         [HttpGet("{id}")]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task<OrderDto> GetByIdAsync(long id)
+        public async Task<OrderDto> GetByIdAsync(string id)
         {
             var result = await _service.GetByIdAsync(id);
             return result;
@@ -57,9 +57,9 @@ namespace HealthyJuices.Api.Controllers
 
         [HttpPost]
         [AuthorizeRoles(UserRole.Customer)]
-        public async Task<long> CreateAsync(OrderDto definitionDto)
+        public async Task<string> CreateAsync(OrderDto definitionDto)
         {
-            var result = await _service.CreateAsync(definitionDto,RequestSenderId);
+            var result = await _service.CreateAsync(definitionDto, RequestSenderId);
             return result;
         }
 
@@ -72,7 +72,7 @@ namespace HealthyJuices.Api.Controllers
 
         [HttpDelete("{id}")]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task DeleteAsync(long id)
+        public async Task DeleteAsync(string id)
         {
             await _service.DeleteByIdAsync(id);
         }

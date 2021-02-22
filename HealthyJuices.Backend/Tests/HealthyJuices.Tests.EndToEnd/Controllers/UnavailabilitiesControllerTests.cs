@@ -1,16 +1,16 @@
 ﻿using FluentAssertions;
 using HealthyJuices.Application.Services;
-using HealthyJuices.Persistence.TestHelpers;
 using HealthyJuices.Shared.Dto;
 using HealthyJuices.Shared.Enums;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using HealthyJuices.Api.Controllers;
 using Xunit;
 
-namespace HealthyJuices.IntegrationTests.Services
+namespace HealthyJuices.Tests.EndToEnd.Controllers
 {
-    public class UnavailabilitiesServiceTests : InMemoryDatabaseTestBase
+    public class UnavailabilitiesControllerTests : InMemoryDatabaseTestBase
     {
         [Fact]
         public async Task Unavailabilitie_can_be_created()
@@ -24,12 +24,13 @@ namespace HealthyJuices.IntegrationTests.Services
                 Comment = "test comment"
             };
 
+            var controller = new UnavailabilitiesController(UnavailabilitiesService);
+
             // act
-            var service = new UnavailabilitiesService(UnavailabilityRepository);
-            var result = await service.CreateAsync(request);
+            var result = await controller.CreateAsync(request);
 
             // assert
-            result.Should().BeGreaterThan(0);
+            result.Should().NotBeNullOrWhiteSpace();
             var subject = AssertRepositoryContext.Unavailabilities.FirstOrDefault();
 
             subject.Should().NotBeNull();

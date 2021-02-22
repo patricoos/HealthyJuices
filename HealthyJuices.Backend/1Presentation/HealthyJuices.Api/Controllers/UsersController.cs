@@ -10,17 +10,17 @@ using Microsoft.AspNetCore.Mvc;
 namespace HealthyJuices.Api.Controllers
 {
     [ApiController]
+        [Authorize]
     [Route("users")]
-    public class UsersApiController : ApiController
+    public class UsersController : BaseApiController
     {
         private readonly UsersService _service;
 
-        public UsersApiController(UsersService service)
+        public UsersController(UsersService service)
         {
             _service = service;
         }
 
-        [Authorize]
         [HttpGet]
         public async Task<List<UserDto>> GetAllAsync()
         {
@@ -28,7 +28,6 @@ namespace HealthyJuices.Api.Controllers
             return result;
         }
 
-        [Authorize]
         [HttpGet("active")]
         public async Task<List<UserDto>> GetAllActiveAsync()
         {
@@ -36,7 +35,6 @@ namespace HealthyJuices.Api.Controllers
             return result;
         }
 
-        [Authorize]
         [HttpGet("role/{role}")]
         public async Task<List<UserDto>> GetAllActiveByUserRoleAsync(UserRole role)
         {
@@ -44,15 +42,13 @@ namespace HealthyJuices.Api.Controllers
             return result;
         }
 
-        [Authorize]
         [HttpGet("{id}")]
-        public async Task<UserDto> GetByIdAsync(long id)
+        public async Task<UserDto> GetByIdAsync(string id)
         {
             var result = await _service.GetAsync(id);
             return result;
         }
 
-        [Authorize]
         [HttpGet("{userName}")]
         public async Task<UserDto> GetAsync(string userName)
         {
@@ -60,25 +56,23 @@ namespace HealthyJuices.Api.Controllers
             return result;
         }
 
-        [HttpGet("existing/{userName}")]
         [AllowAnonymous]
+        [HttpGet("existing/{userName}")]
         public async Task<bool> IsExistingAsync(string userName)
         {
             var result = await _service.IsExistingAsync(userName);
             return result;
         }
 
-        [Authorize]
         [HttpPost]
-        public async Task<long> CreateAsync([FromBody] AddOrEditUserDto dto)
+        public async Task<string> CreateAsync([FromBody] AddOrEditUserDto dto)
         {
             var result = await _service.CreateAsync(dto);
             return result;
         }
 
-        [Authorize]
         [HttpDelete("{id}")]
-        public async Task DeleteAsync(long id)
+        public async Task DeleteAsync(string id)
         {
             await _service.DeleteAsync(id);
         }

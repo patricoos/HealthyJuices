@@ -19,13 +19,11 @@ namespace HealthyJuices.Domain.Models.Orders
 
         public DateTime DeliveryDate { get; private set; }
 
-        //  public OrderStatus Status { get; set; }
 
-
-        public long UserId { get; private set; }
+        public string UserId { get; private set; }
         public User User { get; private set; }
 
-        public long DestinationCompanyId { get; private set; }
+        public string DestinationCompanyId { get; private set; }
         public Company DestinationCompany { get; private set; }
 
         public ICollection<OrderProduct> OrderProducts { get; private set; }

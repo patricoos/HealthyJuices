@@ -13,11 +13,11 @@ namespace HealthyJuices.Api.Controllers
     [ApiController]
     [Route("unavailabilities")]
     [Authorize]
-    public class UnavailabilitiesApiController : ApiController
+    public class UnavailabilitiesController : BaseApiController
     {
         private readonly UnavailabilitiesService _service;
 
-        public UnavailabilitiesApiController(UnavailabilitiesService service)
+        public UnavailabilitiesController(UnavailabilitiesService service)
         {
             _service = service;
         }
@@ -30,7 +30,7 @@ namespace HealthyJuices.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<UnavailabilityDto> GetByIdAsync(long id)
+        public async Task<UnavailabilityDto> GetByIdAsync(string id)
         {
             var result = await _service.GetByIdAsync(id);
             return result;
@@ -38,7 +38,7 @@ namespace HealthyJuices.Api.Controllers
 
         [HttpPost]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task<long> CreateAsync(UnavailabilityDto dto)
+        public async Task<string> CreateAsync(UnavailabilityDto dto)
         {
             var result = await _service.CreateAsync(dto);
             return result;
@@ -53,7 +53,7 @@ namespace HealthyJuices.Api.Controllers
 
         [HttpDelete("{id}")]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task DeleteAsync(long id)
+        public async Task DeleteAsync(string id)
         {
             await _service.DeleteByIdAsync(id);
         }

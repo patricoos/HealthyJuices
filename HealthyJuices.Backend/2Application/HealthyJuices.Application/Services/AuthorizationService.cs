@@ -7,7 +7,7 @@ using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Domain.Models.Companies.DataAccess;
 using HealthyJuices.Domain.Models.Users;
 using HealthyJuices.Domain.Models.Users.DataAccess;
-using HealthyJuices.Domain.Services;
+using HealthyJuices.Domain.Providers;
 using HealthyJuices.Shared.Dto;
 using HealthyJuices.Shared.Dto.Auth;
 using HealthyJuices.Shared.Enums;
@@ -20,14 +20,14 @@ namespace HealthyJuices.Application.Services
         private readonly ICompanyRepository _companyRepository;
         private readonly SimpleTokenProvider _tokenProvider;
         private readonly ITimeProvider _timeProvider;
-        private readonly EmailService _emailService;
+        private readonly EmailProvider _emailProvider;
 
-        public AuthorizationService(IUserRepository userRepository, SimpleTokenProvider tokenProvider, ITimeProvider timeProvider, EmailService emailService, ICompanyRepository companyRepository)
+        public AuthorizationService(IUserRepository userRepository, SimpleTokenProvider tokenProvider, ITimeProvider timeProvider, EmailProvider emailProvider, ICompanyRepository companyRepository)
         {
             _userRepository = userRepository;
             _tokenProvider = tokenProvider;
             _timeProvider = timeProvider;
-            _emailService = emailService;
+            _emailProvider = emailProvider;
             _companyRepository = companyRepository;
         }
 
@@ -135,7 +135,7 @@ namespace HealthyJuices.Application.Services
 
             // TODO: get current url
 
-            await _emailService.SendRegisterCodeEmail(user.Email, "http://localhost:4200/auth/confirm-register", user.ResetPermissionsToken);
+            await _emailProvider.SendRegisterCodeEmail(user.Email, "http://localhost:4200/auth/confirm-register", user.ResetPermissionsToken);
 
             await _userRepository.Insert(user).SaveChangesAsync();
         }
@@ -171,7 +171,7 @@ namespace HealthyJuices.Application.Services
 
             // TODO: get current url
 
-            await _emailService.SendForgotPasswordEmail(user.Email, "http://localhost:4200/auth/reset-password", user.ResetPermissionsToken);
+            await _emailProvider.SendForgotPasswordEmail(user.Email, "http://localhost:4200/auth/reset-password", user.ResetPermissionsToken);
             await _userRepository.Update(user).SaveChangesAsync();
         }
 

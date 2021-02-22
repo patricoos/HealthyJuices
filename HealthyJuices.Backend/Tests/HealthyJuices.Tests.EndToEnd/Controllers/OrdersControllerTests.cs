@@ -5,7 +5,6 @@ using HealthyJuices.Domain.Models.Companies;
 using HealthyJuices.Domain.Models.Products;
 using HealthyJuices.Domain.Models.Unavailabilities;
 using HealthyJuices.Domain.Models.Users;
-using HealthyJuices.Persistence.TestHelpers;
 using HealthyJuices.Shared.Dto.Orders;
 using HealthyJuices.Shared.Dto.Products;
 using HealthyJuices.Shared.Enums;
@@ -14,11 +13,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HealthyJuices.Api.Controllers;
+using HealthyJuices.Tests.EndToEnd.Extensions;
 using Xunit;
 
-namespace HealthyJuices.IntegrationTests.Services
+namespace HealthyJuices.Tests.EndToEnd.Controllers
 {
-    public class OrdersServiceTests : InMemoryDatabaseTestBase
+    public class OrdersControllerTests : InMemoryDatabaseTestBase
     {
         [Fact]
         public async Task Orders_can_be_created()
@@ -50,13 +51,14 @@ namespace HealthyJuices.IntegrationTests.Services
                     }
                 }
             };
+            var controller = new OrdersController(OrdersService);
+            controller.SetUserId(user.Id);
 
             // act
-            var service = new OrdersService(OrderRepository, UserRepository, ProductRepository, UnavailabilityRepository);
-            var result = await service.CreateAsync(request, user.Id);
+            var result = await controller.CreateAsync(request);
 
             // assert
-            result.Should().BeGreaterThan(0);
+            result.Should().NotBeNullOrWhiteSpace();
             var subject = AssertRepositoryContext.Orders
                 .Include(x => x.OrderProducts)
                 .ThenInclude(x => x.Product)
@@ -104,10 +106,11 @@ namespace HealthyJuices.IntegrationTests.Services
                 }
             };
 
-            // act
-            var service = new OrdersService(OrderRepository, UserRepository, ProductRepository, UnavailabilityRepository);
+            var controller = new OrdersController(OrdersService);
+            controller.SetUserId(user.Id);
 
-            Func<Task> act = () => service.CreateAsync(request, user.Id);
+            // act
+            Func<Task> act = () => controller.CreateAsync(request);
             BadRequestException exception = await Assert.ThrowsAsync<BadRequestException>(act);
 
             //assert

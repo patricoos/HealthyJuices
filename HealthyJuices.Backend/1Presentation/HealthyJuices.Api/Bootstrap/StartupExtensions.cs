@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using HealthyJuices.Api.Bootstrap.DataSeed;
+using HealthyJuices.Application.Providers.Logging;
 using HealthyJuices.Application.Services;
 using HealthyJuices.Application.Services.Logging;
 using HealthyJuices.Common;
@@ -13,7 +14,7 @@ using HealthyJuices.Domain.Models.Orders.DataAccess;
 using HealthyJuices.Domain.Models.Products.DataAccess;
 using HealthyJuices.Domain.Models.Unavailabilities.DataAccess;
 using HealthyJuices.Domain.Models.Users.DataAccess;
-using HealthyJuices.Domain.Services;
+using HealthyJuices.Domain.Providers;
 using HealthyJuices.Mailing;
 using HealthyJuices.Persistence.Ef;
 using HealthyJuices.Persistence.Ef.Repositories.Companies;
@@ -57,7 +58,7 @@ namespace HealthyJuices.Api.Bootstrap
 
             @this.AddScoped<ILogger, Logger>();
             @this.AddScoped<ITimeProvider, TimeProvider>();
-            @this.AddScoped<EmailService>();
+            @this.AddScoped<EmailProvider>();
 
             return @this;
         }

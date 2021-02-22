@@ -25,15 +25,5 @@ namespace HealthyJuices.Persistence.Ef.Repositories.Users
 
             return result;
         }
-
-        public async Task<bool> IsExistingAsync(long id)
-        {
-            var result = await Query()
-                .ById(id)
-                .IsNotRemoved()
-                .AnyAsync();
-
-            return result;
-        }
     }
 }

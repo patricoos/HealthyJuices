@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
-namespace HealthyJuices.Domain.Services
+namespace HealthyJuices.Domain.Providers
 {
     public interface IMailer
     {

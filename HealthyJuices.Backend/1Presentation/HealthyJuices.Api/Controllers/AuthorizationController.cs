@@ -9,11 +9,11 @@ namespace HealthyJuices.Api.Controllers
 {
     [ApiController]
     [Route("auth")]
-    public class AuthorizationApiController : ApiController
+    public class AuthorizationController : BaseApiController
     {
         private readonly AuthorizationService _service;
 
-        public AuthorizationApiController(AuthorizationService service)
+        public AuthorizationController(AuthorizationService service)
         {
             _service = service;
         }

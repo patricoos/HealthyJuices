@@ -1,13 +1,12 @@
-﻿using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
-namespace HealthyJuices.Domain.Services
+namespace HealthyJuices.Domain.Providers
 {
-    public class EmailService
+    public class EmailProvider
     {
         private readonly IMailer _mailer;
 
-        public EmailService(IMailer mailer)
+        public EmailProvider(IMailer mailer)
         {
             _mailer = mailer;
         }

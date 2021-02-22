@@ -45,7 +45,7 @@ namespace HealthyJuices.Application.Services
             return result;
         }
 
-        public async Task<ProductDto> GetByIdAsync(long id)
+        public async Task<ProductDto> GetByIdAsync(string id)
         {
             var entity = await _productRepository.Query()
                 .ById(id)
@@ -56,7 +56,7 @@ namespace HealthyJuices.Application.Services
             return result;
         }
 
-        public async Task<long> CreateAsync(ProductDto dto)
+        public async Task<string> CreateAsync(ProductDto dto)
         {
             var product = new Product(dto.Name, dto.Description, dto.Unit, dto.QuantityPerUnit, dto.IsActive, dto.DefaultPricePerUnit);
 
@@ -81,7 +81,7 @@ namespace HealthyJuices.Application.Services
             await _productRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteByIdAsync(long id)
+        public async Task DeleteByIdAsync(string id)
         {
             var product = await _productRepository.Query()
                 .ById(id)

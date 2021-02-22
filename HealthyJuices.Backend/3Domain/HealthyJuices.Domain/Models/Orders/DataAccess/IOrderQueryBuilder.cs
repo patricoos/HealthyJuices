@@ -12,6 +12,6 @@ namespace HealthyJuices.Domain.Models.Orders.DataAccess
         IOrderQueryBuilder BeforeDateTime(DateTime date);
         IOrderQueryBuilder AfterDateTime(DateTime date);
         IOrderQueryBuilder BetweenDateTimes(DateTime from, DateTime to);
-        IOrderQueryBuilder ByUser(long id);
+        IOrderQueryBuilder ByUser(string id);
     }
 }

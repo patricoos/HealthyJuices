@@ -21,10 +21,9 @@ namespace HealthyJuices.Persistence.Ef.Migrations
 
             modelBuilder.Entity("HealthyJuices.Domain.Models.Companies.Company", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
@@ -63,10 +62,9 @@ namespace HealthyJuices.Persistence.Ef.Migrations
 
             modelBuilder.Entity("HealthyJuices.Domain.Models.Logs.Log", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -99,10 +97,9 @@ namespace HealthyJuices.Persistence.Ef.Migrations
 
             modelBuilder.Entity("HealthyJuices.Domain.Models.Orders.Order", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -113,14 +110,14 @@ namespace HealthyJuices.Persistence.Ef.Migrations
                     b.Property<DateTime>("DeliveryDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("DestinationCompanyId")
-                        .HasColumnType("bigint");
+                    b.Property<string>("DestinationCompanyId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsRemoved")
                         .HasColumnType("bit");
 
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -133,19 +130,18 @@ namespace HealthyJuices.Persistence.Ef.Migrations
 
             modelBuilder.Entity("HealthyJuices.Domain.Models.Orders.OrderProduct", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<long>("OrderId")
-                        .HasColumnType("bigint");
+                    b.Property<string>("OrderId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<long>("ProductId")
-                        .HasColumnType("bigint");
+                    b.Property<string>("ProductId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -158,10 +154,9 @@ namespace HealthyJuices.Persistence.Ef.Migrations
 
             modelBuilder.Entity("HealthyJuices.Domain.Models.Products.Product", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -197,10 +192,9 @@ namespace HealthyJuices.Persistence.Ef.Migrations
 
             modelBuilder.Entity("HealthyJuices.Domain.Models.Unavailabilities.Unavailability", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
@@ -221,13 +215,15 @@ namespace HealthyJuices.Persistence.Ef.Migrations
 
             modelBuilder.Entity("HealthyJuices.Domain.Models.Users.User", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<long?>("CompanyId")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("CompanyId1")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -267,7 +263,7 @@ namespace HealthyJuices.Persistence.Ef.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CompanyId");
+                    b.HasIndex("CompanyId1");
 
                     b.ToTable("Users");
                 });
@@ -276,15 +272,11 @@ namespace HealthyJuices.Persistence.Ef.Migrations
                 {
                     b.HasOne("HealthyJuices.Domain.Models.Companies.Company", "DestinationCompany")
                         .WithMany()
-                        .HasForeignKey("DestinationCompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DestinationCompanyId");
 
                     b.HasOne("HealthyJuices.Domain.Models.Users.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("DestinationCompany");
 
@@ -295,15 +287,11 @@ namespace HealthyJuices.Persistence.Ef.Migrations
                 {
                     b.HasOne("HealthyJuices.Domain.Models.Orders.Order", "Order")
                         .WithMany("OrderProducts")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OrderId");
 
                     b.HasOne("HealthyJuices.Domain.Models.Products.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductId");
 
                     b.Navigation("Order");
 
@@ -314,7 +302,7 @@ namespace HealthyJuices.Persistence.Ef.Migrations
                 {
                     b.HasOne("HealthyJuices.Domain.Models.Companies.Company", "Company")
                         .WithMany("Users")
-                        .HasForeignKey("CompanyId");
+                        .HasForeignKey("CompanyId1");
 
                     b.Navigation("Company");
                 });

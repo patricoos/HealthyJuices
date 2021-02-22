@@ -57,7 +57,7 @@ namespace HealthyJuices.Application.Services
         }
 
 
-        public async Task<UserDto> GetAsync(long id)
+        public async Task<UserDto> GetByIdAsync(string id)
         {
             var user = await _userRepository.Query()
                 .ById(id)
@@ -83,7 +83,7 @@ namespace HealthyJuices.Application.Services
            return await _userRepository.Query().ByEmail(email).AnyAsync();
         }
 
-        public async Task<long> CreateAsync(AddOrEditUserDto dto)
+        public async Task<string> CreateAsync(AddOrEditUserDto dto)
         {
             if (await _userRepository.IsExistingAsync(dto.Email))
                 throw new ConflictException($"User '{dto.Email}' already existing");
@@ -93,7 +93,7 @@ namespace HealthyJuices.Application.Services
             return user.Id;
         }
 
-        public async Task DeleteAsync(long id)
+        public async Task DeleteAsync(string id)
         {
             var user = await _userRepository.Query()
                 .ById(id)

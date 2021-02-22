@@ -4,6 +4,7 @@ using System.Linq;
 using HealthyJuices.Domain.Models.Orders;
 using HealthyJuices.Domain.Models.Products;
 using HealthyJuices.Persistence.Ef;
+using HealthyJuices.Shared.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace HealthyJuices.Api.Bootstrap.DataSeed
@@ -14,11 +15,12 @@ namespace HealthyJuices.Api.Bootstrap.DataSeed
         {
             if (!context.Orders.Any())
             {
-                var orders = new List<Order>()
+                var user = context.Users.Include(x => x.Company).FirstOrDefault(x => x.Roles.HasFlag(UserRole.Customer));
+                var orders = new List<Order>
                 {
-                    new Order(context.Users.Include(x => x.Company).FirstOrDefault(), DateTime.Now.AddDays(1), context.Products.Where(x => x.IsActive).Skip(2).Take(2).Select(x => new KeyValuePair<Product, decimal>(x, 1))),
-                    new Order(context.Users.Include(x => x.Company).FirstOrDefault(), DateTime.Now, context.Products.Where(x => x.IsActive).Take(3).Select(x => new KeyValuePair<Product, decimal>(x,  2))),
-                    new Order(context.Users.Include(x => x.Company).FirstOrDefault(), DateTime.Now, context.Products.Where(x => x.IsActive).Skip(3).Select(x => new KeyValuePair<Product, decimal>(x, 5)))
+                    new Order(user, DateTime.Now.AddDays(2), context.Products.Where(x => x.IsActive).Skip(2).Take(2).Select(x => new KeyValuePair<Product, decimal>(x, 1))),
+                    new Order(user, DateTime.Now.AddDays(1), context.Products.Where(x => x.IsActive).Take(3).Select(x => new KeyValuePair<Product, decimal>(x,  2))),
+                    new Order(user, DateTime.Now.AddDays(1), context.Products.Where(x => x.IsActive).Skip(3).Select(x => new KeyValuePair<Product, decimal>(x, 5)))
                 };
                 context.Orders.AddRange(orders);
             }

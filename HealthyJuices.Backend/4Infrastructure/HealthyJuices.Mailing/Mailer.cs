@@ -1,5 +1,5 @@
-﻿using HealthyJuices.Domain.Services;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using HealthyJuices.Domain.Providers;
 using MailKit.Net.Smtp;
 using MimeKit;
 

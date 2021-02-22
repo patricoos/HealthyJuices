@@ -6,7 +6,7 @@ namespace HealthyJuices.Shared.Dto.Orders
 {
     public record OrderDto
     {
-        public long Id { get; init; }
+        public string Id { get; init; }
         public DateTime DateCreated { get; init; }
         public DateTime DateModified { get; init; }
         public bool IsRemoved { get; init; }
@@ -15,10 +15,10 @@ namespace HealthyJuices.Shared.Dto.Orders
 
         //  public OrderStatus Status { get; set; }
 
-        public long UserId { get; init; }
+        public string UserId { get; init; }
         public UserDto User { get; init; }
 
-        public long DestinationCompanyId { get; init; }
+        public string DestinationCompanyId { get; init; }
         public CompanyDto DestinationCompany { get; init; }
 
         public IEnumerable<OrderProductDto> OrderProducts { get; set; }

@@ -34,7 +34,7 @@ namespace HealthyJuices.Persistence.Ef.Repositories
             return this as TQueryBuilder;
         }
 
-        public TQueryBuilder ById(long id)
+        public TQueryBuilder ById(string id)
         {
             Query = Query.Where(m => m.Id == id);
             return this as TQueryBuilder;
@@ -73,18 +73,6 @@ namespace HealthyJuices.Persistence.Ef.Repositories
         public TQueryBuilder TakeLast(int howMany)
         {
             Query = Query.OrderByDescending(x => x.Id).Take(howMany);
-            return this as TQueryBuilder;
-        }
-
-        public TQueryBuilder After(long id)
-        {
-            Query = Query.Where(m => m.Id >= id);
-            return this as TQueryBuilder;
-        }
-
-        public TQueryBuilder Before(long id)
-        {
-            Query = Query.Where(m => m.Id <= id);
             return this as TQueryBuilder;
         }
 

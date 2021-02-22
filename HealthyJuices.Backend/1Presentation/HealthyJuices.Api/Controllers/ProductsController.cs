@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using HealthyJuices.Api.Utils.Attributes;
 using HealthyJuices.Application.Services;
-using HealthyJuices.Shared.Dto;
+using HealthyJuices.Shared.Dto.Products;
 using HealthyJuices.Shared.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,27 +10,27 @@ using Microsoft.AspNetCore.Mvc;
 namespace HealthyJuices.Api.Controllers
 {
     [ApiController]
-    [Route("companies")]
-    public class CompaniesApiController : ApiController
+    [Route("products")]
+    [Authorize]
+    public class ProductsController : BaseApiController
     {
-        private readonly CompaniesService _service;
+        private readonly ProductsService _service;
 
-        public CompaniesApiController(CompaniesService service)
+        public ProductsController(ProductsService service)
         {
             _service = service;
         }
 
         [HttpGet]
-        [Authorize]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task<List<CompanyDto>> GetAllAsync()
+        public async Task<List<ProductDto>> GetAllAsync()
         {
             var result = await _service.GetAllAsync();
             return result;
         }
 
         [HttpGet("active")]
-        public async Task<List<CompanyDto>> GetAllActiveAsync()
+        public async Task<List<ProductDto>> GetAllActiveAsync()
         {
             var result = await _service.GetAllActiveAsync();
             return result;
@@ -38,34 +38,30 @@ namespace HealthyJuices.Api.Controllers
 
 
         [HttpGet("{id}")]
-        [Authorize]
-        public async Task<CompanyDto> GetByIdAsync(long id)
+        public async Task<ProductDto> GetByIdAsync(string id)
         {
             var result = await _service.GetByIdAsync(id);
             return result;
         }
 
         [HttpPost]
-        [Authorize]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task<long> CreateAsync(CompanyDto definitionDto)
+        public async Task<string> CreateAsync(ProductDto definitionDto)
         {
             var result = await _service.CreateAsync(definitionDto);
             return result;
         }
 
         [HttpPut]
-        [Authorize]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task UpdateAsync(CompanyDto definitionDto)
+        public async Task UpdateAsync(ProductDto definitionDto)
         {
             await _service.UpdateAsync(definitionDto);
         }
 
         [HttpDelete("{id}")]
-        [Authorize]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task DeleteAsync(long id)
+        public async Task DeleteAsync(string id)
         {
             await _service.DeleteByIdAsync(id);
         }

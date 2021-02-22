@@ -43,7 +43,7 @@ namespace HealthyJuices.Application.Services
             return result;
         }
 
-        public async Task<CompanyDto> GetByIdAsync(long id)
+        public async Task<CompanyDto> GetByIdAsync(string id)
         {
             var entity = await _companyRepository.Query()
                 .ById(id)
@@ -54,7 +54,7 @@ namespace HealthyJuices.Application.Services
             return result;
         }
 
-        public async Task<long> CreateAsync(CompanyDto dto)
+        public async Task<string> CreateAsync(CompanyDto dto)
         {
             var entity = new Company(dto.Name, dto.Comment, dto.PostalCode, dto.City, dto.Street, dto.Latitude, dto.Longitude);
 
@@ -79,7 +79,7 @@ namespace HealthyJuices.Application.Services
             await _companyRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteByIdAsync(long id)
+        public async Task DeleteByIdAsync(string id)
         {
             var company = await _companyRepository.Query()
                 .ById(id)
