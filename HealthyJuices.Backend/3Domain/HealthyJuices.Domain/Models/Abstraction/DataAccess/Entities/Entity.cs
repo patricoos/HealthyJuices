@@ -7,6 +7,6 @@ namespace HealthyJuices.Domain.Models.Abstraction.DataAccess.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string Id { get; private set; }
+        public string Id { get; set; }
     }
 }

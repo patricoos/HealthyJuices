@@ -131,11 +131,11 @@ namespace HealthyJuices.Application.Services
                 throw new BadRequestException($"Company not found");
 
             var user = new User(dto.Email, dto.Password, dto.FirstName, dto.LastName, company, UserRole.Customer);
-            user.SetResetPermissionsToken(Guid.NewGuid().ToString(), _timeProvider.UtcNow.AddDays(1));
+            user.SetPermissionsToken(Guid.NewGuid().ToString(), _timeProvider.UtcNow.AddDays(1));
 
             // TODO: get current url
 
-            await _emailProvider.SendRegisterCodeEmail(user.Email, "http://localhost:4200/auth/confirm-register", user.ResetPermissionsToken);
+            await _emailProvider.SendRegisterCodeEmail(user.Email, "http://localhost:4200/auth/confirm-register", user.PermissionsToken);
 
             await _userRepository.Insert(user).SaveChangesAsync();
         }
@@ -151,9 +151,10 @@ namespace HealthyJuices.Application.Services
             if (user == null)
                 throw new BadRequestException($"User with email '{email}' not found");
 
-            VerifyResetPermissionsToken(user, token);
-
+            VerifyResetPermissions(user, token);
+            user.ResetPermissionsToken();
             user.Activate();
+
             await _userRepository.Update(user).SaveChangesAsync();
         }
 
@@ -167,11 +168,11 @@ namespace HealthyJuices.Application.Services
             if (user == null)
                 throw new BadRequestException($"User with email '{dto.Email}' not found");
 
-            user.SetResetPermissionsToken(Guid.NewGuid().ToString(), _timeProvider.UtcNow.AddDays(1));
+            user.SetPermissionsToken(Guid.NewGuid().ToString(), _timeProvider.UtcNow.AddDays(1));
 
             // TODO: get current url
 
-            await _emailProvider.SendForgotPasswordEmail(user.Email, "http://localhost:4200/auth/reset-password", user.ResetPermissionsToken);
+            await _emailProvider.SendForgotPasswordEmail(user.Email, "http://localhost:4200/auth/reset-password", user.PermissionsToken);
             await _userRepository.Update(user).SaveChangesAsync();
         }
 
@@ -185,20 +186,20 @@ namespace HealthyJuices.Application.Services
             if (user == null)
                 throw new BadRequestException($"User with email '{dto.Email}' not found");
 
-            VerifyResetPermissionsToken(user, dto.Token);
+            VerifyResetPermissions(user, dto.Token);
 
             user.SetPassword(dto.Password);
-            user.SetResetPermissionsToken(String.Empty, _timeProvider.UtcNow);
+            user.SetPermissionsToken(String.Empty, _timeProvider.UtcNow);
 
             await _userRepository.Update(user).SaveChangesAsync();
         }
 
-        private void VerifyResetPermissionsToken(User user, string token)
+        private void VerifyResetPermissions(User user, string token)
         {
-            if (user.ResetPermissionsTokenExpiration < _timeProvider.UtcNow)
+            if (user.PermissionsTokenExpiration < _timeProvider.UtcNow)
                 throw new BadRequestException("Token Expiration Time Is Up");
 
-            if (string.IsNullOrWhiteSpace(token) || user.ResetPermissionsToken != token)
+            if (string.IsNullOrWhiteSpace(token) || user.PermissionsToken != token)
                 throw new BadRequestException("Invalid Token");
         }
     }

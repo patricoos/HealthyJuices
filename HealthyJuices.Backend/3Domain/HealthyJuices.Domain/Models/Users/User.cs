@@ -32,8 +32,8 @@ namespace HealthyJuices.Domain.Models.Users
         public bool IsRemoved { get; private set; }
         public bool IsActive { get; private set; }
 
-        public string ResetPermissionsToken { get; private set; }
-        public DateTime? ResetPermissionsTokenExpiration { get; private set; }
+        public string PermissionsToken { get; private set; }
+        public DateTime? PermissionsTokenExpiration { get; private set; }
         public List<string> RolesList => this.Roles.GetFlags().Select(x => Enum.GetName(typeof(UserRole), x)).ToList();
 
 
@@ -47,8 +47,8 @@ namespace HealthyJuices.Domain.Models.Users
             this.IsRemoved = false;
 
             this.SetEmail(email);
-            this.PasswordSalt = PasswordManager.GenerateSalt();
-            this.Password = PasswordManager.HashPassword(password, this.PasswordSalt);
+            this.PasswordSalt = PasswordHelper.GenerateSalt();
+            this.Password = PasswordHelper.HashPassword(password, this.PasswordSalt);
 
             this.SetPassword(password);
             this.AddRoles(role);
@@ -75,7 +75,7 @@ namespace HealthyJuices.Domain.Models.Users
 
         public bool CheckPasswordValidity(string password)
         {
-            var hashedPassword = PasswordManager.HashPassword(password, PasswordSalt);
+            var hashedPassword = PasswordHelper.HashPassword(password, PasswordSalt);
             return string.CompareOrdinal(hashedPassword, this.Password) == 0;
         }
 
@@ -84,8 +84,8 @@ namespace HealthyJuices.Domain.Models.Users
             if (string.IsNullOrWhiteSpace(password) || password.Length < 3)
                 throw new Exception($"Password is incorrect.");
 
-            this.PasswordSalt = PasswordManager.GenerateSalt();
-            this.Password = PasswordManager.HashPassword(password, this.PasswordSalt);
+            this.PasswordSalt = PasswordHelper.GenerateSalt();
+            this.Password = PasswordHelper.HashPassword(password, this.PasswordSalt);
             this.Update();
         }
 
@@ -95,10 +95,17 @@ namespace HealthyJuices.Domain.Models.Users
             this.Update();
         }
 
-        public void SetResetPermissionsToken(string token, DateTime date)
+        public void SetPermissionsToken(string token, DateTime date)
         {
-            ResetPermissionsToken = token;
-            ResetPermissionsTokenExpiration = date;
+            PermissionsToken = token;
+            PermissionsTokenExpiration = date;
+            this.Update();
+        }
+
+        public void ResetPermissionsToken()
+        {
+            PermissionsToken = null;
+            PermissionsTokenExpiration = null;
             this.Update();
         }
 

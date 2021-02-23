@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HealthyJuices.Persistence.Ef.Migrations
 {
     [DbContext(typeof(HealthyJuicesDbContext))]
-    [Migration("20210222222213_InitialCreate")]
+    [Migration("20210223000320_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -254,10 +254,10 @@ namespace HealthyJuices.Persistence.Ef.Migrations
                     b.Property<string>("PasswordSalt")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ResetPermissionsToken")
+                    b.Property<string>("PermissionsToken")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("ResetPermissionsTokenExpiration")
+                    b.Property<DateTime?>("PermissionsTokenExpiration")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Roles")

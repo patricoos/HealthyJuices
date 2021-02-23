@@ -99,8 +99,8 @@ namespace HealthyJuices.Persistence.Ef.Migrations
                     DateModified = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    ResetPermissionsToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ResetPermissionsTokenExpiration = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    PermissionsToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PermissionsTokenExpiration = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {

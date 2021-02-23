@@ -24,4 +24,8 @@
     <ProjectReference Include="..\..\Common\HealthyJuices.Common\HealthyJuices.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="SeedTestData\Abstraction\" />
+  </ItemGroup>
+
 </Project>

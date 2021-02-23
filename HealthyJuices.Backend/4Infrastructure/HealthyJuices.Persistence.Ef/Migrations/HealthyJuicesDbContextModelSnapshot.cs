@@ -252,10 +252,10 @@ namespace HealthyJuices.Persistence.Ef.Migrations
                     b.Property<string>("PasswordSalt")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ResetPermissionsToken")
+                    b.Property<string>("PermissionsToken")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("ResetPermissionsTokenExpiration")
+                    b.Property<DateTime?>("PermissionsTokenExpiration")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Roles")
