@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
+using HealthyJuices.Domain.Providers;
 
-namespace HealthyJuices.Domain.Providers
+namespace HealthyJuices.Application.Providers
 {
     public class EmailProvider
     {

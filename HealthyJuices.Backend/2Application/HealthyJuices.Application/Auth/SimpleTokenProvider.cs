@@ -32,20 +32,12 @@ namespace HealthyJuices.Application.Auth
             });
 
             if (roles != null)
-            {
                 foreach (var role in roles)
-                {
                     identity.AddClaim(new Claim(ClaimTypes.Role, role));
-                }
-            }
 
             if (claims != null)
-            {
                 foreach (var claim in claims)
-                {
                     identity.AddClaim(claim);
-                }
-            }
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {

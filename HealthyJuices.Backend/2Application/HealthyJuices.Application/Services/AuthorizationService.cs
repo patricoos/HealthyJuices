@@ -2,12 +2,12 @@
 using System.Threading.Tasks;
 using HealthyJuices.Application.Auth;
 using HealthyJuices.Application.Mappers;
+using HealthyJuices.Application.Providers;
 using HealthyJuices.Common.Contracts;
 using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Domain.Models.Companies.DataAccess;
 using HealthyJuices.Domain.Models.Users;
 using HealthyJuices.Domain.Models.Users.DataAccess;
-using HealthyJuices.Domain.Providers;
 using HealthyJuices.Shared.Dto;
 using HealthyJuices.Shared.Dto.Auth;
 using HealthyJuices.Shared.Enums;

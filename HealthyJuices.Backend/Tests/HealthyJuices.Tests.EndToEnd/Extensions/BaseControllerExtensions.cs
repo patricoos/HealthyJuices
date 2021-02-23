@@ -1,7 +1,6 @@
 ﻿using System.Security.Claims;
 using HealthyJuices.Api.Controllers;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 
 namespace HealthyJuices.Tests.EndToEnd.Extensions
 {

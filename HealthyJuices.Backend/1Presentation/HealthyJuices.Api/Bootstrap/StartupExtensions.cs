@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using HealthyJuices.Api.Bootstrap.DataSeed;
+using HealthyJuices.Application.Providers;
 using HealthyJuices.Application.Providers.Logging;
 using HealthyJuices.Application.Services;
-using HealthyJuices.Application.Services.Logging;
 using HealthyJuices.Common;
 using HealthyJuices.Common.Contracts;
 using HealthyJuices.Common.Services;

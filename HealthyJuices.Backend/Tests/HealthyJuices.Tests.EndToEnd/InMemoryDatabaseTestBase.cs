@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using HealthyJuices.Application.Auth;
+using HealthyJuices.Application.Providers;
 using HealthyJuices.Application.Services;
 using HealthyJuices.Common;
 using HealthyJuices.Common.Contracts;

@@ -2,9 +2,9 @@
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 
-namespace HealthyJuices.Application.Services.Logging
+namespace HealthyJuices.Application.Providers.Logging
 {
-    public static class ExceptionReader
+    public static class ExceptionHelper
     {
         public static string Read(Exception ex)
         {
@@ -18,7 +18,7 @@ namespace HealthyJuices.Application.Services.Logging
             }
             catch
             {
-                return ex?.ToString() ?? $"{nameof(ExceptionReader)} could not read given exception";
+                return ex?.ToString() ?? $"{nameof(ExceptionHelper)} could not read given exception";
             }
         }
 
