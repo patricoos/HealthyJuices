@@ -74,7 +74,7 @@ export class UnavailabilitiesComponent implements OnInit {
       header: 'Edit Unavailability',
       width: '70%',
       data: {
-        unavailability: this.unavailabilities.find(x => x.id === +event.event.id)
+        unavailability: this.unavailabilities.find(x => x.id === event.event.id)
       }
     });
 

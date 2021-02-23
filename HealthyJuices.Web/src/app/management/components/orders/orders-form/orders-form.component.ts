@@ -15,7 +15,7 @@ export class OrdersFormComponent implements AfterViewInit {
 
   selectedOrder: Order | undefined;
 
-  id: number | undefined;
+  id: string | undefined;
   private sub: any;
   editForm: FormGroup = this.initForm();
 
@@ -23,14 +23,14 @@ export class OrdersFormComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.sub = this.route.params.subscribe(params => {
-      this.id = +params['id'];
+      this.id = params['id'];
       if (this.id) {
         this.getDetails(this.id);
       }
     });
   }
 
-  getDetails(id: number): void {
+  getDetails(id: string): void {
     this.ordersService.get(id, this.ordersFormComponentLoader).subscribe(x => {
       this.selectedOrder = x;
       this.editForm = this.initForm(x);

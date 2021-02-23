@@ -36,7 +36,7 @@ export class CompaniesService extends BaseService {
   }
 
   addOrEdit(dto: Company, loader: string): Observable<boolean> {
-    if (dto.id == null || dto.id === 0) {
+    if (dto.id == null || dto.id === '') {
       return this.add(dto, loader);
     } else {
       return this.edit(dto, loader);
@@ -57,7 +57,7 @@ export class CompaniesService extends BaseService {
       finalize(() => this.loadersService.hide(loader)));
   }
 
-  delete(id: number, loader: string): Observable<boolean> {
+  delete(id: string, loader: string): Observable<boolean> {
     this.loadersService.show(loader);
     return this.http.delete(this.baseUrl + '/companies/' + id, { observe: 'response' }).pipe(
       map(response => this.isStatusSucceed(response.status)),

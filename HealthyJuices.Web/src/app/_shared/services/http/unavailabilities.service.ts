@@ -32,14 +32,14 @@ export class UnavailabilitiesService extends BaseService {
   }
 
   addOrEdit(dto: Unavailability, loader: string): Observable<boolean> {
-    if (dto.id == null || dto.id === 0) {
+    if (dto.id == null || dto.id === '') {
       return this.add(dto, loader);
     } else {
       return this.edit(dto, loader);
     }
   }
 
-  get(id: number, loader: string): Observable<Unavailability> {
+  get(id: string, loader: string): Observable<Unavailability> {
     this.loadersService.show(loader);
     return this.http.get<Unavailability>(this.baseUrl + '/unavailabilities/' + id)
       .pipe(finalize(() => this.loadersService.hide(loader)));
@@ -59,7 +59,7 @@ export class UnavailabilitiesService extends BaseService {
       finalize(() => this.loadersService.hide(loader)));
   }
 
-  delete(id: number, loader: string): Observable<boolean> {
+  delete(id: string, loader: string): Observable<boolean> {
     this.loadersService.show(loader);
     return this.http.delete(this.baseUrl + '/unavailabilities/' + id, { observe: 'response' }).pipe(
       map(response => this.isStatusSucceed(response.status)),

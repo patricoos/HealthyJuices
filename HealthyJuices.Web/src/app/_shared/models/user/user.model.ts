@@ -2,7 +2,7 @@ import { UserRole } from '../enums/user-role.enum';
 import { Company } from './company.model';
 
 export interface User {
-  id: number;
+  id: string;
 
   dateCreated?: Date;
   dateModified?: Date;

@@ -61,7 +61,7 @@ export class OrdersService extends BaseService {
   }
 
 
-  get(id: number, loader: string): Observable<Order> {
+  get(id: string, loader: string): Observable<Order> {
     this.loadersService.show(loader);
     return this.http.get<Order>(this.baseUrl + '/orders/' + id)
       .pipe(finalize(() => this.loadersService.hide(loader)));
@@ -89,7 +89,7 @@ export class OrdersService extends BaseService {
       finalize(() => this.loadersService.hide(loader)));
   }
 
-  delete(id: number, loader: string): Observable<boolean> {
+  delete(id: string, loader: string): Observable<boolean> {
     this.loadersService.show(loader);
     return this.http.delete(this.baseUrl + '/orders/' + id, { observe: 'response' }).pipe(
       map(response => this.isStatusSucceed(response.status)),
