@@ -41,9 +41,7 @@ namespace HealthyJuices.Persistence.Ef
             CancellationToken = cancellationToken;
 
             if (options.FindExtension<InMemoryOptionsExtension>() == null)
-            {
                 base.Database.SetCommandTimeout(300);
-            }
         }
 
         public void DetachAllEntities()

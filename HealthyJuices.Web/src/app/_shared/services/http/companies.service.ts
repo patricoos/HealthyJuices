@@ -29,7 +29,7 @@ export class CompaniesService extends BaseService {
     );
   }
 
-  get(id: number, loader: string): Observable<Company> {
+  get(id: string, loader: string): Observable<Company> {
     this.loadersService.show(loader);
     return this.http.get<Company>(this.baseUrl + '/companies/' + id)
       .pipe(finalize(() => this.loadersService.hide(loader)));

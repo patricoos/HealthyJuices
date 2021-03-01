@@ -29,7 +29,7 @@ export class ProductsService extends BaseService {
     );
   }
 
-  get(id: number, loader: string): Observable<Product> {
+  get(id: string, loader: string): Observable<Product> {
     this.loadersService.show(loader);
     return this.http.get<Product>(this.baseUrl + '/products/' + id)
       .pipe(finalize(() => this.loadersService.hide(loader)));

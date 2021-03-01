@@ -22,7 +22,7 @@ export class ProductsFormComponent implements AfterViewInit {
 
   selectedProduct: Product | undefined;
 
-  id: number | undefined;
+  id: string | undefined;
   private sub: any;
   editForm: FormGroup = this.initForm();
   units: SelectItem[] = EnumExtension.getLabelAndValues(ProductUnitType);
@@ -32,14 +32,14 @@ export class ProductsFormComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.sub = this.route.params.subscribe(params => {
-      this.id = +params['id'];
+      this.id = params['id'];
       if (this.id) {
         this.getDetails(this.id);
       }
     });
   }
 
-  getDetails(id: number): void {
+  getDetails(id: string): void {
     this.prodService.get(id, this.productsFormComponentLoader).subscribe(x => {
       console.log(x);
       this.selectedProduct = x;

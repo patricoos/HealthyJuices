@@ -20,7 +20,7 @@ export class CompaniesFormComponent implements AfterViewInit {
 
   selectedCompany: Company | undefined;
 
-  id: number | undefined;
+  id: string | undefined;
   private sub: any;
   editForm: FormGroup = this.initForm();
 
@@ -29,14 +29,14 @@ export class CompaniesFormComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.sub = this.route.params.subscribe(params => {
-      this.id = +params['id'];
+      this.id = params['id'];
       if (this.id) {
         this.getDetails(this.id);
       }
     });
   }
 
-  getDetails(id: number): void {
+  getDetails(id: string): void {
     this.companService.get(id, this.companiesFormComponentLoader).subscribe(x => {
       console.log(x);
       this.selectedCompany = x;
