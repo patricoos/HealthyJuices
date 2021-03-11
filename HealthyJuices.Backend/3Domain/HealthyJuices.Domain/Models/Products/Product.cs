@@ -21,7 +21,7 @@ namespace HealthyJuices.Domain.Models.Products
         public bool IsActive { get; private set; }
 
 
-        public Product() { }
+        protected Product() { }
 
         public Product(string name, string description, ProductUnitType unit, decimal quantityPerUnit, bool isActive, decimal? defaultPrice = null)
         {

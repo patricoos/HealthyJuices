@@ -28,7 +28,7 @@ namespace HealthyJuices.Domain.Models.Orders
 
         public ICollection<OrderProduct> OrderProducts { get; private set; }
 
-        public Order()
+        protected Order()
         {
         }
 

@@ -8,6 +8,7 @@ using HealthyJuices.Domain.Models.Orders;
 using HealthyJuices.Domain.Models.Products;
 using HealthyJuices.Domain.Models.Unavailabilities;
 using HealthyJuices.Domain.Models.Users;
+using HealthyJuices.Persistence.Ef.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 using Microsoft.EntityFrameworkCore.InMemory.Infrastructure.Internal;
@@ -59,6 +60,12 @@ namespace HealthyJuices.Persistence.Ef
         public Task<IDbContextTransaction> BeginTransactionAsync()
         {
             return base.Database.BeginTransactionAsync(CancellationToken);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyEfConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }
 }

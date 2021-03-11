@@ -20,9 +20,7 @@ namespace HealthyJuices.Domain.Models.Users
 
         public UserRole Roles { get; private set; }
 
-        public string Password { get; private set; }
-        public string PasswordSalt { get; private set; }
-
+        public Password Password { get; private set; }
 
         public long? CompanyId { get; private set; }
         public Company Company { get; private set; }
@@ -36,8 +34,7 @@ namespace HealthyJuices.Domain.Models.Users
         public DateTime? PermissionsTokenExpiration { get; private set; }
         public List<string> RolesList => this.Roles.GetFlags().Select(x => Enum.GetName(typeof(UserRole), x)).ToList();
 
-
-        public User() { }
+        protected User() { }
 
 
         public User(string email, string password, params UserRole[] role)
@@ -47,8 +44,7 @@ namespace HealthyJuices.Domain.Models.Users
             this.IsRemoved = false;
 
             this.SetEmail(email);
-            this.PasswordSalt = PasswordHelper.GenerateSalt();
-            this.Password = PasswordHelper.HashPassword(password, this.PasswordSalt);
+            this.Password = new Password(password);
 
             this.SetPassword(password);
             this.AddRoles(role);
@@ -73,19 +69,9 @@ namespace HealthyJuices.Domain.Models.Users
             this.Update();
         }
 
-        public bool CheckPasswordValidity(string password)
-        {
-            var hashedPassword = PasswordHelper.HashPassword(password, PasswordSalt);
-            return string.CompareOrdinal(hashedPassword, this.Password) == 0;
-        }
-
         public void SetPassword(string password)
         {
-            if (string.IsNullOrWhiteSpace(password) || password.Length < 3)
-                throw new Exception($"Password is incorrect.");
-
-            this.PasswordSalt = PasswordHelper.GenerateSalt();
-            this.Password = PasswordHelper.HashPassword(password, this.PasswordSalt);
+            this.Password = new Password(password);
             this.Update();
         }
 

@@ -16,7 +16,7 @@ namespace HealthyJuices.Domain.Models.Unavailabilities
         public string Comment { get; private set; }
 
 
-        public Unavailability() { }
+        protected Unavailability() { }
 
         public Unavailability(DateTime from, DateTime to, UnavailabilityReason reason, string comment)
         {

@@ -13,6 +13,12 @@ namespace HealthyJuices.Persistence.Ef.Mappings
 
             builder.HasMany<Order>()
                 .WithOne(x => x.User);
+
+            builder.OwnsOne(p => p.Password, cb =>
+            {
+                cb.Property(c => c.Text).HasColumnName("Password");
+                cb.Property(c => c.Salt).HasColumnName("PasswordSalt");
+            });
         }
     }
 }

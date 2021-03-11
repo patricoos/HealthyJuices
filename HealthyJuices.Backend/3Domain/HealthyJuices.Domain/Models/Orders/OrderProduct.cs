@@ -14,7 +14,7 @@ namespace HealthyJuices.Domain.Models.Orders
 
         public decimal Amount { get; set; }
 
-        public OrderProduct() { }
+        protected OrderProduct() { }
 
         public OrderProduct(Order order, Product product, decimal amount)
         {

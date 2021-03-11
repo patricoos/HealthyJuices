@@ -45,7 +45,7 @@ namespace HealthyJuices.Application.Services
             if (!user.IsActive)
                 throw new BadRequestException($"User with email '{dto.Email}' is not activated");
 
-            if (!user.CheckPasswordValidity(dto.Password))
+            if (!user.Password.CheckValidity(dto.Password))
                 throw new UnauthorizedException($"Wrong password for user '{dto.Email}'");
 
             var token = _tokenProvider.Create(user.Id.ToString(), _timeProvider, user.RolesList);

@@ -26,7 +26,7 @@ namespace HealthyJuices.Domain.Models.Companies
         public ICollection<User> Users { get; private set; }
 
 
-        public Company() { }
+        protected Company() { }
 
         public Company(string name, string comment, string postalCode, string city, string street, double latitude,
             double longitude)

@@ -33,8 +33,8 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
             subject.Roles.Should().Be(UserRole.Customer);
 
             subject.Email.Should().Be(dto.Email);
-            subject.Password.Should().NotBeNullOrWhiteSpace();
-            subject.PasswordSalt.Should().NotBeNullOrWhiteSpace();
+            subject.Password.Text.Should().NotBeNullOrWhiteSpace();
+            subject.Password.Salt.Should().NotBeNullOrWhiteSpace();
             subject.IsActive.Should().BeFalse();
             subject.IsRemoved.Should().BeFalse();
             subject.PermissionsToken.Should().NotBeNullOrEmpty();
@@ -73,8 +73,8 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
             subject.Roles.Should().Be(UserRole.Customer);
 
             subject.Email.Should().Be(dto.Email);
-            subject.Password.Should().NotBeNullOrWhiteSpace();
-            subject.PasswordSalt.Should().NotBeNullOrWhiteSpace();
+            subject.Password.Text.Should().NotBeNullOrWhiteSpace();
+            subject.Password.Salt.Should().NotBeNullOrWhiteSpace();
             subject.IsActive.Should().BeTrue();
             subject.IsRemoved.Should().BeFalse();
         }
@@ -146,8 +146,8 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
             // assert
             var subject = AssertRepositoryContext.Users.FirstOrDefault();
             subject.Should().NotBeNull();
-            subject.PasswordSalt.Should().NotBe(user.PasswordSalt);
-            subject.PasswordSalt.Should().NotBe(user.Password);
+            subject.Password.Salt.Should().NotBe(user.Password.Salt);
+            subject.Password.Salt.Should().NotBe(user.Password.Text);
             subject.IsActive.Should().BeTrue();
             subject.PermissionsToken.Should().BeNullOrEmpty();
             subject.PermissionsTokenExpiration.Should().BeBefore(DateTime.Now);

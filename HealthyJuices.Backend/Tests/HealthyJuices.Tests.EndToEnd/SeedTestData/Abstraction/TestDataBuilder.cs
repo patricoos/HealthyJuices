@@ -6,7 +6,7 @@ using HealthyJuices.Persistence.Ef;
 namespace HealthyJuices.Tests.EndToEnd.SeedTestData.Abstraction
 {
     public abstract class TestDataBuilder<T>
-        where T : Entity, new()
+        where T : Entity
     {
         protected readonly T Entity;
         protected readonly Random _random;
@@ -14,7 +14,7 @@ namespace HealthyJuices.Tests.EndToEnd.SeedTestData.Abstraction
 
         protected TestDataBuilder()
         {
-            Entity = new T();
+            Entity = (T)Activator.CreateInstance(typeof(T), true);
             _random = new Random();
         }
 

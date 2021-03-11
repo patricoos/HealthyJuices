@@ -20,8 +20,11 @@ namespace HealthyJuices.Tests.EndToEnd.SeedTestData
         public UserBuilder WithPassword(string password)
         {
             var salt = PasswordHelper.GenerateSalt();
-            base.Entity.SetProperty(x => x.PasswordSalt, salt);
-            base.Entity.SetProperty(x => x.Password, PasswordHelper.HashPassword(password, salt));
+            var pass = (Password) Activator.CreateInstance(typeof(Password), true);
+            pass.SetProperty(x => x.Salt, salt);
+            pass.SetProperty(x => x.Text, PasswordHelper.HashPassword(password, salt));
+
+            base.Entity.SetProperty(x => x.Password, pass);
             return this;
         }
 
