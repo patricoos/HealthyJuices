@@ -150,7 +150,7 @@ namespace HealthyJuices.Application.Services
             if (user == null)
                 throw new BadRequestException($"User with email '{email}' not found");
 
-            user.PermissionsToken.CheckValidity(_timeProvider, token);
+            user.CheckPermissionsToken(_timeProvider, token);
             user.ResetPermissionsToken();
             user.Activate();
 
@@ -185,7 +185,7 @@ namespace HealthyJuices.Application.Services
             if (user == null)
                 throw new BadRequestException($"User with email '{dto.Email}' not found");
 
-            user.PermissionsToken.CheckValidity(_timeProvider, dto.Token);
+            user.CheckPermissionsToken(_timeProvider, dto.Token);
 
             user.SetPassword(dto.Password);
             user.ResetPermissionsToken();

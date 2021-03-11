@@ -86,7 +86,7 @@ namespace HealthyJuices.Domain.Models.Users
             this.Update();
         }
 
-        public void CheckValidity(ITimeProvider timeProvider, string token)
+        public void CheckPermissionsToken(ITimeProvider timeProvider, string token)
         {
             if (PermissionsToken == null)
                 throw new BadRequestException("Token Expiration not found");
