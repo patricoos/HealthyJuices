@@ -38,11 +38,11 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
             subject.Password.Salt.Should().NotBeNullOrWhiteSpace();
             subject.IsActive.Should().BeFalse();
             subject.IsRemoved.Should().BeFalse();
-            subject.PermissionsToken.Should().NotBeNullOrEmpty();
-            subject.PermissionsTokenExpiration.Should().BeAfter(DateTime.Now);
-            subject.PermissionsTokenExpiration.Should().BeBefore(DateTime.Now.AddDays(2));
+            subject.PermissionsToken.Token.Should().NotBeNullOrEmpty();
+            subject.PermissionsToken.Expiration.Should().BeAfter(DateTime.Now);
+            subject.PermissionsToken.Expiration.Should().BeBefore(DateTime.Now.AddDays(2));
 
-            MailerMock.Verify(mock => mock.SendAsync(It.Is<string>(x => x == dto.Email), It.IsAny<string>(), It.Is<string>(x => x.Contains(subject.PermissionsToken)), false), Times.Once);
+            MailerMock.Verify(mock => mock.SendAsync(It.Is<string>(x => x == dto.Email), It.IsAny<string>(), It.Is<string>(x => x.Contains(subject.PermissionsToken.Token)), false), Times.Once);
             MailerMock.VerifyNoOtherCalls();
         }
 
@@ -95,11 +95,11 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
             // assert
             var subject = AssertRepositoryContext.Users.FirstOrDefault();
             subject.Should().NotBeNull();
-            subject.PermissionsToken.Should().NotBeNullOrEmpty();
-            subject.PermissionsTokenExpiration.Should().BeAfter(DateTime.Now);
-            subject.PermissionsTokenExpiration.Should().BeBefore(DateTime.Now.AddDays(2));
+            subject.PermissionsToken.Token.Should().NotBeNullOrEmpty();
+            subject.PermissionsToken.Expiration.Should().BeAfter(DateTime.Now);
+            subject.PermissionsToken.Expiration.Should().BeBefore(DateTime.Now.AddDays(2));
 
-            MailerMock.Verify(mock => mock.SendAsync(It.Is<string>(x => x == HealthyJuicesConstants.DEFAULT_USER_LOGIN), It.IsAny<string>(), It.Is<string>(x => x.Contains(subject.PermissionsToken)), false), Times.Once);
+            MailerMock.Verify(mock => mock.SendAsync(It.Is<string>(x => x == HealthyJuicesConstants.DEFAULT_USER_LOGIN), It.IsAny<string>(), It.Is<string>(x => x.Contains(subject.PermissionsToken.Token)), false), Times.Once);
             MailerMock.VerifyNoOtherCalls();
         }
 
@@ -115,14 +115,13 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
             var controller = new AuthorizationController(AuthorizationService);
 
             // act
-            await controller.ConfirmRegisterAsync(HealthyJuicesConstants.DEFAULT_USER_LOGIN, user.PermissionsToken);
+            await controller.ConfirmRegisterAsync(HealthyJuicesConstants.DEFAULT_USER_LOGIN, user.PermissionsToken.Token);
 
             // assert
             var subject = AssertRepositoryContext.Users.FirstOrDefault();
             subject.Should().NotBeNull();
             subject.IsActive.Should().BeTrue();
-            subject.PermissionsToken.Should().BeNullOrEmpty();
-            subject.PermissionsTokenExpiration.Should().BeNull();
+            subject.PermissionsToken.Should().BeNull();
         }
 
         [Fact]
@@ -137,7 +136,8 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
                 .Build(ArrangeRepositoryContext);
 
             var controller = new AuthorizationController(AuthorizationService);
-            var dto = new ResetPasswordDto(HealthyJuicesConstants.DEFAULT_USER_LOGIN, "test new pass", user.PermissionsToken);
+            var newPass = "test new pass";
+            var dto = new ResetPasswordDto(HealthyJuicesConstants.DEFAULT_USER_LOGIN, newPass, user.PermissionsToken.Token);
 
             // act
             await controller.ResetPasswordAsync(dto);
@@ -147,9 +147,11 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
             subject.Should().NotBeNull();
             subject.Password.Salt.Should().NotBe(user.Password.Salt);
             subject.Password.Salt.Should().NotBe(user.Password.Text);
+
+            subject.Password.CheckValidity(newPass).Should().BeTrue();
+
             subject.IsActive.Should().BeTrue();
-            subject.PermissionsToken.Should().BeNullOrEmpty();
-            subject.PermissionsTokenExpiration.Should().BeBefore(DateTime.Now);
+            subject.PermissionsToken.Should().BeNull();
 
             MailerMock.VerifyNoOtherCalls();
         }

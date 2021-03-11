@@ -19,6 +19,12 @@ namespace HealthyJuices.Persistence.Ef.Mappings
                 cb.Property(c => c.Text).HasColumnName("Password");
                 cb.Property(c => c.Salt).HasColumnName("PasswordSalt");
             });
+
+            builder.OwnsOne(p => p.PermissionsToken, cb =>
+            {
+                cb.Property(c => c.Token).HasColumnName("PermissionsToken");
+                cb.Property(c => c.Expiration).HasColumnName("PermissionsTokenExpiration");
+            });
         }
     }
 }

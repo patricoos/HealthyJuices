@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using HealthyJuices.Common.Contracts;
 using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Common.Extensions;
 using HealthyJuices.Domain.Models.Abstraction;
@@ -30,8 +31,8 @@ namespace HealthyJuices.Domain.Models.Users
         public bool IsRemoved { get; private set; }
         public bool IsActive { get; private set; }
 
-        public string PermissionsToken { get; private set; }
-        public DateTime? PermissionsTokenExpiration { get; private set; }
+        public PermissionsToken PermissionsToken { get; private set; }
+
         public List<string> RolesList => this.Roles.GetFlags().Select(x => Enum.GetName(typeof(UserRole), x)).ToList();
 
         protected User() { }
@@ -44,8 +45,6 @@ namespace HealthyJuices.Domain.Models.Users
             this.IsRemoved = false;
 
             this.SetEmail(email);
-            this.Password = new Password(password);
-
             this.SetPassword(password);
             this.AddRoles(role);
             this.Update();
@@ -81,17 +80,23 @@ namespace HealthyJuices.Domain.Models.Users
             this.Update();
         }
 
-        public void SetPermissionsToken(string token, DateTime date)
+        public void SetPermissionsToken(ITimeProvider timeProvider, string token, DateTime date)
         {
-            PermissionsToken = token;
-            PermissionsTokenExpiration = date;
+            PermissionsToken = new PermissionsToken(timeProvider, token, date);
             this.Update();
+        }
+
+        public void CheckValidity(ITimeProvider timeProvider, string token)
+        {
+            if (PermissionsToken == null)
+                throw new BadRequestException("Token Expiration not found");
+
+            PermissionsToken.CheckValidity(timeProvider, token);
         }
 
         public void ResetPermissionsToken()
         {
             PermissionsToken = null;
-            PermissionsTokenExpiration = null;
             this.Update();
         }
 
@@ -120,6 +125,5 @@ namespace HealthyJuices.Domain.Models.Users
 
             this.DateModified = DateTime.UtcNow;
         }
-
     }
 }

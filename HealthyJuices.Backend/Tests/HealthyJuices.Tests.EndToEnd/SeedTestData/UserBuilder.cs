@@ -31,8 +31,11 @@ namespace HealthyJuices.Tests.EndToEnd.SeedTestData
 
         public UserBuilder WithPermissionsToken(string token, DateTime expiration)
         {
-            base.Entity.SetProperty(p => p.PermissionsToken, token);
-            base.Entity.SetProperty(p => p.PermissionsTokenExpiration, expiration);
+            var permissionsToken = (PermissionsToken)Activator.CreateInstance(typeof(PermissionsToken), true);
+            permissionsToken.SetProperty(x => x.Token, token);
+            permissionsToken.SetProperty(x => x.Expiration, expiration);
+
+            base.Entity.SetProperty(p => p.PermissionsToken, permissionsToken);
             return this;
         }
 
