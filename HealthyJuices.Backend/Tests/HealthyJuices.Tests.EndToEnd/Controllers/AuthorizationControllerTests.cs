@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using HealthyJuices.Api.Controllers;
 using HealthyJuices.Common;
+using HealthyJuices.Common.Helpers;
 using HealthyJuices.Domain.Models.Users;
 using HealthyJuices.Shared.Dto;
 using HealthyJuices.Shared.Enums;
@@ -83,8 +84,6 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
         public async Task ForgotPassword_Should_save_new_token_and_send_email()
         {
             // arrange
-            var salt = PasswordHelper.GenerateSalt();
-
             var user = UserBuilder.Create().WithRole(UserRole.Customer).WithEmail(HealthyJuicesConstants.DEFAULT_USER_LOGIN).WithPassword(HealthyJuicesConstants.DEFAULT_USER_PASSWORD).Build(ArrangeRepositoryContext);
 
             var controller = new AuthorizationController(AuthorizationService);

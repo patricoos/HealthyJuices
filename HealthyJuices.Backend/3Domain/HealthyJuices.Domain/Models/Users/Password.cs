@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using HealthyJuices.Common.Exceptions;
+using HealthyJuices.Common.Helpers;
 using HealthyJuices.Domain.Models.Abstraction.DataAccess.Entities;
 
 namespace HealthyJuices.Domain.Models.Users

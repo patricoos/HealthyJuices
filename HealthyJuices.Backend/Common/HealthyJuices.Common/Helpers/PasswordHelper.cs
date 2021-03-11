@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace HealthyJuices.Domain.Models.Users
+namespace HealthyJuices.Common.Helpers
 {
     public static class PasswordHelper
     {

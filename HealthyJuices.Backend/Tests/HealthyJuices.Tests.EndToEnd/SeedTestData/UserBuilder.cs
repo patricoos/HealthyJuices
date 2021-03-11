@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using HealthyJuices.Common.Helpers;
 using HealthyJuices.Domain.Models.Users;
 using HealthyJuices.Shared.Enums;
 using HealthyJuices.Tests.EndToEnd.Extensions;
