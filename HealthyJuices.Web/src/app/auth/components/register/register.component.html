@@ -1,7 +1,6 @@
 <div class="background">
   <form [formGroup]="registerForm" class="box">
-    <div class="loader-container">
-      <app-loader [name]="registerLoader"></app-loader>
+    <app-loader [name]="registerLoader">
       <div class="header">
         <img src="../../../../assets/layout/logo.svg">
       </div>
@@ -71,7 +70,7 @@
           <i class="fa fa-sign-in" aria-hidden="true"></i> Register
         </button>
       </div>
-    </div>
+    </app-loader>
 
 
   </form>

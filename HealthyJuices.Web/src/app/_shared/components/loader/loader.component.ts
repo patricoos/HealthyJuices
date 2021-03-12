@@ -20,26 +20,16 @@ export class LoaderComponent implements OnInit, OnDestroy, OnChanges {
 
   progress = 0;
 
-  isVisible: boolean;
+  isVisible = false;
   loaderName = '';
-  loadersService: LoadersService;
-  toHideSub: Subscription | undefined;
-  toShowSub: Subscription | undefined;
+  loadersSub: Subscription | undefined;
 
-  constructor(loadersService: LoadersService) {
-    this.loadersService = loadersService;
-    this.isVisible = false;
-  }
+  constructor(private loadersService: LoadersService) { }
 
   ngOnInit(): void {
-    this.toShowSub = this.loadersService.getPendingToShow().subscribe(loaderName => {
-      this.handleSignal(loaderName, this.loaderName, 'show');
+    this.loadersSub = this.loadersService.getPendingToShow().subscribe(loaderNames => {
+      this.isVisible = loaderNames.includes(this.loaderName);
     });
-
-    this.toHideSub = this.loadersService.getPendingToHide().subscribe(loaderName => {
-      this.handleSignal(loaderName, this.loaderName, 'hide');
-    });
-
     this.calculateProgress();
   }
 
@@ -53,24 +43,9 @@ export class LoaderComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  handleSignal(name: any, myName: string, action: string): void {
-    if (name !== myName) { return; }
-    if (name === myName) {
-      if (action === 'show') {
-        this.isVisible = true;
-      }
-      if (action === 'hide') {
-        this.isVisible = false;
-      }
-    }
-  }
-
   ngOnDestroy(): void {
-    if (this.toShowSub) {
-      this.toShowSub.unsubscribe();
-    }
-    if (this.toHideSub) {
-      this.toHideSub.unsubscribe();
+    if (this.loadersSub) {
+      this.loadersSub.unsubscribe();
     }
   }
 }

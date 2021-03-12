@@ -6,5 +6,7 @@ namespace HealthyJuices.Domain.Models.Abstraction.DataAccess.Entities
     {
         DateTime DateCreated { get; }
         DateTime DateModified { get; }
+
+        // TODO: add setting to dbcontext
     }
 }

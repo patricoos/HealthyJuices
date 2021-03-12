@@ -5,29 +5,30 @@ import { Observable, Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class LoadersService {
-
-  showSignals: Subject<string>;
-  hideSignals: Subject<string>;
-
-  constructor() {
-    this.showSignals = new Subject<string>();
-    this.hideSignals = new Subject<string>();
-  }
+  private loaders: string[] = [];
+  private loadersObs: Subject<string[]> = new Subject<string[]>();
 
   show(loaderName: string): void {
-    setTimeout(() => this.showSignals.next(loaderName), 0);
+    if (!loaderName || loaderName === '') {
+      return;
+    }
+    setTimeout(() => {
+      this.loaders.push(loaderName);
+      this.loadersObs.next(this.loaders);
+    }, 0);
   }
 
   hide(loaderName: string): void {
-    setTimeout(() => this.hideSignals.next(loaderName), 250);
+    setTimeout(() => {
+      const index = this.loaders.indexOf(loaderName, 0);
+      if (index > -1) {
+        this.loaders.splice(index, 1);
+      }
+      this.loadersObs.next(this.loaders);
+    }, 250);
   }
 
-
-  getPendingToShow(): Observable<any> {
-    return this.showSignals.asObservable();
-  }
-
-  getPendingToHide(): Observable<any> {
-    return this.hideSignals.asObservable();
+  getPendingToShow(): Observable<string[]> {
+    return this.loadersObs.asObservable();
   }
 }

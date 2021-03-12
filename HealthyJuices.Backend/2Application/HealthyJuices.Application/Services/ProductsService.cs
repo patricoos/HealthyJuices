@@ -58,7 +58,7 @@ namespace HealthyJuices.Application.Services
 
         public async Task<string> CreateAsync(ProductDto dto)
         {
-            var product = new Product(dto.Name, dto.Description, dto.Unit, dto.QuantityPerUnit, dto.IsActive, dto.DefaultPricePerUnit);
+            var product = new Product(dto.Name, dto.Description, dto.Unit, dto.QuantityPerUnit, dto.IsActive, dto.DefaultPricePerUnit?.Amount);
 
             _productRepository.Insert(product);
             await _productRepository.SaveChangesAsync();
@@ -75,7 +75,7 @@ namespace HealthyJuices.Application.Services
             if (product == null)
                 throw new BadRequestException($"Not found product with id: {dto.Id}");
 
-            product.Update(dto.Name, dto.Description, dto.Unit, dto.QuantityPerUnit, dto.IsActive, dto.DefaultPricePerUnit);
+            product.Update(dto.Name, dto.Description, dto.Unit, dto.QuantityPerUnit, dto.IsActive, dto.DefaultPricePerUnit?.Amount);
 
             _productRepository.Update(product);
             await _productRepository.SaveChangesAsync();

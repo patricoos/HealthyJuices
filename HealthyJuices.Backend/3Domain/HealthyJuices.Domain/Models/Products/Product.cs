@@ -13,7 +13,7 @@ namespace HealthyJuices.Domain.Models.Products
 
         public ProductUnitType Unit { get; private set; }
         public decimal QuantityPerUnit { get; private set; }
-        public decimal? DefaultPricePerUnit { get; private set; }
+        public Money DefaultPricePerUnit { get; private set; }
 
         public DateTime DateCreated { get; private init; }
         public DateTime DateModified { get; private set; }
@@ -33,7 +33,7 @@ namespace HealthyJuices.Domain.Models.Products
             this.Description = description;
             this.Unit = unit;
             this.QuantityPerUnit = quantityPerUnit < 0 ? throw new BadRequestException($"Quantity per unit can not be less than zero.") : quantityPerUnit;
-            this.DefaultPricePerUnit = defaultPrice != null && defaultPrice < 0 ? throw new BadRequestException($"DefaultPrice can not be less than zero.") : defaultPrice;
+            this.DefaultPricePerUnit = defaultPrice.HasValue ? new Money(defaultPrice.Value) : null;
             this.IsActive = isActive;
         }
 
@@ -51,7 +51,7 @@ namespace HealthyJuices.Domain.Models.Products
             this.Description = description;
             this.Unit = unit;
             this.QuantityPerUnit = quantityPerUnit < 0 ? throw new BadRequestException($"Quantity per unit can not be less than zero.") : quantityPerUnit;
-            this.DefaultPricePerUnit = defaultPrice != null && defaultPrice < 0 ? throw new BadRequestException($"DefaultPrice can not be less than zero.") : defaultPrice;
+            this.DefaultPricePerUnit = defaultPrice.HasValue ? new Money(defaultPrice.Value) : null;
             this.IsActive = isActive;
         }
 

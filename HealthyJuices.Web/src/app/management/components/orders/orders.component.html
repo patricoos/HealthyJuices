@@ -1,5 +1,4 @@
-<div class="loader-container">
-  <app-loader [name]="ordersComponentLoader"></app-loader>
+<app-loader [name]="ordersComponentLoader">
   <div class="primary-container shadow-container">
     <p-table #dt [columns]="columns" [value]="orders" [scrollable]="true" [resizableColumns]="true"
       [reorderableColumns]="true" scrollHeight="calc(100% - 20px)" class="mytableBorder"
@@ -62,4 +61,4 @@
       </ng-template>
     </p-table>
   </div>
-</div>
+</app-loader>

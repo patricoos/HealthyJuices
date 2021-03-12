@@ -4,14 +4,16 @@ using HealthyJuices.Persistence.Ef;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HealthyJuices.Persistence.Ef.Migrations
 {
     [DbContext(typeof(HealthyJuicesDbContext))]
-    partial class HealthyJuicesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210312205752_money_value_object")]
+    partial class money_value_object
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

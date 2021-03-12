@@ -13,7 +13,7 @@ namespace HealthyJuices.Application.Mappers
             Description = e.Description,
             Unit = e.Unit,
             QuantityPerUnit = e.QuantityPerUnit,
-            DefaultPricePerUnit = e.DefaultPricePerUnit,
+            DefaultPricePerUnit = e.DefaultPricePerUnit?.ToDto(),
             DateCreated = e.DateCreated,
             DateModified = e.DateModified,
             IsRemoved = e.IsRemoved,
@@ -28,6 +28,12 @@ namespace HealthyJuices.Application.Mappers
             Product = e.Product?.ToDto(),
             Order = mapOrder ? e.Order?.ToDto() : null,
             OrderId = e.OrderId
+        };
+
+        public static MoneyDto ToDto(this Money e) => new MoneyDto()
+        {
+            Amount = e.Amount,
+            Currency = e.Currency,
         };
     }
 }

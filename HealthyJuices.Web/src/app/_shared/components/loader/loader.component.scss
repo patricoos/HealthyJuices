@@ -1,69 +1,64 @@
 @import "../../../../variables.scss";
 
-.loader-backgroud > svg {
-  top: calc(50% - 60px);
-}
-
-.loader-backgroud > .progress-bar-container {
-  width: 30%;
-  height: 40px;
-  margin: auto;
-  top: calc(50% + 20px);
-  position: absolute;
-  left: 35%;
-}
-
-.loader-backgroud > .progress-bar-container > .progress-bar {
-  background-color: rgba(255, 255, 255, 0.5);
-}
-
-.loader-backgroud > .progress-bar-container > .progress-bar span {
-  height: 15px;
-}
-.loader-backgroud > .progress-bar-container > .progress-bar span div {
-  font-size: 12px;
-  padding: 4px 0;
-}
-
 .loader-container {
   width: 100%;
   height: 100%;
   position: relative;
   cursor: auto;
-}
 
-.loader-backgroud {
-  position: absolute;
-  right: 0;
-  top: 0;
-  background: rgba(0, 0, 0, 0.1);
-  -webkit-backdrop-filter: blur(1px);
-  backdrop-filter: blur(1px);
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  z-index: 99;
-  cursor: progress;
-}
+  .loader-backgroud {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(1px);
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    z-index: 99;
+    cursor: progress;
 
-.loader-backgroud > svg {
-  width: 80px;
-  height: 80px;
-  margin: auto;
-  top: calc(50% - 40px);
-  position: absolute;
-  left: calc(50% - 40px);
-}
+    svg {
+      height: 80%;
+      max-width: 80px;
+      max-height: 80px;
+      margin: auto;
+      position: fixed;
+      top: 45%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    svg.logo {
+      fill: rgba(255, 255, 255, 0.4);
+    }
+    svg.logo-animation {
+      fill: rgba(255, 255, 255, 0.4);
+      stroke-width: 0;
+      -webkit-animation: down-enter ease-in 1.2s infinite, stroke-color linear 2.4s infinite;
+      animation: down-enter ease-in 1.2s infinite, stroke-color linear 2.4s infinite;
+    }
 
-.loader-backgroud > svg.logo {
-  fill: rgba(255, 255, 255, 0.4);
-}
+    .progress-bar-container {
+      width: 45%;
+      height: 40px;
+      margin: auto;
+      position: fixed;
+      top: 45%;
+      left: 50%;
+      transform: translate(-50%, 100%);
 
-.loader-backgroud > svg.logo-animation {
-  fill: rgba(255, 255, 255, 0.4);
-  stroke-width: 0;
-  -webkit-animation: down-enter ease-in 1.2s infinite, stroke-color linear 2.4s infinite;
-  animation: down-enter ease-in 1.2s infinite, stroke-color linear 2.4s infinite;
+      .progress-bar {
+        background-color: rgba(255, 255, 255, 0.5);
+      }
+      .progress-bar span {
+        height: 15px;
+      }
+      .progress-bar span div {
+        font-size: 12px;
+        padding: 4px 0;
+      }
+    }
+  }
 }
 
 @keyframes down-enter {

@@ -1,7 +1,6 @@
 <div class="mycontainer">
   <div class="col-7 white-container shadow-container table-container">
-    <div class="loader-container">
-      <app-loader [name]="myOrdersTableComponentLoader"></app-loader>
+    <app-loader [name]="myOrdersTableComponentLoader">
 
       <p-table #dt [columns]="columns" [value]="orders" [scrollable]="true" [resizableColumns]="true"
         [reorderableColumns]="true" [scrollHeight]="'calc(100vh - 230px )'" class="mytableBorder"
@@ -88,18 +87,17 @@
           </tr>
         </ng-template>
       </p-table>
-    </div>
-    </td>
-    </tr>
-    </ng-template>
-    </p-table>
-
   </div>
+  </td>
+  </tr>
+  </ng-template>
+  </p-table>
+
+  </app-loader>
 </div>
 
 <div class="col-5 white-container shadow-container new-order-container">
-  <div class="loader-container">
-    <app-loader [name]="myOrdersFormComponentLoader"></app-loader>
+  <app-loader [name]="myOrdersFormComponentLoader">
     <div class="form-header">
       <div class="form-header-label col-6"> Add New Order</div>
       <div class="submit-container col-6">
@@ -164,8 +162,7 @@
         </ng-template>
       </p-table>
     </div>
-
-  </div>
+  </app-loader>
 
 </div>
 </div>

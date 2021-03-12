@@ -11,7 +11,7 @@ namespace HealthyJuices.Shared.Dto.Products
 
         public ProductUnitType Unit { get; init; }
         public decimal QuantityPerUnit { get; init; }
-        public decimal? DefaultPricePerUnit { get; init; }
+        public MoneyDto DefaultPricePerUnit { get; init; }
 
         public DateTime DateCreated { get; init; }
         public DateTime DateModified { get; init; }
