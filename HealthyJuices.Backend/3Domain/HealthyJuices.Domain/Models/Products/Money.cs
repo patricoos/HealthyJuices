@@ -6,8 +6,8 @@ namespace HealthyJuices.Domain.Models.Products
 {
     public class Money : IEquatable<Money>, IComparable, IComparable<Money>
     {
-        public decimal Amount { get; private set; }
-        public Currency Currency { get; private set; }
+        public decimal Amount { get; private init; }
+        public Currency Currency { get; private init; }
 
         protected Money() { }
 

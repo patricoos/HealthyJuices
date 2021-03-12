@@ -8,8 +8,8 @@ namespace HealthyJuices.Domain.Models.Users
 {
     public class PermissionsToken : ValueObject
     {
-        public string Token { get; private set; }
-        public DateTime? Expiration { get; private set; }
+        public string Token { get; private init; }
+        public DateTime? Expiration { get; private init; }
 
         protected PermissionsToken() { }
 

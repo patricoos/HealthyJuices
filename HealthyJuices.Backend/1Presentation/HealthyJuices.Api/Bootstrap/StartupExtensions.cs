@@ -148,7 +148,6 @@ namespace HealthyJuices.Api.Bootstrap
                         new CompanyDataSeeder(),
                         new UserDataSeeder(),
                         new OrderDataSeeder()
-
                 };
 
             foreach (var dataSeeder in seeders)

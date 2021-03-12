@@ -7,8 +7,8 @@ namespace HealthyJuices.Domain.Models.Users
 {
     public class Password : ValueObject
     {
-        public string Text { get; private set; }
-        public string Salt { get; private set; }
+        public string Text { get; private init; }
+        public string Salt { get; private init; }
 
         protected Password() { }
 
