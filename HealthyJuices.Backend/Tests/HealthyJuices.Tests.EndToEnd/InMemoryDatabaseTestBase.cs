@@ -51,9 +51,9 @@ namespace HealthyJuices.Tests.EndToEnd
         #region Services
 
         public AuthorizationService AuthorizationService { get; set; }
-        public CompaniesService CompaniesService { get; set; }
+    //    public CompaniesService CompaniesService { get; set; }
         public OrdersService OrdersService { get; set; }
-        public ProductsService ProductsService { get; set; }
+      //  public ProductsService ProductsService { get; set; }
         public UnavailabilitiesService UnavailabilitiesService { get; set; }
         public UsersService UsersService { get; set; }
 
@@ -116,9 +116,9 @@ namespace HealthyJuices.Tests.EndToEnd
         private void InitializeServices()
         {
             AuthorizationService = new AuthorizationService(UserRepository, SimpleTokenProvider, TimeProvider, EmailProvider, CompanyRepository);
-            CompaniesService = new CompaniesService(CompanyRepository);
+         //   CompaniesService = new CompaniesService(CompanyRepository);
             OrdersService = new OrdersService(OrderRepository, UserRepository, ProductRepository, UnavailabilityRepository);
-            ProductsService = new ProductsService(ProductRepository);
+         //   ProductsService = new ProductsService(ProductRepository);
             UnavailabilitiesService = new UnavailabilitiesService(UnavailabilityRepository);
             UsersService = new UsersService(UserRepository);
         }

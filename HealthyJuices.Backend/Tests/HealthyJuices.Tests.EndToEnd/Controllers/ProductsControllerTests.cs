@@ -5,6 +5,10 @@ using HealthyJuices.Shared.Enums;
 using System.Linq;
 using System.Threading.Tasks;
 using HealthyJuices.Api.Controllers;
+using HealthyJuices.Application.Services.Products.Commands;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
 using Xunit;
 
 namespace HealthyJuices.Tests.EndToEnd.Controllers
@@ -15,7 +19,7 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
         public async Task Product_can_be_created()
         {
             // arrange
-            var request = new ProductDto()
+            var request = new CreateProduct.Command()
             {
                 Name = "Sample product",
                 Description = "test desc",
@@ -24,13 +28,21 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
                 IsActive = true
             };
 
-            var controller = new ProductsController(ProductsService);
+            var mediator = new Mock<IMediator>();
+
+            var controller = new ProductsController(mediator.Object);
 
             // act
             var result = await controller.CreateAsync(request);
 
             // assert
-            result.Should().NotBeNullOrWhiteSpace();
+
+            var okResult = result as OkObjectResult;
+            var actualConfiguration = okResult.Value as string;
+
+            // Now you can compare with expected values
+            actualConfiguration.Should().NotBeNullOrWhiteSpace();
+
             var subject = AssertRepositoryContext.Products.FirstOrDefault();
 
             subject.Should().NotBeNull();

@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using HealthyJuices.Api.Utils.Attributes;
-using HealthyJuices.Application.Services;
+using HealthyJuices.Application.Services.Products.Commands;
+using HealthyJuices.Application.Services.Products.Queries;
 using HealthyJuices.Shared.Dto.Products;
 using HealthyJuices.Shared.Enums;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,56 +16,56 @@ namespace HealthyJuices.Api.Controllers
     [Authorize]
     public class ProductsController : BaseApiController
     {
-        private readonly ProductsService _service;
-
-        public ProductsController(ProductsService service)
+        private readonly IMediator _mediator;
+        public ProductsController(IMediator mediator)
         {
-            _service = service;
+            this._mediator = mediator;
         }
 
         [HttpGet]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task<List<ProductDto>> GetAllAsync()
+        public async Task<IEnumerable<ProductDto>> GetAllAsync()
         {
-            var result = await _service.GetAllAsync();
+            var result = await _mediator.Send(new GetAllProducts.Query());
             return result;
         }
 
         [HttpGet("active")]
-        public async Task<List<ProductDto>> GetAllActiveAsync()
+        public async Task<IEnumerable<ProductDto>> GetAllActiveAsync()
         {
-            var result = await _service.GetAllActiveAsync();
+            var result = await _mediator.Send(new GetAllActiveProducts.Query());
             return result;
         }
 
-
         [HttpGet("{id}")]
-        public async Task<ProductDto> GetByIdAsync(string id)
+        public async Task<IActionResult> GetByIdAsync(string id)
         {
-            var result = await _service.GetByIdAsync(id);
-            return result;
+            var response = await _mediator.Send(new GetProductById.Query(id));
+            return response.Failed ? BadRequest(response.Message) : Ok(response.Value);
         }
 
         [HttpPost]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task<string> CreateAsync(ProductDto definitionDto)
+        public async Task<IActionResult> CreateAsync(CreateProduct.Command command)
         {
-            var result = await _service.CreateAsync(definitionDto);
-            return result;
+            var response = await _mediator.Send(command);
+            return response.Failed ? BadRequest(response.Message) : Ok(response.Value);
         }
 
         [HttpPut]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task UpdateAsync(ProductDto definitionDto)
+        public async Task<IActionResult> UpdateAsync(UpdateProduct.Command command)
         {
-            await _service.UpdateAsync(definitionDto);
+            var response = await _mediator.Send(command);
+            return response.Failed ? BadRequest(response.Message) : Ok();
         }
 
         [HttpDelete("{id}")]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task DeleteAsync(string id)
+        public async Task<IActionResult> DeleteAsync(string id)
         {
-            await _service.DeleteByIdAsync(id);
+            var response = await _mediator.Send(new DeleteProduct.Command(id));
+            return response.Failed ? BadRequest(response.Message) : Ok();
         }
     }
 }

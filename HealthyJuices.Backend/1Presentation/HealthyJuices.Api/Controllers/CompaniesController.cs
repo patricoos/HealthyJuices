@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using HealthyJuices.Api.Utils.Attributes;
-using HealthyJuices.Application.Services;
+using HealthyJuices.Application.Services.Companies.Commands;
+using HealthyJuices.Application.Services.Companies.Queries;
 using HealthyJuices.Shared.Dto;
 using HealthyJuices.Shared.Enums;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,61 +15,63 @@ namespace HealthyJuices.Api.Controllers
     [Route("companies")]
     public class CompaniesController : BaseApiController
     {
-        private readonly CompaniesService _service;
+        private readonly IMediator _mediator;
 
-        public CompaniesController(CompaniesService service)
+        public CompaniesController(IMediator mediator)
         {
-            _service = service;
+            _mediator = mediator;
         }
 
         [HttpGet]
         [Authorize]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task<List<CompanyDto>> GetAllAsync()
+        public async Task<IEnumerable<CompanyDto>> GetAllAsync()
         {
-            var result = await _service.GetAllAsync();
+            var result = await _mediator.Send(new GetAllCompanies.Query());
             return result;
         }
 
         [HttpGet("active")]
-        public async Task<List<CompanyDto>> GetAllActiveAsync()
+        public async Task<IEnumerable<CompanyDto>> GetAllActiveAsync()
         {
-            var result = await _service.GetAllActiveAsync();
+            var result = await _mediator.Send(new GetAllActiveCompanies.Query());
             return result;
         }
 
 
         [HttpGet("{id}")]
         [Authorize]
-        public async Task<CompanyDto> GetByIdAsync(string id)
+        public async Task<IActionResult> GetByIdAsync(string id)
         {
-            var result = await _service.GetByIdAsync(id);
-            return result;
+            var response = await _mediator.Send(new GetCompanyById.Query(id));
+            return response.Failed ? BadRequest(response.Message) : Ok(response.Value);
         }
 
         [HttpPost]
         [Authorize]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task<string> CreateAsync(CompanyDto definitionDto)
+        public async Task<IActionResult> CreateAsync(CreateCompany.Command command)
         {
-            var result = await _service.CreateAsync(definitionDto);
-            return result;
+            var response = await _mediator.Send(command);
+            return response.Failed ? BadRequest(response.Message) : Ok(response.Value);
         }
 
         [HttpPut]
         [Authorize]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task UpdateAsync(CompanyDto definitionDto)
+        public async Task<IActionResult> UpdateAsync(UpdateCompany.Command command)
         {
-            await _service.UpdateAsync(definitionDto);
+            var response = await _mediator.Send(command);
+            return response.Failed ? BadRequest(response.Message) : Ok();
         }
 
         [HttpDelete("{id}")]
         [Authorize]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task DeleteAsync(string id)
+        public async Task<IActionResult> DeleteAsync(string id)
         {
-            await _service.DeleteByIdAsync(id);
+            var response = await _mediator.Send(new DeleteCompany.Command(id));
+            return response.Failed ? BadRequest(response.Message) : Ok();
         }
     }
 }

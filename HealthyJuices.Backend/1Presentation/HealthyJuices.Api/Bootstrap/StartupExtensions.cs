@@ -5,6 +5,10 @@ using HealthyJuices.Api.Bootstrap.DataSeed;
 using HealthyJuices.Application.Providers;
 using HealthyJuices.Application.Providers.Logging;
 using HealthyJuices.Application.Services;
+using HealthyJuices.Application.Services.Companies.Commands;
+using HealthyJuices.Application.Services.Companies.Queries;
+using HealthyJuices.Application.Services.Products.Commands;
+using HealthyJuices.Application.Services.Products.Queries;
 using HealthyJuices.Common;
 using HealthyJuices.Common.Contracts;
 using HealthyJuices.Common.Services;
@@ -24,6 +28,7 @@ using HealthyJuices.Persistence.Ef.Repositories.Products;
 using HealthyJuices.Persistence.Ef.Repositories.Unavailabilities;
 using HealthyJuices.Persistence.Ef.Repositories.Users;
 using HealthyJuices.Shared.Enums;
+using MediatR;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -35,18 +40,32 @@ namespace HealthyJuices.Api.Bootstrap
 {
     public static class StartupExtensions
     {
-        public static IServiceCollection RegisterApplicationControllers(this IServiceCollection @this)
+        public static IServiceCollection RegisterServices(this IServiceCollection @this)
         {
+            //@this.AddMediatR(typeof(Startup).Assembly);
+
+            @this.AddMediatR(typeof(GetAllProducts.Query).Assembly);
+            @this.AddMediatR(typeof(GetAllActiveProducts.Query).Assembly);
+            @this.AddMediatR(typeof(GetProductById.Query).Assembly);
+            @this.AddMediatR(typeof(CreateProduct.Command).Assembly);
+            @this.AddMediatR(typeof(DeleteProduct.Command).Assembly);
+            @this.AddMediatR(typeof(UpdateProduct.Command).Assembly);
+
+            @this.AddMediatR(typeof(GetAllCompanies.Query).Assembly);
+            @this.AddMediatR(typeof(GetAllActiveCompanies.Query).Assembly);
+            @this.AddMediatR(typeof(GetCompanyById.Query).Assembly);
+            @this.AddMediatR(typeof(CreateCompany.Command).Assembly);
+            @this.AddMediatR(typeof(DeleteCompany.Command).Assembly);
+            @this.AddMediatR(typeof(UpdateCompany.Command).Assembly);
+
             @this.AddScoped<AuthorizationService>();
             @this.AddScoped<OrdersService>();
             @this.AddScoped<UnavailabilitiesService>();
             @this.AddScoped<UsersService>();
-            @this.AddScoped<CompaniesService>();
-            @this.AddScoped<ProductsService>();
             return @this;
         }
 
-        public static IServiceCollection RegisterServices(this IServiceCollection @this, IConfiguration config)
+        public static IServiceCollection RegisterProviders(this IServiceCollection @this, IConfiguration config)
         {
             @this.AddScoped<IMailer>(x => new Mailer(
                 config["smtp:smtpServer"],
