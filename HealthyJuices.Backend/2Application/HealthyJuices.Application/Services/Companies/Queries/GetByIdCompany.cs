@@ -5,11 +5,10 @@ using HealthyJuices.Application.Wrappers;
 using HealthyJuices.Common.Utils;
 using HealthyJuices.Domain.Models.Companies.DataAccess;
 using HealthyJuices.Shared.Dto;
-using HealthyJuices.Shared.Dto.Products;
 
 namespace HealthyJuices.Application.Services.Companies.Queries
 {
-    public static class GetCompanyById
+    public static class GetByIdCompany
     {
         // Query 
         public record Query(string Id) : IRequestWrapper<CompanyDto> { }
@@ -32,7 +31,7 @@ namespace HealthyJuices.Application.Services.Companies.Queries
                     .FirstOrDefaultAsync();
 
                 if (entity == null)
-                    return Response<CompanyDto>.Fail<CompanyDto>($"Not found product with id: {request.Id}");
+                    return Response<CompanyDto>.Fail<CompanyDto>($"Not found company with id: {request.Id}");
 
                 return Response<CompanyDto>.Success(entity.ToDto());
             }

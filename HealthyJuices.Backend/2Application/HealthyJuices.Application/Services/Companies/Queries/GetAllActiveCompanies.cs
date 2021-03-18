@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using HealthyJuices.Application.Mappers;
 using HealthyJuices.Domain.Models.Companies.DataAccess;
 using HealthyJuices.Shared.Dto;
-using HealthyJuices.Shared.Dto.Products;
 using MediatR;
 
 namespace HealthyJuices.Application.Services.Companies.Queries

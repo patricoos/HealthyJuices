@@ -1,7 +1,11 @@
 ﻿using System.Threading.Tasks;
 using HealthyJuices.Application.Services;
+using HealthyJuices.Application.Services.Auth.Commands;
+using HealthyJuices.Application.Services.Auth.Queries;
+using HealthyJuices.Application.Services.Companies.Queries;
 using HealthyJuices.Shared.Dto;
 using HealthyJuices.Shared.Dto.Auth;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,71 +15,52 @@ namespace HealthyJuices.Api.Controllers
     [Route("auth")]
     public class AuthorizationController : BaseApiController
     {
-        private readonly AuthorizationService _service;
+        private readonly IMediator _mediator;
 
-        public AuthorizationController(AuthorizationService service)
+        public AuthorizationController(IMediator mediator)
         {
-            _service = service;
+            _mediator = mediator;
         }
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<LoginResponseDto> LoginAsync([FromBody] LoginDto dto)
+        public async Task<IActionResult> LoginAsync([FromBody] Login.Query query)
         {
-            var result = await _service.LoginAsync(dto);
-            return result;
-        }
-
-        [AllowAnonymous]
-        [HttpPost("login-refresh-token")]
-        public async Task<LoginResponseDto> LoginWithRefreshTokenAsync([FromBody] LoginDto dto)
-        {
-            var result = await _service.LoginWithRefreshTokenAsync(dto, IpAddress);
-            return result;
-        }
-
-        [AllowAnonymous]
-        [HttpPost("refresh-token")]
-        public async Task<LoginResponseDto> RefreshTokenAsync([FromBody] TokenDto model)
-        {
-            var result = await _service.RefreshTokenAsync(model.Token, IpAddress);
-            return result;
-        }
-
-        [HttpPost("revoke-token")]
-        public async Task<IActionResult> RevokeTokenAsync([FromBody] TokenDto model)
-        {
-            await _service.RevokeTokenAsync(model.Token, IpAddress);
-            return Ok(new { message = "Token revoked" });
+            var response = await _mediator.Send(query);
+            return response.Failed ? BadRequest(response.Message) : Ok(response.Value);
         }
 
 
         [AllowAnonymous]
         [HttpPost("register")]
-        public async Task RegisterAsync([FromBody] RegisterUserDto dto)
+        public async Task<IActionResult> RegisterAsync([FromBody] Register.Command command)
         {
-            await _service.RegisterAsync(dto);
+            var response = await _mediator.Send(command);
+            return response.Failed ? BadRequest(response.Message) : Ok(response.Value);
         }
 
         [AllowAnonymous]
         [HttpGet("confirm-register")]
-        public async Task ConfirmRegisterAsync([FromQuery] string email, [FromQuery] string token)
+        public async Task<IActionResult> ConfirmRegisterAsync([FromQuery] string email, [FromQuery] string token)
         {
-            await _service.ConfirmRegisterAsync(email, token);
+            var response = await _mediator.Send(new ConfirmRegister.Command(email, token));
+            return response.Failed ? BadRequest(response.Message) : Ok();
         }
 
         [AllowAnonymous]
         [HttpPost("forgot-password")]
-        public async Task ForgotPasswordAsync([FromBody] ForgotPasswordDto dto)
+        public async Task<IActionResult> ForgotPasswordAsync([FromBody] ForgotPassword.Command command)
         {
-            await _service.ForgotPasswordAsync(dto);
+            var response = await _mediator.Send(command);
+            return response.Failed ? BadRequest(response.Message) : Ok();
         }
 
         [AllowAnonymous]
         [HttpPost("reset-password")]
-        public async Task ResetPasswordAsync([FromBody] ResetPasswordDto dto)
+        public async Task<IActionResult> ResetPasswordAsync([FromBody] ResetPassword.Command command)
         {
-            await _service.ResetPasswordAsync(dto);
+            var response = await _mediator.Send(command);
+            return response.Failed ? BadRequest(response.Message) : Ok();
         }
     }
 }

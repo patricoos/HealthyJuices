@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 using HealthyJuices.Api.Bootstrap.DataSeed;
 using HealthyJuices.Application.Providers;
@@ -42,26 +43,6 @@ namespace HealthyJuices.Api.Bootstrap
     {
         public static IServiceCollection RegisterServices(this IServiceCollection @this)
         {
-            //@this.AddMediatR(typeof(Startup).Assembly);
-
-            @this.AddMediatR(typeof(GetAllProducts.Query).Assembly);
-            @this.AddMediatR(typeof(GetAllActiveProducts.Query).Assembly);
-            @this.AddMediatR(typeof(GetProductById.Query).Assembly);
-            @this.AddMediatR(typeof(CreateProduct.Command).Assembly);
-            @this.AddMediatR(typeof(DeleteProduct.Command).Assembly);
-            @this.AddMediatR(typeof(UpdateProduct.Command).Assembly);
-
-            @this.AddMediatR(typeof(GetAllCompanies.Query).Assembly);
-            @this.AddMediatR(typeof(GetAllActiveCompanies.Query).Assembly);
-            @this.AddMediatR(typeof(GetCompanyById.Query).Assembly);
-            @this.AddMediatR(typeof(CreateCompany.Command).Assembly);
-            @this.AddMediatR(typeof(DeleteCompany.Command).Assembly);
-            @this.AddMediatR(typeof(UpdateCompany.Command).Assembly);
-
-            @this.AddScoped<AuthorizationService>();
-            @this.AddScoped<OrdersService>();
-            @this.AddScoped<UnavailabilitiesService>();
-            @this.AddScoped<UsersService>();
             return @this;
         }
 

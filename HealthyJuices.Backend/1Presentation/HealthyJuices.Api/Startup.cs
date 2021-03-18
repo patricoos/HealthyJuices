@@ -4,14 +4,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.IO;
-using System.Text;
 using HealthyJuices.Api.Bootstrap;
 using HealthyJuices.Api.Middlewares;
 using HealthyJuices.Application.Auth;
+using HealthyJuices.Application.Utils;
 using HealthyJuices.Common;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 namespace HealthyJuices.Api
@@ -52,6 +50,7 @@ namespace HealthyJuices.Api
                 .RegisterDatabase(Configuration.GetConnectionString("Sql"))
                 .RegisterRepositories()
                 .RegisterServices()
+                .RegisterMediatR()
                 .RegisterProviders(Configuration);
 
             services.AddSwaggerGen(options =>

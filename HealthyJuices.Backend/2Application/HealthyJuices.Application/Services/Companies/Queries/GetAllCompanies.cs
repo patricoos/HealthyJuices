@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using HealthyJuices.Application.Mappers;
 using HealthyJuices.Domain.Models.Companies.DataAccess;
-using HealthyJuices.Domain.Models.Products.DataAccess;
 using HealthyJuices.Shared.Dto;
 using MediatR;
 

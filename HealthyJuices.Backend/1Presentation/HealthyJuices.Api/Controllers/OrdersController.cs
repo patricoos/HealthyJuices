@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using HealthyJuices.Api.Utils.Attributes;
 using HealthyJuices.Application.Services;
+using HealthyJuices.Application.Services.Orders.Commands;
+using HealthyJuices.Application.Services.Orders.Queries;
 using HealthyJuices.Shared.Dto.Orders;
 using HealthyJuices.Shared.Dto.Reports;
 using HealthyJuices.Shared.Enums;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,65 +19,67 @@ namespace HealthyJuices.Api.Controllers
     [Authorize]
     public class OrdersController : BaseApiController
     {
-        private readonly OrdersService _service;
+        private readonly IMediator _mediator;
 
-        public OrdersController(OrdersService service)
+        public OrdersController(IMediator mediator)
         {
-            _service = service;
+            _mediator = mediator;
         }
 
         [HttpGet]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task<List<OrderDto>> GetAllAsync()
+        public async Task<IEnumerable<OrderDto>> GetAllAsync()
         {
-            var result = await _service.GetAllAsync();
+            var result = await _mediator.Send(new GetAllOrders.Query());
             return result;
         }
 
         [HttpGet("my")]
         [AuthorizeRoles(UserRole.Customer)]
-        public async Task<List<OrderDto>> GetAllActiveByUserAsync([FromQuery] DateTime? from = null, [FromQuery] DateTime? to = null)
+        public async Task<IEnumerable<OrderDto>> GetAllActiveByUserAsync([FromQuery] DateTime? from = null, [FromQuery] DateTime? to = null)
         {
-            var result = await _service.GetAllActiveByUserAsync(RequestSenderId, from, to);
+            var result = await _mediator.Send(new GetAllActiveByUserOrders.Query(RequestSenderId, from, to));
             return result;
         }
 
         [HttpGet("active")]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task<List<OrderDto>> GetAllActiveAsync([FromQuery]DateTime? from = null, [FromQuery]DateTime? to = null)
+        public async Task<IEnumerable<OrderDto>> GetAllActiveAsync([FromQuery]DateTime? from = null, [FromQuery]DateTime? to = null)
         {
-            var result = await _service.GetAllActiveAsync(from, to);
+            var result = await _mediator.Send(new GetAllActiveOrders.Query(from, to));
             return result;
         }
 
         [HttpGet("{id}")]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task<OrderDto> GetByIdAsync(string id)
+        public async Task<IActionResult> GetByIdAsync(string id) 
         {
-            var result = await _service.GetByIdAsync(id);
-            return result;
+            var response = await _mediator.Send(new GetByIdOrder.Query(id));
+            return response.Failed ? BadRequest(response.Message) : Ok(response.Value);
         }
 
         [HttpPost]
         [AuthorizeRoles(UserRole.Customer)]
-        public async Task<string> CreateAsync(OrderDto definitionDto)
+        public async Task<IActionResult> CreateAsync(CreateOrder.Command command)
         {
-            var result = await _service.CreateAsync(definitionDto, RequestSenderId);
-            return result;
+            var response = await _mediator.Send(command);
+            return response.Failed ? BadRequest(response.Message) : Ok(response.Value);
         }
 
         [HttpPut]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task UpdateAsync(OrderDto definitionDto)
+        public async Task<IActionResult> UpdateAsync(UpdateOrder.Command command)
         {
-            await _service.UpdateAsync(definitionDto);
+            var response = await _mediator.Send(command);
+            return response.Failed ? BadRequest(response.Message) : Ok();
         }
 
         [HttpDelete("{id}")]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task DeleteAsync(string id)
+        public async Task<IActionResult> DeleteAsync(string id)
         {
-            await _service.DeleteByIdAsync(id);
+            var response = await _mediator.Send(new DeleteOrder.Command(id));
+            return response.Failed ? BadRequest(response.Message) : Ok();
         }
 
 
@@ -82,7 +87,7 @@ namespace HealthyJuices.Api.Controllers
         [AuthorizeRoles(UserRole.BusinessOwner)]
         public async Task<DashboardOrderReportDto> GetDashboardOrderReportAsync([FromQuery] DateTime from, [FromQuery] DateTime to)
         {
-            var result = await _service.GetDashboardOrderReportAsync(from, to);
+            var result = await _mediator.Send(new GetDashboardReportOrders.Query(from, to));
             return result;
         }
     }

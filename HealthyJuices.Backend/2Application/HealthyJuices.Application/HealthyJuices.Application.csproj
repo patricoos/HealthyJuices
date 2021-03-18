@@ -12,18 +12,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\Authorization\Commands\" />
-    <Folder Include="Services\Authorization\Queries\" />
+    <Folder Include="Services\Auth\Queries\" />
     <Folder Include="Services\Orders\Commands\" />
     <Folder Include="Services\Orders\Queries\" />
     <Folder Include="Services\Unavailabilities\Commands\" />
-    <Folder Include="Services\Unavailabilities\Queries\" />
     <Folder Include="Services\Users\Commands\" />
     <Folder Include="Services\Users\Queries\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
   </ItemGroup>
 
 </Project>

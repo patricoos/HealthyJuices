@@ -4,7 +4,16 @@ using HealthyJuices.Application.Auth;
 using HealthyJuices.Application.Providers;
 using HealthyJuices.Application.Services;
 using HealthyJuices.Application.Services.Companies.Commands;
+using HealthyJuices.Application.Services.Companies.Queries;
+using HealthyJuices.Application.Services.Orders.Commands;
+using HealthyJuices.Application.Services.Orders.Queries;
 using HealthyJuices.Application.Services.Products.Commands;
+using HealthyJuices.Application.Services.Products.Queries;
+using HealthyJuices.Application.Services.Unavailabilities.Commands;
+using HealthyJuices.Application.Services.Unavailabilities.Queries;
+using HealthyJuices.Application.Services.Users.Commands;
+using HealthyJuices.Application.Services.Users.Queries;
+using HealthyJuices.Application.Utils;
 using HealthyJuices.Common;
 using HealthyJuices.Common.Contracts;
 using HealthyJuices.Common.Services;
@@ -53,14 +62,6 @@ namespace HealthyJuices.Tests.EndToEnd
         #endregion Repositories
 
         #region Services
-
-        public AuthorizationService AuthorizationService { get; set; }
-    //    public CompaniesService CompaniesService { get; set; }
-        public OrdersService OrdersService { get; set; }
-      //  public ProductsService ProductsService { get; set; }
-        public UnavailabilitiesService UnavailabilitiesService { get; set; }
-        public UsersService UsersService { get; set; }
-
         public ServiceCollection ServiceCollection { get; set; }
         public IMediator Mediator { get; set; }
         #endregion Services
@@ -104,9 +105,7 @@ namespace HealthyJuices.Tests.EndToEnd
 
         private void InitializeMediatR()
         {
-            ServiceCollection.AddMediatR(typeof(CreateProduct.Command).Assembly);
-            ServiceCollection.AddMediatR(typeof(CreateCompany.Command).Assembly);
-
+            ServiceCollection.RegisterMediatR();
             var serviceProvider = ServiceCollection.BuildServiceProvider();
             Mediator = serviceProvider.GetService<IMediator>();
         }
@@ -145,10 +144,6 @@ namespace HealthyJuices.Tests.EndToEnd
 
         private void InitializeServices()
         {
-            AuthorizationService = new AuthorizationService(UserRepository, SimpleTokenProvider, TimeProvider, EmailProvider, CompanyRepository);
-            OrdersService = new OrdersService(OrderRepository, UserRepository, ProductRepository, UnavailabilityRepository);
-            UnavailabilitiesService = new UnavailabilitiesService(UnavailabilityRepository);
-            UsersService = new UsersService(UserRepository);
         }
 
         private void SeedGlobalInitData()

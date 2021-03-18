@@ -5,6 +5,8 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using HealthyJuices.Api.Controllers;
+using HealthyJuices.Application.Services.Unavailabilities.Commands;
+using Microsoft.AspNetCore.Mvc;
 using Xunit;
 
 namespace HealthyJuices.Tests.EndToEnd.Controllers
@@ -15,7 +17,7 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
         public async Task Unavailabilitie_can_be_created()
         {
             // arrange
-            var request = new UnavailabilityDto()
+            var request = new CreateUnavailability.Command
             {
                 From = DateTime.Now.AddDays(1),
                 To = DateTime.Now.AddDays(2),
@@ -23,13 +25,17 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
                 Comment = "test comment"
             };
 
-            var controller = new UnavailabilitiesController(UnavailabilitiesService);
+            var controller = new UnavailabilitiesController(Mediator);
 
             // act
             var result = await controller.CreateAsync(request);
 
             // assert
-            result.Should().NotBeNullOrWhiteSpace();
+            var okResult = result as OkObjectResult;
+            var actualConfiguration = okResult.Value as string;
+            actualConfiguration.Should().NotBeNullOrWhiteSpace();
+
+
             var subject = AssertRepositoryContext.Unavailabilities.FirstOrDefault();
 
             subject.Should().NotBeNull();

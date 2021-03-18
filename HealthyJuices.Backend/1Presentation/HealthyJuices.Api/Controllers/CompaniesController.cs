@@ -43,7 +43,7 @@ namespace HealthyJuices.Api.Controllers
         [Authorize]
         public async Task<IActionResult> GetByIdAsync(string id)
         {
-            var response = await _mediator.Send(new GetCompanyById.Query(id));
+            var response = await _mediator.Send(new GetByIdCompany.Query(id));
             return response.Failed ? BadRequest(response.Message) : Ok(response.Value);
         }
 

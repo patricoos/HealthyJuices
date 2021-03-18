@@ -22,7 +22,7 @@ namespace HealthyJuices.Api.Behaviours
             CancellationToken cancellationToken,
             RequestHandlerDelegate<TOut> next)
         {
-            if (request is BaseRequest br)
+            if (request is ISenderRequest br)
             {
                 var requestSenderId = _httpContext.User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
                 br.RequestSenderId = requestSenderId;

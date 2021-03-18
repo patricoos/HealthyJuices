@@ -1,11 +1,4 @@
 ﻿using FluentAssertions;
-using HealthyJuices.Application.Services;
-using HealthyJuices.Common.Exceptions;
-using HealthyJuices.Domain.Models.Companies;
-using HealthyJuices.Domain.Models.Products;
-using HealthyJuices.Domain.Models.Unavailabilities;
-using HealthyJuices.Domain.Models.Users;
-using HealthyJuices.Shared.Dto.Orders;
 using HealthyJuices.Shared.Dto.Products;
 using HealthyJuices.Shared.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HealthyJuices.Api.Controllers;
+using HealthyJuices.Application.Services.Orders.Commands;
 using HealthyJuices.Tests.EndToEnd.Extensions;
+using HealthyJuices.Tests.EndToEnd.SeedTestData;
+using Microsoft.AspNetCore.Mvc;
 using Xunit;
 
 namespace HealthyJuices.Tests.EndToEnd.Controllers
@@ -25,21 +21,13 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
         public async Task Orders_can_be_created()
         {
             // arrange
-            var company = new Company("test comp", "", "", "", "", 50, 20);
-            ArrangeRepositoryContext.Companies.Add(company);
-
-            var user = new User("test@test.com", "demo", "", "", company, UserRole.Customer);
-            user.Activate();
-            ArrangeRepositoryContext.Users.Add(user);
-
-            var product = new Product("test Prod", "", ProductUnitType.Items, 0.2m, true);
-            ArrangeRepositoryContext.Products.Add(product);
-
-            ArrangeRepositoryContext.SaveChanges();
+            var user = UserBuilder.Create().WithRole(UserRole.Customer).WithEmail("test@test.com").WithRole(UserRole.Customer).Active().Build(ArrangeRepositoryContext);
+            var company = CompanyBuilder.Create().WithName("test company").WithUsers(user).Build(ArrangeRepositoryContext);
+            var product = ProductBuilder.Create().WithName("test Prod").Active().Build(ArrangeRepositoryContext);
 
             var amount = 2;
 
-            var request = new OrderDto()
+            var request = new CreateOrder.Command
             {
                 DeliveryDate = DateTime.Now.AddDays(1),
                 UserId = user.Id,
@@ -51,14 +39,19 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
                     }
                 }
             };
-            var controller = new OrdersController(OrdersService);
+            var controller = new OrdersController(Mediator);
             controller.SetUserId(user.Id);
 
             // act
             var result = await controller.CreateAsync(request);
 
             // assert
-            result.Should().NotBeNullOrWhiteSpace();
+            result.Should().BeOfType<OkObjectResult>();
+            var okResult = result as OkObjectResult;
+
+            var actualConfiguration = okResult.Value as string;
+            actualConfiguration.Should().NotBeNullOrWhiteSpace();
+
             var subject = AssertRepositoryContext.Orders
                 .Include(x => x.OrderProducts)
                 .ThenInclude(x => x.Product)
@@ -78,22 +71,14 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
         public async Task Can_not_create_order_in_unavailability_duration()
         {
             // arrange
-            var company = new Company("test comp", "", "", "", "", 50, 20);
-            ArrangeRepositoryContext.Companies.Add(company);
+            var user = UserBuilder.Create().WithRole(UserRole.Customer).WithEmail("test@test.com").WithRole(UserRole.Customer).Active().Build(ArrangeRepositoryContext);
+            var company = CompanyBuilder.Create().WithName("test company").WithUsers(user).Removed().Build(ArrangeRepositoryContext);
 
-            var user = new User("test@test.com", "demo", "", "", company, UserRole.Customer);
-            user.Activate();
-            ArrangeRepositoryContext.Users.Add(user);
+            var product = ProductBuilder.Create().WithName("test Prod").Active().Build(ArrangeRepositoryContext);
 
-            var product = new Product("test Prod", "", ProductUnitType.Items, 0.2m, true);
-            ArrangeRepositoryContext.Products.Add(product);
+            var unavailability = UnavailabilityBuilder.Create().From(DateTime.Now).To(DateTime.Now.AddDays(3)).WithReason(UnavailabilityReason.Sick).Build(ArrangeRepositoryContext);
 
-            var unavailability = new Unavailability(DateTime.Now, DateTime.Now.AddDays(3), UnavailabilityReason.Sick, "test coment");
-            ArrangeRepositoryContext.Unavailabilities.Add(unavailability);
-
-            ArrangeRepositoryContext.SaveChanges();
-
-            var request = new OrderDto()
+            var request = new CreateOrder.Command
             {
                 DeliveryDate = DateTime.Now.AddDays(1),
                 UserId = user.Id,
@@ -106,15 +91,15 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
                 }
             };
 
-            var controller = new OrdersController(OrdersService);
+            var controller = new OrdersController(Mediator);
             controller.SetUserId(user.Id);
 
             // act
-            Func<Task> act = () => controller.CreateAsync(request);
-            BadRequestException exception = await Assert.ThrowsAsync<BadRequestException>(act);
+            var result = await controller.CreateAsync(request);
 
             //assert
-            exception.Message.Should().Be("Can not create order in unavailability duration");
+            result.Should().BeOfType<BadRequestObjectResult>();
+            (result as BadRequestObjectResult)?.Value.Should().Be("Can not create order in unavailability duration");
 
             // assert
             var subject = AssertRepositoryContext.Orders.ToList();

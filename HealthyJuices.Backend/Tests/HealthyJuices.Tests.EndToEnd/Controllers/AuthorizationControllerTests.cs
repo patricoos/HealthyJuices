@@ -3,12 +3,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using HealthyJuices.Api.Controllers;
+using HealthyJuices.Application.Services.Auth.Commands;
+using HealthyJuices.Application.Services.Auth.Queries;
 using HealthyJuices.Common;
-using HealthyJuices.Common.Helpers;
-using HealthyJuices.Domain.Models.Users;
 using HealthyJuices.Shared.Dto;
+using HealthyJuices.Shared.Dto.Auth;
 using HealthyJuices.Shared.Enums;
 using HealthyJuices.Tests.EndToEnd.SeedTestData;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
 
@@ -21,14 +23,16 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
         {
             // arrange
             var company = CompanyBuilder.Create().WithName("test company").Build(ArrangeRepositoryContext);
-            var dto = new RegisterUserDto("test@email.com", "test pass", "", "", company.Id);
+            var dto = new Register.Command("test@email.com", "test pass", "", "", company.Id);
 
-            var controller = new AuthorizationController(AuthorizationService);
+            var controller = new AuthorizationController(Mediator);
 
             // act
-            await controller.RegisterAsync(dto);
+            var result = await controller.RegisterAsync(dto);
 
             // assert
+            result.Should().BeOfType<OkObjectResult>();
+
             var subject = AssertRepositoryContext.Users.FirstOrDefault();
             subject.Should().NotBeNull();
             subject.Roles.Should().Be(UserRole.Customer);
@@ -57,17 +61,21 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
                 .WithPassword(HealthyJuicesConstants.DEFAULT_USER_PASSWORD)
                 .Build(ArrangeRepositoryContext);
 
-            var dto = new LoginDto(HealthyJuicesConstants.DEFAULT_USER_LOGIN, HealthyJuicesConstants.DEFAULT_USER_PASSWORD);
+            var dto = new Login.Query(HealthyJuicesConstants.DEFAULT_USER_LOGIN, HealthyJuicesConstants.DEFAULT_USER_PASSWORD);
 
-            var controller = new AuthorizationController(AuthorizationService);
+            var controller = new AuthorizationController(Mediator);
 
             // act
             var result = await controller.LoginAsync(dto);
 
             // assert
-            result.AccessToken.Should().NotBeNullOrEmpty();
-            result.User.Should().NotBeNull();
-            result.User.Email.Should().Be(dto.Email);
+            result.Should().BeOfType<OkObjectResult>();
+            var okResult = result as OkObjectResult;
+            var resultValue = okResult.Value as LoginResponseDto;
+
+            resultValue.AccessToken.Should().NotBeNullOrEmpty();
+            resultValue.User.Should().NotBeNull();
+            resultValue.User.Email.Should().Be(dto.Email);
 
             var subject = AssertRepositoryContext.Users.FirstOrDefault();
             subject.Should().NotBeNull();
@@ -86,13 +94,15 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
             // arrange
             var user = UserBuilder.Create().WithRole(UserRole.Customer).WithEmail(HealthyJuicesConstants.DEFAULT_USER_LOGIN).WithPassword(HealthyJuicesConstants.DEFAULT_USER_PASSWORD).Build(ArrangeRepositoryContext);
 
-            var controller = new AuthorizationController(AuthorizationService);
-            var dto = new ForgotPasswordDto(HealthyJuicesConstants.DEFAULT_USER_LOGIN);
+            var controller = new AuthorizationController(Mediator);
+            var dto = new ForgotPassword.Command(HealthyJuicesConstants.DEFAULT_USER_LOGIN);
 
             // act
-            await controller.ForgotPasswordAsync(dto);
+            var result = await controller.ForgotPasswordAsync(dto);
 
             // assert
+            result.Should().BeOfType<OkResult>();
+
             var subject = AssertRepositoryContext.Users.FirstOrDefault();
             subject.Should().NotBeNull();
             subject.PermissionsToken.Token.Should().NotBeNullOrEmpty();
@@ -112,12 +122,14 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
                 .WithPermissionsToken(GenerateRandomString(), DateTime.Today.AddDays(1))
                 .Build(ArrangeRepositoryContext);
 
-            var controller = new AuthorizationController(AuthorizationService);
+            var controller = new AuthorizationController(Mediator);
 
             // act
-            await controller.ConfirmRegisterAsync(HealthyJuicesConstants.DEFAULT_USER_LOGIN, user.PermissionsToken.Token);
+            var result = await controller.ConfirmRegisterAsync(HealthyJuicesConstants.DEFAULT_USER_LOGIN, user.PermissionsToken.Token);
 
             // assert
+            result.Should().BeOfType<OkResult>();
+
             var subject = AssertRepositoryContext.Users.FirstOrDefault();
             subject.Should().NotBeNull();
             subject.IsActive.Should().BeTrue();
@@ -135,14 +147,16 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
                 .Active()
                 .Build(ArrangeRepositoryContext);
 
-            var controller = new AuthorizationController(AuthorizationService);
+            var controller = new AuthorizationController(Mediator);
             var newPass = "test new pass";
-            var dto = new ResetPasswordDto(HealthyJuicesConstants.DEFAULT_USER_LOGIN, newPass, user.PermissionsToken.Token);
+            var dto = new ResetPassword.Command(HealthyJuicesConstants.DEFAULT_USER_LOGIN, user.PermissionsToken.Token, newPass);
 
             // act
-            await controller.ResetPasswordAsync(dto);
+            var result = await controller.ResetPasswordAsync(dto);
 
             // assert
+            result.Should().BeOfType<OkResult>();
+
             var subject = AssertRepositoryContext.Users.FirstOrDefault();
             subject.Should().NotBeNull();
             subject.Password.Salt.Should().NotBe(user.Password.Salt);

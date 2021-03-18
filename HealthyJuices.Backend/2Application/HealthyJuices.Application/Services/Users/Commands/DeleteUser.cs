@@ -2,11 +2,11 @@
 using System.Threading.Tasks;
 using HealthyJuices.Application.Wrappers;
 using HealthyJuices.Common.Utils;
-using HealthyJuices.Domain.Models.Companies.DataAccess;
+using HealthyJuices.Domain.Models.Users.DataAccess;
 
-namespace HealthyJuices.Application.Services.Companies.Commands
+namespace HealthyJuices.Application.Services.Users.Commands
 {
-    public static class DeleteCompany
+    public static class DeleteUser
     {
         // Command 
         public record Command(string Id) : IRequestWrapper { }
@@ -14,26 +14,26 @@ namespace HealthyJuices.Application.Services.Companies.Commands
         // Handler
         public class Handler : IHandlerWrapper<Command>
         {
-            private readonly ICompanyRepository _companyRepository;
+            private readonly IUserRepository _userRepository;
 
-            public Handler(ICompanyRepository repository)
+            public Handler(IUserRepository repository)
             {
-                this._companyRepository = repository;
+                this._userRepository = repository;
             }
 
             public async Task<Response> Handle(Command request, CancellationToken cancellationToken)
             {
-                var entity = await _companyRepository.Query()
+                var entity = await _userRepository.Query()
                     .ById(request.Id)
                     .FirstOrDefaultAsync();
 
                 if (entity == null)
-                    return Response.Fail($"Not found Company with id: {request.Id}");
+                    return Response.Fail($"Not found order with id: {request.Id}");
 
                 entity.Remove();
 
-                _companyRepository.Update(entity);
-                await _companyRepository.SaveChangesAsync();
+                _userRepository.Update(entity);
+                await _userRepository.SaveChangesAsync();
 
                 return Response.Success();
             }

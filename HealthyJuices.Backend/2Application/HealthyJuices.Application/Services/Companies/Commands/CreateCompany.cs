@@ -4,8 +4,6 @@ using HealthyJuices.Application.Wrappers;
 using HealthyJuices.Common.Utils;
 using HealthyJuices.Domain.Models.Companies;
 using HealthyJuices.Domain.Models.Companies.DataAccess;
-using HealthyJuices.Domain.Models.Products;
-using HealthyJuices.Domain.Models.Products.DataAccess;
 using HealthyJuices.Shared.Dto;
 
 namespace HealthyJuices.Application.Services.Companies.Commands

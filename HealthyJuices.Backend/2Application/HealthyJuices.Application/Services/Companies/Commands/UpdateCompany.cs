@@ -29,7 +29,7 @@ namespace HealthyJuices.Application.Services.Companies.Commands
                     .FirstOrDefaultAsync();
 
                 if (entity == null)
-                    return Response.Fail($"Not found product with id: {request.Id}");
+                    return Response.Fail($"Not found Company with id: {request.Id}");
 
                 entity.Update(request.Name, request.Comment, request.PostalCode, request.City, request.Street, request.Latitude, request.Longitude);
 

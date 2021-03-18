@@ -2,21 +2,22 @@
 using System.Threading.Tasks;
 using HealthyJuices.Application.Wrappers;
 using HealthyJuices.Common.Utils;
-using HealthyJuices.Domain.Models.Companies.DataAccess;
+using HealthyJuices.Domain.Models.Orders.DataAccess;
+using HealthyJuices.Shared.Dto.Orders;
 
-namespace HealthyJuices.Application.Services.Companies.Commands
+namespace HealthyJuices.Application.Services.Orders.Commands
 {
-    public static class DeleteCompany
+    public static class UpdateOrder
     {
         // Command 
-        public record Command(string Id) : IRequestWrapper { }
+        public record Command : OrderDto, IRequestWrapper { }
 
         // Handler
         public class Handler : IHandlerWrapper<Command>
         {
-            private readonly ICompanyRepository _companyRepository;
+            private readonly IOrderRepository _companyRepository;
 
-            public Handler(ICompanyRepository repository)
+            public Handler(IOrderRepository repository)
             {
                 this._companyRepository = repository;
             }
@@ -28,9 +29,9 @@ namespace HealthyJuices.Application.Services.Companies.Commands
                     .FirstOrDefaultAsync();
 
                 if (entity == null)
-                    return Response.Fail($"Not found Company with id: {request.Id}");
+                    return Response.Fail($"Not found order with id: {request.Id}");
 
-                entity.Remove();
+                entity.Update(request.DeliveryDate);
 
                 _companyRepository.Update(entity);
                 await _companyRepository.SaveChangesAsync();
