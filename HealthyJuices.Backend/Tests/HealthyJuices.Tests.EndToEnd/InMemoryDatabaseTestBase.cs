@@ -3,6 +3,8 @@ using System.Linq;
 using HealthyJuices.Application.Auth;
 using HealthyJuices.Application.Providers;
 using HealthyJuices.Application.Services;
+using HealthyJuices.Application.Services.Companies.Commands;
+using HealthyJuices.Application.Services.Products.Commands;
 using HealthyJuices.Common;
 using HealthyJuices.Common.Contracts;
 using HealthyJuices.Common.Services;
@@ -20,8 +22,10 @@ using HealthyJuices.Persistence.Ef.Repositories.Orders;
 using HealthyJuices.Persistence.Ef.Repositories.Products;
 using HealthyJuices.Persistence.Ef.Repositories.Unavailabilities;
 using HealthyJuices.Persistence.Ef.Repositories.Users;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.DependencyInjection;
 using Moq;
 
 namespace HealthyJuices.Tests.EndToEnd
@@ -57,6 +61,8 @@ namespace HealthyJuices.Tests.EndToEnd
         public UnavailabilitiesService UnavailabilitiesService { get; set; }
         public UsersService UsersService { get; set; }
 
+        public ServiceCollection ServiceCollection { get; set; }
+        public IMediator Mediator { get; set; }
         #endregion Services
 
 
@@ -76,6 +82,7 @@ namespace HealthyJuices.Tests.EndToEnd
         {
             InitializeProviders();
             InitializeDbContexts();
+            InitializeDI();
             InitializeRepositories();
             InitializeServices();
             SeedGlobalInitData();
@@ -92,6 +99,19 @@ namespace HealthyJuices.Tests.EndToEnd
             ArrangeRepositoryContext = new HealthyJuicesDbContext(options);
             ActRepositoryContext = new HealthyJuicesDbContext(options);
             AssertRepositoryContext = new HealthyJuicesDbContext(options);
+        }
+
+        private void InitializeDI()
+        {
+            ServiceCollection = new ServiceCollection();
+            ServiceCollection.AddMediatR(typeof(CreateProduct.Command).Assembly);
+            ServiceCollection.AddMediatR(typeof(CreateCompany.Command).Assembly);
+
+            ServiceCollection.AddTransient<IProductRepository>(x => new ProductRepository(ActRepositoryContext, TimeProvider));
+            ServiceCollection.AddTransient<ICompanyRepository>(x => new CompanyRepository(ActRepositoryContext, TimeProvider));
+
+            var serviceProvider = ServiceCollection.BuildServiceProvider();
+            Mediator = serviceProvider.GetService<IMediator>();
         }
 
         private void InitializeRepositories()

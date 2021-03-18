@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using HealthyJuices.Api.Controllers;
 using HealthyJuices.Application.Services.Companies.Commands;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
 
@@ -26,14 +27,16 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
                 Latitude = 12,
                 Longitude = 25
             };
-            var mediator = new Mock<IMediator>();
 
             // act
-            var controller = new CompaniesController(mediator.Object);
+            var controller = new CompaniesController(Mediator);
             var result = await controller.CreateAsync(request);
 
             // assert
-            //result.Should().NotBeNullOrWhiteSpace();
+            var okResult = result as OkObjectResult;
+            var actualConfiguration = okResult.Value as string;
+
+            actualConfiguration.Should().NotBeNullOrWhiteSpace();
             var subject = AssertRepositoryContext.Companies.FirstOrDefault();
 
             subject.Should().NotBeNull();

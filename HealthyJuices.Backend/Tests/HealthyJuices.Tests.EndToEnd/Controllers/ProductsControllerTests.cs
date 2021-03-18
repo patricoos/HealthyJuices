@@ -6,10 +6,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using HealthyJuices.Api.Controllers;
 using HealthyJuices.Application.Services.Products.Commands;
+using HealthyJuices.Domain.Models.Products.DataAccess;
+using HealthyJuices.Persistence.Ef.Repositories.Products;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace HealthyJuices.Tests.EndToEnd.Controllers
 {
@@ -28,9 +31,7 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
                 IsActive = true
             };
 
-            var mediator = new Mock<IMediator>();
-
-            var controller = new ProductsController(mediator.Object);
+            var controller = new ProductsController(Mediator);
 
             // act
             var result = await controller.CreateAsync(request);
@@ -40,7 +41,6 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
             var okResult = result as OkObjectResult;
             var actualConfiguration = okResult.Value as string;
 
-            // Now you can compare with expected values
             actualConfiguration.Should().NotBeNullOrWhiteSpace();
 
             var subject = AssertRepositoryContext.Products.FirstOrDefault();
