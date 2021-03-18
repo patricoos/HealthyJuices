@@ -1,18 +1,11 @@
 ﻿using FluentAssertions;
-using HealthyJuices.Application.Services;
-using HealthyJuices.Shared.Dto.Products;
 using HealthyJuices.Shared.Enums;
 using System.Linq;
 using System.Threading.Tasks;
 using HealthyJuices.Api.Controllers;
 using HealthyJuices.Application.Services.Products.Commands;
-using HealthyJuices.Domain.Models.Products.DataAccess;
-using HealthyJuices.Persistence.Ef.Repositories.Products;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Moq;
 using Xunit;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace HealthyJuices.Tests.EndToEnd.Controllers
 {
