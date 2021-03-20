@@ -31,7 +31,7 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
             var result = await controller.RegisterAsync(dto);
 
             // assert
-            result.Should().BeOfType<OkObjectResult>();
+            result.Should().NotBeNullOrWhiteSpace();
 
             var subject = AssertRepositoryContext.Users.FirstOrDefault();
             subject.Should().NotBeNull();

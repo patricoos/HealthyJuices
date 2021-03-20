@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 using HealthyJuices.Api.Controllers;
 using HealthyJuices.Application.Services.Companies.Commands;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using Moq;
 using Xunit;
 
 namespace HealthyJuices.Tests.EndToEnd.Controllers
