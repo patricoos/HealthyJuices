@@ -11,7 +11,6 @@ using HealthyJuices.Application.Services.Orders.Commands;
 using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Tests.EndToEnd.Extensions;
 using HealthyJuices.Tests.EndToEnd.SeedTestData;
-using Microsoft.AspNetCore.Mvc;
 using Xunit;
 
 namespace HealthyJuices.Tests.EndToEnd.Controllers

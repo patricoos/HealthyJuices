@@ -1,8 +1,5 @@
-﻿using System;
-using System.Linq;
-using System.Net;
+﻿using System.Linq;
 using System.Security.Claims;
-using HealthyJuices.Shared.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HealthyJuices.Api.Controllers

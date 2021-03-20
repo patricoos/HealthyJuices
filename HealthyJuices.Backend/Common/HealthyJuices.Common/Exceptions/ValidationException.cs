@@ -8,6 +8,8 @@ namespace HealthyJuices.Common.Exceptions
 {
     public class ValidationException : CustomException
     {
+        public IDictionary<string, string[]> Errors { get; }
+
         public ValidationException(string message, params string[] translationParams)
             : base(HttpStatusCode.Forbidden, message, translationParams)
         {
@@ -20,7 +22,5 @@ namespace HealthyJuices.Common.Exceptions
                 .GroupBy(e => e.PropertyName, e => e.ErrorMessage)
                 .ToDictionary(failureGroup => failureGroup.Key, failureGroup => failureGroup.ToArray());
         }
-
-        public IDictionary<string, string[]> Errors { get; }
     }
 }

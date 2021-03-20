@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using HealthyJuices.Api.Utils.Attributes;
-using HealthyJuices.Application.Services;
-using HealthyJuices.Application.Services.Orders.Queries;
 using HealthyJuices.Application.Services.Users.Commands;
 using HealthyJuices.Application.Services.Users.Queries;
 using HealthyJuices.Shared.Dto;

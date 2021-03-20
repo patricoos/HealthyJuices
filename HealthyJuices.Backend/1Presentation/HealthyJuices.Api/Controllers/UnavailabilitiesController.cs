@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using HealthyJuices.Api.Utils.Attributes;
-using HealthyJuices.Application.Services.Companies.Queries;
 using HealthyJuices.Application.Services.Unavailabilities.Commands;
 using HealthyJuices.Application.Services.Unavailabilities.Queries;
 using HealthyJuices.Shared.Dto;
@@ -39,26 +38,26 @@ namespace HealthyJuices.Api.Controllers
             return response;
         }
 
-        [HttpPost]
-        [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task<string> CreateAsync(CreateUnavailability.Command command)
-        {
-            var response = await _mediator.Send(command);
-            return response;
-        }
+        //[HttpPost]
+        //[AuthorizeRoles(UserRole.BusinessOwner)]
+        //public async Task<string> CreateAsync(CreateUnavailability.Command command)
+        //{
+        //    var response = await _mediator.Send(command);
+        //    return response;
+        //}
 
-        [HttpPut]
-        [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task UpdateAsync(UpdateUnavailability.Command command)
-        {
-             await _mediator.Send(command);
-        }
+        //[HttpPut]
+        //[AuthorizeRoles(UserRole.BusinessOwner)]
+        //public async Task UpdateAsync(UpdateUnavailability.Command command)
+        //{
+        //    await _mediator.Send(command);
+        //}
 
-        [HttpDelete("{id}")]
-        [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task DeleteAsync(string id)
-        {
-             await _mediator.Send(new DeleteUnavailability.Command(id));
-        }
+        //[HttpDelete("{id}")]
+        //[AuthorizeRoles(UserRole.BusinessOwner)]
+        //public async Task DeleteAsync(string id)
+        //{
+        //    await _mediator.Send(new DeleteUnavailability.Command(id));
+        //}
     }
 }

@@ -44,7 +44,7 @@ namespace HealthyJuices.Api.Controllers
 
         [HttpGet("active")]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task<IEnumerable<OrderDto>> GetAllActiveAsync([FromQuery]DateTime? from = null, [FromQuery]DateTime? to = null)
+        public async Task<IEnumerable<OrderDto>> GetAllActiveAsync([FromQuery] DateTime? from = null, [FromQuery] DateTime? to = null)
         {
             var result = await _mediator.Send(new GetAllActiveOrders.Query(from, to));
             return result;
@@ -52,33 +52,33 @@ namespace HealthyJuices.Api.Controllers
 
         [HttpGet("{id}")]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task<OrderDto> GetByIdAsync(string id) 
+        public async Task<OrderDto> GetByIdAsync(string id)
         {
             var response = await _mediator.Send(new GetByIdOrder.Query(id));
             return response;
         }
 
-        [HttpPost]
-        [AuthorizeRoles(UserRole.Customer)]
-        public async Task<string> CreateAsync(CreateOrder.Command command)
-        {
-            var response = await _mediator.Send(command);
-            return response;
-        }
+        //[HttpPost]
+        //[AuthorizeRoles(UserRole.Customer)]
+        //public async Task<string> CreateAsync(CreateOrder.Command command)
+        //{
+        //    var response = await _mediator.Send(command);
+        //    return response;
+        //}
 
-        [HttpPut]
-        [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task UpdateAsync(UpdateOrder.Command command)
-        {
-            await _mediator.Send(command);
-        }
+        //[HttpPut]
+        //[AuthorizeRoles(UserRole.BusinessOwner)]
+        //public async Task UpdateAsync(UpdateOrder.Command command)
+        //{
+        //    await _mediator.Send(command);
+        //}
 
-        [HttpDelete("{id}")]
-        [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task DeleteAsync(string id)
-        {
-             await _mediator.Send(new DeleteOrder.Command(id));
-        }
+        //[HttpDelete("{id}")]
+        //[AuthorizeRoles(UserRole.BusinessOwner)]
+        //public async Task DeleteAsync(string id)
+        //{
+        //    await _mediator.Send(new DeleteOrder.Command(id));
+        //}
 
 
         [HttpGet("dashboard-report")]
