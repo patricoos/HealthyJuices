@@ -64,12 +64,12 @@ namespace HealthyJuices.Api.Controllers
         //    await _mediator.Send(command);
         //}
 
-        //[HttpDelete("{id}")]
-        //[Authorize]
-        //[AuthorizeRoles(UserRole.BusinessOwner)]
-        //public async Task DeleteAsync(string id)
-        //{
-        //    await _mediator.Send(new DeleteCompany.Command(id));
-        //}
+        [HttpDelete("{id}")]
+        [Authorize]
+        [AuthorizeRoles(UserRole.BusinessOwner)]
+        public async Task DeleteAsync(string id)
+        {
+            await _mediator.Send(new DeleteCompany.Command(id));
+        }
     }
 }
