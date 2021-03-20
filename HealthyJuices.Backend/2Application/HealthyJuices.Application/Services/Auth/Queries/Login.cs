@@ -8,6 +8,7 @@ using HealthyJuices.Common.Utils;
 using HealthyJuices.Domain.Models.Companies.DataAccess;
 using HealthyJuices.Domain.Models.Users.DataAccess;
 using HealthyJuices.Shared.Dto.Auth;
+using HealthyJuices.Shared.Enums;
 
 namespace HealthyJuices.Application.Services.Auth.Queries
 {
@@ -37,13 +38,13 @@ namespace HealthyJuices.Application.Services.Auth.Queries
                     .FirstOrDefaultAsync();
 
                 if (user == null)
-                    return Response<LoginResponseDto>.Fail<LoginResponseDto>($"User with email '{request.Email}' not found");
+                    return Response<LoginResponseDto>.Fail<LoginResponseDto>(ResponseStatus.NotFound, $"User with email '{request.Email}' not found");
 
                 if (!user.IsActive)
-                    return Response<LoginResponseDto>.Fail<LoginResponseDto>($"User with email '{request.Email}' is not activated");
+                    return Response<LoginResponseDto>.Fail<LoginResponseDto>(ResponseStatus.ValidationError, $"User with email '{request.Email}' is not activated");
 
                 if (!user.Password.CheckValidity(request.Password))
-                    return Response<LoginResponseDto>.Fail<LoginResponseDto>($"Wrong password for user '{request.Email}'");
+                    return Response<LoginResponseDto>.Fail<LoginResponseDto>(ResponseStatus.ValidationError, $"Wrong password for user '{request.Email}'");
 
                 var token = _tokenProvider.Create(user.Id, _timeProvider, user.RolesList);
                 return Response<LoginResponseDto>.Success(new LoginResponseDto(user.ToDto(), token));

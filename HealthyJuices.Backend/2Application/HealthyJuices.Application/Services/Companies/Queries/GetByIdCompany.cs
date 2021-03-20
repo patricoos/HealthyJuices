@@ -5,6 +5,7 @@ using HealthyJuices.Application.Wrappers;
 using HealthyJuices.Common.Utils;
 using HealthyJuices.Domain.Models.Companies.DataAccess;
 using HealthyJuices.Shared.Dto;
+using HealthyJuices.Shared.Enums;
 
 namespace HealthyJuices.Application.Services.Companies.Queries
 {
@@ -31,7 +32,7 @@ namespace HealthyJuices.Application.Services.Companies.Queries
                     .FirstOrDefaultAsync();
 
                 if (entity == null)
-                    return Response<CompanyDto>.Fail<CompanyDto>($"Not found company with id: {request.Id}");
+                    return Response<CompanyDto>.Fail<CompanyDto>(ResponseStatus.NotFound, $"Not found company with id: {request.Id}");
 
                 return Response<CompanyDto>.Success(entity.ToDto());
             }

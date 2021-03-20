@@ -1,5 +1,7 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
+using HealthyJuices.Application.Validation;
 using HealthyJuices.Application.Wrappers;
 using HealthyJuices.Common.Utils;
 using HealthyJuices.Domain.Models.Products;
@@ -12,6 +14,23 @@ namespace HealthyJuices.Application.Services.Products.Commands
     {
         // Command 
         public record Command : ProductDto, IRequestWrapper<string> { }
+
+
+        // Validator
+        public class Validator : IValidationHandler<Command>
+        {
+            private readonly IProductRepository _repository;
+
+            public Validator(IProductRepository repository) => this._repository = repository;
+
+            public async Task<ValidationResult> Validate(Command request)
+            {
+                //if (_repository.Query().)
+                //    return Response.Fail("Todo already exists.");
+
+                return ValidationResult.Success;
+            }
+        }
 
         // Handler
         public class Handler : IHandlerWrapper<Command, string>

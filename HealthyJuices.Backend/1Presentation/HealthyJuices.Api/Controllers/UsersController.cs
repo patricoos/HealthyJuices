@@ -50,14 +50,14 @@ namespace HealthyJuices.Api.Controllers
         public async Task<IActionResult> GetByIdAsync(string id)
         {
             var response = await _mediator.Send(new GetByIdUser.Query(id));
-            return response.Failed ? BadRequest(response.Message) : Ok(response.Value);
+            return ToActionResult(response);
         }
 
         [HttpGet("{email}")]
         public async Task<IActionResult> GetAsync(string email)
         {
             var response = await _mediator.Send(new GetByEmailUser.Query(email));
-            return response.Failed ? BadRequest(response.Message) : Ok(response.Value);
+            return ToActionResult(response);
         }
 
         [AllowAnonymous]
@@ -72,14 +72,14 @@ namespace HealthyJuices.Api.Controllers
         public async Task<IActionResult> CreateAsync([FromBody] CreateUser.Command command)
         {
             var response = await _mediator.Send(command);
-            return response.Failed ? BadRequest(response.Message) : Ok();
+            return ToActionResult(response);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(string id)
         {
             var response = await _mediator.Send(new DeleteUser.Command(id));
-            return response.Failed ? BadRequest(response.Message) : Ok();
+            return ToActionResult(response);
         }
     }
 }

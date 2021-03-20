@@ -13,6 +13,7 @@ using HealthyJuices.Domain.Models.Products.DataAccess;
 using HealthyJuices.Domain.Models.Unavailabilities.DataAccess;
 using HealthyJuices.Domain.Models.Users.DataAccess;
 using HealthyJuices.Shared.Dto.Orders;
+using HealthyJuices.Shared.Enums;
 
 namespace HealthyJuices.Application.Services.Orders.Commands
 {
@@ -39,14 +40,14 @@ namespace HealthyJuices.Application.Services.Orders.Commands
 
             public async Task<Response<string>> Handle(Command request, CancellationToken cancellationToken)
             {
+                var errors = new List<string>();
                 var user = await _userRepository.Query().IsActive().ById(request.UserId).IncludeCompany().FirstOrDefaultAsync();
                 if (user == null)
-                    return Response<string>.Fail<string>("User not found");
+                    errors.Add("User not found");
 
                 var unavailability = await _unavailabilityRepository.Query().BetweenDateTimes(request.DeliveryDate, request.DeliveryDate).FirstOrDefaultAsync();
                 if (unavailability != null)
-                    return Response<string>.Fail<string>("Can not create order in unavailability duration");
-
+                    errors.Add($"Can not create order in unavailability duration: {unavailability.From} - {unavailability.To}");
 
                 var productsEntities = await _productRepository.Query()
                     .IsNotRemoved()
@@ -58,10 +59,13 @@ namespace HealthyJuices.Application.Services.Orders.Commands
                 {
                     var prod = productsEntities.FirstOrDefault(p => p.Id == x.Key);
                     if (prod == null)
-                        throw new BadRequestException("Product not found");
+                        errors.Add($"Product {x.Key} not found");
 
                     return new KeyValuePair<Product, decimal>(prod, x.Sum(a => a.Amount));
                 }).ToArray();
+
+                if (errors.Any())
+                    return Response<string>.Fail(ResponseStatus.ValidationError, errors.ToArray()); 
 
                 var order = new Order(user, request.DeliveryDate, products);
 

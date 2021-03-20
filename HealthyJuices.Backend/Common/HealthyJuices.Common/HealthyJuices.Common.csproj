@@ -10,4 +10,8 @@
     <Folder Include="Providers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HealthyJuices.Common.DataTransfer\HealthyJuices.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

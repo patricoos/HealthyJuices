@@ -6,6 +6,7 @@ using HealthyJuices.Application.Wrappers;
 using HealthyJuices.Common.Contracts;
 using HealthyJuices.Common.Utils;
 using HealthyJuices.Domain.Models.Users.DataAccess;
+using HealthyJuices.Shared.Enums;
 
 namespace HealthyJuices.Application.Services.Auth.Commands
 {
@@ -34,7 +35,7 @@ namespace HealthyJuices.Application.Services.Auth.Commands
                     .FirstOrDefaultAsync();
 
                 if (user == null)
-                   return Response.Fail($"User with email '{request.Email}' not found");
+                   return Response.Fail(ResponseStatus.NotFound, $"User with email '{request.Email}' not found");
 
                 user.CheckPermissionsToken(_timeProvider, request.Token);
 

@@ -4,6 +4,7 @@ using HealthyJuices.Application.Wrappers;
 using HealthyJuices.Common.Utils;
 using HealthyJuices.Domain.Models.Companies.DataAccess;
 using HealthyJuices.Shared.Dto;
+using HealthyJuices.Shared.Enums;
 
 namespace HealthyJuices.Application.Services.Companies.Commands
 {
@@ -29,7 +30,7 @@ namespace HealthyJuices.Application.Services.Companies.Commands
                     .FirstOrDefaultAsync();
 
                 if (entity == null)
-                    return Response.Fail($"Not found Company with id: {request.Id}");
+                    return Response.Fail(ResponseStatus.NotFound, $"Not found Company with id: {request.Id}");
 
                 entity.Update(request.Name, request.Comment, request.PostalCode, request.City, request.Street, request.Latitude, request.Longitude);
 

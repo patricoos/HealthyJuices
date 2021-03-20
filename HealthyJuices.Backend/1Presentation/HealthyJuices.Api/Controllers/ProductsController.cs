@@ -41,7 +41,7 @@ namespace HealthyJuices.Api.Controllers
         public async Task<IActionResult> GetByIdAsync(string id)
         {
             var response = await _mediator.Send(new GetProductById.Query(id));
-            return response.Failed ? BadRequest(response.Message) : Ok(response.Value);
+            return ToActionResult(response);
         }
 
         [HttpPost]
@@ -49,7 +49,7 @@ namespace HealthyJuices.Api.Controllers
         public async Task<IActionResult> CreateAsync(CreateProduct.Command command)
         {
             var response = await _mediator.Send(command);
-            return response.Failed ? BadRequest(response.Message) : Ok(response.Value);
+            return ToActionResult(response);
         }
 
         [HttpPut]
@@ -57,7 +57,7 @@ namespace HealthyJuices.Api.Controllers
         public async Task<IActionResult> UpdateAsync(UpdateProduct.Command command)
         {
             var response = await _mediator.Send(command);
-            return response.Failed ? BadRequest(response.Message) : Ok();
+            return ToActionResult(response);
         }
 
         [HttpDelete("{id}")]
@@ -65,7 +65,7 @@ namespace HealthyJuices.Api.Controllers
         public async Task<IActionResult> DeleteAsync(string id)
         {
             var response = await _mediator.Send(new DeleteProduct.Command(id));
-            return response.Failed ? BadRequest(response.Message) : Ok();
+            return ToActionResult(response);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace HealthyJuices.Api.Controllers
         public async Task<IActionResult> LoginAsync([FromBody] Login.Query query)
         {
             var response = await _mediator.Send(query);
-            return response.Failed ? BadRequest(response.Message) : Ok(response.Value);
+            return ToActionResult(response);
         }
 
 
@@ -36,7 +36,7 @@ namespace HealthyJuices.Api.Controllers
         public async Task<IActionResult> RegisterAsync([FromBody] Register.Command command)
         {
             var response = await _mediator.Send(command);
-            return response.Failed ? BadRequest(response.Message) : Ok(response.Value);
+            return ToActionResult(response);
         }
 
         [AllowAnonymous]
@@ -44,7 +44,7 @@ namespace HealthyJuices.Api.Controllers
         public async Task<IActionResult> ConfirmRegisterAsync([FromQuery] string email, [FromQuery] string token)
         {
             var response = await _mediator.Send(new ConfirmRegister.Command(email, token));
-            return response.Failed ? BadRequest(response.Message) : Ok();
+            return ToActionResult(response);
         }
 
         [AllowAnonymous]
@@ -52,7 +52,7 @@ namespace HealthyJuices.Api.Controllers
         public async Task<IActionResult> ForgotPasswordAsync([FromBody] ForgotPassword.Command command)
         {
             var response = await _mediator.Send(command);
-            return response.Failed ? BadRequest(response.Message) : Ok();
+            return ToActionResult(response);
         }
 
         [AllowAnonymous]
@@ -60,7 +60,7 @@ namespace HealthyJuices.Api.Controllers
         public async Task<IActionResult> ResetPasswordAsync([FromBody] ResetPassword.Command command)
         {
             var response = await _mediator.Send(command);
-            return response.Failed ? BadRequest(response.Message) : Ok();
+            return ToActionResult(response);
         }
     }
 }

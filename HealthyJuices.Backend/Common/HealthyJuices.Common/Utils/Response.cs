@@ -1,39 +1,47 @@
-﻿namespace HealthyJuices.Common.Utils
+﻿using System.Collections.Generic;
+using System.Linq;
+using HealthyJuices.Shared.Enums;
+
+namespace HealthyJuices.Common.Utils
 {
 
     public class Response
     {
-        public bool Succeed { get; set; }
-        public string Message { get; set; }
+        public string Message => Errors == null ? default : string.Join("\n,", Errors.ToArray());
+        public ResponseStatus Status { get; init; }
+        public IEnumerable<string> Errors { get; init; }
 
+
+        public bool Succeed => Status == ResponseStatus.Success;
         public bool Failed => !Succeed;
 
-        public static Response Fail(string message) => new Response(message, true);
-        public static Response Success(string message = null) => new Response(message, false);
 
-        protected Response(string msg, bool error)
+        public static Response Fail(ResponseStatus statusCode, params string[] messages) => new Response(statusCode, messages);
+        public static Response Success() => new Response(ResponseStatus.Success);
+
+        public static Response<T> Fail<T>(ResponseStatus statusCode, params string[] messages) => new Response<T>(default, statusCode, messages);
+        public static Response<T> Success<T>(T data) => new Response<T>(data, ResponseStatus.Success);
+
+
+        protected Response(ResponseStatus status, params string[] messages)
         {
-            Message = msg;
-            Succeed = !error;
+            Errors = messages;
+            Status = status;
         }
     }
 
-    public class Response<TResult>
+    public class Response<TResult> : Response
     {
-        public bool Succeed { get; set; }
-        public string Message { get; set; }
+        public TResult Value { get; init; }
 
-        public bool Failed => !Succeed;
-        public TResult Value { get; set; }
 
-        public static Response<T> Fail<T>(string message) => new Response<T>(default, message, true);
-        public static Response<T> Success<T>(T data, string message = null) => new Response<T>(data, message, false);
+        public static Response<T> Fail<T>(ResponseStatus statusCode, params string[] messages) => new Response<T>(default, statusCode, messages);
+        public static Response<T> Success<T>(T data) => new Response<T>(data, ResponseStatus.Success);
 
-        protected internal Response(TResult value, string msg, bool error) 
+
+        private Response(TResult value, ResponseStatus status, params string[] messages) : base(status, messages)
         {
             Value = value;
-            Message = msg;
-            Succeed = !error;
         }
     }
 }

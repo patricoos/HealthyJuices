@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using HealthyJuices.Api.Behaviours;
 using HealthyJuices.Api.Bootstrap.DataSeed;
 using HealthyJuices.Application.Providers;
 using HealthyJuices.Application.Providers.Logging;
@@ -41,8 +42,10 @@ namespace HealthyJuices.Api.Bootstrap
 {
     public static class StartupExtensions
     {
-        public static IServiceCollection RegisterServices(this IServiceCollection @this)
+        public static IServiceCollection RegisterBehaviours(this IServiceCollection @this)
         {
+
+            @this.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
             return @this;
         }
 
