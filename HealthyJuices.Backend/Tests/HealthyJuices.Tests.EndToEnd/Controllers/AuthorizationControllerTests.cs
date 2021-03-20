@@ -69,13 +69,9 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
             var result = await controller.LoginAsync(dto);
 
             // assert
-            result.Should().BeOfType<OkObjectResult>();
-            var okResult = result as OkObjectResult;
-            var resultValue = okResult.Value as LoginResponseDto;
-
-            resultValue.AccessToken.Should().NotBeNullOrEmpty();
-            resultValue.User.Should().NotBeNull();
-            resultValue.User.Email.Should().Be(dto.Email);
+            result.AccessToken.Should().NotBeNullOrEmpty();
+            result.User.Should().NotBeNull();
+            result.User.Email.Should().Be(dto.Email);
 
             var subject = AssertRepositoryContext.Users.FirstOrDefault();
             subject.Should().NotBeNull();
@@ -98,11 +94,9 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
             var dto = new ForgotPassword.Command(HealthyJuicesConstants.DEFAULT_USER_LOGIN);
 
             // act
-            var result = await controller.ForgotPasswordAsync(dto);
+             await controller.ForgotPasswordAsync(dto);
 
             // assert
-            result.Should().BeOfType<OkResult>();
-
             var subject = AssertRepositoryContext.Users.FirstOrDefault();
             subject.Should().NotBeNull();
             subject.PermissionsToken.Token.Should().NotBeNullOrEmpty();
@@ -125,11 +119,9 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
             var controller = new AuthorizationController(Mediator);
 
             // act
-            var result = await controller.ConfirmRegisterAsync(HealthyJuicesConstants.DEFAULT_USER_LOGIN, user.PermissionsToken.Token);
+             await controller.ConfirmRegisterAsync(HealthyJuicesConstants.DEFAULT_USER_LOGIN, user.PermissionsToken.Token);
 
             // assert
-            result.Should().BeOfType<OkResult>();
-
             var subject = AssertRepositoryContext.Users.FirstOrDefault();
             subject.Should().NotBeNull();
             subject.IsActive.Should().BeTrue();
@@ -152,11 +144,9 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
             var dto = new ResetPassword.Command(HealthyJuicesConstants.DEFAULT_USER_LOGIN, user.PermissionsToken.Token, newPass);
 
             // act
-            var result = await controller.ResetPasswordAsync(dto);
+           await controller.ResetPasswordAsync(dto);
 
             // assert
-            result.Should().BeOfType<OkResult>();
-
             var subject = AssertRepositoryContext.Users.FirstOrDefault();
             subject.Should().NotBeNull();
             subject.Password.Salt.Should().NotBe(user.Password.Salt);

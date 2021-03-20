@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HealthyJuices.Api.Controllers;
 using HealthyJuices.Application.Services.Orders.Commands;
+using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Tests.EndToEnd.Extensions;
 using HealthyJuices.Tests.EndToEnd.SeedTestData;
 using Microsoft.AspNetCore.Mvc;
@@ -46,11 +47,7 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
             var result = await controller.CreateAsync(request);
 
             // assert
-            result.Should().BeOfType<OkObjectResult>();
-            var okResult = result as OkObjectResult;
-
-            var actualConfiguration = okResult.Value as string;
-            actualConfiguration.Should().NotBeNullOrWhiteSpace();
+            result.Should().NotBeNullOrWhiteSpace();
 
             var subject = AssertRepositoryContext.Orders
                 .Include(x => x.OrderProducts)
@@ -95,11 +92,11 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
             controller.SetUserId(user.Id);
 
             // act
-            var result = await controller.CreateAsync(request);
+            Func<Task> act = () => controller.CreateAsync(request);
+            var exception = await Assert.ThrowsAsync<BadRequestException>(act);
 
             //assert
-            result.Should().BeOfType<BadRequestObjectResult>();
-            (result as BadRequestObjectResult)?.Value.Should().Be("Can not create order in unavailability duration");
+            exception.Message.Should().Be("Can not create order in unavailability duration");
 
             // assert
             var subject = AssertRepositoryContext.Orders.ToList();

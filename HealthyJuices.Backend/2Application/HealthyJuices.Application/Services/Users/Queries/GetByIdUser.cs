@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using HealthyJuices.Application.Mappers;
-using HealthyJuices.Application.Wrappers;
-using HealthyJuices.Common.Utils;
+using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Domain.Models.Users.DataAccess;
 using HealthyJuices.Shared.Dto;
 using MediatR;
@@ -13,10 +11,10 @@ namespace HealthyJuices.Application.Services.Users.Queries
     public static class GetByIdUser
     {
         // Query 
-        public record Query(string Id) : IRequestWrapper<UserDto> { }
+        public record Query(string Id) : IRequest<UserDto> { }
 
         // Handler
-        public class Handler : IHandlerWrapper<Query, UserDto>
+        public class Handler : IRequestHandler<Query, UserDto>
         {
             private readonly IUserRepository _userRepository;
 
@@ -25,16 +23,16 @@ namespace HealthyJuices.Application.Services.Users.Queries
                 this._userRepository = repository;
             }
 
-            public async Task<Response<UserDto>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<UserDto> Handle(Query request, CancellationToken cancellationToken)
             {
                 var entity = await _userRepository.Query()
                     .ById(request.Id)
                     .FirstOrDefaultAsync();
 
                 if (entity == null)
-                    return Response<UserDto>.Fail<UserDto>($"Not found user with id: {request.Id}");
+                    throw new BadRequestException($"Not found user with id: {request.Id}");
 
-                return Response<UserDto>.Success(entity.ToDto());
+                return entity.ToDto();
             }
         }
     }

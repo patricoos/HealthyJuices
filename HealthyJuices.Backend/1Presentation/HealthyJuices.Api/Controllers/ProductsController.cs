@@ -38,34 +38,32 @@ namespace HealthyJuices.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetByIdAsync(string id)
+        public async Task<ProductDto> GetByIdAsync(string id)
         {
             var response = await _mediator.Send(new GetProductById.Query(id));
-            return ToActionResult(response);
+            return response;
         }
 
         [HttpPost]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task<IActionResult> CreateAsync(CreateProduct.Command command)
+        public async Task<string> CreateAsync(CreateProduct.Command command)
         {
             var response = await _mediator.Send(command);
-            return ToActionResult(response);
+            return response;
         }
 
         [HttpPut]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task<IActionResult> UpdateAsync(UpdateProduct.Command command)
+        public async Task UpdateAsync(UpdateProduct.Command command)
         {
-            var response = await _mediator.Send(command);
-            return ToActionResult(response);
+             await _mediator.Send(command);
         }
 
         [HttpDelete("{id}")]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task<IActionResult> DeleteAsync(string id)
+        public async Task DeleteAsync(string id)
         {
-            var response = await _mediator.Send(new DeleteProduct.Command(id));
-            return ToActionResult(response);
+            await _mediator.Send(new DeleteProduct.Command(id));
         }
     }
 }

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using HealthyJuices.Api.Controllers;
 using HealthyJuices.Application.Services.Products.Commands;
-using Microsoft.AspNetCore.Mvc;
 using Xunit;
 
 namespace HealthyJuices.Tests.EndToEnd.Controllers
@@ -30,11 +29,7 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
             var result = await controller.CreateAsync(request);
 
             // assert
-
-            var okResult = result as OkObjectResult;
-            var actualConfiguration = okResult.Value as string;
-
-            actualConfiguration.Should().NotBeNullOrWhiteSpace();
+            result.Should().NotBeNullOrWhiteSpace();
 
             var subject = AssertRepositoryContext.Products.FirstOrDefault();
 

@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Behaviours\" />
     <Folder Include="Services\Auth\Queries\" />
     <Folder Include="Services\Orders\Commands\" />
     <Folder Include="Services\Orders\Queries\" />
@@ -22,6 +23,7 @@
 
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="9.5.3" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="9.5.3" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
   </ItemGroup>

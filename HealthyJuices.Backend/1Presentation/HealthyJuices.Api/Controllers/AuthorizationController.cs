@@ -1,9 +1,6 @@
 ﻿using System.Threading.Tasks;
-using HealthyJuices.Application.Services;
 using HealthyJuices.Application.Services.Auth.Commands;
 using HealthyJuices.Application.Services.Auth.Queries;
-using HealthyJuices.Application.Services.Companies.Queries;
-using HealthyJuices.Shared.Dto;
 using HealthyJuices.Shared.Dto.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -24,43 +21,40 @@ namespace HealthyJuices.Api.Controllers
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<IActionResult> LoginAsync([FromBody] Login.Query query)
+        public async Task<LoginResponseDto> LoginAsync([FromBody] Login.Query query)
         {
             var response = await _mediator.Send(query);
-            return ToActionResult(response);
+            return response;
         }
 
 
         [AllowAnonymous]
         [HttpPost("register")]
-        public async Task<IActionResult> RegisterAsync([FromBody] Register.Command command)
+        public async Task<string> RegisterAsync([FromBody] Register.Command command)
         {
             var response = await _mediator.Send(command);
-            return ToActionResult(response);
+            return response;
         }
 
         [AllowAnonymous]
         [HttpGet("confirm-register")]
-        public async Task<IActionResult> ConfirmRegisterAsync([FromQuery] string email, [FromQuery] string token)
+        public async Task ConfirmRegisterAsync([FromQuery] string email, [FromQuery] string token)
         {
-            var response = await _mediator.Send(new ConfirmRegister.Command(email, token));
-            return ToActionResult(response);
+             await _mediator.Send(new ConfirmRegister.Command(email, token));
         }
 
         [AllowAnonymous]
         [HttpPost("forgot-password")]
-        public async Task<IActionResult> ForgotPasswordAsync([FromBody] ForgotPassword.Command command)
+        public async Task ForgotPasswordAsync([FromBody] ForgotPassword.Command command)
         {
             var response = await _mediator.Send(command);
-            return ToActionResult(response);
         }
 
         [AllowAnonymous]
         [HttpPost("reset-password")]
-        public async Task<IActionResult> ResetPasswordAsync([FromBody] ResetPassword.Command command)
+        public async Task ResetPasswordAsync([FromBody] ResetPassword.Command command)
         {
-            var response = await _mediator.Send(command);
-            return ToActionResult(response);
+             await _mediator.Send(command);
         }
     }
 }

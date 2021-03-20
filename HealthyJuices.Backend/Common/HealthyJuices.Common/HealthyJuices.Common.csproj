@@ -11,6 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="9.5.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\HealthyJuices.Common.DataTransfer\HealthyJuices.Shared.csproj" />
   </ItemGroup>
 

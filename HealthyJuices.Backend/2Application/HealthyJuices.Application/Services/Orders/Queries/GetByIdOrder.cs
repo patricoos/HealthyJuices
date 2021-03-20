@@ -1,20 +1,20 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using HealthyJuices.Application.Mappers;
-using HealthyJuices.Application.Wrappers;
-using HealthyJuices.Common.Utils;
+using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Domain.Models.Orders.DataAccess;
 using HealthyJuices.Shared.Dto.Orders;
+using MediatR;
 
 namespace HealthyJuices.Application.Services.Orders.Queries
 {
     public static class GetByIdOrder
     {
         // Query 
-        public record Query(string Id) : IRequestWrapper<OrderDto> { }
+        public record Query(string Id) : IRequest<OrderDto> { }
 
         // Handler
-        public class Handler : IHandlerWrapper<Query, OrderDto>
+        public class Handler : IRequestHandler<Query, OrderDto>
         {
             private readonly IOrderRepository _orderRepository;
 
@@ -23,18 +23,18 @@ namespace HealthyJuices.Application.Services.Orders.Queries
                 this._orderRepository = repository;
             }
 
-            public async Task<Response<OrderDto>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<OrderDto> Handle(Query request, CancellationToken cancellationToken)
             {
                 var entity = await _orderRepository.Query()
                     .ById(request.Id)
                     .IncludeDestinationCompany()
                     .IncludeProducts()
-                        .FirstOrDefaultAsync();
+                    .FirstOrDefaultAsync();
 
                 if (entity == null)
-                    return Response<OrderDto>.Fail<OrderDto>($"Not found order with id: {request.Id}");
+                    throw new BadRequestException($"Not found order with id: {request.Id}");
 
-                return Response<OrderDto>.Success(entity.ToDto());
+                return entity.ToDto();
             }
         }
     }

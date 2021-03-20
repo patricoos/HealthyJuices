@@ -1,20 +1,19 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using HealthyJuices.Application.Wrappers;
-using HealthyJuices.Common.Utils;
-using HealthyJuices.Domain.Models.Unavailabilities;
+using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Domain.Models.Unavailabilities.DataAccess;
 using HealthyJuices.Shared.Dto;
+using MediatR;
 
 namespace HealthyJuices.Application.Services.Unavailabilities.Commands
 {
     public static class UpdateUnavailability
     {
         // Command 
-        public record Command : UnavailabilityDto, IRequestWrapper { }
+        public record Command : UnavailabilityDto, IRequest { }
 
         // Handler
-        public class Handler : IHandlerWrapper<Command>
+        public class Handler : IRequestHandler<Command>
         {
             private readonly IUnavailabilityRepository _unavailabilityRepository;
 
@@ -23,21 +22,21 @@ namespace HealthyJuices.Application.Services.Unavailabilities.Commands
                 this._unavailabilityRepository = repository;
             }
 
-            public async Task<Response> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
                 var unavailability = await _unavailabilityRepository.Query()
                     .ById(request.Id)
                     .FirstOrDefaultAsync();
 
                 if (unavailability == null)
-                   Response.Fail($"Not found product with id: {request.Id}");
+                    throw new BadRequestException($"Not found product with id: {request.Id}");
 
                 unavailability.Update(request.From, request.To, request.Reason, request.Comment);
 
                 _unavailabilityRepository.Update(unavailability);
                 await _unavailabilityRepository.SaveChangesAsync();
 
-                return Response.Success();
+                return Unit.Value;
             }
         }
     }

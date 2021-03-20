@@ -108,7 +108,7 @@ namespace HealthyJuices.Tests.EndToEnd
             ServiceCollection.RegisterMediatR();
             var serviceProvider = ServiceCollection.BuildServiceProvider();
             Mediator = serviceProvider.GetService<IMediator>();
-            ServiceCollection.AddValidators();
+            ServiceCollection.RegisterValidators();
         }
 
         private void InitializeRepositories()

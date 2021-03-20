@@ -1,16 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Text;
-using HealthyJuices.Api.Behaviours;
 using HealthyJuices.Api.Bootstrap.DataSeed;
 using HealthyJuices.Application.Providers;
 using HealthyJuices.Application.Providers.Logging;
-using HealthyJuices.Application.Services;
-using HealthyJuices.Application.Services.Companies.Commands;
-using HealthyJuices.Application.Services.Companies.Queries;
-using HealthyJuices.Application.Services.Products.Commands;
-using HealthyJuices.Application.Services.Products.Queries;
 using HealthyJuices.Common;
 using HealthyJuices.Common.Contracts;
 using HealthyJuices.Common.Services;
@@ -30,7 +23,6 @@ using HealthyJuices.Persistence.Ef.Repositories.Products;
 using HealthyJuices.Persistence.Ef.Repositories.Unavailabilities;
 using HealthyJuices.Persistence.Ef.Repositories.Users;
 using HealthyJuices.Shared.Enums;
-using MediatR;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -42,13 +34,6 @@ namespace HealthyJuices.Api.Bootstrap
 {
     public static class StartupExtensions
     {
-        public static IServiceCollection RegisterBehaviours(this IServiceCollection @this)
-        {
-
-            @this.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-            return @this;
-        }
-
         public static IServiceCollection RegisterProviders(this IServiceCollection @this, IConfiguration config)
         {
             @this.AddScoped<IMailer>(x => new Mailer(

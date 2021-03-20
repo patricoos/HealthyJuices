@@ -2,25 +2,23 @@
 using System.Threading;
 using System.Threading.Tasks;
 using HealthyJuices.Application.Providers;
-using HealthyJuices.Application.Wrappers;
 using HealthyJuices.Common.Contracts;
 using HealthyJuices.Common.Exceptions;
-using HealthyJuices.Common.Utils;
 using HealthyJuices.Domain.Models.Companies.DataAccess;
 using HealthyJuices.Domain.Models.Users;
 using HealthyJuices.Domain.Models.Users.DataAccess;
-using HealthyJuices.Shared.Dto;
 using HealthyJuices.Shared.Enums;
+using MediatR;
 
 namespace HealthyJuices.Application.Services.Auth.Commands
 {
     public static class Register
     {
         // Command 
-        public record Command(string Email, string Password, string FirstName, string LastName, string CompanyId) : IRequestWrapper<string> { }
+        public record Command(string Email, string Password, string FirstName, string LastName, string CompanyId) : IRequest<string> { }
 
         // Handler
-        public class Handler : IHandlerWrapper<Command, string>
+        public class Handler : IRequestHandler<Command, string>
         {
             private readonly EmailProvider _emailProvider;
             private readonly ITimeProvider _timeProvider;
@@ -35,7 +33,7 @@ namespace HealthyJuices.Application.Services.Auth.Commands
                 _companyRepository = companyRepository;
             }
 
-            public async Task<Response<string>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<string> Handle(Command request, CancellationToken cancellationToken)
             {
                 var existing = await _userRepository.IsExistingAsync(request.Email);
                 if (existing)
@@ -53,7 +51,7 @@ namespace HealthyJuices.Application.Services.Auth.Commands
                 await _emailProvider.SendRegisterCodeEmail(user.Email, "http://localhost:4200/auth/confirm-register", user.PermissionsToken.Token);
 
                 await _userRepository.Insert(user).SaveChangesAsync();
-                return Response<string>.Success(user.Id);
+                return user.Id;
             }
         }
     }

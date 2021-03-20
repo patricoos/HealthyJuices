@@ -31,10 +31,7 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
             var result = await controller.CreateAsync(request);
 
             // assert
-            var okResult = result as OkObjectResult;
-            var actualConfiguration = okResult.Value as string;
-            actualConfiguration.Should().NotBeNullOrWhiteSpace();
-
+            result.Should().NotBeNullOrWhiteSpace();
 
             var subject = AssertRepositoryContext.Unavailabilities.FirstOrDefault();
 

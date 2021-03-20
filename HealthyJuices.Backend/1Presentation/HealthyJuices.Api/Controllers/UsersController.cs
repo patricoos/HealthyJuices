@@ -14,7 +14,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace HealthyJuices.Api.Controllers
 {
     [ApiController]
-        [Authorize]
+    [Authorize]
+    [AuthorizeRoles(UserRole.BusinessOwner)]
     [Route("users")]
     public class UsersController : BaseApiController
     {
@@ -47,17 +48,17 @@ namespace HealthyJuices.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetByIdAsync(string id)
+        public async Task<UserDto> GetByIdAsync(string id)
         {
             var response = await _mediator.Send(new GetByIdUser.Query(id));
-            return ToActionResult(response);
+            return response;
         }
 
         [HttpGet("{email}")]
-        public async Task<IActionResult> GetAsync(string email)
+        public async Task<UserDto> GetAsync(string email)
         {
             var response = await _mediator.Send(new GetByEmailUser.Query(email));
-            return ToActionResult(response);
+            return response;
         }
 
         [AllowAnonymous]
@@ -69,17 +70,16 @@ namespace HealthyJuices.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync([FromBody] CreateUser.Command command)
+        public async Task<string> CreateAsync([FromBody] CreateUser.Command command)
         {
             var response = await _mediator.Send(command);
-            return ToActionResult(response);
+            return response;
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAsync(string id)
+        public async Task DeleteAsync(string id)
         {
-            var response = await _mediator.Send(new DeleteUser.Command(id));
-            return ToActionResult(response);
+            await _mediator.Send(new DeleteUser.Command(id));
         }
     }
 }

@@ -1,39 +1,35 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using HealthyJuices.Application.Validation;
-using HealthyJuices.Application.Wrappers;
-using HealthyJuices.Common.Utils;
+using FluentValidation;
 using HealthyJuices.Domain.Models.Products;
 using HealthyJuices.Domain.Models.Products.DataAccess;
 using HealthyJuices.Shared.Dto.Products;
+using MediatR;
 
 namespace HealthyJuices.Application.Services.Products.Commands
 {
     public static class CreateProduct
     {
         // Command 
-        public record Command : ProductDto, IRequestWrapper<string> { }
-
+        public record Command : ProductDto, IRequest<string> { }
 
         // Validator
-        public class Validator : IValidationHandler<Command>
+        public class Validator : AbstractValidator<Command>
         {
-            private readonly IProductRepository _repository;
-
-            public Validator(IProductRepository repository) => this._repository = repository;
-
-            public async Task<ValidationResult> Validate(Command request)
+            public Validator()
             {
-                //if (_repository.Query().)
-                //    return Response.Fail("Todo already exists.");
+                RuleFor(v => v.Name)
+                .NotEmpty().WithMessage("Names is required.")
+                .MaximumLength(200).WithMessage("Names must not exceed 200 characters.");
 
-                return ValidationResult.Success;
+                RuleFor(v => v.Unit)
+                    .NotNull().WithMessage("Unit is required.");
             }
         }
 
         // Handler
-        public class Handler : IHandlerWrapper<Command, string>
+        public class Handler : IRequestHandler<Command, string>
         {
             private readonly IProductRepository _productRepository;
 
@@ -42,14 +38,14 @@ namespace HealthyJuices.Application.Services.Products.Commands
                 this._productRepository = repository;
             }
 
-            public async Task<Response<string>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<string> Handle(Command request, CancellationToken cancellationToken)
             {
                 var product = new Product(request.Name, request.Description, request.Unit, request.QuantityPerUnit, request.IsActive, request.DefaultPricePerUnit?.Amount);
 
                 _productRepository.Insert(product);
                 await _productRepository.SaveChangesAsync();
 
-                return Response<string>.Success(product.Id);
+                return product.Id;
             }
         }
     }

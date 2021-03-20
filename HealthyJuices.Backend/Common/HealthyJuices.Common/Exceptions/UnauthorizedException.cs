@@ -4,8 +4,8 @@ namespace HealthyJuices.Common.Exceptions
 {
     public class UnauthorizedException : CustomException
     {
-        public UnauthorizedException(string message, params string[] messageParameters)
-            : base(HttpStatusCode.Unauthorized, message, messageParameters)
+        public UnauthorizedException(string message, params string[] translationParams)
+            : base(HttpStatusCode.Unauthorized, message, translationParams)
         {
         }
     }

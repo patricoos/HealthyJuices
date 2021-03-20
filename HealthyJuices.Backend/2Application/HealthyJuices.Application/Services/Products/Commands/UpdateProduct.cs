@@ -1,19 +1,19 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using HealthyJuices.Application.Wrappers;
-using HealthyJuices.Common.Utils;
+using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Domain.Models.Products.DataAccess;
 using HealthyJuices.Shared.Dto.Products;
+using MediatR;
 
 namespace HealthyJuices.Application.Services.Products.Commands
 {
     public static class UpdateProduct
     {
         // Command 
-        public record Command : ProductDto, IRequestWrapper { }
+        public record Command : ProductDto, IRequest { }
 
         // Handler
-        public class Handler : IHandlerWrapper<Command>
+        public class Handler : IRequestHandler<Command>
         {
             private readonly IProductRepository _productRepository;
 
@@ -22,21 +22,21 @@ namespace HealthyJuices.Application.Services.Products.Commands
                 this._productRepository = repository;
             }
 
-            public async Task<Response> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
                 var product = await _productRepository.Query()
                     .ById(request.Id)
                     .FirstOrDefaultAsync();
 
                 if (product == null)
-                    return Response.Fail($"Not found product with id: {request.Id}");
+                    throw new BadRequestException($"Not found product with id: {request.Id}");
 
                 product.Update(request.Name, request.Description, request.Unit, request.QuantityPerUnit, request.IsActive, request.DefaultPricePerUnit?.Amount);
 
                 _productRepository.Update(product);
                 await _productRepository.SaveChangesAsync();
 
-                return Response.Success();
+                return Unit.Value;
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using HealthyJuices.Domain.Models.Abstraction.DataAccess.Repositories;
+﻿using System.Threading.Tasks;
+using HealthyJuices.Domain.Models.Abstraction.DataAccess.Repositories;
 
 namespace HealthyJuices.Domain.Models.Products.DataAccess
 {

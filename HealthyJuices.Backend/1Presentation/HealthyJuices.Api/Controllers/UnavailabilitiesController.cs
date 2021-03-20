@@ -33,34 +33,32 @@ namespace HealthyJuices.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetByIdAsync(string id)
+        public async Task<UnavailabilityDto> GetByIdAsync(string id)
         {
             var response = await _mediator.Send(new GetByIdUnavalability.Query(id));
-            return ToActionResult(response);
+            return response;
         }
 
         [HttpPost]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task<IActionResult> CreateAsync(CreateUnavailability.Command command)
+        public async Task<string> CreateAsync(CreateUnavailability.Command command)
         {
             var response = await _mediator.Send(command);
-            return ToActionResult(response);
+            return response;
         }
 
         [HttpPut]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task<IActionResult> UpdateAsync(UpdateUnavailability.Command command)
+        public async Task UpdateAsync(UpdateUnavailability.Command command)
         {
-            var response = await _mediator.Send(command);
-            return ToActionResult(response);
+             await _mediator.Send(command);
         }
 
         [HttpDelete("{id}")]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task<IActionResult> DeleteAsync(string id)
+        public async Task DeleteAsync(string id)
         {
-            var response = await _mediator.Send(new DeleteUnavailability.Command(id));
-            return ToActionResult(response);
+             await _mediator.Send(new DeleteUnavailability.Command(id));
         }
     }
 }

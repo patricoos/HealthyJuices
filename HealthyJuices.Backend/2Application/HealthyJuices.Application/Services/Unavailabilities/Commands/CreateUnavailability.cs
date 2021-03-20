@@ -1,20 +1,19 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using HealthyJuices.Application.Wrappers;
-using HealthyJuices.Common.Utils;
 using HealthyJuices.Domain.Models.Unavailabilities;
 using HealthyJuices.Domain.Models.Unavailabilities.DataAccess;
 using HealthyJuices.Shared.Dto;
+using MediatR;
 
 namespace HealthyJuices.Application.Services.Unavailabilities.Commands
 {
     public static class CreateUnavailability
     {
         // Command 
-        public record Command : UnavailabilityDto, IRequestWrapper<string> { }
+        public record Command : UnavailabilityDto, IRequest<string> { }
 
         // Handler
-        public class Handler : IHandlerWrapper<Command, string>
+        public class Handler : IRequestHandler<Command, string>
         {
             private readonly IUnavailabilityRepository _unavailabilityRepository;
 
@@ -23,14 +22,14 @@ namespace HealthyJuices.Application.Services.Unavailabilities.Commands
                 this._unavailabilityRepository = repository;
             }
 
-            public async Task<Response<string>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<string> Handle(Command request, CancellationToken cancellationToken)
             {
                 var unavailability = new Unavailability(request.From, request.To, request.Reason, request.Comment);
 
                 _unavailabilityRepository.Insert(unavailability);
                 await _unavailabilityRepository.SaveChangesAsync();
 
-                return Response<string>.Success(unavailability.Id);
+                return unavailability.Id;
             }
         }
     }

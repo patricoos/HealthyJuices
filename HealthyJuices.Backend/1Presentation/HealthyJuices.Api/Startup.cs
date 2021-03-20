@@ -49,9 +49,8 @@ namespace HealthyJuices.Api
             services
                 .RegisterDatabase(Configuration.GetConnectionString("Sql"))
                 .RegisterRepositories()
-                .RegisterBehaviours()
                 .RegisterMediatR()
-                .AddValidators()
+                .RegisterValidators()
                 .RegisterProviders(Configuration);
 
             services.AddSwaggerGen(options =>

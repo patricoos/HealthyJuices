@@ -2,21 +2,21 @@
 using System.Threading;
 using System.Threading.Tasks;
 using HealthyJuices.Application.Providers;
-using HealthyJuices.Application.Wrappers;
 using HealthyJuices.Common.Contracts;
-using HealthyJuices.Common.Utils;
+using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Domain.Models.Users.DataAccess;
 using HealthyJuices.Shared.Enums;
+using MediatR;
 
 namespace HealthyJuices.Application.Services.Auth.Commands
 {
     public static class ForgotPassword
     {
         // Command 
-        public record Command(string Email) : IRequestWrapper { }
+        public record Command(string Email) : IRequest { }
 
         // Handler
-        public class Handler : IHandlerWrapper<Command>
+        public class Handler : IRequestHandler<Command>
         {
             private readonly IUserRepository _userRepository;
             private readonly ITimeProvider _timeProvider;
@@ -29,7 +29,7 @@ namespace HealthyJuices.Application.Services.Auth.Commands
                 _emailProvider = emailProvider;
             }
 
-            public async Task<Response> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
                 var user = await _userRepository.Query()
                     .ByEmail(request.Email)
@@ -37,7 +37,7 @@ namespace HealthyJuices.Application.Services.Auth.Commands
                     .FirstOrDefaultAsync();
 
                 if (user == null)
-                    return Response.Fail(ResponseStatus.NotFound, $"User with email '{request.Email}' not found");
+                   throw new BadRequestException($"User with email '{request.Email}' not found");
 
                 user.SetPermissionsToken(_timeProvider, Guid.NewGuid().ToString(), _timeProvider.UtcNow.AddDays(1));
 
@@ -46,7 +46,7 @@ namespace HealthyJuices.Application.Services.Auth.Commands
                 await _emailProvider.SendForgotPasswordEmail(user.Email, "http://localhost:4200/auth/reset-password", user.PermissionsToken.Token);
                 await _userRepository.SaveChangesAsync();
 
-                return Response.Success();
+                return Unit.Value;
             }
         }
     }
