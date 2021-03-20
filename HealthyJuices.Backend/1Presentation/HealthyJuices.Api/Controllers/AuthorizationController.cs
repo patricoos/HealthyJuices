@@ -28,13 +28,13 @@ namespace HealthyJuices.Api.Controllers
         }
 
 
-        //[AllowAnonymous]
-        //[HttpPost("register")]
-        //public async Task<string> RegisterAsync([FromBody] Register.Command command)
-        //{
-        //    var response = await _mediator.Send(command);
-        //    return response;
-        //}
+        [AllowAnonymous]
+        [HttpPost("register")]
+        public async Task<string> RegisterAsync([FromBody] Register.Command command)
+        {
+            var response = await _mediator.Send(command);
+            return response;
+        }
 
         [AllowAnonymous]
         [HttpGet("confirm-register")]
@@ -43,18 +43,18 @@ namespace HealthyJuices.Api.Controllers
             await _mediator.Send(new ConfirmRegister.Command(email, token));
         }
 
-        //[AllowAnonymous]
-        //[HttpPost("forgot-password")]
-        //public async Task ForgotPasswordAsync([FromBody] ForgotPassword.Command command)
-        //{
-        //    var response = await _mediator.Send(command);
-        //}
+        [AllowAnonymous]
+        [HttpPost("forgot-password")]
+        public async Task ForgotPasswordAsync([FromBody] ForgotPassword.Command command)
+        {
+            var response = await _mediator.Send(command);
+        }
 
-        //[AllowAnonymous]
-        //[HttpPost("reset-password")]
-        //public async Task ResetPasswordAsync([FromBody] ResetPassword.Command command)
-        //{
-        //    await _mediator.Send(command);
-        //}
+        [AllowAnonymous]
+        [HttpPost("reset-password")]
+        public async Task ResetPasswordAsync([FromBody] ResetPassword.Command command)
+        {
+            await _mediator.Send(command);
+        }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.IO;
+using System.Linq;
 using HealthyJuices.Api.Bootstrap;
 using HealthyJuices.Api.Middlewares;
 using HealthyJuices.Application.Auth;
@@ -56,6 +57,7 @@ namespace HealthyJuices.Api
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "HealthyJuices Api", Version = "v1" });
+                options.CustomSchemaIds(x => x.FullName.Split('.').Last()?.Replace("+", ""));
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Name = "Authorization",

@@ -21,7 +21,8 @@ namespace HealthyJuices.Application.Services.Products.Commands
             {
                 RuleFor(v => v.Name)
                 .NotEmpty().WithMessage("Names is required.")
-                .MaximumLength(200).WithMessage("Names must not exceed 200 characters.");
+                .MinimumLength(2).WithMessage("Name must be at least 2 characters.")
+                .MaximumLength(200).WithMessage("Name must not exceed 200 characters.");
 
                 RuleFor(v => v.Unit)
                     .NotNull().WithMessage("Unit is required.");

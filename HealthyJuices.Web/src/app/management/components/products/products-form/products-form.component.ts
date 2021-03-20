@@ -41,7 +41,6 @@ export class ProductsFormComponent implements AfterViewInit {
 
   getDetails(id: string): void {
     this.prodService.get(id, this.productsFormComponentLoader).subscribe(x => {
-      console.log(x);
       this.selectedProduct = x;
       this.editForm = this.initForm(x);
     }, error => this.toastsService.showError(error));
@@ -49,7 +48,7 @@ export class ProductsFormComponent implements AfterViewInit {
 
   private initForm(product: Product | null = null): FormGroup {
     const form = new FormGroup({
-      id: new FormControl(product ? product.id : 0),
+      id: new FormControl(product ? product.id : null),
 
       name: new FormControl(product ? product.name : null, Validators.required),
       description: new FormControl(product ? product.description : null),

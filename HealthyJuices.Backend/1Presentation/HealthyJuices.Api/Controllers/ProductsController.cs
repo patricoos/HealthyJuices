@@ -44,20 +44,20 @@ namespace HealthyJuices.Api.Controllers
             return response;
         }
 
-        //[HttpPost]
-        //[AuthorizeRoles(UserRole.BusinessOwner)]
-        //public async Task<string> CreateAsync(CreateProduct.Command command)
-        //{
-        //    var response = await _mediator.Send(command);
-        //    return response;
-        //}
+        [HttpPost]
+        [AuthorizeRoles(UserRole.BusinessOwner)]
+        public async Task<string> CreateAsync(CreateProduct.Command command)
+        {
+            var response = await _mediator.Send(command);
+            return response;
+        }
 
-        //[HttpPut]
-        //[AuthorizeRoles(UserRole.BusinessOwner)]
-        //public async Task UpdateAsync(UpdateProduct.Command command)
-        //{
-        //    await _mediator.Send(command);
-        //}
+        [HttpPut]
+        [AuthorizeRoles(UserRole.BusinessOwner)]
+        public async Task UpdateAsync(UpdateProduct.Command command)
+        {
+            await _mediator.Send(command);
+        }
 
         [HttpDelete("{id}")]
         [AuthorizeRoles(UserRole.BusinessOwner)]
