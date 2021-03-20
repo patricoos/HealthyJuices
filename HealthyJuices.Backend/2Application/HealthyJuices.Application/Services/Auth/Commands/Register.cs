@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentValidation;
 using HealthyJuices.Application.Providers;
 using HealthyJuices.Common.Contracts;
 using HealthyJuices.Common.Exceptions;
@@ -16,6 +17,29 @@ namespace HealthyJuices.Application.Services.Auth.Commands
     {
         // Command 
         public record Command(string Email, string Password, string FirstName, string LastName, string CompanyId) : IRequest<string> { }
+
+        // Validator
+        public class Validator : AbstractValidator<Command>
+        {
+            private readonly IUserRepository _userRepository;
+
+            public Validator(IUserRepository userRepository)
+            {
+                _userRepository = userRepository;
+                RuleFor(v => v.Email)
+                    .EmailAddress()
+                    .MustAsync(BeUniqueEmail).WithMessage("Email title already exists.");
+
+                RuleFor(v => v.Password)
+                    .MinimumLength(4).WithMessage("Password must be at least 4 characters.");
+            }
+
+            public async Task<bool> BeUniqueEmail(string email, CancellationToken cancellationToken)
+            {
+                var existing = await _userRepository.IsExistingAsync(email);
+                return !existing;
+            }
+        }
 
         // Handler
         public class Handler : IRequestHandler<Command, string>
@@ -35,10 +59,6 @@ namespace HealthyJuices.Application.Services.Auth.Commands
 
             public async Task<string> Handle(Command request, CancellationToken cancellationToken)
             {
-                var existing = await _userRepository.IsExistingAsync(request.Email);
-                if (existing)
-                    throw new BadRequestException($"User with email '{request.Email}' already exists");
-
                 var company = await _companyRepository.Query().ById(request.CompanyId).FirstOrDefaultAsync();
                 if (company == null)
                     throw new BadRequestException($"Company not found");
