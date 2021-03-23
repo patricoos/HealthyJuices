@@ -1,18 +1,25 @@
-﻿using HealthyJuices.Common.Contracts;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using HealthyJuices.Common.Contracts;
 using HealthyJuices.Domain.Models.Companies;
 using HealthyJuices.Domain.Models.Companies.DataAccess;
 
 namespace HealthyJuices.Persistence.Ef.Repositories.Companies
 {
-    public class CompanyRepository : PersistableRepository<Company>, ICompanyRepository
+    public class CompanyRepository : BaseRepository<Company>, ICompanyWriteRepository
     {
-        public CompanyRepository(IDbContext context, ITimeProvider timeProvider) : base(context, timeProvider)
+        private CompanyQueryBuilder Query => new CompanyQueryBuilder(AggregateRootDbSet.AsQueryable());
+
+        public CompanyRepository(IDbContext context) : base(context)
         {
         }
 
-        public ICompanyQueryBuilder Query()
+        public async Task<IEnumerable<Company>> GetAllActiveAsync()
         {
-            return new CompanyQueryBuilder(AggregateRootDbSet.AsQueryable(), TimeProvider);
+            return await Query.IsNotRemoved().ToListAsync();
         }
+
+
     }
 }

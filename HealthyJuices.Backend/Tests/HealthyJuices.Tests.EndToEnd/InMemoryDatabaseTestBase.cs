@@ -53,11 +53,11 @@ namespace HealthyJuices.Tests.EndToEnd
         #region Repositories
 
         public IUserRepository UserRepository { get; set; }
-        public ICompanyRepository CompanyRepository { get; set; }
-        public ILogRepository LogRepository { get; set; }
+        public ICompanyWriteRepository CompanyWriteRepository { get; set; }
+        public ILogWriteRepository LogWriteRepository { get; set; }
         public IOrderRepository OrderRepository { get; set; }
         public IProductRepository ProductRepository { get; set; }
-        public IUnavailabilityRepository UnavailabilityRepository { get; set; }
+        public IUnavailabilityWriteRepository UnavailabilityWriteRepository { get; set; }
 
         #endregion Repositories
 
@@ -113,19 +113,19 @@ namespace HealthyJuices.Tests.EndToEnd
 
         private void InitializeRepositories()
         {
-            UserRepository = new UserRepository(ActRepositoryContext, TimeProvider);
-            CompanyRepository = new CompanyRepository(ActRepositoryContext, TimeProvider);
-            LogRepository = new LogRepository(ActRepositoryContext, TimeProvider);
-            OrderRepository = new OrderRepository(ActRepositoryContext, TimeProvider);
-            ProductRepository = new ProductRepository(ActRepositoryContext, TimeProvider);
-            UnavailabilityRepository = new UnavailabilityRepository(ActRepositoryContext, TimeProvider);
+            UserRepository = new UserRepository(ActRepositoryContext);
+            CompanyWriteRepository = new CompanyRepository(ActRepositoryContext);
+            LogWriteRepository = new LogRepository(ActRepositoryContext);
+            OrderRepository = new OrderRepository(ActRepositoryContext);
+            ProductRepository = new ProductRepository(ActRepositoryContext);
+            UnavailabilityWriteRepository = new UnavailabilityRepository(ActRepositoryContext);
 
             ServiceCollection.AddTransient(x => UserRepository);
-            ServiceCollection.AddTransient(x => CompanyRepository);
-            ServiceCollection.AddTransient(x => LogRepository);
+            ServiceCollection.AddTransient(x => CompanyWriteRepository);
+            ServiceCollection.AddTransient(x => LogWriteRepository);
             ServiceCollection.AddTransient(x => OrderRepository);
             ServiceCollection.AddTransient(x => ProductRepository);
-            ServiceCollection.AddTransient(x => UnavailabilityRepository);
+            ServiceCollection.AddTransient(x => UnavailabilityWriteRepository);
         }
 
         private void InitializeProviders()

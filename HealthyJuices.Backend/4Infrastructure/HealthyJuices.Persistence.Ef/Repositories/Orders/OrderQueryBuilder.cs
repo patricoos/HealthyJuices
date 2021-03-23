@@ -2,54 +2,53 @@
 using System.Linq;
 using HealthyJuices.Common.Contracts;
 using HealthyJuices.Domain.Models.Orders;
-using HealthyJuices.Domain.Models.Orders.DataAccess;
 using Microsoft.EntityFrameworkCore;
 
 namespace HealthyJuices.Persistence.Ef.Repositories.Orders
 {
-    public class OrderQueryBuilder : QueryBuilder<Order, IOrderQueryBuilder>, IOrderQueryBuilder
+    public class OrderQueryBuilder : QueryBuilder<Order, OrderQueryBuilder>
     {
-        public OrderQueryBuilder(IQueryable<Order> query, ITimeProvider timeProvider) : base(query, timeProvider)
+        public OrderQueryBuilder(IQueryable<Order> query) : base(query)
         {
         }
 
-        public IOrderQueryBuilder IsNotRemoved()
+        public OrderQueryBuilder IsNotRemoved()
         {
             Query = Query.Where(x => x.IsRemoved == false);
             return this;
         }
 
-        public IOrderQueryBuilder IncludeUser()
+        public OrderQueryBuilder IncludeUser()
         {
             Query = Query.Include(x => x.User);
             return this;
         }
 
-        public IOrderQueryBuilder IncludeDestinationCompany()
+        public OrderQueryBuilder IncludeDestinationCompany()
         {
             Query = Query.Include(x => x.DestinationCompany);
             return this;
         }
 
-        public IOrderQueryBuilder IncludeProducts()
+        public OrderQueryBuilder IncludeProducts()
         {
             Query = Query.Include(x => x.OrderProducts).ThenInclude(x => x.Product);
             return this;
         }
 
-        public IOrderQueryBuilder BeforeDateTime(DateTime date)
+        public OrderQueryBuilder BeforeDateTime(DateTime date)
         {
             Query = Query.Where(x => x.DeliveryDate <= date);
             return this;
         }
 
-        public IOrderQueryBuilder AfterDateTime(DateTime date)
+        public OrderQueryBuilder AfterDateTime(DateTime date)
         {
             Query = Query.Where(x => x.DeliveryDate >= date);
             return this;
         }
 
-        public IOrderQueryBuilder BetweenDateTimes(DateTime @from, DateTime to)
+        public OrderQueryBuilder BetweenDateTimes(DateTime @from, DateTime to)
         {
             AfterDateTime(from);
             BeforeDateTime(to);
@@ -57,7 +56,7 @@ namespace HealthyJuices.Persistence.Ef.Repositories.Orders
             return this;
         }
 
-        public IOrderQueryBuilder ByUser(string id)
+        public OrderQueryBuilder ByUser(string id)
         {
             Query = Query.Where(x => x.UserId == id);
             return this;

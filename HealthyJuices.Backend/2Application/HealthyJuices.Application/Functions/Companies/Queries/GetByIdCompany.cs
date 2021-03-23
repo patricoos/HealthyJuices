@@ -17,18 +17,16 @@ namespace HealthyJuices.Application.Functions.Companies.Queries
         // Handler
         public class Handler : IRequestHandler<Query, CompanyDto>
         {
-            private readonly ICompanyRepository _companyRepository;
+            private readonly ICompanyWriteRepository _companyWriteRepository;
 
-            public Handler(ICompanyRepository repository)
+            public Handler(ICompanyWriteRepository writeRepository)
             {
-                this._companyRepository = repository;
+                this._companyWriteRepository = writeRepository;
             }
 
             public async Task<CompanyDto> Handle(Query request, CancellationToken cancellationToken)
             {
-                var entity = await _companyRepository.Query()
-                    .ById(request.Id)
-                    .FirstOrDefaultAsync();
+                var entity = await _companyWriteRepository.GetByIdAsync(request.Id);
 
                 if (entity == null)
                     throw new BadRequestException($"Not found company with id: {request.Id}");

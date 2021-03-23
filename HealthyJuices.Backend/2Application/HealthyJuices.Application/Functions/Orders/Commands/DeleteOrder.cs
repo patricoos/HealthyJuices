@@ -23,9 +23,7 @@ namespace HealthyJuices.Application.Functions.Orders.Commands
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var entity = await _orderRepository.Query()
-                    .ById(request.Id)
-                    .FirstOrDefaultAsync();
+                var entity = await _orderRepository.GetByIdAsync(request.Id);
 
                 if (entity == null)
                     throw new BadRequestException($"Not found order with id: {request.Id}");

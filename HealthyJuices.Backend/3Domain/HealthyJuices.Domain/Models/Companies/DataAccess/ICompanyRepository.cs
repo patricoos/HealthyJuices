@@ -1,8 +1,11 @@
-﻿using HealthyJuices.Domain.Models.Abstraction.DataAccess.Repositories;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using HealthyJuices.Domain.Models.Abstraction.DataAccess.Repositories;
 
 namespace HealthyJuices.Domain.Models.Companies.DataAccess
 {
-    public interface ICompanyRepository : IPersistableRepository<Company>, IQueryableRepository<Company, ICompanyQueryBuilder>
+    public interface ICompanyWriteRepository : IWriteRepository<Company>, IReadRepository<Company>
     {
+        Task<IEnumerable<Company>> GetAllActiveAsync();
     }
 }

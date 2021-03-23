@@ -25,9 +25,7 @@ namespace HealthyJuices.Application.Functions.Users.Queries
 
             public async Task<UserDto> Handle(Query request, CancellationToken cancellationToken)
             {
-                var entity = await _userRepository.Query()
-                    .ById(request.Id)
-                    .FirstOrDefaultAsync();
+                var entity = await _userRepository.GetByIdAsync(request.Id);
 
                 if (entity == null)
                     throw new BadRequestException($"Not found user with id: {request.Id}");

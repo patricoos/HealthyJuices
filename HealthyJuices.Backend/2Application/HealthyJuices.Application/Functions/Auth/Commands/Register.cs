@@ -47,19 +47,19 @@ namespace HealthyJuices.Application.Functions.Auth.Commands
             private readonly EmailProvider _emailProvider;
             private readonly ITimeProvider _timeProvider;
             private readonly IUserRepository _userRepository;
-            private readonly ICompanyRepository _companyRepository;
+            private readonly ICompanyWriteRepository _companyWriteRepository;
 
-            public Handler(IUserRepository repository, EmailProvider emailProvider, ITimeProvider timeProvider, ICompanyRepository companyRepository)
+            public Handler(IUserRepository repository, EmailProvider emailProvider, ITimeProvider timeProvider, ICompanyWriteRepository companyWriteRepository)
             {
                 this._userRepository = repository;
                 _emailProvider = emailProvider;
                 _timeProvider = timeProvider;
-                _companyRepository = companyRepository;
+                _companyWriteRepository = companyWriteRepository;
             }
 
             public async Task<string> Handle(Command request, CancellationToken cancellationToken)
             {
-                var company = await _companyRepository.Query().ById(request.CompanyId).FirstOrDefaultAsync();
+                var company = await _companyWriteRepository.GetByIdAsync(request.CompanyId, false);
                 if (company == null)
                     throw new BadRequestException($"Company not found");
 
@@ -70,7 +70,8 @@ namespace HealthyJuices.Application.Functions.Auth.Commands
 
                 await _emailProvider.SendRegisterCodeEmail(user.Email, "http://localhost:4200/auth/confirm-register", user.PermissionsToken.Token);
 
-                await _userRepository.Insert(user).SaveChangesAsync();
+                _userRepository.Insert(user);
+                await _userRepository.SaveChangesAsync();
                 return user.Id;
             }
         }

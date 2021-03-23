@@ -1,17 +1,15 @@
 ﻿using System.Linq;
-using HealthyJuices.Common.Contracts;
 using HealthyJuices.Domain.Models.Companies;
-using HealthyJuices.Domain.Models.Companies.DataAccess;
 
 namespace HealthyJuices.Persistence.Ef.Repositories.Companies
 {
-    public class CompanyQueryBuilder : QueryBuilder<Company, ICompanyQueryBuilder>, ICompanyQueryBuilder
+    public class CompanyQueryBuilder : QueryBuilder<Company, CompanyQueryBuilder>
     {
-        public CompanyQueryBuilder(IQueryable<Company> query, ITimeProvider timeProvider) : base(query, timeProvider)
+        public CompanyQueryBuilder(IQueryable<Company> query) : base(query)
         {
         }
 
-        public ICompanyQueryBuilder IsNotRemoved()
+        public CompanyQueryBuilder IsNotRemoved()
         {
             Query = Query.Where(x => x.IsRemoved == false);
             return this;

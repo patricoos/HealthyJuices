@@ -7,38 +7,38 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HealthyJuices.Persistence.Ef.Repositories.Users
 {
-    public class UserQueryBuilder : QueryBuilder<User, IUserQueryBuilder>, IUserQueryBuilder
+    public class UserQueryBuilder : QueryBuilder<User, UserQueryBuilder>
     {
-        public UserQueryBuilder(IQueryable<User> query, ITimeProvider timeProvider) : base(query, timeProvider)
+        public UserQueryBuilder(IQueryable<User> query) : base(query)
         {
         }
 
 
-        public IUserQueryBuilder ByEmail(string email)
+        public UserQueryBuilder ByEmail(string email)
         {
             Query = Query.Where(x => x.Email == email);
             return this;
         }
 
-        public IUserQueryBuilder ByUserRole(UserRole role)
+        public UserQueryBuilder ByUserRole(UserRole role)
         {
             Query = Query.Where(x => x.Roles.HasFlag(role));
             return this;
         }
 
-        public IUserQueryBuilder IsActive()
+        public UserQueryBuilder IsActive()
         {
             Query = Query.Where(x => x.IsActive == true);
             return this;
         }
 
-        public IUserQueryBuilder IncludeCompany()
+        public UserQueryBuilder IncludeCompany()
         {
             Query = Query.Include(x => x.Company);
             return this;
         }
 
-        public IUserQueryBuilder IsNotRemoved()
+        public UserQueryBuilder IsNotRemoved()
         {
             Query = Query.Where(x => x.IsRemoved == false);
             return this;

@@ -16,18 +16,16 @@ namespace HealthyJuices.Application.Functions.Unavailabilities.Queries
         // Handler
         public class Handler : IRequestHandler<Query, UnavailabilityDto>
         {
-            private readonly IUnavailabilityRepository _unavailabilityRepository;
+            private readonly IUnavailabilityWriteRepository _unavailabilityWriteRepository;
 
-            public Handler(IUnavailabilityRepository unavailabilityRepository)
+            public Handler(IUnavailabilityWriteRepository unavailabilityWriteRepository)
             {
-                _unavailabilityRepository = unavailabilityRepository;
+                _unavailabilityWriteRepository = unavailabilityWriteRepository;
             }
 
             public async Task<UnavailabilityDto> Handle(Query request, CancellationToken cancellationToken)
             {
-                var entity = await _unavailabilityRepository.Query()
-                    .ById(request.Id)
-                    .FirstOrDefaultAsync();
+                var entity = await _unavailabilityWriteRepository.GetByIdAsync(request.Id);
 
                 if (entity == null)
                     throw new BadRequestException($"Not found unavalability with id: {request.Id}");

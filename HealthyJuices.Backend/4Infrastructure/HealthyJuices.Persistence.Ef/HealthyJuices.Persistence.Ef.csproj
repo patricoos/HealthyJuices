@@ -6,9 +6,6 @@
 
   <ItemGroup>
     <Folder Include="Extensions\" />
-    <Folder Include="Repositories\Products\" />
-    <Folder Include="Repositories\Unavailabilities\" />
-    <Folder Include="Repositories\Orders\" />
   </ItemGroup>
 
   <ItemGroup>

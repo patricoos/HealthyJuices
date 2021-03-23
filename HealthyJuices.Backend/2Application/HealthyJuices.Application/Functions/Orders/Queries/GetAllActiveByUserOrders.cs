@@ -13,7 +13,7 @@ namespace HealthyJuices.Application.Functions.Orders.Queries
     public static class GetAllActiveByUserOrders
     {
         // Query 
-        public record Query(string userId, DateTime? from, DateTime? to) : IRequest<IEnumerable<OrderDto>> { }
+        public record Query(string UserId, DateTime? From = null, DateTime? To = null) : IRequest<IEnumerable<OrderDto>> { }
 
         // Handler
         public class Handler : IRequestHandler<Query, IEnumerable<OrderDto>>
@@ -27,18 +27,7 @@ namespace HealthyJuices.Application.Functions.Orders.Queries
 
             public async Task<IEnumerable<OrderDto>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var query = _orderRepository.Query()
-                    .IncludeProducts()
-                    .IsNotRemoved()
-                    .ByUser(request.userId);
-
-                if (request.from.HasValue)
-                    query.AfterDateTime(request.from.Value);
-
-                if (request.to.HasValue)
-                    query.BeforeDateTime(request.to.Value);
-
-                var entities = await query.ToListAsync();
+                var entities = await _orderRepository.GetByUserIdAndDatesWithProductsAsync(request.UserId, request.From, request.To);
 
                 var result = entities
                     .Select(x => x.ToDto())

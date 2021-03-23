@@ -63,11 +63,11 @@ namespace HealthyJuices.Api.Bootstrap
         {
             @this.AddScoped<IDbContext, HealthyJuicesDbContext>();
 
-            @this.AddScoped<ILogRepository, LogRepository>();
+            @this.AddScoped<ILogWriteRepository, LogRepository>();
             @this.AddScoped<IUserRepository, UserRepository>();
             @this.AddScoped<IOrderRepository, OrderRepository>();
-            @this.AddScoped<IUnavailabilityRepository, UnavailabilityRepository>();
-            @this.AddScoped<ICompanyRepository, CompanyRepository>();
+            @this.AddScoped<IUnavailabilityWriteRepository, UnavailabilityRepository>();
+            @this.AddScoped<ICompanyWriteRepository, CompanyRepository>();
             @this.AddScoped<IProductRepository, ProductRepository>();
 
             return @this;

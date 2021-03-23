@@ -24,7 +24,7 @@ namespace HealthyJuices.Application.Functions.Users.Queries
 
             public async Task<bool> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _userRepository.Query().ByEmail(request.Email).AnyAsync();
+                return await _userRepository.IsExistingAsync(request.Email);
             }
         }
     }

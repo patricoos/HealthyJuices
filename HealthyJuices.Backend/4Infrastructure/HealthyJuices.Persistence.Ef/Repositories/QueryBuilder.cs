@@ -4,24 +4,20 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
-using HealthyJuices.Common.Contracts;
 using HealthyJuices.Domain.Models.Abstraction.DataAccess.Entities;
-using HealthyJuices.Domain.Models.Abstraction.DataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace HealthyJuices.Persistence.Ef.Repositories
 {
-    public abstract class QueryBuilder<TEntity, TQueryBuilder> : IQueryBuilder<TEntity, TQueryBuilder>
+    public abstract class QueryBuilder<TEntity, TQueryBuilder>
            where TEntity : Entity
            where TQueryBuilder : class
     {
-        protected readonly ITimeProvider TimeProvider;
         protected List<string> IgnoredProperties;
 
-        protected QueryBuilder(IQueryable<TEntity> query, ITimeProvider timeProvider)
+        protected QueryBuilder(IQueryable<TEntity> query)
         {
             Query = query;
-            TimeProvider = timeProvider;
             IgnoredProperties = new List<string>();
         }
 
