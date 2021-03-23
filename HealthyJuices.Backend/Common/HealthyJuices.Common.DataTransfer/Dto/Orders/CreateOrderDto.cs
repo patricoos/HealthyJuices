@@ -7,6 +7,6 @@ namespace HealthyJuices.Shared.Dto.Orders
     public class CreateOrderDto
     {
         public DateTime DeliveryDate { get; init; }
-        public IEnumerable<OrderProductDto> OrderProducts { get; set; }
+        public IEnumerable<OrderItemDto> OrderProducts { get; set; }
     }
 }

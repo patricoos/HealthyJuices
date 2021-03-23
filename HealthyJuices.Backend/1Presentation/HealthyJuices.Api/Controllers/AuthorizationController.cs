@@ -1,7 +1,9 @@
 ﻿using System.Threading.Tasks;
-using HealthyJuices.Application.Services;
-using HealthyJuices.Shared.Dto;
+using HealthyJuices.Application.Functions.Auth.Commands;
+using HealthyJuices.Application.Functions.Auth.Commands;
+using HealthyJuices.Application.Functions.Auth.Queries;
 using HealthyJuices.Shared.Dto.Auth;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,71 +13,49 @@ namespace HealthyJuices.Api.Controllers
     [Route("auth")]
     public class AuthorizationController : BaseApiController
     {
-        private readonly AuthorizationService _service;
+        private readonly IMediator _mediator;
 
-        public AuthorizationController(AuthorizationService service)
+        public AuthorizationController(IMediator mediator)
         {
-            _service = service;
+            _mediator = mediator;
         }
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<LoginResponseDto> LoginAsync([FromBody] LoginDto dto)
+        public async Task<LoginResponseDto> LoginAsync([FromBody] Login.Query query)
         {
-            var result = await _service.LoginAsync(dto);
-            return result;
-        }
-
-        [AllowAnonymous]
-        [HttpPost("login-refresh-token")]
-        public async Task<LoginResponseDto> LoginWithRefreshTokenAsync([FromBody] LoginDto dto)
-        {
-            var result = await _service.LoginWithRefreshTokenAsync(dto, IpAddress);
-            return result;
-        }
-
-        [AllowAnonymous]
-        [HttpPost("refresh-token")]
-        public async Task<LoginResponseDto> RefreshTokenAsync([FromBody] TokenDto model)
-        {
-            var result = await _service.RefreshTokenAsync(model.Token, IpAddress);
-            return result;
-        }
-
-        [HttpPost("revoke-token")]
-        public async Task<IActionResult> RevokeTokenAsync([FromBody] TokenDto model)
-        {
-            await _service.RevokeTokenAsync(model.Token, IpAddress);
-            return Ok(new { message = "Token revoked" });
+            var response = await _mediator.Send(query);
+            return response;
         }
 
 
         [AllowAnonymous]
         [HttpPost("register")]
-        public async Task RegisterAsync([FromBody] RegisterUserDto dto)
+        public async Task<string> RegisterAsync([FromBody] Register.Command command)
         {
-            await _service.RegisterAsync(dto);
+            var response = await _mediator.Send(command);
+            return response;
         }
 
         [AllowAnonymous]
         [HttpGet("confirm-register")]
         public async Task ConfirmRegisterAsync([FromQuery] string email, [FromQuery] string token)
         {
-            await _service.ConfirmRegisterAsync(email, token);
+            await _mediator.Send(new ConfirmRegister.Command(email, token));
         }
 
         [AllowAnonymous]
         [HttpPost("forgot-password")]
-        public async Task ForgotPasswordAsync([FromBody] ForgotPasswordDto dto)
+        public async Task ForgotPasswordAsync([FromBody] ForgotPassword.Command command)
         {
-            await _service.ForgotPasswordAsync(dto);
+            var response = await _mediator.Send(command);
         }
 
         [AllowAnonymous]
         [HttpPost("reset-password")]
-        public async Task ResetPasswordAsync([FromBody] ResetPasswordDto dto)
+        public async Task ResetPasswordAsync([FromBody] ResetPassword.Command command)
         {
-            await _service.ResetPasswordAsync(dto);
+            await _mediator.Send(command);
         }
     }
 }

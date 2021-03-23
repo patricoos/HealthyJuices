@@ -3,6 +3,8 @@ using HealthyJuices.Shared.Dto;
 using System.Linq;
 using System.Threading.Tasks;
 using HealthyJuices.Api.Controllers;
+using HealthyJuices.Application.Functions.Companies.Commands;
+using MediatR;
 using Xunit;
 
 namespace HealthyJuices.Tests.EndToEnd.Controllers
@@ -13,7 +15,7 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
         public async Task Company_can_be_created()
         {
             // arrange
-            var request = new CompanyDto()
+            var request = new CreateCompany.Command()
             {
                 Name = "Sample product",
                 Comment = "test comment",
@@ -25,7 +27,7 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
             };
 
             // act
-            var controller = new CompaniesController(CompaniesService);
+            var controller = new CompaniesController(Mediator);
             var result = await controller.CreateAsync(request);
 
             // assert

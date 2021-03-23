@@ -20,7 +20,7 @@ namespace HealthyJuices.Application.Mappers
             IsActive = e.IsActive
         };
 
-        public static OrderProductDto ToDto(this OrderProduct e, bool mapOrder = false) => new OrderProductDto()
+        public static OrderItemDto ToDto(this OrderItem e, bool mapOrder = false) => new OrderItemDto()
         {
             Id = e.Id,
             Amount = e.Amount,

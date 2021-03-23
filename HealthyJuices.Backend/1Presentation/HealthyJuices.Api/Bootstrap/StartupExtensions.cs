@@ -4,7 +4,6 @@ using System.Text;
 using HealthyJuices.Api.Bootstrap.DataSeed;
 using HealthyJuices.Application.Providers;
 using HealthyJuices.Application.Providers.Logging;
-using HealthyJuices.Application.Services;
 using HealthyJuices.Common;
 using HealthyJuices.Common.Contracts;
 using HealthyJuices.Common.Services;
@@ -35,18 +34,7 @@ namespace HealthyJuices.Api.Bootstrap
 {
     public static class StartupExtensions
     {
-        public static IServiceCollection RegisterApplicationControllers(this IServiceCollection @this)
-        {
-            @this.AddScoped<AuthorizationService>();
-            @this.AddScoped<OrdersService>();
-            @this.AddScoped<UnavailabilitiesService>();
-            @this.AddScoped<UsersService>();
-            @this.AddScoped<CompaniesService>();
-            @this.AddScoped<ProductsService>();
-            return @this;
-        }
-
-        public static IServiceCollection RegisterServices(this IServiceCollection @this, IConfiguration config)
+        public static IServiceCollection RegisterProviders(this IServiceCollection @this, IConfiguration config)
         {
             @this.AddScoped<IMailer>(x => new Mailer(
                 config["smtp:smtpServer"],

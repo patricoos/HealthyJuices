@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using HealthyJuices.Api.Utils.Attributes;
-using HealthyJuices.Application.Services;
+using HealthyJuices.Application.Functions.Unavailabilities.Commands;
+using HealthyJuices.Application.Functions.Unavailabilities.Queries;
 using HealthyJuices.Shared.Dto;
 using HealthyJuices.Shared.Enums;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,47 +17,47 @@ namespace HealthyJuices.Api.Controllers
     [Authorize]
     public class UnavailabilitiesController : BaseApiController
     {
-        private readonly UnavailabilitiesService _service;
+        private readonly IMediator _mediator;
 
-        public UnavailabilitiesController(UnavailabilitiesService service)
+        public UnavailabilitiesController(IMediator mediator)
         {
-            _service = service;
+            _mediator = mediator;
         }
 
         [HttpGet]
-        public async Task<List<UnavailabilityDto>> GetAllAsync([FromQuery] DateTime? from, [FromQuery] DateTime? to)
+        public async Task<IEnumerable<UnavailabilityDto>> GetAllAsync([FromQuery] DateTime? from, [FromQuery] DateTime? to)
         {
-            var result = await _service.GetAllAsync(from, to);
+            var result = await _mediator.Send(new GetAllUnavailabilities.Query(from, to));
             return result;
         }
 
         [HttpGet("{id}")]
         public async Task<UnavailabilityDto> GetByIdAsync(string id)
         {
-            var result = await _service.GetByIdAsync(id);
-            return result;
+            var response = await _mediator.Send(new GetByIdUnavalability.Query(id));
+            return response;
         }
 
         [HttpPost]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task<string> CreateAsync(UnavailabilityDto dto)
+        public async Task<string> CreateAsync(CreateUnavailability.Command command)
         {
-            var result = await _service.CreateAsync(dto);
-            return result;
+            var response = await _mediator.Send(command);
+            return response;
         }
 
         [HttpPut]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task UpdateAsync(UnavailabilityDto dto)
+        public async Task UpdateAsync(UpdateUnavailability.Command command)
         {
-            await _service.UpdateAsync(dto);
+            await _mediator.Send(command);
         }
 
         [HttpDelete("{id}")]
         [AuthorizeRoles(UserRole.BusinessOwner)]
         public async Task DeleteAsync(string id)
         {
-            await _service.DeleteByIdAsync(id);
+            await _mediator.Send(new DeleteUnavailability.Command(id));
         }
     }
 }

@@ -4,14 +4,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.IO;
-using System.Text;
+using System.Linq;
 using HealthyJuices.Api.Bootstrap;
 using HealthyJuices.Api.Middlewares;
 using HealthyJuices.Application.Auth;
+using HealthyJuices.Application.Utils;
 using HealthyJuices.Common;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 namespace HealthyJuices.Api
@@ -51,12 +50,14 @@ namespace HealthyJuices.Api
             services
                 .RegisterDatabase(Configuration.GetConnectionString("Sql"))
                 .RegisterRepositories()
-                .RegisterApplicationControllers()
-                .RegisterServices(Configuration);
+                .RegisterMediatR()
+                .RegisterValidators()
+                .RegisterProviders(Configuration);
 
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "HealthyJuices Api", Version = "v1" });
+                options.CustomSchemaIds(x => x.FullName.Split('.').Last()?.Replace("+", ""));
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Name = "Authorization",

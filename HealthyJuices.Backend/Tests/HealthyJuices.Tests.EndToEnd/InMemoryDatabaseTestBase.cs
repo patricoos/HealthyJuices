@@ -2,7 +2,18 @@
 using System.Linq;
 using HealthyJuices.Application.Auth;
 using HealthyJuices.Application.Providers;
-using HealthyJuices.Application.Services;
+using HealthyJuices.Application.Functions;
+using HealthyJuices.Application.Functions.Companies.Commands;
+using HealthyJuices.Application.Functions.Companies.Queries;
+using HealthyJuices.Application.Functions.Orders.Commands;
+using HealthyJuices.Application.Functions.Orders.Queries;
+using HealthyJuices.Application.Functions.Products.Commands;
+using HealthyJuices.Application.Functions.Products.Queries;
+using HealthyJuices.Application.Functions.Unavailabilities.Commands;
+using HealthyJuices.Application.Functions.Unavailabilities.Queries;
+using HealthyJuices.Application.Functions.Users.Commands;
+using HealthyJuices.Application.Functions.Users.Queries;
+using HealthyJuices.Application.Utils;
 using HealthyJuices.Common;
 using HealthyJuices.Common.Contracts;
 using HealthyJuices.Common.Services;
@@ -20,8 +31,10 @@ using HealthyJuices.Persistence.Ef.Repositories.Orders;
 using HealthyJuices.Persistence.Ef.Repositories.Products;
 using HealthyJuices.Persistence.Ef.Repositories.Unavailabilities;
 using HealthyJuices.Persistence.Ef.Repositories.Users;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.DependencyInjection;
 using Moq;
 
 namespace HealthyJuices.Tests.EndToEnd
@@ -49,14 +62,8 @@ namespace HealthyJuices.Tests.EndToEnd
         #endregion Repositories
 
         #region Services
-
-        public AuthorizationService AuthorizationService { get; set; }
-        public CompaniesService CompaniesService { get; set; }
-        public OrdersService OrdersService { get; set; }
-        public ProductsService ProductsService { get; set; }
-        public UnavailabilitiesService UnavailabilitiesService { get; set; }
-        public UsersService UsersService { get; set; }
-
+        public ServiceCollection ServiceCollection { get; set; }
+        public IMediator Mediator { get; set; }
         #endregion Services
 
 
@@ -74,10 +81,12 @@ namespace HealthyJuices.Tests.EndToEnd
 
         protected InMemoryDatabaseTestBase()
         {
+            ServiceCollection = new ServiceCollection();
             InitializeProviders();
             InitializeDbContexts();
             InitializeRepositories();
             InitializeServices();
+            InitializeMediatR();
             SeedGlobalInitData();
             _random = new Random();
         }
@@ -94,6 +103,14 @@ namespace HealthyJuices.Tests.EndToEnd
             AssertRepositoryContext = new HealthyJuicesDbContext(options);
         }
 
+        private void InitializeMediatR()
+        {
+            ServiceCollection.RegisterMediatR();
+            var serviceProvider = ServiceCollection.BuildServiceProvider();
+            Mediator = serviceProvider.GetService<IMediator>();
+            ServiceCollection.RegisterValidators();
+        }
+
         private void InitializeRepositories()
         {
             UserRepository = new UserRepository(ActRepositoryContext, TimeProvider);
@@ -102,6 +119,13 @@ namespace HealthyJuices.Tests.EndToEnd
             OrderRepository = new OrderRepository(ActRepositoryContext, TimeProvider);
             ProductRepository = new ProductRepository(ActRepositoryContext, TimeProvider);
             UnavailabilityRepository = new UnavailabilityRepository(ActRepositoryContext, TimeProvider);
+
+            ServiceCollection.AddTransient(x => UserRepository);
+            ServiceCollection.AddTransient(x => CompanyRepository);
+            ServiceCollection.AddTransient(x => LogRepository);
+            ServiceCollection.AddTransient(x => OrderRepository);
+            ServiceCollection.AddTransient(x => ProductRepository);
+            ServiceCollection.AddTransient(x => UnavailabilityRepository);
         }
 
         private void InitializeProviders()
@@ -111,16 +135,16 @@ namespace HealthyJuices.Tests.EndToEnd
             TimeProvider = new TimeProvider();
             EmailProvider = new EmailProvider(MailerMock.Object);
             SimpleTokenProvider = new SimpleTokenProvider(TimeSpan.FromDays(30), HealthyJuicesConstants.LOCAL_ACCESS_TOKEN_SECRET);
+
+            ServiceCollection.AddTransient(x => MailerMock.Object);
+            ServiceCollection.AddTransient(x => LoggerMock.Object);
+            ServiceCollection.AddTransient(x => TimeProvider);
+            ServiceCollection.AddTransient(x => EmailProvider);
+            ServiceCollection.AddTransient(x => SimpleTokenProvider);
         }
 
         private void InitializeServices()
         {
-            AuthorizationService = new AuthorizationService(UserRepository, SimpleTokenProvider, TimeProvider, EmailProvider, CompanyRepository);
-            CompaniesService = new CompaniesService(CompanyRepository);
-            OrdersService = new OrdersService(OrderRepository, UserRepository, ProductRepository, UnavailabilityRepository);
-            ProductsService = new ProductsService(ProductRepository);
-            UnavailabilitiesService = new UnavailabilitiesService(UnavailabilityRepository);
-            UsersService = new UsersService(UserRepository);
         }
 
         private void SeedGlobalInitData()

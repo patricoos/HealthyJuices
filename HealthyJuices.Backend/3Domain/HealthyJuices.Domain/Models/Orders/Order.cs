@@ -26,7 +26,7 @@ namespace HealthyJuices.Domain.Models.Orders
         public string DestinationCompanyId { get; private set; }
         public Company DestinationCompany { get; private set; }
 
-        public ICollection<OrderProduct> OrderProducts { get; private set; }
+        public ICollection<OrderItem> OrderProducts { get; private set; }
 
         protected Order()
         {
@@ -34,7 +34,7 @@ namespace HealthyJuices.Domain.Models.Orders
 
         public Order(User user, DateTime deliveryDate)
         {
-            this.OrderProducts = new List<OrderProduct>();
+            this.OrderProducts = new List<OrderItem>();
             this.DateCreated = DateTime.UtcNow;
             this.SetDeliveryDate(deliveryDate);
             this.SetUser(user);
@@ -62,7 +62,7 @@ namespace HealthyJuices.Domain.Models.Orders
                 existingProduct.Amount += amount;
                 return;
             }
-            this.OrderProducts.Add(new OrderProduct(this, product, amount));
+            this.OrderProducts.Add(new OrderItem(this, product, amount));
         }
 
         public void Remove()

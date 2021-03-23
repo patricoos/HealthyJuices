@@ -6,10 +6,5 @@ namespace HealthyJuices.Common.Contracts
     {
         DateTime Now { get; }
         DateTime UtcNow { get; }
-
-        TimeZoneInfo LocalTimeZone { get; }
-
-        DateTime ToLocalDateTime(DateTime dateTime);
-        DateTime ToUtcDateTime(DateTime dateTime);
     }
 }

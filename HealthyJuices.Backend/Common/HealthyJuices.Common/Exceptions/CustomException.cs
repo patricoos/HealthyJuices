@@ -8,15 +8,15 @@ namespace HealthyJuices.Common.Exceptions
         public HttpStatusCode HttpStatusCode { get; }
         public string[] TranslationParams { get; set; }
 
-        protected CustomException(HttpStatusCode statusCode, string message, params string[] messageParameters)
+        protected CustomException(HttpStatusCode statusCode, string message, params string[] translationParams)
             : base(message)
         {
             this.HttpStatusCode = statusCode;
-            TranslationParams = messageParameters;
+            TranslationParams = translationParams;
         }
 
-        protected CustomException(HttpStatusCode statusCode, Exception exception, params string[] messageParameters)
-            : this(statusCode, exception.Message, messageParameters)
+        protected CustomException(HttpStatusCode statusCode, Exception exception, params string[] translationParams)
+            : this(statusCode, exception.Message, translationParams)
         {
         }
     }

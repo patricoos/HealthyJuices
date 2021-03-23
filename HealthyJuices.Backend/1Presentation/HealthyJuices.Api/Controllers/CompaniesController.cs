@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using HealthyJuices.Api.Utils.Attributes;
-using HealthyJuices.Application.Services;
+using HealthyJuices.Application.Functions.Companies.Commands;
+using HealthyJuices.Application.Functions.Companies.Queries;
 using HealthyJuices.Shared.Dto;
 using HealthyJuices.Shared.Enums;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,26 +15,26 @@ namespace HealthyJuices.Api.Controllers
     [Route("companies")]
     public class CompaniesController : BaseApiController
     {
-        private readonly CompaniesService _service;
+        private readonly IMediator _mediator;
 
-        public CompaniesController(CompaniesService service)
+        public CompaniesController(IMediator mediator)
         {
-            _service = service;
+            _mediator = mediator;
         }
 
         [HttpGet]
         [Authorize]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task<List<CompanyDto>> GetAllAsync()
+        public async Task<IEnumerable<CompanyDto>> GetAllAsync()
         {
-            var result = await _service.GetAllAsync();
+            var result = await _mediator.Send(new GetAllCompanies.Query());
             return result;
         }
 
         [HttpGet("active")]
-        public async Task<List<CompanyDto>> GetAllActiveAsync()
+        public async Task<IEnumerable<CompanyDto>> GetAllActiveAsync()
         {
-            var result = await _service.GetAllActiveAsync();
+            var result = await _mediator.Send(new GetAllActiveCompanies.Query());
             return result;
         }
 
@@ -41,25 +43,25 @@ namespace HealthyJuices.Api.Controllers
         [Authorize]
         public async Task<CompanyDto> GetByIdAsync(string id)
         {
-            var result = await _service.GetByIdAsync(id);
-            return result;
+            var response = await _mediator.Send(new GetByIdCompany.Query(id));
+            return response;
         }
 
         [HttpPost]
         [Authorize]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task<string> CreateAsync(CompanyDto definitionDto)
+        public async Task<string> CreateAsync(CreateCompany.Command command)
         {
-            var result = await _service.CreateAsync(definitionDto);
-            return result;
+            var response = await _mediator.Send(command);
+            return response;
         }
 
         [HttpPut]
         [Authorize]
         [AuthorizeRoles(UserRole.BusinessOwner)]
-        public async Task UpdateAsync(CompanyDto definitionDto)
+        public async Task UpdateAsync(UpdateCompany.Command command)
         {
-            await _service.UpdateAsync(definitionDto);
+            await _mediator.Send(command);
         }
 
         [HttpDelete("{id}")]
@@ -67,7 +69,7 @@ namespace HealthyJuices.Api.Controllers
         [AuthorizeRoles(UserRole.BusinessOwner)]
         public async Task DeleteAsync(string id)
         {
-            await _service.DeleteByIdAsync(id);
+            await _mediator.Send(new DeleteCompany.Command(id));
         }
     }
 }

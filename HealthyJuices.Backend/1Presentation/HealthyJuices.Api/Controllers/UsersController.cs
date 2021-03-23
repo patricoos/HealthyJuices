@@ -1,80 +1,83 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using HealthyJuices.Api.Utils.Attributes;
-using HealthyJuices.Application.Services;
+using HealthyJuices.Application.Functions.Users.Commands;
+using HealthyJuices.Application.Functions.Users.Queries;
 using HealthyJuices.Shared.Dto;
 using HealthyJuices.Shared.Enums;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HealthyJuices.Api.Controllers
 {
     [ApiController]
-        [Authorize]
+    [Authorize]
+    [AuthorizeRoles(UserRole.BusinessOwner)]
     [Route("users")]
     public class UsersController : BaseApiController
     {
-        private readonly UsersService _service;
+        private readonly IMediator _mediator;
 
-        public UsersController(UsersService service)
+        public UsersController(IMediator mediator)
         {
-            _service = service;
+            _mediator = mediator;
         }
 
         [HttpGet]
-        public async Task<List<UserDto>> GetAllAsync()
+        public async Task<IEnumerable<UserDto>> GetAllAsync()
         {
-            var result = await _service.GetAllAsync();
+            var result = await _mediator.Send(new GetAllUsers.Query());
             return result;
         }
 
         [HttpGet("active")]
-        public async Task<List<UserDto>> GetAllActiveAsync()
+        public async Task<IEnumerable<UserDto>> GetAllActiveAsync()
         {
-            var result = await _service.GetAllActiveAsync();
-            return result;
+            var response = await _mediator.Send(new GetAllActiveUsers.Query());
+            return response;
         }
 
         [HttpGet("role/{role}")]
-        public async Task<List<UserDto>> GetAllActiveByUserRoleAsync(UserRole role)
+        public async Task<IEnumerable<UserDto>> GetAllActiveByUserRoleAsync(UserRole role)
         {
-            var result = await _service.GetAllActiveByUserRoleAsync(role);
-            return result;
+            var response = await _mediator.Send(new GetAllActiveByUserRoleUsers.Query(role));
+            return response;
         }
 
         [HttpGet("{id}")]
         public async Task<UserDto> GetByIdAsync(string id)
         {
-            var result = await _service.GetAsync(id);
-            return result;
+            var response = await _mediator.Send(new GetByIdUser.Query(id));
+            return response;
         }
 
-        [HttpGet("{userName}")]
-        public async Task<UserDto> GetAsync(string userName)
+        [HttpGet("{email}")]
+        public async Task<UserDto> GetAsync(string email)
         {
-            var result = await _service.GetAsync(userName);
-            return result;
+            var response = await _mediator.Send(new GetByEmailUser.Query(email));
+            return response;
         }
 
         [AllowAnonymous]
         [HttpGet("existing/{userName}")]
         public async Task<bool> IsExistingAsync(string userName)
         {
-            var result = await _service.IsExistingAsync(userName);
-            return result;
+            var response = await _mediator.Send(new IsExistingUser.Query(userName));
+            return response;
         }
 
         [HttpPost]
-        public async Task<string> CreateAsync([FromBody] AddOrEditUserDto dto)
+        public async Task<string> CreateAsync([FromBody] CreateUser.Command command)
         {
-            var result = await _service.CreateAsync(dto);
-            return result;
+            var response = await _mediator.Send(command);
+            return response;
         }
 
         [HttpDelete("{id}")]
         public async Task DeleteAsync(string id)
         {
-            await _service.DeleteAsync(id);
+            await _mediator.Send(new DeleteUser.Command(id));
         }
     }
 }

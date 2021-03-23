@@ -21,6 +21,6 @@ namespace HealthyJuices.Shared.Dto.Orders
         public string DestinationCompanyId { get; init; }
         public CompanyDto DestinationCompany { get; init; }
 
-        public IEnumerable<OrderProductDto> OrderProducts { get; set; }
+        public IEnumerable<OrderItemDto> OrderProducts { get; set; }
     }
 }

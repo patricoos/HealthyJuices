@@ -48,7 +48,7 @@ export class CompaniesFormComponent implements AfterViewInit {
 
   private initForm(company: Company | null = null): FormGroup {
     const form = new FormGroup({
-      id: new FormControl(company ? company.id : 0),
+      id: new FormControl(company ? company.id : null),
 
       name: new FormControl(company ? company.name : null, Validators.required),
       comment: new FormControl(company ? company.comment : null),

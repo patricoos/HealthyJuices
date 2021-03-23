@@ -2,7 +2,7 @@
 
 namespace HealthyJuices.Shared.Dto.Products
 {
-    public record OrderProductDto
+    public record OrderItemDto
     {
         public string Id { get; init; }
         public string OrderId { get; init; }

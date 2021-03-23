@@ -1,10 +1,9 @@
 ﻿using FluentAssertions;
-using HealthyJuices.Application.Services;
-using HealthyJuices.Shared.Dto.Products;
 using HealthyJuices.Shared.Enums;
 using System.Linq;
 using System.Threading.Tasks;
 using HealthyJuices.Api.Controllers;
+using HealthyJuices.Application.Functions.Products.Commands;
 using Xunit;
 
 namespace HealthyJuices.Tests.EndToEnd.Controllers
@@ -15,7 +14,7 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
         public async Task Product_can_be_created()
         {
             // arrange
-            var request = new ProductDto()
+            var request = new CreateProduct.Command()
             {
                 Name = "Sample product",
                 Description = "test desc",
@@ -24,13 +23,14 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
                 IsActive = true
             };
 
-            var controller = new ProductsController(ProductsService);
+            var controller = new ProductsController(Mediator);
 
             // act
             var result = await controller.CreateAsync(request);
 
             // assert
             result.Should().NotBeNullOrWhiteSpace();
+
             var subject = AssertRepositoryContext.Products.FirstOrDefault();
 
             subject.Should().NotBeNull();
