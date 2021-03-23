@@ -1,29 +1,27 @@
 ﻿using System.Linq;
-using HealthyJuices.Common.Contracts;
 using HealthyJuices.Domain.Models.Products;
-using HealthyJuices.Domain.Models.Products.DataAccess;
 
 namespace HealthyJuices.Persistence.Ef.Repositories.Products
 {
-    public class ProductQueryBuilder : QueryBuilder<Product, IProductQueryBuilder>, IProductQueryBuilder
+    public class ProductQueryBuilder : QueryBuilder<Product, ProductQueryBuilder>
     {
-        public ProductQueryBuilder(IQueryable<Product> query, ITimeProvider timeProvider) : base(query, timeProvider)
+        public ProductQueryBuilder(IQueryable<Product> query) : base(query)
         {
         }
 
-        public IProductQueryBuilder IsActive()
+        public ProductQueryBuilder IsActive()
         {
             Query = Query.Where(x => x.IsActive == true);
             return this;
         }
 
-        public IProductQueryBuilder IsNotRemoved()
+        public ProductQueryBuilder IsNotRemoved()
         {
             Query = Query.Where(x => x.IsRemoved == false);
             return this;
         }
 
-        public IProductQueryBuilder ByIds(params string[] ids)
+        public ProductQueryBuilder ByIds(params string[] ids)
         {
             Query = Query.Where(x => ids.Contains(x.Id));
             return this;

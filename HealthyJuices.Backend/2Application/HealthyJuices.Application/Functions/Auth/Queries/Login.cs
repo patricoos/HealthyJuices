@@ -29,11 +29,7 @@ namespace HealthyJuices.Application.Functions.Auth.Queries
             }
             public async Task<LoginResponseDto> Handle(Query request, CancellationToken cancellationToken)
             {
-                var user = await _userRepository.Query()
-                    .ByEmail(request.Email)
-                    .IsNotRemoved()
-                    .AsNoTracking()
-                    .FirstOrDefaultAsync();
+                var user = await _userRepository.GetByEmailAsync(request.Email);
 
                 if (user == null)
                     throw new BadRequestException($"User with email '{request.Email}' not found");

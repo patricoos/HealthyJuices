@@ -25,11 +25,7 @@ namespace HealthyJuices.Application.Functions.Orders.Queries
 
             public async Task<OrderDto> Handle(Query request, CancellationToken cancellationToken)
             {
-                var entity = await _orderRepository.Query()
-                    .ById(request.Id)
-                    .IncludeDestinationCompany()
-                    .IncludeProducts()
-                    .FirstOrDefaultAsync();
+                var entity = await _orderRepository.GetByIdWithRelations(request.Id);
 
                 if (entity == null)
                     throw new BadRequestException($"Not found order with id: {request.Id}");

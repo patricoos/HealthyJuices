@@ -30,12 +30,9 @@ namespace HealthyJuices.Application.Functions.Auth.Commands
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var user = await _userRepository.Query()
-                    .ByEmail(request.Email)
-                    .IsNotRemoved()
-                    .FirstOrDefaultAsync();
+                var user = await _userRepository.GetByEmailAsync(request.Email, false);
 
-                if (user == null)
+                if (user == null || user.IsRemoved)
                    throw new BadRequestException($"User with email '{request.Email}' not found");
 
                 user.SetPermissionsToken(_timeProvider, Guid.NewGuid().ToString(), _timeProvider.UtcNow.AddDays(1));

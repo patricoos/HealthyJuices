@@ -27,13 +27,7 @@ namespace HealthyJuices.Application.Functions.Orders.Queries
 
             public async Task<DashboardOrderReportDto> Handle(Query request, CancellationToken cancellationToken)
             {
-                var orders = await _orderRepository.Query()
-                    .IncludeUser()
-                    .IncludeDestinationCompany()
-                    .IncludeProducts()
-                    .IsNotRemoved()
-                    .BetweenDateTimes(request.From, request.To)
-                    .ToListAsync();
+                var orders = await _orderRepository.GetAllActiveWithRelationsAsync(request.From, request.To);
 
                 var ordersBycompany = orders
                     .GroupBy(x => x.User.Company)

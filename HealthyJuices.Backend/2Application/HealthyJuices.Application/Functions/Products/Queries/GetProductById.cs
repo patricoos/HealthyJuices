@@ -26,9 +26,7 @@ namespace HealthyJuices.Application.Functions.Products.Queries
 
             public async Task<ProductDto> Handle(Query request, CancellationToken cancellationToken)
             {
-                var entity = await _productRepository.Query()
-                    .ById(request.Id)
-                    .FirstOrDefaultAsync();
+                var entity = await _productRepository.GetByIdAsync(request.Id);
 
                 if (entity == null)
                     throw new BadRequestException($"Not found product with id: {request.Id}");

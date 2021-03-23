@@ -25,32 +25,27 @@ namespace HealthyJuices.Application.Functions.Orders.Commands
             private readonly IOrderRepository _orderRepository;
             private readonly IUserRepository _userRepository;
             private readonly IProductRepository _productRepository;
-            private readonly IUnavailabilityRepository _unavailabilityRepository;
+            private readonly IUnavailabilityWriteRepository _unavailabilityWriteRepository;
 
-            public Handler(IOrderRepository repository, IUserRepository userRepository, IUnavailabilityRepository unavailabilityRepository, IProductRepository productRepository)
+            public Handler(IOrderRepository repository, IUserRepository userRepository, IUnavailabilityWriteRepository unavailabilityWriteRepository, IProductRepository productRepository)
             {
                 this._orderRepository = repository;
                 _userRepository = userRepository;
-                _unavailabilityRepository = unavailabilityRepository;
+                _unavailabilityWriteRepository = unavailabilityWriteRepository;
                 _productRepository = productRepository;
             }
 
             public async Task<string> Handle(Command request, CancellationToken cancellationToken)
             {
-                var user = await _userRepository.Query().IsActive().ById(request.UserId).IncludeCompany().FirstOrDefaultAsync();
-                if (user == null)
+                var user = await _userRepository.GetByIdWithRelationsAsync(request.UserId);
+                if (user == null || user.IsRemoved || !user.IsActive)
                     throw new BadRequestException("User not found");
 
-                var unavailability = await _unavailabilityRepository.Query().BetweenDateTimes(request.DeliveryDate, request.DeliveryDate).FirstOrDefaultAsync();
-                if (unavailability != null)
+                var unavailability = await _unavailabilityWriteRepository.GetAllAsync(request.DeliveryDate, request.DeliveryDate);
+                if (unavailability.Any())
                     throw new BadRequestException("Can not create order in unavailability duration");
 
-
-                var productsEntities = await _productRepository.Query()
-                    .IsNotRemoved()
-                    .IsActive()
-                    .ByIds(request.OrderProducts.Select(p => p.ProductId).ToArray())
-                    .ToListAsync();
+                var productsEntities = await _productRepository.GetAllActiveByIdsAsync(request.OrderProducts.Select(p => p.ProductId).ToArray());
 
                 var products = request.OrderProducts.GroupBy(x => x.ProductId).Select(x =>
                 {

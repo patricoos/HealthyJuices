@@ -15,19 +15,19 @@ namespace HealthyJuices.Application.Functions.Companies.Commands
         // Handler
         public class Handler : IRequestHandler<Command, string>
         {
-            private readonly ICompanyRepository _companyRepository;
+            private readonly ICompanyWriteRepository _companyWriteRepository;
 
-            public Handler(ICompanyRepository repository)
+            public Handler(ICompanyWriteRepository writeRepository)
             {
-                this._companyRepository = repository;
+                this._companyWriteRepository = writeRepository;
             }
 
             public async Task<string> Handle(Command request, CancellationToken cancellationToken)
             {
                 var entity = new Company(request.Name, request.Comment, request.PostalCode, request.City, request.Street, request.Latitude, request.Longitude);
 
-                _companyRepository.Insert(entity);
-                await _companyRepository.SaveChangesAsync();
+                _companyWriteRepository.Insert(entity);
+                await _companyWriteRepository.SaveChangesAsync();
 
                 return entity.Id;
             }

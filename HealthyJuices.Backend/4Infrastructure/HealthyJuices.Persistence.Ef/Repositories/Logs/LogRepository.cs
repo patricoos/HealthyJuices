@@ -1,18 +1,16 @@
-﻿using HealthyJuices.Common.Contracts;
+﻿using System.Collections.Generic;
+using HealthyJuices.Common.Contracts;
 using HealthyJuices.Domain.Models.Logs;
 using HealthyJuices.Domain.Models.Logs.DataAccess;
 
 namespace HealthyJuices.Persistence.Ef.Repositories.Logs
 {
-    public class LogRepository : PersistableRepository<Log>, ILogRepository
+    public class LogRepository : BaseRepository<Log>, ILogWriteRepository
     {
-        public LogRepository(IDbContext context, ITimeProvider timeProvider) : base(context, timeProvider)
-        {
-        }
+        private LogQueryBuilder Query => new LogQueryBuilder(AggregateRootDbSet.AsQueryable());
 
-        public ILogQueryBuilder Query()
+        public LogRepository(IDbContext context) : base(context)
         {
-            return new LogQueryBuilder(AggregateRootDbSet.AsQueryable(), TimeProvider);
         }
     }
 }

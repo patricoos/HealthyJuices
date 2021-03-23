@@ -1,31 +1,29 @@
 ﻿using System;
 using System.Linq;
-using HealthyJuices.Common.Contracts;
 using HealthyJuices.Domain.Models.Logs;
-using HealthyJuices.Domain.Models.Logs.DataAccess;
 using HealthyJuices.Shared.Enums;
 
 namespace HealthyJuices.Persistence.Ef.Repositories.Logs
 {
-    public class LogQueryBuilder : QueryBuilder<Log, ILogQueryBuilder>, ILogQueryBuilder
+    public class LogQueryBuilder : QueryBuilder<Log, LogQueryBuilder>
     {
-        public LogQueryBuilder(IQueryable<Log> query, ITimeProvider timeProvider) : base(query, timeProvider)
+        public LogQueryBuilder(IQueryable<Log> query) : base(query)
         {
         }
 
-        public ILogQueryBuilder BeforeDateTime(DateTime date)
+        public LogQueryBuilder BeforeDateTime(DateTime date)
         {
             Query = Query.Where(x => x.Date <= date);
             return this;
         }
 
-        public ILogQueryBuilder AfterDateTime(DateTime date)
+        public LogQueryBuilder AfterDateTime(DateTime date)
         {
             Query = Query.Where(x => x.Date >= date);
             return this;
         }
 
-        public ILogQueryBuilder BetweenDateTimes(DateTime from, DateTime to)
+        public LogQueryBuilder BetweenDateTimes(DateTime from, DateTime to)
         {
             AfterDateTime(from);
             BeforeDateTime(to);
@@ -33,7 +31,7 @@ namespace HealthyJuices.Persistence.Ef.Repositories.Logs
             return this;
         }
 
-        public ILogQueryBuilder ByType(LogType type)
+        public LogQueryBuilder ByType(LogType type)
         {
             Query = Query.Where(x => x.Type == type);
             return this;

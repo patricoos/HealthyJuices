@@ -26,8 +26,7 @@ namespace HealthyJuices.Application.Functions.Users.Queries
 
             public async Task<IEnumerable<UserDto>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var entities = await _userRepository.Query()
-                    .ToListAsync();
+                var entities = await _userRepository.GetAllAsync();
 
                 var result = entities
                     .Select(x => x.ToDto())

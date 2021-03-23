@@ -4,14 +4,10 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using HealthyJuices.Api.Controllers;
 using HealthyJuices.Application.Functions.Auth.Commands;
-using HealthyJuices.Application.Functions.Auth.Commands;
 using HealthyJuices.Application.Functions.Auth.Queries;
 using HealthyJuices.Common;
-using HealthyJuices.Shared.Dto;
-using HealthyJuices.Shared.Dto.Auth;
 using HealthyJuices.Shared.Enums;
 using HealthyJuices.Tests.EndToEnd.SeedTestData;
-using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
 
