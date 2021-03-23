@@ -7,6 +7,6 @@ namespace HealthyJuices.Shared.Dto.Reports
     public record DashboardOrderReportDto
     {
         public IEnumerable<OrderReportDto> OrderReports { get; init; }
-        public IEnumerable<OrderProductDto> Products { get; init; }
+        public IEnumerable<OrderItemDto> Products { get; init; }
     }
 }

@@ -31,8 +31,8 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
             {
                 DeliveryDate = DateTime.Now.AddDays(1),
                 UserId = user.Id,
-                OrderProducts = new List<OrderProductDto> {
-                    new OrderProductDto()
+                OrderProducts = new List<OrderItemDto> {
+                    new OrderItemDto()
                     {
                         ProductId = product.Id,
                         Amount = amount
@@ -78,8 +78,8 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
             {
                 DeliveryDate = DateTime.Now.AddDays(1),
                 UserId = user.Id,
-                OrderProducts = new List<OrderProductDto> {
-                    new OrderProductDto()
+                OrderProducts = new List<OrderItemDto> {
+                    new OrderItemDto()
                     {
                         ProductId = product.Id,
                         Amount = 1

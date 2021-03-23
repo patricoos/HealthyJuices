@@ -4,7 +4,7 @@ using HealthyJuices.Domain.Models.Products;
 
 namespace HealthyJuices.Domain.Models.Orders
 {
-    public class OrderProduct: Entity
+    public class OrderItem: Entity
     {
         public string OrderId { get; set; }
         public Order Order { get; set; }
@@ -14,9 +14,9 @@ namespace HealthyJuices.Domain.Models.Orders
 
         public decimal Amount { get; set; }
 
-        protected OrderProduct() { }
+        protected OrderItem() { }
 
-        public OrderProduct(Order order, Product product, decimal amount)
+        public OrderItem(Order order, Product product, decimal amount)
         {
             this.Order = order;
             this.Amount = amount <= 0 ? throw new BadRequestException("Amount must be greater than 0") : amount;

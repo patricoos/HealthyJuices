@@ -11,7 +11,7 @@ namespace HealthyJuices.Persistence.Ef.Mappings
         {
             builder.ToTable("Orders");
 
-            builder.HasMany<OrderProduct>(x => x.OrderProducts)
+            builder.HasMany<OrderItem>(x => x.OrderProducts)
                 .WithOne(x => x.Order);
 
             builder.HasOne<Company>(x => x.DestinationCompany)

@@ -24,7 +24,7 @@ namespace HealthyJuices.Persistence.Ef
         DbSet<Company> Companies { get; set; }
         DbSet<User> Users { get; set; }
         DbSet<Product> Products { get; set; }
-        DbSet<OrderProduct> OrderProducts { get; set; }
+        DbSet<OrderItem> OrderProducts { get; set; }
 
         #endregion
 

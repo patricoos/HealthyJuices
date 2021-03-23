@@ -52,7 +52,7 @@ namespace HealthyJuices.Application.Services.Orders.Queries
                 var products = orders
                     .SelectMany(x => x.OrderProducts)
                     .GroupBy(z => z.ProductId)
-                    .Select(x => new OrderProductDto()
+                    .Select(x => new OrderItemDto()
                     {
                         Amount = x.Sum(a => a.Amount),
                         ProductId = x.Key,
