@@ -13,12 +13,6 @@
 
   <ItemGroup>
     <Folder Include="Behaviours\" />
-    <Folder Include="Services\Auth\Queries\" />
-    <Folder Include="Services\Orders\Commands\" />
-    <Folder Include="Services\Orders\Queries\" />
-    <Folder Include="Services\Unavailabilities\Commands\" />
-    <Folder Include="Services\Users\Commands\" />
-    <Folder Include="Services\Users\Queries\" />
   </ItemGroup>
 
   <ItemGroup>

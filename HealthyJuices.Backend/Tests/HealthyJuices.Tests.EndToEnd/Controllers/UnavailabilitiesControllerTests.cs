@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using HealthyJuices.Api.Controllers;
-using HealthyJuices.Application.Services.Unavailabilities.Commands;
+using HealthyJuices.Application.Functions.Unavailabilities.Commands;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;
 

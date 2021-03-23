@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
-using HealthyJuices.Application.Services.Auth.Commands;
-using HealthyJuices.Application.Services.Auth.Queries;
+using HealthyJuices.Application.Functions.Auth.Commands;
+using HealthyJuices.Application.Functions.Auth.Commands;
+using HealthyJuices.Application.Functions.Auth.Queries;
 using HealthyJuices.Shared.Dto.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

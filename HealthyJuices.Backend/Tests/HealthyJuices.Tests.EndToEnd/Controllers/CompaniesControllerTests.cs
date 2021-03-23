@@ -3,7 +3,7 @@ using HealthyJuices.Shared.Dto;
 using System.Linq;
 using System.Threading.Tasks;
 using HealthyJuices.Api.Controllers;
-using HealthyJuices.Application.Services.Companies.Commands;
+using HealthyJuices.Application.Functions.Companies.Commands;
 using MediatR;
 using Xunit;
 
