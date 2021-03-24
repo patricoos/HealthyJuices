@@ -29,9 +29,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthyJuices.Mailing", "4I
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{404C87E5-7BC6-4172-9C4B-93A65E9807AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthyJuices.Tests.EndToEnd", "Tests\HealthyJuices.Tests.EndToEnd\HealthyJuices.Tests.EndToEnd.csproj", "{21D3B583-06C8-40C5-9273-72E35A98029C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthyJuices.Tests.EndToEnd", "Tests\HealthyJuices.Tests.EndToEnd\HealthyJuices.Tests.EndToEnd.csproj", "{21D3B583-06C8-40C5-9273-72E35A98029C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthyJuices.Domain.Tests", "Tests\HealthyJuices.Domain.Tests\HealthyJuices.Domain.Tests.csproj", "{25B47AA0-D6C0-4DCC-BADA-DF6C1CD71922}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthyJuices.Domain.Tests", "Tests\HealthyJuices.Domain.Tests\HealthyJuices.Domain.Tests.csproj", "{25B47AA0-D6C0-4DCC-BADA-DF6C1CD71922}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthyJuices.Application.Tests", "Tests\HealthyJuices.Application.Tests\HealthyJuices.Application.Tests.csproj", "{40AF0FFF-BE5E-4914-ABE6-0503234E40FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,10 @@ Global
 		{25B47AA0-D6C0-4DCC-BADA-DF6C1CD71922}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25B47AA0-D6C0-4DCC-BADA-DF6C1CD71922}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25B47AA0-D6C0-4DCC-BADA-DF6C1CD71922}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40AF0FFF-BE5E-4914-ABE6-0503234E40FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40AF0FFF-BE5E-4914-ABE6-0503234E40FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40AF0FFF-BE5E-4914-ABE6-0503234E40FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40AF0FFF-BE5E-4914-ABE6-0503234E40FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -89,6 +95,7 @@ Global
 		{9F4DDD9B-D89E-4AFF-BE33-E44428122FBD} = {3D937A68-36BD-4820-9F6C-6EF10CA34972}
 		{21D3B583-06C8-40C5-9273-72E35A98029C} = {404C87E5-7BC6-4172-9C4B-93A65E9807AD}
 		{25B47AA0-D6C0-4DCC-BADA-DF6C1CD71922} = {404C87E5-7BC6-4172-9C4B-93A65E9807AD}
+		{40AF0FFF-BE5E-4914-ABE6-0503234E40FB} = {404C87E5-7BC6-4172-9C4B-93A65E9807AD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4A943487-9743-4E3D-AA7E-C61A00302256}

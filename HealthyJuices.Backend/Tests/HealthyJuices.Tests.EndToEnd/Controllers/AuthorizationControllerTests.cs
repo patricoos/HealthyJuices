@@ -91,7 +91,7 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
             var dto = new ForgotPassword.Command(HealthyJuicesConstants.DEFAULT_USER_LOGIN);
 
             // act
-             await controller.ForgotPasswordAsync(dto);
+            await controller.ForgotPasswordAsync(dto);
 
             // assert
             var subject = AssertRepositoryContext.Users.FirstOrDefault();
@@ -116,7 +116,7 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
             var controller = new AuthorizationController(Mediator);
 
             // act
-             await controller.ConfirmRegisterAsync(HealthyJuicesConstants.DEFAULT_USER_LOGIN, user.PermissionsToken.Token);
+            await controller.ConfirmRegisterAsync(HealthyJuicesConstants.DEFAULT_USER_LOGIN, user.PermissionsToken.Token);
 
             // assert
             var subject = AssertRepositoryContext.Users.FirstOrDefault();
@@ -141,7 +141,7 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
             var dto = new ResetPassword.Command(HealthyJuicesConstants.DEFAULT_USER_LOGIN, user.PermissionsToken.Token, newPass);
 
             // act
-           await controller.ResetPasswordAsync(dto);
+            await controller.ResetPasswordAsync(dto);
 
             // assert
             var subject = AssertRepositoryContext.Users.FirstOrDefault();

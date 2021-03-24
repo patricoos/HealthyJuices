@@ -56,7 +56,7 @@ namespace HealthyJuices.Application.Functions.Auth.Commands
 
             public Handler(IUserRepository repository, EmailProvider emailProvider, ITimeProvider timeProvider, ICompanyRepository companyRepository)
             {
-                this._userRepository = repository;
+                _userRepository = repository;
                 _emailProvider = emailProvider;
                 _timeProvider = timeProvider;
                 _companyRepository = companyRepository;
