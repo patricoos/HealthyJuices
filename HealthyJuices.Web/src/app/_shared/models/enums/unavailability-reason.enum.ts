@@ -1,6 +1,5 @@
 export enum UnavailabilityReason {
-  Unknown = 0,
-  Vacation,
+  Vacation = 1,
   Sick,
   Other
 }

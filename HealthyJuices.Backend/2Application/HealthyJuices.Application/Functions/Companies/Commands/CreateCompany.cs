@@ -22,8 +22,7 @@ namespace HealthyJuices.Application.Functions.Companies.Commands
             {
                 _companyRepository = companyRepository;
                 RuleFor(v => v.Name)
-                    .NotNull().WithMessage("Name is required.")
-                    .EmailAddress();
+                    .NotNull().WithMessage("Name is required.");
 
                 RuleFor(v => v.PostalCode)
                     .NotNull().WithMessage("PostalCode is required.")

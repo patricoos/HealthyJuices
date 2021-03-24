@@ -33,7 +33,7 @@ export class ProductsComponent implements AfterViewInit {
     private tableQueryService: TableQueryService, private router: Router) { }
 
   ngAfterViewInit(): void {
-    this.productsService.getAll(this.productsComponentLoader).subscribe(x => {
+    this.productsService.getAllActive(this.productsComponentLoader).subscribe(x => {
       console.log(x);
       this.products = x;
     }, error => this.toastsService.showError(error));
