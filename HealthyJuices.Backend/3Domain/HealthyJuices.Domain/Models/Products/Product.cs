@@ -15,8 +15,8 @@ namespace HealthyJuices.Domain.Models.Products
         public decimal QuantityPerUnit { get; private set; }
         public Money DefaultPricePerUnit { get; private set; }
 
-        public DateTime DateCreated { get; private init; }
-        public DateTime DateModified { get; private set; }
+        public DateTimeOffset DateCreated { get; private init; }
+        public DateTimeOffset DateModified { get; private set; }
         public bool IsRemoved { get; private set; }
         public bool IsActive { get; private set; }
 

@@ -4,14 +4,16 @@ using HealthyJuices.Persistence.Ef;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HealthyJuices.Persistence.Ef.Migrations
 {
     [DbContext(typeof(HealthyJuicesDbContext))]
-    partial class HealthyJuicesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210324104304_Date_created_and_date_Modify_to_UtcDateTime")]
+    partial class Date_created_and_date_Modify_to_UtcDateTime
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

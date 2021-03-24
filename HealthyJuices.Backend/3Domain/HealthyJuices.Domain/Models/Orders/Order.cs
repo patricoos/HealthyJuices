@@ -13,8 +13,8 @@ namespace HealthyJuices.Domain.Models.Orders
 {
     public class Order : Entity, IModifiableEntity, ISoftRemovableEntity, IAggregateRoot
     {
-        public DateTime DateCreated { get; init; }
-        public DateTime DateModified { get; private set; }
+        public DateTimeOffset DateCreated { get; init; }
+        public DateTimeOffset DateModified { get; private set; }
         public bool IsRemoved { get; private set; }
 
         public DateTime DeliveryDate { get; private set; }

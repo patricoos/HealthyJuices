@@ -26,8 +26,8 @@ namespace HealthyJuices.Domain.Models.Users
         public long? CompanyId { get; private set; }
         public Company Company { get; private set; }
 
-        public DateTime DateCreated { get; private init; }
-        public DateTime DateModified { get; private set; }
+        public DateTimeOffset DateCreated { get; private init; }
+        public DateTimeOffset DateModified { get; private set; }
         public bool IsRemoved { get; private set; }
         public bool IsActive { get; private set; }
 
