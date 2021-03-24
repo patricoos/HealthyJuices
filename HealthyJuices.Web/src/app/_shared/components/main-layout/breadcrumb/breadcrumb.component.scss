@@ -18,10 +18,15 @@
   font-size: 17px;
   margin-top: 1px;
 }
+
 .breadcrumb li a {
   color: $breadcrumb-color;
   text-decoration: none;
-  padding: 3px 0 3px 55px;
+  padding: 3px 30px 3px 25px;
+  border-radius: 0 20px 20px 0;
+  border-color: gray;
+  border-style: solid;
+  border-width: 0 1px 0 0;
   background: #ffff; /* fallback color */
   background: #ffff;
   position: relative;
@@ -29,60 +34,57 @@
   float: left;
   height: 26px;
 }
-.breadcrumb li a:after {
-  content: " ";
-  display: block;
-  width: 0;
-  height: 0;
-  border-top: 50px solid transparent; /* Go big on the size, and let overflow hide */
-  border-bottom: 50px solid transparent;
-  border-left: 30px solid #ffff;
-  position: absolute;
-  top: 50%;
-  margin-top: -50px;
-  left: 100%;
-  z-index: 102;
-}
-.breadcrumb li a:before {
-  content: " ";
-  display: block;
-  width: 0;
-  height: 0;
-  border-top: 50px solid transparent; /* Go big on the size, and let overflow hide */
-  border-bottom: 50px solid transparent;
-  border-left: 30px solid;
-  position: absolute;
-  top: 50%;
-  margin-top: -50px;
-  margin-left: 1px;
-  left: 100%;
-  z-index: 101;
-}
+
 .breadcrumb li:first-child a {
-  padding-left: 20px;
+  padding-left: 25px;
 }
 
-.breadcrumb li:nth-last-child(2) a:before {
-  color: $breadcrumb-current-bg-color;
+.breadcrumb li:nth-last-child(2) {
+  background-color: $breadcrumb-current-bg-color;
 }
-
+.breadcrumb li:nth-last-child(2) a {
+  border-right: none;
+}
 .breadcrumb li:last-child a {
   background: $breadcrumb-current-bg-color;
   color: $breadcrumb-current-color;
   pointer-events: none;
-  // padding-right: 20px;
+  border-right: none;
   cursor: default;
-  // border-radius: 0 5px 5px 0;
-}
-.breadcrumb li:last-child a:after {
-  border-left-color: $breadcrumb-current-bg-color;
 }
 
 .breadcrumb li a:hover {
-  background: $breadcrumb-hover-bg-color;
+  background-color: $breadcrumb-hover-bg-color;
 }
-.breadcrumb li a:hover:after {
-  border-left-color: $breadcrumb-hover-bg-color !important;
+
+.breadcrumb li:first-child:hover:before,
+.breadcrumb li:last-child:hover:before {
+  display: none;
+}
+
+.breadcrumb li.canNavigate:hover:before {
+  content: "";
+  background-color: $breadcrumb-hover-bg-color;
+  width: 14px;
+  height: 26px;
+  position: absolute;
+  z-index: 1;
+  margin-left: -14px;
+}
+
+.breadcrumb li a:hover:before {
+  content: "";
+  background-color: $breadcrumb-bg-color;
+  border-radius: 0 20px 20px 0;
+  border-color: gray;
+  border-style: solid;
+  border-width: 0 1px 0 0;
+  width: 14px;
+  height: 26px;
+  position: absolute;
+  z-index: 1;
+  margin-left: -40px;
+  margin-top: -3px;
 }
 
 a.disabled {
@@ -94,7 +96,7 @@ a:hover {
 
 @media only screen and (max-width: 600px) {
   .breadcrumb li a {
-    padding: 3px 0 3px 24px;
+    padding: 3px 15px 3px 10px;
     font-size: 12px;
     line-height: 19px;
   }

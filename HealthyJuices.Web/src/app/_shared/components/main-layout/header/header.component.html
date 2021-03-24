@@ -2,30 +2,31 @@
   <img src="../../../../../assets/layout/logo.svg" id="logoImg">
 </div>
 
-<div id="center" class="hide-menu">
-  <ng-container *ngFor="let menuItem of menu">
-    <div class="block menu" [routerLink]="menuItem.routerLink" routerLinkActive="active"
-      *ngIf="!menuItem.children && isUserInOneRoleOf(menuItem.roles)">
-      <i class="icon summary" [class]="menuItem.icon" aria-hidden="true"></i>
-      <div>{{menuItem.label}}</div>
-    </div>
+<nav>
+  <ul id="center" class="hide-menu">
+    <ng-container *ngFor="let menuItem of menu">
+      <li class="block menu" [routerLink]="menuItem.routerLink" routerLinkActive="active"
+        *ngIf="!menuItem.children && isUserInOneRoleOf(menuItem.roles)">
+        <i class="icon summary" [class]="menuItem.icon" aria-hidden="true"></i>
+        <div>{{menuItem.label}}</div>
+      </li>
 
-    <div class="block menu" *ngIf="menuItem.children && isUserInOneRoleOf(menuItem.roles)" routerLinkActive="active">
-      <i class="icon summary" [class]="menuItem.icon" aria-hidden="true"></i>
-      <div>{{menuItem.label}}</div>
-      <ng-container *ngIf="menuItem.children">
-        <div class="dropdown-content">
-          <ng-container *ngFor="let childrenItem of menuItem.children">
-            <div [routerLink]="childrenItem.routerLink" routerLinkActive="active"
-              *ngIf="isUserInOneRoleOf(childrenItem.roles)">
-              {{childrenItem.label}}</div>
-          </ng-container>
-        </div>
-      </ng-container>
-    </div>
-  </ng-container>
-
-</div>
+      <li class="block menu" *ngIf="menuItem.children && isUserInOneRoleOf(menuItem.roles)" routerLinkActive="active">
+        <i class="icon summary" [class]="menuItem.icon" aria-hidden="true"></i>
+        <div>{{menuItem.label}}</div>
+        <ng-container *ngIf="menuItem.children">
+          <div class="dropdown-content">
+            <ng-container *ngFor="let childrenItem of menuItem.children">
+              <div [routerLink]="childrenItem.routerLink" routerLinkActive="active"
+                *ngIf="isUserInOneRoleOf(childrenItem.roles)">
+                {{childrenItem.label}}</div>
+            </ng-container>
+          </div>
+        </ng-container>
+      </li>
+    </ng-container>
+  </ul>
+</nav>
 
 <div id="rightSide" class="hide-menu">
   <div class="block user-name">{{userName}}<div class="role" *ngFor="let role of userRoles">

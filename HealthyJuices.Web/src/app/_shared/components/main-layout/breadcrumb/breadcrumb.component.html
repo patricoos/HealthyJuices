@@ -5,14 +5,16 @@
     </a>
   </li>
 
-  <li *ngFor="let breadcrumb of breadcrumbs">
-    <a *ngIf="!breadcrumb.params" [routerLink]="[breadcrumb.url]"
-      [class.disabled]="!breadcrumb.canNavigateFromBreadcrumb">
-      {{ breadcrumb.label}}
-    </a>
-    <a *ngIf="breadcrumb.params" [routerLink]="[breadcrumb.url, breadcrumb.params]"
-      [class.disabled]="!breadcrumb.canNavigateFromBreadcrumb">
-      {{ breadcrumb.label}}
-    </a>
-  </li>
+  <ng-container *ngFor="let breadcrumb of breadcrumbs">
+    <li [class.canNavigate]="breadcrumb.canNavigateFromBreadcrumb">
+      <a *ngIf="!breadcrumb.params" [routerLink]="[breadcrumb.url]"
+        [class.disabled]="!breadcrumb.canNavigateFromBreadcrumb">
+        {{ breadcrumb.label}}
+      </a>
+      <a *ngIf="breadcrumb.params" [routerLink]="[breadcrumb.url, breadcrumb.params]"
+        [class.disabled]="!breadcrumb.canNavigateFromBreadcrumb">
+        {{ breadcrumb.label}}
+      </a>
+    </li>
+  </ng-container>
 </ul>

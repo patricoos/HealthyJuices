@@ -9,8 +9,14 @@
   transition: 0.5s all ease;
 }
 
+nav {
+  display: inline-block;
+  vertical-align: top;
+}
+
 #center {
-  // margin-left: 20px;
+  padding: 0;
+  margin: 0;
   text-align: center;
   display: inline-block;
   height: $header-height;
