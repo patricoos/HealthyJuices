@@ -1,19 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using HealthyJuices.Common.Contracts;
 using HealthyJuices.Domain.Models.Products;
 using HealthyJuices.Domain.Models.Products.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace HealthyJuices.Persistence.Ef.Repositories.Products
 {
     public class ProductRepository : BaseRepository<Product>, IProductRepository
     {
-        public ProductQueryBuilder Query => new ProductQueryBuilder(AggregateRootDbSet.AsQueryable());
-        
         public ProductRepository(IDbContext context) : base(context)
         {
         }
-
 
         public async Task<IEnumerable<Product>> GetAllActiveAsync()
         {

@@ -13,6 +13,7 @@ namespace HealthyJuices.Persistence.Ef.Repositories
     {
         private readonly IDbContext _context;
         protected DbSet<TAggregateRootEntity> AggregateRootDbSet => _context.Set<TAggregateRootEntity>();
+        internal IQueryable<TAggregateRootEntity> Query => AggregateRootDbSet.AsQueryable();
 
 
         protected BaseRepository(IDbContext context)

@@ -1,16 +1,13 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using HealthyJuices.Common.Contracts;
 using HealthyJuices.Domain.Models.Companies;
 using HealthyJuices.Domain.Models.Companies.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace HealthyJuices.Persistence.Ef.Repositories.Companies
 {
     public class CompanyRepository : BaseRepository<Company>, ICompanyWriteRepository
     {
-        private CompanyQueryBuilder Query => new CompanyQueryBuilder(AggregateRootDbSet.AsQueryable());
-
         public CompanyRepository(IDbContext context) : base(context)
         {
         }
@@ -19,7 +16,5 @@ namespace HealthyJuices.Persistence.Ef.Repositories.Companies
         {
             return await Query.IsNotRemoved().ToListAsync();
         }
-
-
     }
 }

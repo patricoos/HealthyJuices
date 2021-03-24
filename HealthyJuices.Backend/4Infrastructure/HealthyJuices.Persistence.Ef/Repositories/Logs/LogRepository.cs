@@ -7,8 +7,6 @@ namespace HealthyJuices.Persistence.Ef.Repositories.Logs
 {
     public class LogRepository : BaseRepository<Log>, ILogWriteRepository
     {
-        private LogQueryBuilder Query => new LogQueryBuilder(AggregateRootDbSet.AsQueryable());
-
         public LogRepository(IDbContext context) : base(context)
         {
         }

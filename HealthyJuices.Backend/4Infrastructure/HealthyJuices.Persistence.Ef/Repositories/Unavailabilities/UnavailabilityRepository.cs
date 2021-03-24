@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using HealthyJuices.Domain.Models.Unavailabilities;
 using HealthyJuices.Domain.Models.Unavailabilities.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace HealthyJuices.Persistence.Ef.Repositories.Unavailabilities
 {
     public class UnavailabilityRepository : BaseRepository<Unavailability>, IUnavailabilityWriteRepository
     {
-        public UnavailabilityQueryBuilder Query => new UnavailabilityQueryBuilder(AggregateRootDbSet.AsQueryable());
-
         public UnavailabilityRepository(IDbContext context) : base(context)
         {
         }

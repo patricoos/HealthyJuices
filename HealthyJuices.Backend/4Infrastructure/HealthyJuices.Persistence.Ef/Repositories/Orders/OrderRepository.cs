@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using HealthyJuices.Domain.Models.Orders;
 using HealthyJuices.Domain.Models.Orders.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace HealthyJuices.Persistence.Ef.Repositories.Orders
 {
     public class OrderRepository : BaseRepository<Order>, IOrderRepository
     {
-        public OrderQueryBuilder Query => new OrderQueryBuilder(AggregateRootDbSet.AsQueryable());
         public OrderRepository(IDbContext context) : base(context)
         {
         }
