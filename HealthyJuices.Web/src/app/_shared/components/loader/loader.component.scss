@@ -29,13 +29,12 @@
       transform: translate(-50%, -50%);
     }
     svg.logo {
-      fill: rgba(255, 255, 255, 0.4);
-    }
-    svg.logo-animation {
-      fill: rgba(255, 255, 255, 0.4);
+      fill: $primary-color;
       stroke-width: 0;
-      -webkit-animation: down-enter ease-in 1.2s infinite, stroke-color linear 2.4s infinite;
-      animation: down-enter ease-in 1.2s infinite, stroke-color linear 2.4s infinite;
+      animation-name: spin;
+      animation-duration: 1000ms;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
     }
 
     .progress-bar-container {
@@ -61,79 +60,11 @@
   }
 }
 
-@keyframes down-enter {
-  0% {
-    clip-path: inset(0 0 100% 0);
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
   }
-  25% {
-    clip-path: inset(0);
-  }
-  50% {
-    clip-path: inset(0);
-  }
-  75% {
-    clip-path: inset(100% 0 0 0);
-  }
-  100% {
-    clip-path: inset(100% 0 0 0);
-  }
-}
-
-@-webkit-keyframes down-enter {
-  0% {
-    clip-path: inset(0 0 100% 0);
-  }
-  25% {
-    clip-path: inset(0);
-  }
-  50% {
-    clip-path: inset(0);
-  }
-  75% {
-    clip-path: inset(100% 0 0 0);
-  }
-  100% {
-    clip-path: inset(100% 0 0 0);
-  }
-}
-
-@keyframes down-leave {
-  0% {
-    clip-path: inset(0);
-  }
-  100% {
-    clip-path: inset(100% 0 0 0);
-  }
-}
-
-@-webkit-keyframes stroke-color {
-  0% {
-    fill: $primary-color;
-  }
-  49% {
-    fill: $primary-color;
-  }
-
-  50% {
-    fill: $secondary-color;
-  }
-  99% {
-    fill: $secondary-color;
-  }
-}
-
-@keyframes stroke-color {
-  0% {
-    fill: $primary-color;
-  }
-  49% {
-    fill: $primary-color;
-  }
-
-  50% {
-    fill: $secondary-color;
-  }
-  99% {
-    fill: $secondary-color;
+  to {
+    transform: rotate(360deg);
   }
 }

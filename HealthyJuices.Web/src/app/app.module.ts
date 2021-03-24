@@ -9,6 +9,8 @@ import { MessageService } from 'primeng/api';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './_shared/interceptors/jwt.interceptor';
 import { HttpErrorInterceptor } from './_shared/interceptors/http-error.interceptor';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,8 @@ import { HttpErrorInterceptor } from './_shared/interceptors/http-error.intercep
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    ToastModule
+    ToastModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

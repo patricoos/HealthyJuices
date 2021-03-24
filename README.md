@@ -26,6 +26,7 @@ Employees are not obliged to use the system. Therefore, Ms. Zosia will visit all
 
 #### Web
 
+- angular/service-worker (PWA)
 - primeng
 - chart.js
 - moment
