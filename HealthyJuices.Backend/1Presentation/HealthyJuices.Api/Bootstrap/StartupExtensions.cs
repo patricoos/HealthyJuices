@@ -67,7 +67,7 @@ namespace HealthyJuices.Api.Bootstrap
             @this.AddScoped<IUserRepository, UserRepository>();
             @this.AddScoped<IOrderRepository, OrderRepository>();
             @this.AddScoped<IUnavailabilityWriteRepository, UnavailabilityRepository>();
-            @this.AddScoped<ICompanyWriteRepository, CompanyRepository>();
+            @this.AddScoped<ICompanyRepository, CompanyRepository>();
             @this.AddScoped<IProductRepository, ProductRepository>();
 
             return @this;

@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using FluentValidation;
 using HealthyJuices.Application.Auth;
 using HealthyJuices.Application.Mappers;
 using HealthyJuices.Common.Contracts;
@@ -14,6 +15,23 @@ namespace HealthyJuices.Application.Functions.Auth.Queries
     {
         // Query 
         public record Query(string Email, string Password) : IRequest<LoginResponseDto> { }
+
+        // Validator
+        public class Validator : AbstractValidator<Query>
+        {
+            private readonly IUserRepository _userRepository;
+
+            public Validator(IUserRepository userRepository)
+            {
+                _userRepository = userRepository;
+                RuleFor(v => v.Email)
+                    .NotNull().WithMessage("Email is required.");
+
+                RuleFor(v => v.Password)
+                    .NotNull().WithMessage("Password is required.")
+                    .MinimumLength(4).WithMessage("Password must be at least 4 characters.");
+            }
+        }
 
         // Handler
         public class Handler : IRequestHandler<Query, LoginResponseDto>

@@ -28,10 +28,15 @@ namespace HealthyJuices.Application.Functions.Auth.Commands
                 _userRepository = userRepository;
                 RuleFor(v => v.Email)
                     .EmailAddress()
-                    .MustAsync(BeUniqueEmail).WithMessage("Email title already exists.");
+                    .NotNull().WithMessage("Email is required.")
+                    .MustAsync(BeUniqueEmail).WithMessage("Email already taken.");
 
                 RuleFor(v => v.Password)
+                    .NotNull().WithMessage("Password is required.")
                     .MinimumLength(4).WithMessage("Password must be at least 4 characters.");
+
+                RuleFor(v => v.CompanyId)
+                    .NotNull().WithMessage("Company is required.");
             }
 
             public async Task<bool> BeUniqueEmail(string email, CancellationToken cancellationToken)
@@ -47,19 +52,19 @@ namespace HealthyJuices.Application.Functions.Auth.Commands
             private readonly EmailProvider _emailProvider;
             private readonly ITimeProvider _timeProvider;
             private readonly IUserRepository _userRepository;
-            private readonly ICompanyWriteRepository _companyWriteRepository;
+            private readonly ICompanyRepository _companyRepository;
 
-            public Handler(IUserRepository repository, EmailProvider emailProvider, ITimeProvider timeProvider, ICompanyWriteRepository companyWriteRepository)
+            public Handler(IUserRepository repository, EmailProvider emailProvider, ITimeProvider timeProvider, ICompanyRepository companyRepository)
             {
                 this._userRepository = repository;
                 _emailProvider = emailProvider;
                 _timeProvider = timeProvider;
-                _companyWriteRepository = companyWriteRepository;
+                _companyRepository = companyRepository;
             }
 
             public async Task<string> Handle(Command request, CancellationToken cancellationToken)
             {
-                var company = await _companyWriteRepository.GetByIdAsync(request.CompanyId, false);
+                var company = await _companyRepository.GetByIdAsync(request.CompanyId, false);
                 if (company == null)
                     throw new BadRequestException($"Company not found");
 

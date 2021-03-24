@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HealthyJuices.Persistence.Ef.Repositories.Companies
 {
-    public class CompanyRepository : BaseRepository<Company>, ICompanyWriteRepository
+    public class CompanyRepository : BaseRepository<Company>, ICompanyRepository
     {
         public CompanyRepository(IDbContext context) : base(context)
         {

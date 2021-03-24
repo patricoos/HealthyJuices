@@ -17,16 +17,16 @@ namespace HealthyJuices.Application.Functions.Companies.Queries
         // Handler
         public class Handler : IRequestHandler<Query, IEnumerable<CompanyDto>>
         {
-            private readonly ICompanyWriteRepository _companyWriteRepository;
+            private readonly ICompanyRepository _companyRepository;
 
-            public Handler(ICompanyWriteRepository writeRepository)
+            public Handler(ICompanyRepository repository)
             {
-                this._companyWriteRepository = writeRepository;
+                this._companyRepository = repository;
             }
 
             public async Task<IEnumerable<CompanyDto>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var entities = await _companyWriteRepository.GetAllAsync();
+                var entities = await _companyRepository.GetAllAsync();
 
                 var result = entities
                     .Select(x => x.ToDto())

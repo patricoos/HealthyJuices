@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using FluentValidation;
 using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Domain.Models.Users;
 using HealthyJuices.Domain.Models.Users.DataAccess;
@@ -12,6 +13,29 @@ namespace HealthyJuices.Application.Functions.Users.Commands
     {
         // Command 
         public record Command(string Id, string Email, string Password, UserRole Roles) : IRequest<string> { }
+
+        // Validator
+        public class Validator : AbstractValidator<Command>
+        {
+            private readonly IUserRepository _userRepository;
+
+            public Validator(IUserRepository userRepository)
+            {
+                _userRepository = userRepository;
+                RuleFor(v => v.Email)
+                    .EmailAddress()
+                    .MustAsync(BeUniqueEmail).WithMessage("Email already taken.");
+
+                RuleFor(v => v.Password)
+                    .MinimumLength(4).WithMessage("Password must be at least 4 characters.");
+            }
+
+            public async Task<bool> BeUniqueEmail(string email, CancellationToken cancellationToken)
+            {
+                var existing = await _userRepository.IsExistingAsync(email);
+                return !existing;
+            }
+        }
 
         // Handler
         public class Handler : IRequestHandler<Command, string>

@@ -53,7 +53,7 @@ namespace HealthyJuices.Tests.EndToEnd
         #region Repositories
 
         public IUserRepository UserRepository { get; set; }
-        public ICompanyWriteRepository CompanyWriteRepository { get; set; }
+        public ICompanyRepository CompanyRepository { get; set; }
         public ILogWriteRepository LogWriteRepository { get; set; }
         public IOrderRepository OrderRepository { get; set; }
         public IProductRepository ProductRepository { get; set; }
@@ -114,14 +114,14 @@ namespace HealthyJuices.Tests.EndToEnd
         private void InitializeRepositories()
         {
             UserRepository = new UserRepository(ActRepositoryContext);
-            CompanyWriteRepository = new CompanyRepository(ActRepositoryContext);
+            CompanyRepository = new CompanyRepository(ActRepositoryContext);
             LogWriteRepository = new LogRepository(ActRepositoryContext);
             OrderRepository = new OrderRepository(ActRepositoryContext);
             ProductRepository = new ProductRepository(ActRepositoryContext);
             UnavailabilityWriteRepository = new UnavailabilityRepository(ActRepositoryContext);
 
             ServiceCollection.AddTransient(x => UserRepository);
-            ServiceCollection.AddTransient(x => CompanyWriteRepository);
+            ServiceCollection.AddTransient(x => CompanyRepository);
             ServiceCollection.AddTransient(x => LogWriteRepository);
             ServiceCollection.AddTransient(x => OrderRepository);
             ServiceCollection.AddTransient(x => ProductRepository);

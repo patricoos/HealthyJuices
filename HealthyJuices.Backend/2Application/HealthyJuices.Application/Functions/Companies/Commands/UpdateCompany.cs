@@ -15,24 +15,24 @@ namespace HealthyJuices.Application.Functions.Companies.Commands
         // Handler
         public class Handler : IRequestHandler<Command>
         {
-            private readonly ICompanyWriteRepository _companyWriteRepository;
+            private readonly ICompanyRepository _companyRepository;
 
-            public Handler(ICompanyWriteRepository writeRepository)
+            public Handler(ICompanyRepository repository)
             {
-                this._companyWriteRepository = writeRepository;
+                this._companyRepository = repository;
             }
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var entity = await _companyWriteRepository.GetByIdAsync(request.Id);
+                var entity = await _companyRepository.GetByIdAsync(request.Id);
 
                 if (entity == null)
                     throw new BadRequestException($"Not found Company with id: {request.Id}");
 
                 entity.Update(request.Name, request.Comment, request.PostalCode, request.City, request.Street, request.Latitude, request.Longitude);
 
-                _companyWriteRepository.Update(entity);
-                await _companyWriteRepository.SaveChangesAsync();
+                _companyRepository.Update(entity);
+                await _companyRepository.SaveChangesAsync();
 
                 return Unit.Value;
             }
