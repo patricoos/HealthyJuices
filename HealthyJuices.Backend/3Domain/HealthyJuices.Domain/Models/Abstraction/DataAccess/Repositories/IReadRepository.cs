@@ -7,7 +7,7 @@ namespace HealthyJuices.Domain.Models.Abstraction.DataAccess.Repositories
     public interface IReadRepository<TAggregateRootEntity>
         where TAggregateRootEntity : IEntity, IAggregateRoot
     {
-        Task<IEnumerable<TAggregateRootEntity>> GetAllAsync();
+        Task<IEnumerable<TAggregateRootEntity>> GetAllAsync(bool asNotTrackong = true);
         Task<TAggregateRootEntity> GetByIdAsync(string id, bool asNotTracking = true);
     }
 }

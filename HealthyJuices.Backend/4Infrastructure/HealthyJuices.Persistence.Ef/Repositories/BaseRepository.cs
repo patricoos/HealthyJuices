@@ -60,18 +60,19 @@ namespace HealthyJuices.Persistence.Ef.Repositories
             _context.DetachAllEntities();
         }
 
-        public async Task<IEnumerable<TAggregateRootEntity>> GetAllAsync()
+        public virtual async Task<IEnumerable<TAggregateRootEntity>> GetAllAsync(bool asNotTrackong = true)
         {
-            var result = await AggregateRootDbSet.AsQueryable().ToListAsync();
+            var result = await Query.ToListAsync();
             return result;
         }
 
-        public async Task<TAggregateRootEntity> GetByIdAsync(string id, bool asNotTrackong = true)
+        public virtual async Task<TAggregateRootEntity> GetByIdAsync(string id, bool asNotTrackong = true)
         {
+            var query = Query;
             if (asNotTrackong)
-                return await AggregateRootDbSet.AsQueryable().Where(x => x.Id == id).AsNoTracking().FirstOrDefaultAsync();
+                query = query.AsNoTracking();
 
-            return await AggregateRootDbSet.AsQueryable().Where(x => x.Id == id).FirstOrDefaultAsync();
+            return await query.Where(x => x.Id == id).FirstOrDefaultAsync();
         }
     }
 }
