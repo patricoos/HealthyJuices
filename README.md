@@ -14,6 +14,8 @@ Employees are not obliged to use the system. Therefore, Ms. Zosia will visit all
 
 ## Packages
 
+#### Backend
+
 - MediatR
 - FluentValidation
 - EntityFramework Core
@@ -21,3 +23,12 @@ Employees are not obliged to use the system. Therefore, Ms. Zosia will visit all
 - MailKit
 - FluentAssertions
 - Moq
+
+#### Web
+
+- primeng
+- chart.js
+- moment
+- font-awesome
+- fullcalendar
+- agm/core
