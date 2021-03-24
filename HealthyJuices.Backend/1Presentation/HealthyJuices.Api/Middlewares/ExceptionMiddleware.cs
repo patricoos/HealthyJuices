@@ -64,12 +64,10 @@ namespace HealthyJuices.Api.Middlewares
                 var requestBody = await GetRequestString(context);
 
                 if (context.Items.ContainsKey("DriverId"))
-                {
                     if (long.TryParse(context.Items["DriverId"].ToString(), out var driverId))
                         userId = driverId;
-                }
 
-                return await logger.LogUnspecifiedAsync(LogType.Api, exception, userId, null, requestUrl, requestBody);
+                return await logger.LogAsync(LogSeverity.Unspecified, LogType.Api, exception, userId, null, requestUrl, requestBody);
             }
             catch (Exception ex)
             {
@@ -84,11 +82,9 @@ namespace HealthyJuices.Api.Middlewares
 
             context.Request.EnableBuffering();
             context.Request.Body.Position = 0;
-            using (var reader = new StreamReader(context.Request.Body))
-            {
-                body = await reader.ReadToEndAsync();
-                context.Request.Body = new MemoryStream(Encoding.UTF8.GetBytes(body));
-            }
+            using var reader = new StreamReader(context.Request.Body);
+            body = await reader.ReadToEndAsync();
+            context.Request.Body = new MemoryStream(Encoding.UTF8.GetBytes(body));
             return body;
         }
 

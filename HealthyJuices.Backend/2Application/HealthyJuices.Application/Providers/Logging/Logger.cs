@@ -21,7 +21,7 @@ namespace HealthyJuices.Application.Providers.Logging
             _logWriteRepository = writeRepository;
         }
 
-        private async Task<string> LogAsync(Assembly assembly, LogSeverity severity, LogType type, string message, long? userId, object sourceObject, string requestUrl, string requestBody)
+        public async Task<string> LogAsync(LogSeverity severity, LogType type, string message, long? userId, object sourceObject, string requestUrl, string requestBody)
         {
             var log = new Log
             {
@@ -40,54 +40,9 @@ namespace HealthyJuices.Application.Providers.Logging
             return log.Id;
         }
 
-        public async Task<string> LogInfoAsync(LogType type, string message, long? userId = null, object sourceObject = null, string requestUrl = null, string requestBody = null)
+        public async Task<string> LogAsync(LogSeverity severity, LogType type, Exception ex, long? userId = null, object sourceObject = null, string requestUrl = null, string requestBody = null)
         {
-            return await this.LogAsync(Assembly.GetCallingAssembly(), LogSeverity.Info, type, message, userId, sourceObject, requestUrl, requestBody);
-        }
-
-        public async Task<string> LogWarningAsync(LogType type, string message, long? userId = null, object sourceObject = null, string requestUrl = null, string requestBody = null)
-        {
-            return await this.LogAsync(Assembly.GetCallingAssembly(), LogSeverity.Warning, type, message, userId, sourceObject, requestUrl, requestBody);
-        }
-
-        public async Task<string> LogErrorAsync(LogType type, string message, long? userId = null, object sourceObject = null, string requestUrl = null, string requestBody = null)
-        {
-            return await this.LogAsync(Assembly.GetCallingAssembly(), LogSeverity.Error, type, message, userId, sourceObject, requestUrl, requestBody);
-        }
-
-        public async Task<string> LogCriticalAsync(LogType type, string message, long? userId = null, object sourceObject = null, string requestUrl = null, string requestBody = null)
-        {
-            return await this.LogAsync(Assembly.GetCallingAssembly(), LogSeverity.Critical, type, message, userId, sourceObject, requestUrl, requestBody);
-        }
-
-        public async Task<string> LogUnspecifiedAsync(LogType type, string message, long? userId = null, object sourceObject = null, string requestUrl = null, string requestBody = null)
-        {
-            return await this.LogAsync(Assembly.GetCallingAssembly(), LogSeverity.Unspecified, type, message, userId, sourceObject, requestUrl, requestBody);
-        }
-
-        public async Task<string> LogInfoAsync(LogType type, Exception ex, long? userId = null, object sourceObject = null, string requestUrl = null, string requestBody = null)
-        {
-            return await this.LogAsync(Assembly.GetCallingAssembly(), LogSeverity.Info, type, ExceptionHelper.Read(ex), userId, sourceObject, requestUrl, requestBody);
-        }
-
-        public async Task<string> LogWarningAsync(LogType type, Exception ex, long? userId = null, object sourceObject = null, string requestUrl = null, string requestBody = null)
-        {
-            return await this.LogAsync(Assembly.GetCallingAssembly(), LogSeverity.Warning, type, ExceptionHelper.Read(ex), userId, sourceObject, requestUrl, requestBody);
-        }
-
-        public async Task<string> LogErrorAsync(LogType type, Exception ex, long? userId = null, object sourceObject = null, string requestUrl = null, string requestBody = null)
-        {
-            return await this.LogAsync(Assembly.GetCallingAssembly(), LogSeverity.Error, type, ExceptionHelper.Read(ex), userId, sourceObject, requestUrl, requestBody);
-        }
-
-        public async Task<string> LogCriticalAsync(LogType type, Exception ex, long? userId = null, object sourceObject = null, string requestUrl = null, string requestBody = null)
-        {
-            return await this.LogAsync(Assembly.GetCallingAssembly(), LogSeverity.Critical, type, ExceptionHelper.Read(ex), userId, sourceObject, requestUrl, requestBody);
-        }
-
-        public async Task<string> LogUnspecifiedAsync(LogType type, Exception ex, long? userId = null, object sourceObject = null, string requestUrl = null, string requestBody = null)
-        {
-            return await this.LogAsync(Assembly.GetCallingAssembly(), LogSeverity.Unspecified, type, ExceptionHelper.Read(ex), userId, sourceObject, requestUrl, requestBody);
+            return await this.LogAsync(severity, type, ExceptionHelper.Read(ex), userId, sourceObject, requestUrl, requestBody);
         }
 
         private string ParseSourceObject(object sourceObject)
@@ -99,6 +54,5 @@ namespace HealthyJuices.Application.Providers.Logging
                 ? sourceObject.ToString()
                 : JsonConvert.SerializeObject(sourceObject);
         }
-
     }
 }
