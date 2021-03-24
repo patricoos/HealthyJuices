@@ -54,12 +54,6 @@ namespace HealthyJuices.Persistence.Ef.Repositories
         {
             return _context.SaveChangesAsync();
         }
-
-        public void ClearAllChanges()
-        {
-            _context.DetachAllEntities();
-        }
-
         public virtual async Task<IEnumerable<TAggregateRootEntity>> GetAllAsync(bool asNotTrackong = true)
         {
             var result = await Query.ToListAsync();

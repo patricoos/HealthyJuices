@@ -13,12 +13,12 @@ namespace HealthyJuices.Application.Providers.Logging
     public class Logger : ILogger
     {
         private readonly ITimeProvider _timeProvider;
-        private readonly ILogWriteRepository _logWriteRepository;
+        private readonly ILogRepository _logRepository;
 
-        public Logger(ILogWriteRepository writeRepository, ITimeProvider timeProvider)
+        public Logger(ILogRepository repository, ITimeProvider timeProvider)
         {
             _timeProvider = timeProvider;
-            _logWriteRepository = writeRepository;
+            _logRepository = repository;
         }
 
         public async Task<string> LogAsync(LogSeverity severity, LogType type, string message, long? userId, object sourceObject, string requestUrl, string requestBody)
@@ -35,7 +35,7 @@ namespace HealthyJuices.Application.Providers.Logging
                 UserId = userId
             };
 
-            await _logWriteRepository.Insert(log).SaveChangesAsync();
+            await _logRepository.Insert(log).SaveChangesAsync();
 
             return log.Id;
         }

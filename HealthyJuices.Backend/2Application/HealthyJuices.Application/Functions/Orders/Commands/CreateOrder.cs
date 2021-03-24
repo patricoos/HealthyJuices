@@ -25,13 +25,13 @@ namespace HealthyJuices.Application.Functions.Orders.Commands
             private readonly IOrderRepository _orderRepository;
             private readonly IUserRepository _userRepository;
             private readonly IProductRepository _productRepository;
-            private readonly IUnavailabilityWriteRepository _unavailabilityWriteRepository;
+            private readonly IUnavailabilityRepository _unavailabilityRepository;
 
-            public Handler(IOrderRepository repository, IUserRepository userRepository, IUnavailabilityWriteRepository unavailabilityWriteRepository, IProductRepository productRepository)
+            public Handler(IOrderRepository repository, IUserRepository userRepository, IUnavailabilityRepository unavailabilityRepository, IProductRepository productRepository)
             {
                 this._orderRepository = repository;
                 _userRepository = userRepository;
-                _unavailabilityWriteRepository = unavailabilityWriteRepository;
+                _unavailabilityRepository = unavailabilityRepository;
                 _productRepository = productRepository;
             }
 
@@ -41,7 +41,7 @@ namespace HealthyJuices.Application.Functions.Orders.Commands
                 if (user == null || user.IsRemoved || !user.IsActive)
                     throw new BadRequestException("User not found");
 
-                var unavailability = await _unavailabilityWriteRepository.GetAllAsync(request.DeliveryDate, request.DeliveryDate);
+                var unavailability = await _unavailabilityRepository.GetAllAsync(request.DeliveryDate, request.DeliveryDate);
                 if (unavailability.Any())
                     throw new BadRequestException("Can not create order in unavailability duration");
 

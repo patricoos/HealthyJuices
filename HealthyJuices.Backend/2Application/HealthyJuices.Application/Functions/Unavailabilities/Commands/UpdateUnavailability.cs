@@ -15,24 +15,24 @@ namespace HealthyJuices.Application.Functions.Unavailabilities.Commands
         // Handler
         public class Handler : IRequestHandler<Command>
         {
-            private readonly IUnavailabilityWriteRepository _unavailabilityWriteRepository;
+            private readonly IUnavailabilityRepository _unavailabilityRepository;
 
-            public Handler(IUnavailabilityWriteRepository writeRepository)
+            public Handler(IUnavailabilityRepository repository)
             {
-                this._unavailabilityWriteRepository = writeRepository;
+                this._unavailabilityRepository = repository;
             }
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var unavailability = await _unavailabilityWriteRepository.GetByIdAsync(request.Id);
+                var unavailability = await _unavailabilityRepository.GetByIdAsync(request.Id);
 
                 if (unavailability == null)
                     throw new BadRequestException($"Not found product with id: {request.Id}");
 
                 unavailability.Update(request.From, request.To, request.Reason, request.Comment);
 
-                _unavailabilityWriteRepository.Update(unavailability);
-                await _unavailabilityWriteRepository.SaveChangesAsync();
+                _unavailabilityRepository.Update(unavailability);
+                await _unavailabilityRepository.SaveChangesAsync();
 
                 return Unit.Value;
             }

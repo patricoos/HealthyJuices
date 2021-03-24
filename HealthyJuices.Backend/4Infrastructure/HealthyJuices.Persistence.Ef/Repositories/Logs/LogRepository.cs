@@ -5,7 +5,7 @@ using HealthyJuices.Domain.Models.Logs.DataAccess;
 
 namespace HealthyJuices.Persistence.Ef.Repositories.Logs
 {
-    public class LogRepository : BaseRepository<Log>, ILogWriteRepository
+    public class LogRepository : BaseRepository<Log>, ILogRepository
     {
         public LogRepository(IDbContext context) : base(context)
         {

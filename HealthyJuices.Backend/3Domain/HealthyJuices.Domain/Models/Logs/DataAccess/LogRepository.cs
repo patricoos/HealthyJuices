@@ -2,7 +2,7 @@
 
 namespace HealthyJuices.Domain.Models.Logs.DataAccess
 {
-    public interface ILogWriteRepository : IWriteRepository<Log>
+    public interface ILogRepository : IWriteRepository<Log>, IReadRepository<Log>
     {
     }
 }

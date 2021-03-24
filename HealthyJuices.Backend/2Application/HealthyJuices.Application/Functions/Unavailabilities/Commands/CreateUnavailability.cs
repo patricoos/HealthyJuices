@@ -15,19 +15,19 @@ namespace HealthyJuices.Application.Functions.Unavailabilities.Commands
         // Handler
         public class Handler : IRequestHandler<Command, string>
         {
-            private readonly IUnavailabilityWriteRepository _unavailabilityWriteRepository;
+            private readonly IUnavailabilityRepository _unavailabilityRepository;
 
-            public Handler(IUnavailabilityWriteRepository writeRepository)
+            public Handler(IUnavailabilityRepository repository)
             {
-                this._unavailabilityWriteRepository = writeRepository;
+                this._unavailabilityRepository = repository;
             }
 
             public async Task<string> Handle(Command request, CancellationToken cancellationToken)
             {
                 var unavailability = new Unavailability(request.From, request.To, request.Reason, request.Comment);
 
-                _unavailabilityWriteRepository.Insert(unavailability);
-                await _unavailabilityWriteRepository.SaveChangesAsync();
+                _unavailabilityRepository.Insert(unavailability);
+                await _unavailabilityRepository.SaveChangesAsync();
 
                 return unavailability.Id;
             }

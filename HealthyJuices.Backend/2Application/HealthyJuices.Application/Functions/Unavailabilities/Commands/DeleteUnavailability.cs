@@ -14,22 +14,22 @@ namespace HealthyJuices.Application.Functions.Unavailabilities.Commands
         // Handler
         public class Handler : IRequestHandler<Command>
         {
-            private readonly IUnavailabilityWriteRepository _unavailabilityWriteRepository;
+            private readonly IUnavailabilityRepository _unavailabilityRepository;
 
-            public Handler(IUnavailabilityWriteRepository writeRepository)
+            public Handler(IUnavailabilityRepository repository)
             {
-                this._unavailabilityWriteRepository = writeRepository;
+                this._unavailabilityRepository = repository;
             }
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var unavailability = await _unavailabilityWriteRepository.GetByIdAsync(request.Id);
+                var unavailability = await _unavailabilityRepository.GetByIdAsync(request.Id);
 
                 if (unavailability == null)
                     throw new BadRequestException($"Not found unavailability with id: {request.Id}");
 
-                _unavailabilityWriteRepository.Remove(unavailability);
-                await _unavailabilityWriteRepository.SaveChangesAsync();
+                _unavailabilityRepository.Remove(unavailability);
+                await _unavailabilityRepository.SaveChangesAsync();
 
                 return Unit.Value;
             }

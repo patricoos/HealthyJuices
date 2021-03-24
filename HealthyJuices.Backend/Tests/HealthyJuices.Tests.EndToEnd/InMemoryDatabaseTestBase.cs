@@ -2,17 +2,7 @@
 using System.Linq;
 using HealthyJuices.Application.Auth;
 using HealthyJuices.Application.Providers;
-using HealthyJuices.Application.Functions;
-using HealthyJuices.Application.Functions.Companies.Commands;
-using HealthyJuices.Application.Functions.Companies.Queries;
-using HealthyJuices.Application.Functions.Orders.Commands;
-using HealthyJuices.Application.Functions.Orders.Queries;
-using HealthyJuices.Application.Functions.Products.Commands;
-using HealthyJuices.Application.Functions.Products.Queries;
-using HealthyJuices.Application.Functions.Unavailabilities.Commands;
-using HealthyJuices.Application.Functions.Unavailabilities.Queries;
-using HealthyJuices.Application.Functions.Users.Commands;
-using HealthyJuices.Application.Functions.Users.Queries;
+
 using HealthyJuices.Application.Utils;
 using HealthyJuices.Common;
 using HealthyJuices.Common.Contracts;
@@ -54,10 +44,10 @@ namespace HealthyJuices.Tests.EndToEnd
 
         public IUserRepository UserRepository { get; set; }
         public ICompanyRepository CompanyRepository { get; set; }
-        public ILogWriteRepository LogWriteRepository { get; set; }
+        public ILogRepository LogRepository { get; set; }
         public IOrderRepository OrderRepository { get; set; }
         public IProductRepository ProductRepository { get; set; }
-        public IUnavailabilityWriteRepository UnavailabilityWriteRepository { get; set; }
+        public IUnavailabilityRepository UnavailabilityRepository { get; set; }
 
         #endregion Repositories
 
@@ -115,17 +105,17 @@ namespace HealthyJuices.Tests.EndToEnd
         {
             UserRepository = new UserRepository(ActRepositoryContext);
             CompanyRepository = new CompanyRepository(ActRepositoryContext);
-            LogWriteRepository = new LogRepository(ActRepositoryContext);
+            LogRepository = new LogRepository(ActRepositoryContext);
             OrderRepository = new OrderRepository(ActRepositoryContext);
             ProductRepository = new ProductRepository(ActRepositoryContext);
-            UnavailabilityWriteRepository = new UnavailabilityRepository(ActRepositoryContext);
+            UnavailabilityRepository = new UnavailabilityRepository(ActRepositoryContext);
 
             ServiceCollection.AddTransient(x => UserRepository);
             ServiceCollection.AddTransient(x => CompanyRepository);
-            ServiceCollection.AddTransient(x => LogWriteRepository);
+            ServiceCollection.AddTransient(x => LogRepository);
             ServiceCollection.AddTransient(x => OrderRepository);
             ServiceCollection.AddTransient(x => ProductRepository);
-            ServiceCollection.AddTransient(x => UnavailabilityWriteRepository);
+            ServiceCollection.AddTransient(x => UnavailabilityRepository);
         }
 
         private void InitializeProviders()

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HealthyJuices.Persistence.Ef.Repositories.Unavailabilities
 {
-    public class UnavailabilityRepository : BaseRepository<Unavailability>, IUnavailabilityWriteRepository
+    public class UnavailabilityRepository : BaseRepository<Unavailability>, IUnavailabilityRepository
     {
         public UnavailabilityRepository(IDbContext context) : base(context)
         {

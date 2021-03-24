@@ -18,16 +18,16 @@ namespace HealthyJuices.Application.Functions.Unavailabilities.Queries
         // Handler
         public class Handler : IRequestHandler<Query, IEnumerable<UnavailabilityDto>>
         {
-            private readonly IUnavailabilityWriteRepository _unavailabilityWriteRepository;
+            private readonly IUnavailabilityRepository _unavailabilityRepository;
 
-            public Handler(IUnavailabilityWriteRepository unavailabilityWriteRepository)
+            public Handler(IUnavailabilityRepository unavailabilityRepository)
             {
-                _unavailabilityWriteRepository = unavailabilityWriteRepository;
+                _unavailabilityRepository = unavailabilityRepository;
             }
 
             public async Task<IEnumerable<UnavailabilityDto>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var entities = await _unavailabilityWriteRepository.GetAllAsync(request.From, request.To);
+                var entities = await _unavailabilityRepository.GetAllAsync(request.From, request.To);
 
                 var result = entities
                     .Select(x => x.ToDto())
