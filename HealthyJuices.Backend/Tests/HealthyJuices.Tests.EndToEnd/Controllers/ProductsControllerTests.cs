@@ -3,7 +3,7 @@ using HealthyJuices.Shared.Enums;
 using System.Linq;
 using System.Threading.Tasks;
 using HealthyJuices.Api.Controllers;
-using HealthyJuices.Application.Functions.Products.Commands;
+using HealthyJuices.Application.Features.Products.Commands;
 using Xunit;
 
 namespace HealthyJuices.Tests.EndToEnd.Controllers

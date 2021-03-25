@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
-using HealthyJuices.Application.Functions.Auth.Commands;
+using HealthyJuices.Application.Features.Auth.Commands;
 using HealthyJuices.Domain.Models.Users.DataAccess;
 using Moq;
 using Xunit;

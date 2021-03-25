@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using HealthyJuices.Api.Utils.Attributes;
-using HealthyJuices.Application.Functions.Companies.Commands;
-using HealthyJuices.Application.Functions.Companies.Queries;
+using HealthyJuices.Application.Features.Companies.Commands;
+using HealthyJuices.Application.Features.Companies.Queries;
 using HealthyJuices.Shared.Dto;
 using HealthyJuices.Shared.Enums;
 using MediatR;

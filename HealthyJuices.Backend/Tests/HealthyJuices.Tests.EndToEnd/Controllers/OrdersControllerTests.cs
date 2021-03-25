@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HealthyJuices.Api.Controllers;
-using HealthyJuices.Application.Functions.Orders.Commands;
+using HealthyJuices.Application.Features.Orders.Commands;
 using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Tests.EndToEnd.Extensions;
 using HealthyJuices.Tests.EndToEnd.SeedTestData;

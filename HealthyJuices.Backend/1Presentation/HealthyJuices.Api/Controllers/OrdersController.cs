@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using HealthyJuices.Api.Utils.Attributes;
-using HealthyJuices.Application.Functions;
-using HealthyJuices.Application.Functions.Orders.Commands;
-using HealthyJuices.Application.Functions.Orders.Queries;
+using HealthyJuices.Application.Features.Orders.Commands;
+using HealthyJuices.Application.Features.Orders.Queries;
 using HealthyJuices.Shared.Dto.Orders;
 using HealthyJuices.Shared.Dto.Reports;
 using HealthyJuices.Shared.Enums;

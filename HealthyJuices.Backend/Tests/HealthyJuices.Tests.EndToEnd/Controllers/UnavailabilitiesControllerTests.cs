@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using HealthyJuices.Api.Controllers;
-using HealthyJuices.Application.Functions.Unavailabilities.Commands;
+using HealthyJuices.Application.Features.Unavailabilities.Commands;
 using Xunit;
 
 namespace HealthyJuices.Tests.EndToEnd.Controllers
