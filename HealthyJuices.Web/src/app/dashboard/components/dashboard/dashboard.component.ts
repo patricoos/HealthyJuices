@@ -29,7 +29,7 @@ export class DashboardComponent extends MapComponent implements AfterViewInit {
     { field: 'postalCode', header: 'Postal Code' },
     { field: 'city', header: 'City' },
     { field: 'street', header: 'Street' },
-    { field: 'dateCreated', header: 'Created' },
+    { field: 'created', header: 'Created' },
   ];
 
   constructor(private ordersService: OrdersService, private toastsService: ToastsService,

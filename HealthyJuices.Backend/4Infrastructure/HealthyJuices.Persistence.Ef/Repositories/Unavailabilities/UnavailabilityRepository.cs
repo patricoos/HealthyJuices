@@ -9,7 +9,7 @@ namespace HealthyJuices.Persistence.Ef.Repositories.Unavailabilities
 {
     public class UnavailabilityRepository : BaseRepository<Unavailability>, IUnavailabilityRepository
     {
-        public UnavailabilityRepository(IDbContext context) : base(context)
+        public UnavailabilityRepository(IApplicationDbContext context) : base(context)
         {
         }
 

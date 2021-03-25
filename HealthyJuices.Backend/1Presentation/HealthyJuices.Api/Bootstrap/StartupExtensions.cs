@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using HealthyJuices.Api.Bootstrap.DataSeed;
+using HealthyJuices.Api.Utils;
 using HealthyJuices.Application.Providers;
 using HealthyJuices.Application.Providers.Logging;
 using HealthyJuices.Common;
@@ -46,6 +47,8 @@ namespace HealthyJuices.Api.Bootstrap
 
             @this.AddScoped<ILogger, Logger>();
             @this.AddScoped<IDateTimeProvider, DateTimeProvider>();
+            @this.AddHttpContextAccessor();
+            @this.AddScoped<ICurrentUserProvider, CurrentUserProvider>();
             @this.AddScoped<EmailProvider>();
 
             return @this;
@@ -53,7 +56,7 @@ namespace HealthyJuices.Api.Bootstrap
 
         public static IServiceCollection RegisterDatabase(this IServiceCollection @this, string connectionString)
         {
-            @this.AddDbContext<HealthyJuicesDbContext>(options =>
+            @this.AddDbContext<ApplicationApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
             return @this;
@@ -61,7 +64,7 @@ namespace HealthyJuices.Api.Bootstrap
 
         public static IServiceCollection RegisterRepositories(this IServiceCollection @this)
         {
-            @this.AddScoped<IDbContext, HealthyJuicesDbContext>();
+            @this.AddScoped<IApplicationDbContext, ApplicationApplicationDbContext>();
 
             @this.AddScoped<ILogRepository, LogRepository>();
             @this.AddScoped<IUserRepository, UserRepository>();
@@ -76,7 +79,7 @@ namespace HealthyJuices.Api.Bootstrap
         public static IApplicationBuilder MigrateDatabase(this IApplicationBuilder @this)
         {
             using var serviceScope = @this.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
-            var context = serviceScope.ServiceProvider.GetRequiredService<HealthyJuicesDbContext>();
+            var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationApplicationDbContext>();
 
             context.Database.Migrate();
 
@@ -128,7 +131,7 @@ namespace HealthyJuices.Api.Bootstrap
         public static IApplicationBuilder SeedDefaultData(this IApplicationBuilder @this)
         {
             using var serviceScope = @this.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
-            var context = serviceScope.ServiceProvider.GetRequiredService<HealthyJuicesDbContext>();
+            var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationApplicationDbContext>();
 
             var seeders = new List<IDataSeeder>()
                 {
@@ -139,9 +142,7 @@ namespace HealthyJuices.Api.Bootstrap
                 };
 
             foreach (var dataSeeder in seeders)
-            {
                 dataSeeder.Seed(context);
-            }
 
             return @this;
         }

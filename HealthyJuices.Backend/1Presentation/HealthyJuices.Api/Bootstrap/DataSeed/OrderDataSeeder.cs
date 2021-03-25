@@ -11,7 +11,7 @@ namespace HealthyJuices.Api.Bootstrap.DataSeed
 {
     public class OrderDataSeeder: IDataSeeder
     {
-        public void Seed(IDbContext context)
+        public void Seed(IApplicationDbContext context)
         {
             if (!context.Orders.Any())
             {

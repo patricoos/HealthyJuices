@@ -9,7 +9,7 @@ namespace HealthyJuices.Persistence.Ef.Repositories.Orders
 {
     public class OrderRepository : BaseRepository<Order>, IOrderRepository
     {
-        public OrderRepository(IDbContext context) : base(context)
+        public OrderRepository(IApplicationDbContext context) : base(context)
         {
         }
 

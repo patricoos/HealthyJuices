@@ -10,7 +10,7 @@ namespace HealthyJuices.Persistence.Ef.Repositories.Users
     public class UserRepository : BaseRepository<User>, IUserRepository
     {
 
-        public UserRepository(IDbContext context) : base(context)
+        public UserRepository(IApplicationDbContext context) : base(context)
         {
         }
         public async Task<bool> IsExistingAsync(string email)

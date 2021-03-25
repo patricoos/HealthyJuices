@@ -9,10 +9,10 @@ namespace HealthyJuices.Domain.Models.Abstraction.DataAccess.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Id { get; protected set; }
-        public DateTimeOffset Created { get; protected init; }
+        public DateTimeOffset Created { get; protected init; } 
         public DateTimeOffset? LastModified { get; protected set; }
 
-        //public string ModifiedBy { get; protected set; }
-        //public string CreatedBy { get; protected set; }
+        public string LastModifiedBy { get; protected set; }
+        public string CreatedBy { get; protected set; }
     }
 }

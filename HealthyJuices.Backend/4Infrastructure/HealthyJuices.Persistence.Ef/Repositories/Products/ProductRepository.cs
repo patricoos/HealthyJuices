@@ -8,7 +8,7 @@ namespace HealthyJuices.Persistence.Ef.Repositories.Products
 {
     public class ProductRepository : BaseRepository<Product>, IProductRepository
     {
-        public ProductRepository(IDbContext context) : base(context)
+        public ProductRepository(IApplicationDbContext context) : base(context)
         {
         }
 

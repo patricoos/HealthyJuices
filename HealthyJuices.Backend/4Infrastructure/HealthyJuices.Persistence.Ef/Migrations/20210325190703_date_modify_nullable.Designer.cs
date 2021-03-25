@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HealthyJuices.Persistence.Ef.Migrations
 {
-    [DbContext(typeof(HealthyJuicesDbContext))]
+    [DbContext(typeof(ApplicationApplicationDbContext))]
     [Migration("20210325190703_date_modify_nullable")]
     partial class date_modify_nullable
     {

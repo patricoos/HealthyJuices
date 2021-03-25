@@ -28,7 +28,7 @@
                 (onSelect)="dt.filter(rangeFilter1.value, col.field, 'dateRangeFilter')" [locale]="calendarLocale"
                 (onClearClick)="dt.filter(null, col.field, 'dateRangeFilter')" [style]="{'minWidth':'100%'}">
               </p-calendar>
-              <p-calendar *ngSwitchCase="'dateCreated'" #rangeFilter1 selectionMode="range" appendTo="body"
+              <p-calendar *ngSwitchCase="'created'" #rangeFilter1 selectionMode="range" appendTo="body"
                 placeholder="Filter" dateFormat="dd.mm.yy" [showButtonBar]="true"
                 (onSelect)="dt.filter(rangeFilter1.value, col.field, 'dateRangeFilter')" [locale]="calendarLocale"
                 (onClearClick)="dt.filter(null, col.field, 'dateRangeFilter')" [style]="{'minWidth':'100%'}">
@@ -46,7 +46,7 @@
               </a>
             </td>
             <td *ngFor="let col of columns" [ngSwitch]="col.field">
-              <div *ngSwitchCase="'dateCreated'">
+              <div *ngSwitchCase="'created'">
                 <span class="p-column-title">{{col.header}}</span>
                 {{rowData[col.field] | date:"HH:mm dd.MM.yyyy"}}
               </div>

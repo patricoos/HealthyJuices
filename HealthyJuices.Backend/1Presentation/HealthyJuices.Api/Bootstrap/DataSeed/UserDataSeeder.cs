@@ -7,7 +7,7 @@ namespace HealthyJuices.Api.Bootstrap.DataSeed
 {
     public class UserDataSeeder : IDataSeeder
     {
-        public void Seed(IDbContext context)
+        public void Seed(IApplicationDbContext context)
         {
             if (!context.Users.Any())
             {

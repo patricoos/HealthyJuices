@@ -4,8 +4,8 @@ export interface Company {
   name: string;
   comment: string;
 
-  dateCreated?: Date;
-  dateModified?: Date;
+  created?: Date;
+  lastModified?: Date;
   isRemoved?: boolean;
 
   postalCode: string;

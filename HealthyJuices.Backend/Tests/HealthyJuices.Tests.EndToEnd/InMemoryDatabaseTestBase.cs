@@ -31,9 +31,9 @@ namespace HealthyJuices.Tests.EndToEnd
     public abstract class InMemoryDatabaseTestBase : IDisposable
     {
         #region Contexts
-        public IDbContext ArrangeRepositoryContext { get; set; }
-        public IDbContext ActRepositoryContext { get; set; }
-        public IDbContext AssertRepositoryContext { get; set; }
+        public IApplicationDbContext ArrangeRepositoryContext { get; set; }
+        public IApplicationDbContext ActRepositoryContext { get; set; }
+        public IApplicationDbContext AssertRepositoryContext { get; set; }
         #endregion Contexts
 
         #region Repositories
@@ -56,6 +56,7 @@ namespace HealthyJuices.Tests.EndToEnd
         public Mock<IDateTimeProvider> TimeProviderMock { get; set; }
         public IDateTimeProvider DateTimeProvider { get; set; }
         public Mock<ILogger> LoggerMock { get; set; }
+        public Mock<ICurrentUserProvider> CurrentUserProviderMock { get; set; }
         public SimpleTokenProvider SimpleTokenProvider { get; set; }
 
         #endregion Providers
@@ -73,14 +74,14 @@ namespace HealthyJuices.Tests.EndToEnd
 
         private void InitializeDbContexts()
         {
-            var options = new DbContextOptionsBuilder<HealthyJuicesDbContext>()
+            var options = new DbContextOptionsBuilder<ApplicationApplicationDbContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning))
                 .Options;
 
-            ArrangeRepositoryContext = new HealthyJuicesDbContext(options);
-            ActRepositoryContext = new HealthyJuicesDbContext(options);
-            AssertRepositoryContext = new HealthyJuicesDbContext(options);
+            ArrangeRepositoryContext = new ApplicationApplicationDbContext(options, CurrentUserProviderMock.Object, DateTimeProvider);
+            ActRepositoryContext = new ApplicationApplicationDbContext(options, CurrentUserProviderMock.Object, DateTimeProvider);
+            AssertRepositoryContext = new ApplicationApplicationDbContext(options, CurrentUserProviderMock.Object, DateTimeProvider);
         }
 
         private void InitializeMediatR()
@@ -115,6 +116,7 @@ namespace HealthyJuices.Tests.EndToEnd
             DateTimeProvider = new DateTimeProvider();
             EmailProvider = new EmailProvider(MailerMock.Object);
             SimpleTokenProvider = new SimpleTokenProvider(TimeSpan.FromDays(30), HealthyJuicesConstants.LOCAL_ACCESS_TOKEN_SECRET);
+            CurrentUserProviderMock = new Mock<ICurrentUserProvider>();
 
             ServiceCollection.AddTransient(x => MailerMock.Object);
             ServiceCollection.AddTransient(x => LoggerMock.Object);

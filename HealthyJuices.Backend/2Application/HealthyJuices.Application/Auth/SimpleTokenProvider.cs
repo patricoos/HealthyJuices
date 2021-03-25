@@ -28,7 +28,7 @@ namespace HealthyJuices.Application.Auth
             var key = Encoding.ASCII.GetBytes(Secret);
             var identity = new ClaimsIdentity(new[]
             {
-                new Claim(ClaimTypes.Name, userId)
+                new Claim(ClaimTypes.NameIdentifier, userId)
             });
 
             if (roles != null)

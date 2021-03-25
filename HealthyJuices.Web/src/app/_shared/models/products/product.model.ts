@@ -9,8 +9,8 @@ export interface Product {
   quantityPerUnit: number;
   defaultPricePerUnit: number;
 
-  dateCreated: Date;
-  dateModified: Date;
+  created: Date;
+  lastModified: Date;
   isRemoved?: boolean;
   isActive: boolean;
 }

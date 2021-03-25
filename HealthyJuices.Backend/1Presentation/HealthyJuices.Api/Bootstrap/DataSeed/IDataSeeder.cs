@@ -4,6 +4,6 @@ namespace HealthyJuices.Api.Bootstrap.DataSeed
 {
     public interface IDataSeeder
     {
-        void Seed(IDbContext context);
+        void Seed(IApplicationDbContext context);
     }
 }

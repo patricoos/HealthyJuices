@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HealthyJuices.Persistence.Ef.Migrations
 {
-    [DbContext(typeof(HealthyJuicesDbContext))]
+    [DbContext(typeof(ApplicationApplicationDbContext))]
     [Migration("20210324104304_Date_created_and_date_Modify_to_UtcDateTime")]
     partial class Date_created_and_date_Modify_to_UtcDateTime
     {

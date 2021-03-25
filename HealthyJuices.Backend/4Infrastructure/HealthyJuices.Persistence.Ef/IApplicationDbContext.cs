@@ -14,7 +14,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace HealthyJuices.Persistence.Ef
 {
-    public interface IDbContext : IDisposable
+    public interface IApplicationDbContext : IDisposable
     {
         #region - DbSets 
 
@@ -36,7 +36,5 @@ namespace HealthyJuices.Persistence.Ef
 
         int SaveChanges();
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
-        Task<IDbContextTransaction> BeginTransactionAsync();
-        void DetachAllEntities();
     }
 }

@@ -17,7 +17,7 @@ export class OrdersComponent implements OnInit {
   columns = [
     { field: 'userName', header: 'User' },
     { field: 'destinationCompanyName', header: 'Destination Company' },
-    { field: 'dateCreated', header: 'Created' },
+    { field: 'created', header: 'Created' },
     { field: 'deliveryDate', header: 'Delivery Date' },
     // { field: 'action', header: 'Action', width: '145px' },
   ];

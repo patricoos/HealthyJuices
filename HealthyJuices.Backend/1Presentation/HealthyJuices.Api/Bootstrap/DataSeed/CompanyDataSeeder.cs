@@ -9,7 +9,7 @@ namespace HealthyJuices.Api.Bootstrap.DataSeed
 {
     public class CompanyDataSeeder : IDataSeeder
     {
-        public void Seed(IDbContext context)
+        public void Seed(IApplicationDbContext context)
         {
             if (!context.Companies.Any())
             {

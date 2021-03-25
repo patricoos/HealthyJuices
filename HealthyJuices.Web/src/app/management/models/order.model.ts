@@ -4,8 +4,8 @@ import { User } from 'src/app/_shared/models/user/user.model';
 
 export interface Order {
   id: number;
-  dateCreated?: Date;
-  dateModified?: Date;
+  created?: Date;
+  lastModified?: Date;
   isRemoved?: boolean;
 
   deliveryDate: Date;

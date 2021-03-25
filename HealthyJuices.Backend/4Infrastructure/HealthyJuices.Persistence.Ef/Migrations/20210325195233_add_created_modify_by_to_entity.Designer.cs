@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HealthyJuices.Persistence.Ef.Migrations
 {
     [DbContext(typeof(ApplicationApplicationDbContext))]
-    [Migration("20210223000320_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20210325195233_add_created_modify_by_to_entity")]
+    partial class add_created_modify_by_to_entity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,14 +33,20 @@ namespace HealthyJuices.Persistence.Ef.Migrations
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("Created")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<DateTime>("DateModified")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsRemoved")
                         .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LastModified")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Latitude")
                         .HasColumnType("float");
@@ -68,8 +74,20 @@ namespace HealthyJuices.Persistence.Ef.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<DateTimeOffset>("Created")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
+
+                    b.Property<DateTimeOffset?>("LastModified")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Message")
                         .HasColumnType("nvarchar(max)");
@@ -83,14 +101,11 @@ namespace HealthyJuices.Persistence.Ef.Migrations
                     b.Property<int>("Severity")
                         .HasColumnType("int");
 
-                    b.Property<string>("SourceObject")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<long?>("UserId")
-                        .HasColumnType("bigint");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -103,11 +118,11 @@ namespace HealthyJuices.Persistence.Ef.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("Created")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<DateTime>("DateModified")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DeliveryDate")
                         .HasColumnType("datetime2");
@@ -117,6 +132,12 @@ namespace HealthyJuices.Persistence.Ef.Migrations
 
                     b.Property<bool>("IsRemoved")
                         .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LastModified")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -130,7 +151,7 @@ namespace HealthyJuices.Persistence.Ef.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("HealthyJuices.Domain.Models.Orders.OrderProduct", b =>
+            modelBuilder.Entity("HealthyJuices.Domain.Models.Orders.OrderItem", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
@@ -138,6 +159,18 @@ namespace HealthyJuices.Persistence.Ef.Migrations
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTimeOffset>("Created")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("LastModified")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OrderId")
                         .HasColumnType("nvarchar(450)");
@@ -160,14 +193,11 @@ namespace HealthyJuices.Persistence.Ef.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("Created")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<DateTime>("DateModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal?>("DefaultPricePerUnit")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -177,6 +207,12 @@ namespace HealthyJuices.Persistence.Ef.Migrations
 
                     b.Property<bool>("IsRemoved")
                         .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LastModified")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -201,8 +237,20 @@ namespace HealthyJuices.Persistence.Ef.Migrations
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTimeOffset>("Created")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("From")
                         .HasColumnType("datetime2");
+
+                    b.Property<DateTimeOffset?>("LastModified")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Reason")
                         .HasColumnType("int");
@@ -227,11 +275,11 @@ namespace HealthyJuices.Persistence.Ef.Migrations
                     b.Property<string>("CompanyId1")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("Created")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<DateTime>("DateModified")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -245,20 +293,14 @@ namespace HealthyJuices.Persistence.Ef.Migrations
                     b.Property<bool>("IsRemoved")
                         .HasColumnType("bit");
 
+                    b.Property<DateTimeOffset?>("LastModified")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PasswordSalt")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PermissionsToken")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("PermissionsTokenExpiration")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("Roles")
                         .HasColumnType("int");
@@ -285,7 +327,7 @@ namespace HealthyJuices.Persistence.Ef.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("HealthyJuices.Domain.Models.Orders.OrderProduct", b =>
+            modelBuilder.Entity("HealthyJuices.Domain.Models.Orders.OrderItem", b =>
                 {
                     b.HasOne("HealthyJuices.Domain.Models.Orders.Order", "Order")
                         .WithMany("OrderProducts")
@@ -300,13 +342,85 @@ namespace HealthyJuices.Persistence.Ef.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("HealthyJuices.Domain.Models.Products.Product", b =>
+                {
+                    b.OwnsOne("HealthyJuices.Domain.Models.Products.Money", "DefaultPricePerUnit", b1 =>
+                        {
+                            b1.Property<string>("ProductId")
+                                .HasColumnType("nvarchar(450)");
+
+                            b1.Property<decimal>("Amount")
+                                .HasColumnType("decimal(18,2)")
+                                .HasColumnName("DefaultPricePerUnitAmount");
+
+                            b1.Property<int>("Currency")
+                                .HasColumnType("int")
+                                .HasColumnName("DefaultPricePerUnitCurrency");
+
+                            b1.HasKey("ProductId");
+
+                            b1.ToTable("Products");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ProductId");
+                        });
+
+                    b.Navigation("DefaultPricePerUnit");
+                });
+
             modelBuilder.Entity("HealthyJuices.Domain.Models.Users.User", b =>
                 {
                     b.HasOne("HealthyJuices.Domain.Models.Companies.Company", "Company")
                         .WithMany("Users")
                         .HasForeignKey("CompanyId1");
 
+                    b.OwnsOne("HealthyJuices.Domain.Models.Users.Password", "Password", b1 =>
+                        {
+                            b1.Property<string>("UserId")
+                                .HasColumnType("nvarchar(450)");
+
+                            b1.Property<string>("Salt")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("PasswordSalt");
+
+                            b1.Property<string>("Text")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Password");
+
+                            b1.HasKey("UserId");
+
+                            b1.ToTable("Users");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
+
+                    b.OwnsOne("HealthyJuices.Domain.Models.Users.PermissionsToken", "PermissionsToken", b1 =>
+                        {
+                            b1.Property<string>("UserId")
+                                .HasColumnType("nvarchar(450)");
+
+                            b1.Property<DateTime?>("Expiration")
+                                .HasColumnType("datetime2")
+                                .HasColumnName("PermissionsTokenExpiration");
+
+                            b1.Property<string>("Token")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("PermissionsToken");
+
+                            b1.HasKey("UserId");
+
+                            b1.ToTable("Users");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
+
                     b.Navigation("Company");
+
+                    b.Navigation("Password");
+
+                    b.Navigation("PermissionsToken");
                 });
 
             modelBuilder.Entity("HealthyJuices.Domain.Models.Companies.Company", b =>

@@ -8,7 +8,7 @@ namespace HealthyJuices.Domain.Models.Abstraction.DataAccess.Entities
         DateTimeOffset Created { get; }
         DateTimeOffset? LastModified { get; }
 
-        //public string ModifiedBy { get; }
-        //public string CreatedBy { get; }
+        public string LastModifiedBy { get; }
+        public string CreatedBy { get; }
     }
 }

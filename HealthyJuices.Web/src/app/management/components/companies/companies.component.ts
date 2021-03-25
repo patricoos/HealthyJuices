@@ -20,7 +20,7 @@ export class CompaniesComponent implements AfterViewInit {
     { field: 'postalCode', header: 'Postal Code' },
     { field: 'city', header: 'City' },
     { field: 'street', header: 'Street' },
-    { field: 'dateCreated', header: 'Created' },
+    { field: 'created', header: 'Created' },
     { field: 'action', header: 'Action', width: '145px' },
   ];
   calendarLocale = FullCallendarConsts.getCallendarLocale();

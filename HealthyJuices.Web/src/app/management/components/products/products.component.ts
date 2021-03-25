@@ -22,7 +22,7 @@ export class ProductsComponent implements AfterViewInit {
     { field: 'quantityPerUnit', header: 'Quantity Per Unit' },
     { field: 'unit', header: 'Unit' },
     { field: 'isActive', header: 'Active' },
-    { field: 'dateCreated', header: 'Created' },
+    { field: 'created', header: 'Created' },
     { field: 'action', header: 'Action', width: '145px' },
   ];
   boolStatus: SelectItem[] = [{ label: 'True', value: true }, { label: 'False', value: false }];

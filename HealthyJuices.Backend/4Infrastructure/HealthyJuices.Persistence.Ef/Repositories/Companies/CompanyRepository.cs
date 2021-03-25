@@ -8,7 +8,7 @@ namespace HealthyJuices.Persistence.Ef.Repositories.Companies
 {
     public class CompanyRepository : BaseRepository<Company>, ICompanyRepository
     {
-        public CompanyRepository(IDbContext context) : base(context)
+        public CompanyRepository(IApplicationDbContext context) : base(context)
         {
         }
 

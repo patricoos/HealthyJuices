@@ -36,7 +36,7 @@ export class MyOrdersComponent extends MapComponent implements AfterViewInit {
 
   columns = [
     { field: 'deliveryDate', header: 'Delivery Date' },
-    { field: 'dateCreated', header: 'Created' },
+    { field: 'created', header: 'Created' },
     { field: 'productsNames', header: 'Products' },
   ];
 

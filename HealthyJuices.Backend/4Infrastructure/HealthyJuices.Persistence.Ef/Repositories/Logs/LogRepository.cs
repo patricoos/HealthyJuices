@@ -7,7 +7,7 @@ namespace HealthyJuices.Persistence.Ef.Repositories.Logs
 {
     public class LogRepository : BaseRepository<Log>, ILogRepository
     {
-        public LogRepository(IDbContext context) : base(context)
+        public LogRepository(IApplicationDbContext context) : base(context)
         {
         }
     }

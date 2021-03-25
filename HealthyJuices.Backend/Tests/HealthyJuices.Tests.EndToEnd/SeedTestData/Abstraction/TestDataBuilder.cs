@@ -18,7 +18,7 @@ namespace HealthyJuices.Tests.EndToEnd.SeedTestData.Abstraction
             _random = new Random();
         }
 
-        public virtual T Build(IDbContext context)
+        public virtual T Build(IApplicationDbContext context)
         {
             context.Set<T>().Add(Entity);
             context.SaveChanges();
