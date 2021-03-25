@@ -4,14 +4,16 @@ using HealthyJuices.Persistence.Ef;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HealthyJuices.Persistence.Ef.Migrations
 {
     [DbContext(typeof(HealthyJuicesDbContext))]
-    partial class HealthyJuicesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210325190703_date_modify_nullable")]
+    partial class date_modify_nullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

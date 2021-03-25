@@ -2,10 +2,9 @@
 
 namespace HealthyJuices.Common.Exceptions
 {
-    public class BadRequestException : CustomException
+    public class BadRequestException : BaseException
     {
-        public BadRequestException(string message, params string[] translationParams)
-            : base(HttpStatusCode.BadRequest, message, translationParams)
+        public BadRequestException(string message) : base(HttpStatusCode.BadRequest, message)
         {
         }
     }

@@ -13,15 +13,15 @@ namespace HealthyJuices.Domain.Models.Users
 
         protected PermissionsToken() { }
 
-        public PermissionsToken(ITimeProvider timeProvider, string token, DateTime date)
+        public PermissionsToken(IDateTimeProvider dateTimeProvider, string token, DateTime date)
         {
             Token = token ?? throw new BadRequestException($"{nameof(Token)} can not be null");
-            Expiration = date <= timeProvider.UtcNow ? throw new BadRequestException($"{nameof(PermissionsToken)} {nameof(Expiration)} must be from feature") : date;
+            Expiration = date <= dateTimeProvider.UtcNow ? throw new BadRequestException($"{nameof(PermissionsToken)} {nameof(Expiration)} must be from feature") : date;
         }
 
-        public void CheckValidity(ITimeProvider timeProvider, string token)
+        public void CheckValidity(IDateTimeProvider dateTimeProvider, string token)
         {
-            if (Expiration <= timeProvider.UtcNow)
+            if (Expiration <= dateTimeProvider.UtcNow)
                 throw new BadRequestException("Token Expiration Time Is Up");
 
             if (string.IsNullOrWhiteSpace(token) || Token != token)

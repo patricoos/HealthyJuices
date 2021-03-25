@@ -11,8 +11,7 @@ namespace HealthyJuices.Domain.Models.Logs
         public LogSeverity Severity { get; set; }
         public LogType Type { get; set; }
         public string Message { get; set; }
-        public long? UserId { get; set; }
-        public string SourceObject { get; set; }
+        public string UserId { get; set; }
         public string RequestUrl { get; set; }
         public string RequestBody { get; set; }
 

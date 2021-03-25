@@ -1,36 +1,34 @@
 ﻿using System;
-using System.Reflection;
 using System.Threading.Tasks;
 using HealthyJuices.Common.Contracts;
 using HealthyJuices.Domain.Models.Logs;
 using HealthyJuices.Domain.Models.Logs.DataAccess;
 using HealthyJuices.Domain.Providers;
 using HealthyJuices.Shared.Enums;
-using Newtonsoft.Json;
 
 namespace HealthyJuices.Application.Providers.Logging
 {
     public class Logger : ILogger
     {
-        private readonly ITimeProvider _timeProvider;
+        private readonly IDateTimeProvider _dateTimeProvider;
         private readonly ILogRepository _logRepository;
 
-        public Logger(ILogRepository repository, ITimeProvider timeProvider)
+        public Logger(ILogRepository repository, IDateTimeProvider dateTimeProvider)
         {
-            _timeProvider = timeProvider;
+            _dateTimeProvider = dateTimeProvider;
             _logRepository = repository;
         }
 
-        public async Task<string> LogAsync(LogSeverity severity, LogType type, string message, long? userId, object sourceObject, string requestUrl, string requestBody)
+        public async Task<string> LogAsync(LogSeverity severity, LogType type, string message, string userId = null, string path = null, string body = null)
         {
+
             var log = new Log
             {
-                Date = _timeProvider.UtcNow,
+                Date = _dateTimeProvider.UtcNow,
                 Message = message,
-                RequestBody = requestBody,
-                RequestUrl = requestUrl,
+                RequestBody = body,
+                RequestUrl = path,
                 Severity = severity,
-                SourceObject = this.ParseSourceObject(sourceObject),
                 Type = type,
                 UserId = userId
             };
@@ -40,19 +38,9 @@ namespace HealthyJuices.Application.Providers.Logging
             return log.Id;
         }
 
-        public async Task<string> LogAsync(LogSeverity severity, LogType type, Exception ex, long? userId = null, object sourceObject = null, string requestUrl = null, string requestBody = null)
+        public async Task<string> LogAsync(LogSeverity severity, LogType type, Exception ex, string userId = null, string path = null, string body = null)
         {
-            return await this.LogAsync(severity, type, ExceptionHelper.Read(ex), userId, sourceObject, requestUrl, requestBody);
-        }
-
-        private string ParseSourceObject(object sourceObject)
-        {
-            if (sourceObject == null)
-                return null;
-
-            return sourceObject.GetType().IsValueType
-                ? sourceObject.ToString()
-                : JsonConvert.SerializeObject(sourceObject);
+            return await this.LogAsync(severity, type, ExceptionHelper.Read(ex), userId, path, body);
         }
     }
 }

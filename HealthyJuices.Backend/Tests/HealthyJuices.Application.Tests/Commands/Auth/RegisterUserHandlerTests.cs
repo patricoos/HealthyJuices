@@ -26,7 +26,7 @@ namespace HealthyJuices.Application.Tests.Commands.Auth
             //  arrange
             var repositoryMock = new Mock<IUserRepository>();
             var companyMock = new Mock<ICompanyRepository>();
-            var timeProvicerMock = new Mock<ITimeProvider>();
+            var timeProvicerMock = new Mock<IDateTimeProvider>();
             var mailerMock = new Mock<IMailer>();
             var emailProvicerMock = new Mock<EmailProvider>(mailerMock.Object);
 

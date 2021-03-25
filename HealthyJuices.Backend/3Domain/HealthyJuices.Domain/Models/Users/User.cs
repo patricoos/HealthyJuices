@@ -12,7 +12,7 @@ using HealthyJuices.Shared.Enums;
 
 namespace HealthyJuices.Domain.Models.Users
 {
-    public class User : Entity, IModifiableEntity, ISoftRemovableEntity, IAggregateRoot
+    public class User : Entity, ISoftRemovableEntity, IAggregateRoot
     {
         public string Email { get; private set; }
 
@@ -26,8 +26,6 @@ namespace HealthyJuices.Domain.Models.Users
         public long? CompanyId { get; private set; }
         public Company Company { get; private set; }
 
-        public DateTimeOffset DateCreated { get; private init; }
-        public DateTimeOffset DateModified { get; private set; }
         public bool IsRemoved { get; private set; }
         public bool IsActive { get; private set; }
 
@@ -40,7 +38,7 @@ namespace HealthyJuices.Domain.Models.Users
 
         public User(string email, string password, params UserRole[] role)
         {
-            this.DateCreated = DateTime.Now;
+            this.Created = DateTime.UtcNow;
             this.IsActive = false;
             this.IsRemoved = false;
 
@@ -80,18 +78,18 @@ namespace HealthyJuices.Domain.Models.Users
             this.Update();
         }
 
-        public void SetPermissionsToken(ITimeProvider timeProvider, string token, DateTime date)
+        public void SetPermissionsToken(IDateTimeProvider dateTimeProvider, string token, DateTime date)
         {
-            PermissionsToken = new PermissionsToken(timeProvider, token, date);
+            PermissionsToken = new PermissionsToken(dateTimeProvider, token, date);
             this.Update();
         }
 
-        public void CheckPermissionsToken(ITimeProvider timeProvider, string token)
+        public void CheckPermissionsToken(IDateTimeProvider dateTimeProvider, string token)
         {
             if (PermissionsToken == null)
                 throw new BadRequestException("Token Expiration not found");
 
-            PermissionsToken.CheckValidity(timeProvider, token);
+            PermissionsToken.CheckValidity(dateTimeProvider, token);
         }
 
         public void ResetPermissionsToken()
@@ -123,7 +121,7 @@ namespace HealthyJuices.Domain.Models.Users
             if (this.IsRemoved)
                 throw new BadRequestException("This user is removed");
 
-            this.DateModified = DateTime.UtcNow;
+            this.LastModified = DateTime.UtcNow;
         }
     }
 }

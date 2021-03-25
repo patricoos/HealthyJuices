@@ -110,7 +110,7 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
             // arrange
             var user = UserBuilder.Create()
                 .WithEmail(HealthyJuicesConstants.DEFAULT_USER_LOGIN)
-                .WithPermissionsToken(GenerateRandomString(), DateTime.Today.AddDays(1))
+                .WithPermissionsToken(RandomString, DateTime.Today.AddDays(1))
                 .Build(ArrangeRepositoryContext);
 
             var controller = new AuthorizationController(Mediator);
@@ -131,8 +131,8 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
             // arrange
             var user = UserBuilder.Create()
                 .WithEmail(HealthyJuicesConstants.DEFAULT_USER_LOGIN)
-                .WithPassword(GenerateRandomString())
-                .WithPermissionsToken(GenerateRandomString(), DateTime.Today.AddDays(1))
+                .WithPassword(RandomString)
+                .WithPermissionsToken(RandomString, DateTime.Today.AddDays(1))
                 .Active()
                 .Build(ArrangeRepositoryContext);
 

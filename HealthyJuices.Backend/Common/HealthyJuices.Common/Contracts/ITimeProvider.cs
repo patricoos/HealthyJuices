@@ -2,9 +2,8 @@
 
 namespace HealthyJuices.Common.Contracts
 {
-    public interface ITimeProvider
+    public interface IDateTimeProvider
     {
-        DateTime Now { get; }
         DateTime UtcNow { get; }
     }
 }

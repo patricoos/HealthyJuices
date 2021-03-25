@@ -6,7 +6,7 @@ using HealthyJuices.Shared.Enums;
 
 namespace HealthyJuices.Domain.Models.Products
 {
-    public class Product : Entity, IModifiableEntity, ISoftRemovableEntity, IAggregateRoot
+    public class Product : Entity, ISoftRemovableEntity, IAggregateRoot
     {
         public string Name { get; private set; }
         public string Description { get; private set; }
@@ -15,8 +15,6 @@ namespace HealthyJuices.Domain.Models.Products
         public decimal QuantityPerUnit { get; private set; }
         public Money DefaultPricePerUnit { get; private set; }
 
-        public DateTimeOffset DateCreated { get; private init; }
-        public DateTimeOffset DateModified { get; private set; }
         public bool IsRemoved { get; private set; }
         public bool IsActive { get; private set; }
 
@@ -25,7 +23,7 @@ namespace HealthyJuices.Domain.Models.Products
 
         public Product(string name, string description, ProductUnitType unit, decimal quantityPerUnit, bool isActive, decimal? defaultPrice = null)
         {
-            this.DateCreated = DateTime.UtcNow;
+            this.Created = DateTime.UtcNow;
             this.IsRemoved = false;
             this.Update();
 
@@ -60,7 +58,7 @@ namespace HealthyJuices.Domain.Models.Products
             if (this.IsRemoved)
                 throw new BadRequestException($"This {nameof(Product)} is removed");
 
-            this.DateModified = DateTime.UtcNow;
+            this.LastModified = DateTime.UtcNow;
         }
 
         public void SetName(string name)

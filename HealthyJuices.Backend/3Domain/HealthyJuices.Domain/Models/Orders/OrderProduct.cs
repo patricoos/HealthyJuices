@@ -29,7 +29,7 @@ namespace HealthyJuices.Domain.Models.Orders
                 throw new BadRequestException("Product not exists");
 
             if (!product.IsActive)
-                throw new BadRequestException($"Product '{product.Name}' is not active");
+                throw new BadRequestException($"{nameof(Product)} '{product.Name}' is not active");
 
             this.Product = product;
         }

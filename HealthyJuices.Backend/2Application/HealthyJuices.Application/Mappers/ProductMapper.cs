@@ -14,8 +14,8 @@ namespace HealthyJuices.Application.Mappers
             Unit = e.Unit,
             QuantityPerUnit = e.QuantityPerUnit,
             DefaultPricePerUnit = e.DefaultPricePerUnit?.ToDto(),
-            DateCreated = e.DateCreated.UtcDateTime,
-            DateModified = e.DateModified.UtcDateTime,
+            Created = e.Created.UtcDateTime,
+            LastModified = e.LastModified?.UtcDateTime,
             IsRemoved = e.IsRemoved,
             IsActive = e.IsActive
         };

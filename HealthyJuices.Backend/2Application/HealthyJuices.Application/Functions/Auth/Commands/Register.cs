@@ -50,15 +50,15 @@ namespace HealthyJuices.Application.Functions.Auth.Commands
         public class Handler : IRequestHandler<Command, string>
         {
             private readonly EmailProvider _emailProvider;
-            private readonly ITimeProvider _timeProvider;
+            private readonly IDateTimeProvider _dateTimeProvider;
             private readonly IUserRepository _userRepository;
             private readonly ICompanyRepository _companyRepository;
 
-            public Handler(IUserRepository repository, EmailProvider emailProvider, ITimeProvider timeProvider, ICompanyRepository companyRepository)
+            public Handler(IUserRepository repository, EmailProvider emailProvider, IDateTimeProvider dateTimeProvider, ICompanyRepository companyRepository)
             {
                 _userRepository = repository;
                 _emailProvider = emailProvider;
-                _timeProvider = timeProvider;
+                _dateTimeProvider = dateTimeProvider;
                 _companyRepository = companyRepository;
             }
 
@@ -69,7 +69,7 @@ namespace HealthyJuices.Application.Functions.Auth.Commands
                     throw new BadRequestException($"Company not found");
 
                 var user = new User(request.Email, request.Password, request.FirstName, request.LastName, company, UserRole.Customer);
-                user.SetPermissionsToken(_timeProvider, Guid.NewGuid().ToString(), _timeProvider.UtcNow.AddDays(1));
+                user.SetPermissionsToken(_dateTimeProvider, Guid.NewGuid().ToString(), _dateTimeProvider.UtcNow.AddDays(1));
 
                 // TODO: get current url
 

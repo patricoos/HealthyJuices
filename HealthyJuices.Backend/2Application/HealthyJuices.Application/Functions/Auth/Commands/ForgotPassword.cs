@@ -18,13 +18,13 @@ namespace HealthyJuices.Application.Functions.Auth.Commands
         public class Handler : IRequestHandler<Command>
         {
             private readonly IUserRepository _userRepository;
-            private readonly ITimeProvider _timeProvider;
+            private readonly IDateTimeProvider _dateTimeProvider;
             private readonly EmailProvider _emailProvider;
 
-            public Handler(IUserRepository repository, ITimeProvider timeProvider, EmailProvider emailProvider)
+            public Handler(IUserRepository repository, IDateTimeProvider dateTimeProvider, EmailProvider emailProvider)
             {
                 this._userRepository = repository;
-                _timeProvider = timeProvider;
+                _dateTimeProvider = dateTimeProvider;
                 _emailProvider = emailProvider;
             }
 
@@ -35,7 +35,7 @@ namespace HealthyJuices.Application.Functions.Auth.Commands
                 if (user == null || user.IsRemoved)
                    throw new BadRequestException($"User with email '{request.Email}' not found");
 
-                user.SetPermissionsToken(_timeProvider, Guid.NewGuid().ToString(), _timeProvider.UtcNow.AddDays(1));
+                user.SetPermissionsToken(_dateTimeProvider, Guid.NewGuid().ToString(), _dateTimeProvider.UtcNow.AddDays(1));
 
                 // TODO: get current url
 

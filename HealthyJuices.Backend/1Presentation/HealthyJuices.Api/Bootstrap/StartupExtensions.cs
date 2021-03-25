@@ -6,7 +6,7 @@ using HealthyJuices.Application.Providers;
 using HealthyJuices.Application.Providers.Logging;
 using HealthyJuices.Common;
 using HealthyJuices.Common.Contracts;
-using HealthyJuices.Common.Services;
+using HealthyJuices.Common.Providers;
 using HealthyJuices.Domain.Models.Companies.DataAccess;
 using HealthyJuices.Domain.Models.Logs.DataAccess;
 using HealthyJuices.Domain.Models.Orders.DataAccess;
@@ -45,7 +45,7 @@ namespace HealthyJuices.Api.Bootstrap
             ));
 
             @this.AddScoped<ILogger, Logger>();
-            @this.AddScoped<ITimeProvider, TimeProvider>();
+            @this.AddScoped<IDateTimeProvider, DateTimeProvider>();
             @this.AddScoped<EmailProvider>();
 
             return @this;

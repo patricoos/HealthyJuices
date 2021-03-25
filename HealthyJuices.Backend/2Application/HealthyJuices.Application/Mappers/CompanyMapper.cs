@@ -18,8 +18,8 @@ namespace HealthyJuices.Application.Mappers
             Latitude = e.Latitude,
             Longitude = e.Longitude,
 
-            DateCreated = e.DateCreated.UtcDateTime,
-            DateModified = e.DateModified.UtcDateTime,
+            Created = e.Created.UtcDateTime,
+            LastModified = e.LastModified?.UtcDateTime,
             IsRemoved = e.IsRemoved,
         };
     }

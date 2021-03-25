@@ -38,12 +38,12 @@ namespace HealthyJuices.Application.Functions.Auth.Queries
         {
             private readonly IUserRepository _userRepository;
             private readonly SimpleTokenProvider _tokenProvider;
-            private readonly ITimeProvider _timeProvider;
-            public Handler(IUserRepository repository, SimpleTokenProvider tokenProvider, ITimeProvider timeProvider)
+            private readonly IDateTimeProvider _dateTimeProvider;
+            public Handler(IUserRepository repository, SimpleTokenProvider tokenProvider, IDateTimeProvider dateTimeProvider)
             {
                 this._userRepository = repository;
                 _tokenProvider = tokenProvider;
-                _timeProvider = timeProvider;
+                _dateTimeProvider = dateTimeProvider;
             }
             public async Task<LoginResponseDto> Handle(Query request, CancellationToken cancellationToken)
             {
@@ -58,7 +58,7 @@ namespace HealthyJuices.Application.Functions.Auth.Queries
                 if (!user.Password.CheckValidity(request.Password))
                     throw new BadRequestException($"Wrong password for user '{request.Email}'");
 
-                var token = _tokenProvider.Create(user.Id, _timeProvider, user.RolesList);
+                var token = _tokenProvider.Create(user.Id, _dateTimeProvider, user.RolesList);
                 return new LoginResponseDto(user.ToDto(), token);
             }
         }

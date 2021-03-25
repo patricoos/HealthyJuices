@@ -11,10 +11,8 @@ using HealthyJuices.Shared.Enums;
 
 namespace HealthyJuices.Domain.Models.Orders
 {
-    public class Order : Entity, IModifiableEntity, ISoftRemovableEntity, IAggregateRoot
+    public class Order : Entity, ISoftRemovableEntity, IAggregateRoot
     {
-        public DateTimeOffset DateCreated { get; init; }
-        public DateTimeOffset DateModified { get; private set; }
         public bool IsRemoved { get; private set; }
 
         public DateTime DeliveryDate { get; private set; }
@@ -35,7 +33,7 @@ namespace HealthyJuices.Domain.Models.Orders
         public Order(User user, DateTime deliveryDate)
         {
             this.OrderProducts = new List<OrderItem>();
-            this.DateCreated = DateTime.UtcNow;
+            this.Created = DateTime.UtcNow;
             this.SetDeliveryDate(deliveryDate);
             this.SetUser(user);
             this.SetCompany(user.Company);
@@ -86,7 +84,7 @@ namespace HealthyJuices.Domain.Models.Orders
             if (DeliveryDate.Date <= DateTime.Now.Date)
                 throw new BadRequestException("This order can not be modified");
 
-            this.DateModified = DateTime.UtcNow;
+            this.LastModified = DateTime.UtcNow;
         }
 
         private void SetDeliveryDate(DateTime date)

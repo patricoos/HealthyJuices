@@ -16,12 +16,12 @@ namespace HealthyJuices.Application.Functions.Auth.Commands
         public class Handler : IRequestHandler<Command>
         {
             private readonly IUserRepository _userRepository;
-            private readonly ITimeProvider _timeProvider;
+            private readonly IDateTimeProvider _dateTimeProvider;
 
-            public Handler(IUserRepository repository, ITimeProvider timeProvider)
+            public Handler(IUserRepository repository, IDateTimeProvider dateTimeProvider)
             {
                 this._userRepository = repository;
-                _timeProvider = timeProvider;
+                _dateTimeProvider = dateTimeProvider;
             }
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
@@ -31,7 +31,7 @@ namespace HealthyJuices.Application.Functions.Auth.Commands
                 if (user == null || user.IsRemoved)
                     throw new BadRequestException($"User with email '{request.Email}' not found");
 
-                user.CheckPermissionsToken(_timeProvider, request.Token);
+                user.CheckPermissionsToken(_dateTimeProvider, request.Token);
                 user.ResetPermissionsToken();
                 user.Activate();
 

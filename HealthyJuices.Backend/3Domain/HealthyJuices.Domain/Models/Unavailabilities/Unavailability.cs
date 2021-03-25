@@ -20,6 +20,7 @@ namespace HealthyJuices.Domain.Models.Unavailabilities
 
         public Unavailability(DateTime from, DateTime to, UnavailabilityReason reason, string comment)
         {
+            this.Created = DateTime.UtcNow;
             this.SetDuration(from, to);
             this.Reason = reason;
             this.Comment = comment;
@@ -30,6 +31,7 @@ namespace HealthyJuices.Domain.Models.Unavailabilities
             this.SetDuration(from, to);
             this.Reason = reason;
             this.Comment = comment;
+            this.LastModified = DateTime.UtcNow;
         }
 
         public void SetDuration(DateTime from, DateTime to)
@@ -39,6 +41,7 @@ namespace HealthyJuices.Domain.Models.Unavailabilities
 
             this.From = from;
             this.To = to;
+            this.LastModified = DateTime.UtcNow;
         }
     }
 }

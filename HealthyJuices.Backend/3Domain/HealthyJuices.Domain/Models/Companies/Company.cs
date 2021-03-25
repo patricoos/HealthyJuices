@@ -7,7 +7,7 @@ using HealthyJuices.Domain.Models.Users;
 
 namespace HealthyJuices.Domain.Models.Companies
 {
-    public class Company : Entity, IModifiableEntity, ISoftRemovableEntity, IAggregateRoot
+    public class Company : Entity, ISoftRemovableEntity, IAggregateRoot
     {
         public string Name { get; private set; }
         public string Comment { get; private set; }
@@ -20,8 +20,6 @@ namespace HealthyJuices.Domain.Models.Companies
         public double Longitude { get; private set; }
 
         public bool IsRemoved { get; private set; }
-        public DateTimeOffset DateCreated { get; private init; }
-        public DateTimeOffset DateModified { get; private set; }
 
         public ICollection<User> Users { get; private set; }
 
@@ -31,7 +29,7 @@ namespace HealthyJuices.Domain.Models.Companies
         public Company(string name, string comment, string postalCode, string city, string street, double latitude,
             double longitude)
         {
-            this.DateCreated = DateTime.UtcNow;
+            this.Created = DateTime.UtcNow;
             this.IsRemoved = false;
             this.Update();
 
@@ -61,7 +59,7 @@ namespace HealthyJuices.Domain.Models.Companies
         public void Remove()
         {
             this.IsRemoved = true;
-            this.DateModified = DateTime.UtcNow;
+            this.LastModified = DateTime.UtcNow;
         }
 
         public void SetName(string name)
@@ -76,9 +74,9 @@ namespace HealthyJuices.Domain.Models.Companies
         private void Update()
         {
             if (this.IsRemoved)
-                throw new BadRequestException("This company is removed");
+                throw new BadRequestException($"This {nameof(Company)} is removed");
 
-            this.DateModified = DateTime.UtcNow;
+            this.LastModified = DateTime.UtcNow;
         }
     }
 }

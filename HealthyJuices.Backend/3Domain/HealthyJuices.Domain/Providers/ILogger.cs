@@ -6,7 +6,7 @@ namespace HealthyJuices.Domain.Providers
 {
     public interface ILogger
     {
-        Task<string> LogAsync(LogSeverity severity, LogType type, string message, long? userId = null, object sourceObject = null, string requestUrl = null, string requestBody = null);
-        Task<string> LogAsync(LogSeverity severity, LogType type, Exception ex, long? userId = null, object sourceObject = null, string requestUrl = null, string requestBody = null);
+        Task<string> LogAsync(LogSeverity severity, LogType type, string message, string userId = null, string path = null, string body = null);
+        Task<string> LogAsync(LogSeverity severity, LogType type, Exception ex, string userId = null, string path = null, string body = null);
     }
 }

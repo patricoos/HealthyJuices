@@ -1,12 +1,10 @@
 ﻿using FluentAssertions;
-using HealthyJuices.Shared.Dto;
 using HealthyJuices.Shared.Enums;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using HealthyJuices.Api.Controllers;
 using HealthyJuices.Application.Functions.Unavailabilities.Commands;
-using Microsoft.AspNetCore.Mvc;
 using Xunit;
 
 namespace HealthyJuices.Tests.EndToEnd.Controllers

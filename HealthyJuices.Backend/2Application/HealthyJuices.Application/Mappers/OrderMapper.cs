@@ -9,8 +9,8 @@ namespace HealthyJuices.Application.Mappers
         public static OrderDto ToDto(this Order e) => new OrderDto()
         {
             Id = e.Id,
-            DateCreated = e.DateCreated.UtcDateTime,
-            DateModified = e.DateModified.UtcDateTime,
+            Created = e.Created.UtcDateTime,
+            LastModified = e.LastModified?.UtcDateTime,
             IsRemoved = e.IsRemoved,
 
             DeliveryDate = e.DeliveryDate,

@@ -5,12 +5,11 @@ using FluentValidation.Results;
 
 namespace HealthyJuices.Common.Exceptions
 {
-    public class ValidationException : CustomException
+    public class ValidationException : BaseException
     {
         public IDictionary<string, string[]> Errors { get; }
 
-        public ValidationException(string message, params string[] translationParams)
-            : base(HttpStatusCode.Forbidden, message, translationParams)
+        public ValidationException(string message) : base(HttpStatusCode.Forbidden, message)
         {
             Errors = new Dictionary<string, string[]>();
         }

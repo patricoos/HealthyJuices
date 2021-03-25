@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Linq;
 using HealthyJuices.Application.Auth;
 using HealthyJuices.Application.Providers;
 
 using HealthyJuices.Application.Utils;
 using HealthyJuices.Common;
 using HealthyJuices.Common.Contracts;
-using HealthyJuices.Common.Services;
+using HealthyJuices.Common.Providers;
 using HealthyJuices.Domain.Models.Companies.DataAccess;
 using HealthyJuices.Domain.Models.Logs.DataAccess;
 using HealthyJuices.Domain.Models.Orders.DataAccess;
@@ -32,23 +31,18 @@ namespace HealthyJuices.Tests.EndToEnd
     public abstract class InMemoryDatabaseTestBase : IDisposable
     {
         #region Contexts
-
         public IDbContext ArrangeRepositoryContext { get; set; }
         public IDbContext ActRepositoryContext { get; set; }
         public IDbContext AssertRepositoryContext { get; set; }
-
-
         #endregion Contexts
 
         #region Repositories
-
         public IUserRepository UserRepository { get; set; }
         public ICompanyRepository CompanyRepository { get; set; }
         public ILogRepository LogRepository { get; set; }
         public IOrderRepository OrderRepository { get; set; }
         public IProductRepository ProductRepository { get; set; }
         public IUnavailabilityRepository UnavailabilityRepository { get; set; }
-
         #endregion Repositories
 
         #region Services
@@ -56,18 +50,17 @@ namespace HealthyJuices.Tests.EndToEnd
         public IMediator Mediator { get; set; }
         #endregion Services
 
-
         #region Providers
-        private readonly Random _random;
         public Mock<IMailer> MailerMock { get; set; }
         public EmailProvider EmailProvider { get; set; }
-        public Mock<ITimeProvider> TimeProviderMock { get; set; }
-        public ITimeProvider TimeProvider { get; set; }
+        public Mock<IDateTimeProvider> TimeProviderMock { get; set; }
+        public IDateTimeProvider DateTimeProvider { get; set; }
         public Mock<ILogger> LoggerMock { get; set; }
         public SimpleTokenProvider SimpleTokenProvider { get; set; }
 
-
         #endregion Providers
+
+        public string RandomString => Guid.NewGuid().ToString("n").Substring(0, 8);
 
         protected InMemoryDatabaseTestBase()
         {
@@ -75,10 +68,7 @@ namespace HealthyJuices.Tests.EndToEnd
             InitializeProviders();
             InitializeDbContexts();
             InitializeRepositories();
-            InitializeServices();
             InitializeMediatR();
-            SeedGlobalInitData();
-            _random = new Random();
         }
 
         private void InitializeDbContexts()
@@ -122,33 +112,15 @@ namespace HealthyJuices.Tests.EndToEnd
         {
             MailerMock = new Mock<IMailer>();
             LoggerMock = new Mock<ILogger>();
-            TimeProvider = new TimeProvider();
+            DateTimeProvider = new DateTimeProvider();
             EmailProvider = new EmailProvider(MailerMock.Object);
             SimpleTokenProvider = new SimpleTokenProvider(TimeSpan.FromDays(30), HealthyJuicesConstants.LOCAL_ACCESS_TOKEN_SECRET);
 
             ServiceCollection.AddTransient(x => MailerMock.Object);
             ServiceCollection.AddTransient(x => LoggerMock.Object);
-            ServiceCollection.AddTransient(x => TimeProvider);
+            ServiceCollection.AddTransient(x => DateTimeProvider);
             ServiceCollection.AddTransient(x => EmailProvider);
             ServiceCollection.AddTransient(x => SimpleTokenProvider);
-        }
-
-        private void InitializeServices()
-        {
-        }
-
-        private void SeedGlobalInitData()
-        {
-        }
-
-        protected int GeneratePositiveRandomNumber(int minValue = 1, int maxValue = int.MaxValue) => _random.Next(minValue, maxValue);
-        protected string RandomId => Guid.NewGuid().ToString();
-
-        protected string GenerateRandomString(int length = 10)
-        {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            return new string(Enumerable.Repeat(chars, length)
-                .Select(s => s[_random.Next(s.Length)]).ToArray());
         }
 
         public void Dispose()

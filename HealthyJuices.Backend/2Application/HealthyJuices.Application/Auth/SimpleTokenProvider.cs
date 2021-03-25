@@ -22,7 +22,7 @@ namespace HealthyJuices.Application.Auth
             Secret = secret;
         }
 
-        public string Create(string userId, ITimeProvider clock, IEnumerable<string> roles = null, params Claim[] claims)
+        public string Create(string userId, IDateTimeProvider clock, IEnumerable<string> roles = null, params Claim[] claims)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(Secret);

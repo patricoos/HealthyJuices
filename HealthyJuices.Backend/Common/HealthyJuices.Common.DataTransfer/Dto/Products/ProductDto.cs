@@ -13,8 +13,8 @@ namespace HealthyJuices.Shared.Dto.Products
         public decimal QuantityPerUnit { get; init; }
         public MoneyDto DefaultPricePerUnit { get; init; }
 
-        public DateTime DateCreated { get; init; }
-        public DateTime DateModified { get; init; }
+        public DateTime Created { get; init; }
+        public DateTime?LastModified { get; init; }
         public bool IsRemoved { get; init; }
         public bool IsActive { get; set; }
     }
