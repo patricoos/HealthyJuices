@@ -15,7 +15,6 @@ using HealthyJuices.Domain.Models.Users.DataAccess;
 using HealthyJuices.Domain.Providers;
 using HealthyJuices.Persistence.Ef;
 using HealthyJuices.Persistence.Ef.Repositories.Companies;
-using HealthyJuices.Persistence.Ef.Repositories.Logs;
 using HealthyJuices.Persistence.Ef.Repositories.Orders;
 using HealthyJuices.Persistence.Ef.Repositories.Products;
 using HealthyJuices.Persistence.Ef.Repositories.Unavailabilities;
@@ -39,10 +38,10 @@ namespace HealthyJuices.Tests.EndToEnd
         #region Repositories
         public IUserRepository UserRepository { get; set; }
         public ICompanyRepository CompanyRepository { get; set; }
-        public ILogRepository LogRepository { get; set; }
         public IOrderRepository OrderRepository { get; set; }
         public IProductRepository ProductRepository { get; set; }
         public IUnavailabilityRepository UnavailabilityRepository { get; set; }
+        public Mock<ILogRepository> LogRepositoryMock { get; set; }
         #endregion Repositories
 
         #region Services
@@ -96,14 +95,14 @@ namespace HealthyJuices.Tests.EndToEnd
         {
             UserRepository = new UserRepository(ActRepositoryContext);
             CompanyRepository = new CompanyRepository(ActRepositoryContext);
-            LogRepository = new LogRepository(ActRepositoryContext);
             OrderRepository = new OrderRepository(ActRepositoryContext);
             ProductRepository = new ProductRepository(ActRepositoryContext);
             UnavailabilityRepository = new UnavailabilityRepository(ActRepositoryContext);
+            LogRepositoryMock = new Mock<ILogRepository>();
 
             ServiceCollection.AddTransient(x => UserRepository);
             ServiceCollection.AddTransient(x => CompanyRepository);
-            ServiceCollection.AddTransient(x => LogRepository);
+            ServiceCollection.AddTransient(x => LogRepositoryMock.Object);
             ServiceCollection.AddTransient(x => OrderRepository);
             ServiceCollection.AddTransient(x => ProductRepository);
             ServiceCollection.AddTransient(x => UnavailabilityRepository);
