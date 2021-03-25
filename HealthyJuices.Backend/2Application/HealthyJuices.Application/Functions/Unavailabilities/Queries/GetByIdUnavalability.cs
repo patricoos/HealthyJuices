@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using HealthyJuices.Application.Mappers;
+using AutoMapper;
 using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Domain.Models.Unavailabilities.DataAccess;
 using HealthyJuices.Shared.Dto;
@@ -17,10 +17,12 @@ namespace HealthyJuices.Application.Functions.Unavailabilities.Queries
         public class Handler : IRequestHandler<Query, UnavailabilityDto>
         {
             private readonly IUnavailabilityRepository _unavailabilityRepository;
+            private readonly IMapper _mapper;
 
-            public Handler(IUnavailabilityRepository unavailabilityRepository)
+            public Handler(IUnavailabilityRepository unavailabilityRepository, IMapper mapper)
             {
                 _unavailabilityRepository = unavailabilityRepository;
+                _mapper = mapper;
             }
 
             public async Task<UnavailabilityDto> Handle(Query request, CancellationToken cancellationToken)
@@ -30,7 +32,7 @@ namespace HealthyJuices.Application.Functions.Unavailabilities.Queries
                 if (entity == null)
                     throw new BadRequestException($"Not found unavalability with id: {request.Id}");
 
-                return entity.ToDto();
+                return _mapper.Map<UnavailabilityDto>(entity);
             }
         }
     }

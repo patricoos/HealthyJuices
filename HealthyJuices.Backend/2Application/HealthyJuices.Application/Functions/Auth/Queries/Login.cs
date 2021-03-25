@@ -1,11 +1,13 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using FluentValidation;
 using HealthyJuices.Application.Auth;
 using HealthyJuices.Application.Mappers;
 using HealthyJuices.Common.Contracts;
 using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Domain.Models.Users.DataAccess;
+using HealthyJuices.Shared.Dto;
 using HealthyJuices.Shared.Dto.Auth;
 using MediatR;
 
@@ -39,11 +41,14 @@ namespace HealthyJuices.Application.Functions.Auth.Queries
             private readonly IUserRepository _userRepository;
             private readonly SimpleTokenProvider _tokenProvider;
             private readonly IDateTimeProvider _dateTimeProvider;
-            public Handler(IUserRepository repository, SimpleTokenProvider tokenProvider, IDateTimeProvider dateTimeProvider)
+            private readonly IMapper _mapper;
+
+            public Handler(IUserRepository repository, SimpleTokenProvider tokenProvider, IDateTimeProvider dateTimeProvider, IMapper mapper)
             {
                 this._userRepository = repository;
                 _tokenProvider = tokenProvider;
                 _dateTimeProvider = dateTimeProvider;
+                _mapper = mapper;
             }
             public async Task<LoginResponseDto> Handle(Query request, CancellationToken cancellationToken)
             {
@@ -59,7 +64,7 @@ namespace HealthyJuices.Application.Functions.Auth.Queries
                     throw new BadRequestException($"Wrong password for user '{request.Email}'");
 
                 var token = _tokenProvider.Create(user.Id, _dateTimeProvider, user.RolesList);
-                return new LoginResponseDto(user.ToDto(), token);
+                return new LoginResponseDto(_mapper.Map<UserDto>(user), token);
             }
         }
     }

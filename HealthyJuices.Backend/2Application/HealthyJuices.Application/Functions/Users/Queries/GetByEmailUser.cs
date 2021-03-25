@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using HealthyJuices.Application.Mappers;
 using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Domain.Models.Users.DataAccess;
@@ -17,10 +18,12 @@ namespace HealthyJuices.Application.Functions.Users.Queries
         public class Handler : IRequestHandler<Query, UserDto>
         {
             private readonly IUserRepository _userRepository;
+            private readonly IMapper _mapper;
 
-            public Handler(IUserRepository repository)
+            public Handler(IUserRepository repository, IMapper mapper)
             {
                 this._userRepository = repository;
+                _mapper = mapper;
             }
 
             public async Task<UserDto> Handle(Query request, CancellationToken cancellationToken)
@@ -30,7 +33,7 @@ namespace HealthyJuices.Application.Functions.Users.Queries
                 if (entity == null)
                     throw new BadRequestException($"Not found user with email: {request.Email}");
 
-                return entity.ToDto();
+                return _mapper.Map<UserDto>(entity);
             }
         }
     }

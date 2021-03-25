@@ -2,8 +2,9 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using HealthyJuices.Application.Mappers;
+using AutoMapper;
 using HealthyJuices.Domain.Models.Orders.DataAccess;
+using HealthyJuices.Shared.Dto;
 using HealthyJuices.Shared.Dto.Products;
 using HealthyJuices.Shared.Dto.Reports;
 using MediatR;
@@ -19,10 +20,12 @@ namespace HealthyJuices.Application.Functions.Orders.Queries
         public class Handler : IRequestHandler<Query, DashboardOrderReportDto>
         {
             private readonly IOrderRepository _orderRepository;
+            private readonly IMapper _mapper;
 
-            public Handler(IOrderRepository repository)
+            public Handler(IOrderRepository repository, IMapper mapper)
             {
                 this._orderRepository = repository;
+                _mapper = mapper;
             }
 
             public async Task<DashboardOrderReportDto> Handle(Query request, CancellationToken cancellationToken)
@@ -33,11 +36,21 @@ namespace HealthyJuices.Application.Functions.Orders.Queries
                     .GroupBy(x => x.User.Company)
                     .Select(x => new OrderReportDto()
                     {
-                        Company = x.Key.ToDto(),
+                        Company = _mapper.Map<CompanyDto>(x.Key),
                         ProductsByUser = x.GroupBy(z => z.User).Select(u => new UsersProductsReportDto()
                         {
-                            User = u.Key.ToDto(),
-                            Products = u.SelectMany(p => p.OrderProducts.Select(z => z.ToDto()))
+                            User = new UserDto
+                            {
+                                Email = u.Key.Email
+                            },
+                            Products = u.SelectMany(p => p.OrderProducts.Select(z => new OrderItemDto()
+                            {
+                                Product = new ProductDto()
+                                {
+                                    Name = z.Product.Name
+                                },
+                                Amount = z.Amount
+                            }))
                         })
                     }).ToList();
 
@@ -48,7 +61,7 @@ namespace HealthyJuices.Application.Functions.Orders.Queries
                     {
                         Amount = x.Sum(a => a.Amount),
                         ProductId = x.Key,
-                        Product = x.First().Product.ToDto()
+                        Product = _mapper.Map<ProductDto>(x.First().Product)
                     }).ToList();
 
                 var result = new DashboardOrderReportDto()

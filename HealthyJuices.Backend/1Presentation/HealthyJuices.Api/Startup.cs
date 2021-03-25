@@ -50,6 +50,7 @@ namespace HealthyJuices.Api
             services
                 .RegisterDatabase(Configuration.GetConnectionString("Sql"))
                 .RegisterRepositories()
+                .RegisterAutoMapper()
                 .RegisterMediatR()
                 .RegisterValidators()
                 .RegisterProviders(Configuration);

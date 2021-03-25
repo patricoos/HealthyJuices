@@ -86,7 +86,7 @@ namespace HealthyJuices.Tests.EndToEnd
 
         private void InitializeMediatR()
         {
-            ServiceCollection.RegisterMediatR();
+            ServiceCollection.RegisterAutoMapper().RegisterMediatR();
             var serviceProvider = ServiceCollection.BuildServiceProvider();
             Mediator = serviceProvider.GetService<IMediator>();
             ServiceCollection.RegisterValidators();

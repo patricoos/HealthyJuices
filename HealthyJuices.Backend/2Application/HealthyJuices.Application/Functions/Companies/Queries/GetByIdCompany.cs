@@ -1,9 +1,12 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using HealthyJuices.Application.Mappers;
 using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Domain.Models.Companies.DataAccess;
 using HealthyJuices.Shared.Dto;
+using HealthyJuices.Shared.Dto.Products;
 using MediatR;
 
 namespace HealthyJuices.Application.Functions.Companies.Queries
@@ -18,10 +21,12 @@ namespace HealthyJuices.Application.Functions.Companies.Queries
         public class Handler : IRequestHandler<Query, CompanyDto>
         {
             private readonly ICompanyRepository _companyRepository;
+            private readonly IMapper _mapper;
 
-            public Handler(ICompanyRepository repository)
+            public Handler(ICompanyRepository repository, IMapper mapper)
             {
                 this._companyRepository = repository;
+                _mapper = mapper;
             }
 
             public async Task<CompanyDto> Handle(Query request, CancellationToken cancellationToken)
@@ -31,7 +36,7 @@ namespace HealthyJuices.Application.Functions.Companies.Queries
                 if (entity == null)
                     throw new BadRequestException($"Not found company with id: {request.Id}");
 
-                return entity.ToDto();
+                return _mapper.Map<CompanyDto>(entity);
             }
         }
     }

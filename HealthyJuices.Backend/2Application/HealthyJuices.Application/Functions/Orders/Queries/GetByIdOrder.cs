@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using HealthyJuices.Application.Mappers;
+using AutoMapper;
 using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Domain.Models.Orders.DataAccess;
 using HealthyJuices.Shared.Dto.Orders;
@@ -17,10 +17,12 @@ namespace HealthyJuices.Application.Functions.Orders.Queries
         public class Handler : IRequestHandler<Query, OrderDto>
         {
             private readonly IOrderRepository _orderRepository;
+            private readonly IMapper _mapper;
 
-            public Handler(IOrderRepository repository)
+            public Handler(IOrderRepository repository, IMapper mapper)
             {
                 this._orderRepository = repository;
+                _mapper = mapper;
             }
 
             public async Task<OrderDto> Handle(Query request, CancellationToken cancellationToken)
@@ -30,7 +32,7 @@ namespace HealthyJuices.Application.Functions.Orders.Queries
                 if (entity == null)
                     throw new BadRequestException($"Not found order with id: {request.Id}");
 
-                return entity.ToDto();
+                return _mapper.Map<OrderDto>(entity);
             }
         }
     }

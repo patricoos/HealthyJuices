@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using HealthyJuices.Application.Mappers;
+using AutoMapper;
 using HealthyJuices.Domain.Models.Products.DataAccess;
 using HealthyJuices.Shared.Dto.Products;
 using MediatR;
@@ -19,21 +18,18 @@ namespace HealthyJuices.Application.Functions.Products.Queries
         public class Handler : IRequestHandler<Query, IEnumerable<ProductDto>>
         {
             private readonly IProductRepository _productRepository;
+            private readonly IMapper _mapper;
 
-            public Handler(IProductRepository repository)
+            public Handler(IProductRepository repository, IMapper mapper)
             {
                 this._productRepository = repository;
+                _mapper = mapper;
             }
 
             public async Task<IEnumerable<ProductDto>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var entities = await _productRepository.GetAllActiveAsync();
-
-                var result = entities
-                    .Select(x => x.ToDto())
-                    .ToList();
-
-                return result;
+                return _mapper.Map<IEnumerable<ProductDto>>(entities);
             }
         }
     }
