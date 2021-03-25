@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using HealthyJuices.Common.Contracts;
 using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Domain.Providers;
 using HealthyJuices.Shared.Enums;
@@ -50,7 +51,7 @@ namespace HealthyJuices.Api.Middlewares
                 var url = context.Request.Path + context.Request.QueryString;
                 var body = await GetRequestString(context);
 
-                await logger.LogAsync(LogSeverity.Unspecified, LogType.Api, exception, null, url, body);
+                await logger.LogAsync(LogSeverity.Unspecified, LogType.Api, exception, url, body);
             }
             catch (Exception ex)
             {

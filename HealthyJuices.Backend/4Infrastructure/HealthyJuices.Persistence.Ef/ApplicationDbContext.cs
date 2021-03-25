@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using HealthyJuices.Common.Contracts;
 using HealthyJuices.Domain.Models.Abstraction.DataAccess.Entities;
 using HealthyJuices.Domain.Models.Companies;
-using HealthyJuices.Domain.Models.Logs;
 using HealthyJuices.Domain.Models.Orders;
 using HealthyJuices.Domain.Models.Products;
 using HealthyJuices.Domain.Models.Unavailabilities;
@@ -19,7 +18,6 @@ namespace HealthyJuices.Persistence.Ef
     public class ApplicationApplicationDbContext : DbContext, IApplicationDbContext
     {
         #region - DbSets 
-        public DbSet<Log> Logs { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Unavailability> Unavailabilities { get; set; }
         public DbSet<Company> Companies { get; set; }

@@ -12,16 +12,17 @@ namespace HealthyJuices.Application.Providers.Logging
     {
         private readonly IDateTimeProvider _dateTimeProvider;
         private readonly ILogRepository _logRepository;
+        private readonly ICurrentUserProvider _currentUserProvider;
 
-        public Logger(ILogRepository repository, IDateTimeProvider dateTimeProvider)
+        public Logger(ILogRepository repository, IDateTimeProvider dateTimeProvider, ICurrentUserProvider currentUserProvider)
         {
             _dateTimeProvider = dateTimeProvider;
+            _currentUserProvider = currentUserProvider;
             _logRepository = repository;
         }
 
-        public async Task<string> LogAsync(LogSeverity severity, LogType type, string message, string userId = null, string path = null, string body = null)
+        public async Task<string> LogAsync(LogSeverity severity, LogType type, string message,  string path = null, string body = null)
         {
-
             var log = new Log
             {
                 Date = _dateTimeProvider.UtcNow,
@@ -30,17 +31,16 @@ namespace HealthyJuices.Application.Providers.Logging
                 RequestUrl = path,
                 Severity = severity,
                 Type = type,
-                UserId = userId
+                UserId = _currentUserProvider.UserId
             };
 
-            await _logRepository.Insert(log).SaveChangesAsync();
-
+            await _logRepository.Insert(log);
             return log.Id;
         }
 
-        public async Task<string> LogAsync(LogSeverity severity, LogType type, Exception ex, string userId = null, string path = null, string body = null)
+        public async Task<string> LogAsync(LogSeverity severity, LogType type, Exception ex, string path = null, string body = null)
         {
-            return await this.LogAsync(severity, type, ExceptionHelper.Read(ex), userId, path, body);
+            return await this.LogAsync(severity, type, ExceptionHelper.Read(ex), path, body);
         }
     }
 }

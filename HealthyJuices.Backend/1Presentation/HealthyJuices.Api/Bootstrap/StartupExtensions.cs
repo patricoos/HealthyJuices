@@ -18,11 +18,11 @@ using HealthyJuices.Domain.Providers;
 using HealthyJuices.Mailing;
 using HealthyJuices.Persistence.Ef;
 using HealthyJuices.Persistence.Ef.Repositories.Companies;
-using HealthyJuices.Persistence.Ef.Repositories.Logs;
 using HealthyJuices.Persistence.Ef.Repositories.Orders;
 using HealthyJuices.Persistence.Ef.Repositories.Products;
 using HealthyJuices.Persistence.Ef.Repositories.Unavailabilities;
 using HealthyJuices.Persistence.Ef.Repositories.Users;
+using HealthyJuices.Persistence.Elasticsearch.Repositories;
 using HealthyJuices.Shared.Enums;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Builder;
@@ -30,6 +30,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Nest;
 
 namespace HealthyJuices.Api.Bootstrap
 {
@@ -54,6 +55,12 @@ namespace HealthyJuices.Api.Bootstrap
             return @this;
         }
 
+        public static IServiceCollection RegisterElasticsearch(this IServiceCollection @this, IConfiguration config)
+        {
+            @this.AddSingleton<IElasticClient>(new ElasticClient(new Uri(config["Elasticsearch"])));
+            return @this;
+        }
+
         public static IServiceCollection RegisterDatabase(this IServiceCollection @this, string connectionString)
         {
             @this.AddDbContext<ApplicationApplicationDbContext>(options =>
@@ -66,7 +73,7 @@ namespace HealthyJuices.Api.Bootstrap
         {
             @this.AddScoped<IApplicationDbContext, ApplicationApplicationDbContext>();
 
-            @this.AddScoped<ILogRepository, LogRepository>();
+            @this.AddScoped<ILogRepository, LogElasticRepository>();
             @this.AddScoped<IUserRepository, UserRepository>();
             @this.AddScoped<IOrderRepository, OrderRepository>();
             @this.AddScoped<IUnavailabilityRepository, UnavailabilityRepository>();

@@ -24,6 +24,7 @@
     <ProjectReference Include="..\..\3Domain\HealthyJuices.Domain\HealthyJuices.Domain.csproj" />
     <ProjectReference Include="..\..\4Infrastructure\HealthyJuices.Mailing\HealthyJuices.Mailing.csproj" />
     <ProjectReference Include="..\..\4Infrastructure\HealthyJuices.Persistence.Ef\HealthyJuices.Persistence.Ef.csproj" />
+    <ProjectReference Include="..\..\4Infrastructure\HealthyJuices.Persistence.Elasticsearch\HealthyJuices.Persistence.Elasticsearch.csproj" />
     <ProjectReference Include="..\..\Common\HealthyJuices.Common.DataTransfer\HealthyJuices.Shared.csproj" />
     <ProjectReference Include="..\..\Common\HealthyJuices.Common\HealthyJuices.Common.csproj" />
   </ItemGroup>

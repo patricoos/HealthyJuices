@@ -17,8 +17,6 @@ namespace HealthyJuices.Persistence.Ef
     public interface IApplicationDbContext : IDisposable
     {
         #region - DbSets 
-
-        DbSet<Log> Logs { get; set; }
         DbSet<Order> Orders { get; set; }
         DbSet<Unavailability> Unavailabilities { get; set; }
         DbSet<Company> Companies { get; set; }
