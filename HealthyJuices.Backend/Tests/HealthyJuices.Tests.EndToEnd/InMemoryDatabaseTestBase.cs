@@ -60,7 +60,7 @@ namespace HealthyJuices.Tests.EndToEnd
 
         #endregion Providers
 
-        public string RandomString => Guid.NewGuid().ToString("n").Substring(0, 8);
+        public string RandomString => Guid.NewGuid().ToString("n");
 
         protected InMemoryDatabaseTestBase()
         {
