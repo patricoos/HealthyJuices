@@ -32,8 +32,7 @@ export class DashboardComponent extends MapComponent implements AfterViewInit {
     { field: 'created', header: 'Created' },
   ];
 
-  constructor(private ordersService: OrdersService, private toastsService: ToastsService,
-    private tableQueryService: TableQueryService) {
+  constructor(private ordersService: OrdersService, private toastsService: ToastsService) {
     super();
   }
   ngAfterViewInit(): void {

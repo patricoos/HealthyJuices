@@ -4,7 +4,6 @@ import { Component } from '@angular/core';
   template: ``
 })
 export abstract class MapComponent {
-  public usePanning = true;
   public zoomDefault = 10;
   public zoom: number = this.zoomDefault;
   public centerLatitudeDefault = 52.22;
@@ -60,25 +59,5 @@ export abstract class MapComponent {
       this.centerLongitude = this.centerLongitudeDefault;
       this.zoom = this.zoomDefault;
     }
-  }
-
-  setMapCenterCoordinate(coordinate: any): void {
-    this.centerLatitude = coordinate.latitude;
-    this.centerLongitude = coordinate.longitude;
-  }
-
-  setMapDefaults(): void {
-    this.centerLatitude = this.centerLatitudeDefault;
-    this.centerLongitude = this.centerLongitudeDefault;
-    this.zoom = this.zoomDefault;
-  }
-
-  onZoomChange(e: number): void {
-    this.zoom = e;
-  }
-
-  onCenterChange(e: any): void {
-    this.centerLatitude = e.lat;
-    this.centerLongitude = e.lng;
   }
 }
