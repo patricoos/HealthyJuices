@@ -1,14 +1,10 @@
 import { SelectItem } from 'primeng/api';
-import { Company } from './../../../_shared/models/user/company.model';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/_shared/services/auth.service';
-import { UsersService } from 'src/app/_shared/services/http/users.service';
 import { ToastsService } from 'src/app/_shared/services/toasts.service';
 import { FormGroupExtension } from 'src/app/_shared/utils/form-group.extension';
-import { RegisterUser } from '../../models/register-user.model';
-import { UserValidators } from '../../validators/user.validator';
 import { CompaniesService } from 'src/app/_shared/services/http/companies.service';
 
 @Component({
