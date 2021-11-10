@@ -12,6 +12,21 @@ Mrs. Rose sells drinks. It offers several types of them. Its sale consists in th
 
 Employees are not obliged to use the system. Therefore, Ms. Rose will visit all companies every day and ask her employees about the purchase.
 
+## Get Started
+
+If you have the following environment installed and you use windows os, please run `run_backend_local.bat` and `run_web_local.bat`
+
+### Installations
+
+#### Backend
+- .NET 5.0 SDK
+- SQL Server
+
+#### Web
+- NodeJS
+- TypeScript
+- Angular CLI
+
 ## Packages
 
 #### Backend
