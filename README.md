@@ -16,6 +16,10 @@ Employees are not obliged to use the system. Therefore, Ms. Rose will visit all 
 
 If you have the following environment installed and you use windows os, please run `run_backend_local.bat` and `run_web_local.bat`
 
+#### Login Credentials
+- BusinessOwner - Email: "bo@demo.com" Pasword: "demo"
+- Customer - Email: "customer@demo.com" Pasword: "demo"
+
 ### Installations
 
 #### Backend
