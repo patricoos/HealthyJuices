@@ -11,7 +11,7 @@ using MediatR;
 
 namespace HealthyJuices.Application.Features.Unavailabilities.Queries
 {
-    public static class GetAllUnavailabilities
+    public abstract class GetAllUnavailabilities
     {
         // Query 
         public record Query(DateTime? From = null, DateTime? To = null) : IRequest<IEnumerable<UnavailabilityDto>> { }

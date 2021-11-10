@@ -9,7 +9,7 @@ using MediatR;
 
 namespace HealthyJuices.Application.Features.Users.Queries
 {
-    public static class GetByIdUser
+    public abstract class GetByIdUser
     {
         // Query 
         public record Query(string Id) : IRequest<UserDto> { }

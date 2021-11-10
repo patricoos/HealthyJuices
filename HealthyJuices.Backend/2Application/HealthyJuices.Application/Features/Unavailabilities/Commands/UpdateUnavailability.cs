@@ -7,7 +7,7 @@ using MediatR;
 
 namespace HealthyJuices.Application.Features.Unavailabilities.Commands
 {
-    public static class UpdateUnavailability
+    public abstract class UpdateUnavailability
     {
         // Command 
         public record Command : UnavailabilityDto, IRequest { }

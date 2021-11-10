@@ -63,7 +63,7 @@ namespace HealthyJuices.Api.Bootstrap
 
         public static IServiceCollection RegisterDatabase(this IServiceCollection @this, string connectionString)
         {
-            @this.AddDbContext<ApplicationApplicationDbContext>(options =>
+            @this.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
             return @this;
@@ -71,7 +71,7 @@ namespace HealthyJuices.Api.Bootstrap
 
         public static IServiceCollection RegisterRepositories(this IServiceCollection @this)
         {
-            @this.AddScoped<IApplicationDbContext, ApplicationApplicationDbContext>();
+            @this.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 
             @this.AddScoped<ILogRepository, LogElasticRepository>();
             @this.AddScoped<IUserRepository, UserRepository>();
@@ -86,7 +86,7 @@ namespace HealthyJuices.Api.Bootstrap
         public static IApplicationBuilder MigrateDatabase(this IApplicationBuilder @this)
         {
             using var serviceScope = @this.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
-            var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationApplicationDbContext>();
+            var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
             context.Database.Migrate();
 
@@ -138,7 +138,7 @@ namespace HealthyJuices.Api.Bootstrap
         public static IApplicationBuilder SeedDefaultData(this IApplicationBuilder @this)
         {
             using var serviceScope = @this.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
-            var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationApplicationDbContext>();
+            var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
             var seeders = new List<IDataSeeder>()
                 {

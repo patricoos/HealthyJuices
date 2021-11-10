@@ -11,7 +11,7 @@ using MediatR;
 
 namespace HealthyJuices.Application.Features.Companies.Queries
 {
-    public static class GetByIdCompany
+    public abstract class GetByIdCompany
     {
         // Query 
         public record Query(string Id) : IRequest<CompanyDto> { }

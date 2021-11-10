@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HealthyJuices.Persistence.Ef.Migrations
 {
-    [DbContext(typeof(ApplicationApplicationDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     partial class HealthyJuicesDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

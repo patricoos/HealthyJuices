@@ -6,7 +6,7 @@ using MediatR;
 
 namespace HealthyJuices.Application.Features.Users.Commands
 {
-    public static class DeleteUser
+    public abstract class DeleteUser
     {
         // Command 
         public record Command(string Id) : IRequest { }

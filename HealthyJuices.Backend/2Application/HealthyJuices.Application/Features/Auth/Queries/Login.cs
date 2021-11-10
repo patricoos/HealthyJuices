@@ -13,7 +13,7 @@ using MediatR;
 
 namespace HealthyJuices.Application.Features.Auth.Queries
 {
-    public static class Login
+    public abstract class Login
     {
         // Query 
         public record Query(string Email, string Password) : IRequest<LoginResponseDto> { }

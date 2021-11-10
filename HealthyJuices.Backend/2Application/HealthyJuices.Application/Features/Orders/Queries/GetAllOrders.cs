@@ -8,7 +8,7 @@ using MediatR;
 
 namespace HealthyJuices.Application.Features.Orders.Queries
 {
-    public static class GetAllOrders
+    public abstract class GetAllOrders
     {
         // Query 
         public record Query : IRequest<IEnumerable<OrderDto>> { }

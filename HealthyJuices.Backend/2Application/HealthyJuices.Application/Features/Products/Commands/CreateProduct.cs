@@ -8,7 +8,7 @@ using MediatR;
 
 namespace HealthyJuices.Application.Features.Products.Commands
 {
-    public static class CreateProduct
+    public abstract class CreateProduct
     {
         // Command 
         public record Command : ProductDto, IRequest<string> { }

@@ -97,9 +97,7 @@ namespace HealthyJuices.Tests.EndToEnd.Controllers
             //assert
             exception.Message.Should().Be("Can not create order in unavailability duration");
 
-            // assert
             var subject = AssertRepositoryContext.Orders.ToList();
-
             subject.Count.Should().Be(0);
         }
     }

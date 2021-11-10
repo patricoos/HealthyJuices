@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HealthyJuices.Persistence.Ef.Migrations
 {
-    [DbContext(typeof(ApplicationApplicationDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20210325195233_add_created_modify_by_to_entity")]
     partial class add_created_modify_by_to_entity
     {

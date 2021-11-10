@@ -7,7 +7,7 @@ using MediatR;
 
 namespace HealthyJuices.Application.Features.Auth.Commands
 {
-    public static class ResetPassword
+    public abstract class ResetPassword
     {
         // Command 
         public record Command(string Email, string Token, string Password) : IRequest { }

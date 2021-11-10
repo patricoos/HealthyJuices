@@ -7,7 +7,7 @@ using MediatR;
 
 namespace HealthyJuices.Application.Features.Users.Queries
 {
-    public static class IsExistingUser
+    public abstract class IsExistingUser
     {
         // Query 
         public record Query(string Email) : IRequest<bool> { }

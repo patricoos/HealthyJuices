@@ -11,7 +11,7 @@ using MediatR;
 
 namespace HealthyJuices.Application.Features.Orders.Queries
 {
-    public static class GetDashboardReportOrders
+    public abstract class GetDashboardReportOrders
     {
         // Query 
         public record Query(DateTime From, DateTime To) : IRequest<DashboardOrderReportDto> { }

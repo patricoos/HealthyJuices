@@ -8,7 +8,7 @@ using MediatR;
 
 namespace HealthyJuices.Application.Features.Unavailabilities.Queries
 {
-    public static class GetByIdUnavalability
+    public abstract class GetByIdUnavalability
     {
         // Query 
         public record Query(string Id) : IRequest<UnavailabilityDto> { }

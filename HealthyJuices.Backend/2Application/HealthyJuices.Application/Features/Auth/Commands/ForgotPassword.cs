@@ -9,7 +9,7 @@ using MediatR;
 
 namespace HealthyJuices.Application.Features.Auth.Commands
 {
-    public static class ForgotPassword
+    public abstract class ForgotPassword
     {
         // Command 
         public record Command(string Email) : IRequest { }

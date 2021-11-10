@@ -15,7 +15,7 @@ using Microsoft.EntityFrameworkCore.InMemory.Infrastructure.Internal;
 
 namespace HealthyJuices.Persistence.Ef
 {
-    public class ApplicationApplicationDbContext : DbContext, IApplicationDbContext
+    public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
         #region - DbSets 
         public DbSet<Order> Orders { get; set; }
@@ -30,11 +30,11 @@ namespace HealthyJuices.Persistence.Ef
         private readonly ICurrentUserProvider _currentUserProvider;
         private readonly IDateTimeProvider _timeProvider;
 
-        public ApplicationApplicationDbContext(DbContextOptions<ApplicationApplicationDbContext> options, ICurrentUserProvider currentUserProvider, IDateTimeProvider timeProvider) : this(options, currentUserProvider, timeProvider, CancellationToken.None)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, ICurrentUserProvider currentUserProvider, IDateTimeProvider timeProvider) : this(options, currentUserProvider, timeProvider, CancellationToken.None)
         {
         }
 
-        public ApplicationApplicationDbContext(DbContextOptions<ApplicationApplicationDbContext> options, ICurrentUserProvider currentUserProvider, IDateTimeProvider timeProvider, CancellationToken cancellationToken) : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, ICurrentUserProvider currentUserProvider, IDateTimeProvider timeProvider, CancellationToken cancellationToken) : base(options)
         {
             CancellationToken = cancellationToken;
             _currentUserProvider = currentUserProvider;

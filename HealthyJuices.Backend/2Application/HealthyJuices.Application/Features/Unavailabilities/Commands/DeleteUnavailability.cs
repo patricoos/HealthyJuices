@@ -6,7 +6,7 @@ using MediatR;
 
 namespace HealthyJuices.Application.Features.Unavailabilities.Commands
 {
-    public static class DeleteUnavailability
+    public abstract class DeleteUnavailability
     {
         // Command 
         public record Command(string Id) : IRequest { }

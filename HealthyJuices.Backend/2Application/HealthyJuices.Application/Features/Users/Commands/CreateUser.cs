@@ -9,7 +9,7 @@ using MediatR;
 
 namespace HealthyJuices.Application.Features.Users.Commands
 {
-    public static class CreateUser
+    public abstract class CreateUser
     {
         // Command 
         public record Command(string Id, string Email, string Password, UserRole Roles) : IRequest<string> { }

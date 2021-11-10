@@ -10,7 +10,7 @@ using MediatR;
 
 namespace HealthyJuices.Application.Features.Users.Queries
 {
-    public static class GetAllUsers
+    public abstract class GetAllUsers
     {
         // Query 
         public record Query : IRequest<IEnumerable<UserDto>> { }

@@ -73,14 +73,14 @@ namespace HealthyJuices.Tests.EndToEnd
 
         private void InitializeDbContexts()
         {
-            var options = new DbContextOptionsBuilder<ApplicationApplicationDbContext>()
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning))
                 .Options;
 
-            ArrangeRepositoryContext = new ApplicationApplicationDbContext(options, CurrentUserProviderMock.Object, DateTimeProvider);
-            ActRepositoryContext = new ApplicationApplicationDbContext(options, CurrentUserProviderMock.Object, DateTimeProvider);
-            AssertRepositoryContext = new ApplicationApplicationDbContext(options, CurrentUserProviderMock.Object, DateTimeProvider);
+            ArrangeRepositoryContext = new ApplicationDbContext(options, CurrentUserProviderMock.Object, DateTimeProvider);
+            ActRepositoryContext = new ApplicationDbContext(options, CurrentUserProviderMock.Object, DateTimeProvider);
+            AssertRepositoryContext = new ApplicationDbContext(options, CurrentUserProviderMock.Object, DateTimeProvider);
         }
 
         private void InitializeMediatR()

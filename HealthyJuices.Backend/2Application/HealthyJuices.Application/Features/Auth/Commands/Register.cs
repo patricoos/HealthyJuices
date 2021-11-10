@@ -13,7 +13,7 @@ using MediatR;
 
 namespace HealthyJuices.Application.Features.Auth.Commands
 {
-    public static class Register
+    public abstract class Register
     {
         // Command 
         public record Command(string Email, string Password, string FirstName, string LastName, string CompanyId) : IRequest<string> { }

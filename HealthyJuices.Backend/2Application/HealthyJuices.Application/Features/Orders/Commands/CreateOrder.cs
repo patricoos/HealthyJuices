@@ -14,7 +14,7 @@ using MediatR;
 
 namespace HealthyJuices.Application.Features.Orders.Commands
 {
-    public static class CreateOrder
+    public abstract class CreateOrder
     {
         // Command 
         public record Command : OrderDto, IRequest<string> { }

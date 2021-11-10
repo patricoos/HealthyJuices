@@ -7,7 +7,7 @@ using MediatR;
 
 namespace HealthyJuices.Application.Features.Auth.Commands
 {
-    public static class ConfirmRegister
+    public abstract class ConfirmRegister
     {
         // Command 
         public record Command(string Email, string Token) : IRequest { }

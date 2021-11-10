@@ -11,7 +11,7 @@ using MediatR;
 
 namespace HealthyJuices.Application.Features.Orders.Queries
 {
-    public static class GetAllActiveOrders
+    public abstract class GetAllActiveOrders
     {
         // Query 
         public record Query(DateTime? From = null, DateTime? To = null) : IRequest<IEnumerable<OrderDto>> { }

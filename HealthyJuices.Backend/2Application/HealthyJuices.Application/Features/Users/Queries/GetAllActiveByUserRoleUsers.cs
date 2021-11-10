@@ -11,7 +11,7 @@ using MediatR;
 
 namespace HealthyJuices.Application.Features.Users.Queries
 {
-    public static class GetAllActiveByUserRoleUsers
+    public abstract class GetAllActiveByUserRoleUsers
     {
         // Query 
         public record Query(UserRole Role) : IRequest<IEnumerable<UserDto>> { }
