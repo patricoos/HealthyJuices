@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using HealthyJuices.Application.Features.Auth.Commands;
-using HealthyJuices.Application.Features.Auth.Commands;
 using HealthyJuices.Application.Features.Auth.Queries;
 using HealthyJuices.Shared.Dto.Auth;
 using MediatR;
