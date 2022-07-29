@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
@@ -7,8 +8,11 @@ using System.Threading.Tasks;
 using HealthyJuices.Common.Contracts;
 using HealthyJuices.Common.Exceptions;
 using HealthyJuices.Domain.Providers;
+using HealthyJuices.Shared.Dto;
 using HealthyJuices.Shared.Enums;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace HealthyJuices.Api.Middlewares
 {
@@ -33,29 +37,36 @@ namespace HealthyJuices.Api.Middlewares
             }
             catch (Exception ex)
             {
-                await WriteLogAsync(context, ex, logger);
-                await WriteResponseAsync(context, "Server not responding.", HttpStatusCode.InternalServerError);
+                var eid = await WriteLogAsync(context, ex, logger);
+                await WriteResponseAsync(context, "Server not responding.", HttpStatusCode.InternalServerError, eid);
             }
         }
 
-        private async Task WriteResponseAsync(HttpContext context, string message, HttpStatusCode statusCode)
+        private async Task WriteResponseAsync(HttpContext context, string message, HttpStatusCode statusCode, string logId = null, IDictionary<string, string[]> errors = null, string details = null)
         {
             context.Response.StatusCode = (int)statusCode;
-            await context.Response.Body.WriteAsync(Encoding.UTF8.GetBytes(message));
+            context.Response.ContentType = "application/json";
+
+            var error = new ErrorDetailsDto(statusCode, message, details, logId, errors);
+            var body = JsonConvert.SerializeObject(error, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+
+            await context.Response.WriteAsync(body);
         }
 
-        private static async Task WriteLogAsync(HttpContext context, Exception exception, ILogger logger)
+        private static async Task<string> WriteLogAsync(HttpContext context, Exception exception, ILogger logger)
         {
             try
             {
                 var url = context.Request.Path + context.Request.QueryString;
                 var body = await GetRequestString(context);
 
-                await logger.LogAsync(LogSeverity.Unspecified, LogType.Api, exception, url, body);
+                var logId = await logger.LogAsync(LogSeverity.Unspecified, LogType.Api, exception, url, body);
+                return logId;
             }
             catch (Exception ex)
             {
                 Debug.Write(ex?.ToString());
+                return null;
             }
         }
 

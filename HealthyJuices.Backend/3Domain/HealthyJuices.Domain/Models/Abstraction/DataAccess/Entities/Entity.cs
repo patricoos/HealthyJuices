@@ -8,7 +8,7 @@ namespace HealthyJuices.Domain.Models.Abstraction.DataAccess.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string Id { get; protected set; }
+        public string Id { get; private init; } = Guid.NewGuid().ToString();
         public DateTimeOffset Created { get; protected init; } 
         public DateTimeOffset? LastModified { get; protected set; }
 
